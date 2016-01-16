@@ -9,19 +9,23 @@
 
 #include "ui_player.h"
 
+class fairytale;
+
 class Player : public QDialog, protected Ui::Player
 {
 	Q_OBJECT
 
 	public slots:
-		void playVideo(const QUrl &url);
+		void playVideo(fairytale *app, const QUrl &url);
 
 		void skip();
 	public:
-		Player(QWidget *parent);
+		Player(QWidget *parent, fairytale *app);
 
 		QMediaPlayer* mediaPlayer() const;
 		bool skipped() const;
+
+		QPushButton* pauseButton() const;
 
 	private:
 		QVideoWidget *m_videoWidget;
@@ -38,6 +42,11 @@ inline QMediaPlayer* Player::mediaPlayer() const
 inline bool Player::skipped() const
 {
 	return this->m_skipped;
+}
+
+inline QPushButton* Player::pauseButton() const
+{
+	return this->pausePushButton;
 }
 
 #endif // PLAYER_H

@@ -27,6 +27,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void playFinalVideo();
 
+		void pauseGame();
 		void about();
 
 	public:
@@ -36,6 +37,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void playFinalClip(int index);
 
 		void gameOver();
+
+		QUrl resolveClipUrl(const QUrl &url) const;
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
@@ -49,12 +52,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void fillCurrentClips();
 		void selectRandomSolution();
 
-		bool loadClipsFromFile(const QString &file);
+		bool loadClipsFromFile(const QString &file, QList<Clip*> &clips);
+
+
+		QUrl m_clipsDir;
 
 		Player *m_player;
 
 		QTimer m_timer;
 		long int m_remainingTime;
+
+		bool m_requiresPerson;
 
 		Clip *m_currentSolution;
 		QVector<QPushButton*> m_buttons;
@@ -65,6 +73,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QList<QPushButton*> m_completeSolutionButtons;
 		int m_completeSolutionIndex;
 		bool m_playCompleteSolution;
+
+		bool m_paused;
 };
 
 #endif // fairytale_H

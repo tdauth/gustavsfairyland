@@ -186,7 +186,7 @@
          <x>0</x>
          <y>0</y>
          <width>859</width>
-         <height>89</height>
+         <height>93</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -237,6 +237,7 @@
      <string>Fi&amp;le</string>
     </property>
     <addaction name="actionNewGame"/>
+    <addaction name="actionPauseGame"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -261,7 +262,12 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionPauseGame">
+   <property name="text">
+    <string>Pause Game</string>
    </property>
   </action>
  </widget>

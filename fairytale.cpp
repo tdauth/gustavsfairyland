@@ -11,6 +11,11 @@
 
 #include <QtCore/QXmlStreamReader>
 
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+
+#include <iostream>
+
 #include "clip.h"
 #include "player.h"
 
@@ -32,18 +37,70 @@ void fairytale::newGame()
 
 	qDebug() << "After selecting file";
 
-	if (loadClipsFromFile(file))
+	QList<Clip*> clips;
+
+	if (loadClipsFromFile(file, clips))
 	{
+		this->m_clips = clips;
 		qDebug() << "start";
 		nextTurn();
 	}
 	else
 	{
+		foreach (Clip *clip, clips)
+		{
+			delete clip;
+		}
+
 		qDebug() << this->m_clips.size() << " clips";
 	}
 }
 
-fairytale::fairytale() : m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this))
+void fairytale::pauseGame()
+{
+	if (this->m_paused)
+	{
+		this->actionPauseGame->setText(tr("Pause Game"));
+		this->m_player->pauseButton()->setText(tr("Pause Game"));
+		this->m_paused = false;
+
+		if (this->m_remainingTime > 0)
+		{
+			this->m_timer.start();
+
+			foreach (QPushButton *button, this->m_buttons)
+			{
+				button->setEnabled(true);
+			}
+		}
+		else
+		{
+			this->m_player->mediaPlayer()->play();
+		}
+	}
+	else
+	{
+		this->actionPauseGame->setText(tr("Continue Game"));
+		this->m_player->pauseButton()->setText(tr("Continue Game"));
+		this->m_paused = true;
+
+		if (this->m_remainingTime > 0)
+		{
+			this->m_timer.stop();
+
+			foreach (QPushButton *button, this->m_buttons)
+			{
+				button->setEnabled(false);
+			}
+		}
+		else
+		{
+			this->m_player->mediaPlayer()->pause();
+		}
+	}
+}
+
+fairytale::fairytale() : m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false)
 {
 	this->m_player->hide();
 
@@ -63,6 +120,7 @@ fairytale::fairytale() : m_remainingTime(0), m_currentSolution(0), m_playComplet
 	}
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
+	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
@@ -78,7 +136,7 @@ void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
-	this->m_player->playVideo(this->m_completeSolution[index]->narratorVideoUrl());
+	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl());
 }
 
 void fairytale::playFinalVideo()
@@ -113,15 +171,22 @@ void fairytale::nextTurn()
 	{
 		this->fillCurrentClips();
 
+		if (!this->m_currentClips.empty())
+		{
+			this->selectRandomSolution();
 
-		this->selectRandomSolution();
+			qDebug() << "Complete size " << m_clips.size();
 
-		qDebug() << "Complete size " << m_clips.size();
-
-		/*
-		 * Play the narrator clip for the current solution as hint.
-		 */
-		this->m_player->playVideo(this->m_currentSolution->narratorVideoUrl());
+			/*
+			* Play the narrator clip for the current solution as hint.
+			*/
+			this->m_player->playVideo(this, this->m_currentSolution->narratorVideoUrl());
+		}
+		else
+		{
+			QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
+			this->playFinalVideoPushButton->setEnabled(true);
+		}
 	}
 	else
 	{
@@ -219,6 +284,7 @@ void fairytale::timerTick()
 void fairytale::clickCard()
 {
 	this->m_timer.stop();
+	this->m_remainingTime = 0; // set time to 0 that the method pauseGame() works
 	bool success = false;
 
 	for (int i = 0; i < this->m_currentClips.size() && !success; ++i)
@@ -257,6 +323,28 @@ void fairytale::fillCurrentClips()
 {
 	QList<Clip*> copy = this->m_clips;
 
+	/*
+	 * Allow only persons or acts.
+	 */
+	for (int i = 0; i < copy.size(); )
+	{
+		if ((m_requiresPerson && !copy[i]->isPerson()) || (!m_requiresPerson && copy[i]->isPerson()))
+		{
+			copy.removeAt(i);
+		}
+		else
+		{
+			++i;
+		}
+	}
+
+	if (copy.isEmpty())
+	{
+		return;
+	}
+
+	m_requiresPerson = !m_requiresPerson;
+
 	qDebug() << "Size before" << copy.size();
 
 	for (int i = 0; i < this->m_buttons.size() && !copy.empty(); ++i)
@@ -278,9 +366,8 @@ void fairytale::selectRandomSolution()
 	this->m_clips.removeAll(solution); // solution is done forever
 }
 
-bool fairytale::loadClipsFromFile(const QString &file)
+bool fairytale::loadClipsFromFile(const QString &file, QList<Clip*> &clips)
 {
-	this->m_clips.clear();
 	QFile f(file);
 
 	if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -290,85 +377,73 @@ bool fairytale::loadClipsFromFile(const QString &file)
 		return false;
 	}
 
-	QXmlStreamReader xmlReader(&f);
+	QDomDocument document;
 
-	if (!xmlReader.readNextStartElement())
+	if (!document.setContent(&f))
 	{
-		qDebug() << "Missing start element";
+		std::cerr << "Error on reading DOM tree" << std::endl;
 
 		return false;
 	}
 
-	if (xmlReader.name() != "clips")
+	std::cerr << document.nodeName().toUtf8().constData() << std::endl;
+
+	const QDomElement root = document.firstChildElement();
+
+	if (root.nodeName() != "clips")
 	{
-		qDebug() << "Missing <clips> element";
+		std::cerr << "Missing <clips>" << std::endl;
 
 		return false;
 	}
 
-	while (xmlReader.readNext())
+	QDomNodeList nodes = root.elementsByTagName("clip");
+
+	if (nodes.isEmpty())
 	{
-		QUrl image, video, narrator;
+		std::cerr << "Missing clips" << std::endl;
 
-		QMessageBox::information(this, xmlReader.name().toString(), xmlReader.readElementText());
-
-		if (xmlReader.name() != "clip")
-		{
-			qDebug() << "Missing <clip> element";
-
-			return false;
-		}
-
-		if (!xmlReader.readNext())
-		{
-			qDebug() << "Missing <image> element";
-
-			return false;
-		}
-
-		if (xmlReader.name() != "image") {
-			qDebug() << "Missing <image> element";
-
-			return false;
-		}
-
-		image = QUrl(xmlReader.text().toString());
-
-		if (!xmlReader.readNext()) {
-			qDebug() << "Missing <video> element";
-
-			return false;
-		}
-
-		if (xmlReader.name() != "video") {
-			qDebug() << "Missing <video> element";
-
-			return false;
-		}
-
-		video = QUrl(xmlReader.text().toString());
-
-		if (!xmlReader.readNext()) {
-			qDebug() << "Missing <narrator> element";
-
-			return false;
-		}
-
-		if (xmlReader.name() != "narrator") {
-			qDebug() << "Missing <narrator> element";
-
-			return false;
-		}
-
-		narrator = QUrl(xmlReader.text().toString());
-
-		this->m_clips.push_back(new Clip(image, video, narrator, this));
+		return false;
 	}
 
-	qDebug() << this->m_clips.size() << " clips";
+	for (int i = 0; i < nodes.size(); ++i)
+	{
+		QDomNode node = nodes.at(i);
+
+		if (node.nodeName() != "clip")
+		{
+			std::cerr << "Missing clip" << std::endl;
+
+			return false;
+		}
+
+		const QUrl image = QUrl(node.firstChildElement("image").text());
+		const QUrl video = QUrl(node.firstChildElement("video").text());
+		const QUrl narrator = QUrl(node.firstChildElement("narrator").text());
+
+		const QString isPerson = node.hasAttributes() && node.attributes().contains("isPerson") ?  node.attributes().namedItem("isPerson").nodeValue() : "";
+
+		clips.push_back(new Clip(image, video, narrator, isPerson == "true", this));
+	}
+
+	std::cerr << "Clips " << clips.size() << std::endl;
 
 	return true;
 }
+
+QUrl fairytale::resolveClipUrl(const QUrl& url) const
+{
+	if (!url.isRelative())
+	{
+		return url;
+	}
+
+	QUrl result = this->m_clipsDir;
+	result.setUrl(this->m_clipsDir.url() + "/" + url.url());
+
+	return result;
+}
+
 
 
 #include "fairytale.moc"
