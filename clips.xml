@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<clips>
+	<clip>
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
+		<video>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</narrator>
+	</clip>
+
+	<clip>
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
+		<video>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</narrator>
+	</clip>
+
+	<clip>
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
+		<video>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</narrator>
+	</clip>
+
+	<clip>
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
+		<video>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/Film (TaCaMo)/output.mp4</narrator>
+	</clip>
+</clips>

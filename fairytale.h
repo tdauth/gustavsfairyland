@@ -1,13 +1,18 @@
 #ifndef fairytale_H
 #define fairytale_H
 
-#include <QtGui/QMainWindow>
-#include <QTimer>
-#include <QVector>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QWidget>
+#include <QtCore/QTimer>
+#include <QtCore/QVector>
 #include <QtCore/QList>
+
+#include <QtMultimedia/QMediaPlayer>
+
 #include "ui_mainwindow.h"
 
 class Clip;
+class Player;
 
 class fairytale : public QMainWindow, protected Ui::MainWindow
 {
@@ -15,24 +20,25 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 	public slots:
 		void newGame();
-		void skipNarrator();
 		void nextTurn();
 		void clear();
 		void clearSolution();
 		void clearClips();
 
-		void playVideo(const QUrl &url);
+		void playFinalVideo();
+
+		void about();
+
 	public:
 		fairytale();
 		virtual ~fairytale();
 
 		void playFinalClip(int index);
-		void playFinalVideo();
 
 		void gameOver();
 
 	private slots:
-		void finishNarrator();
+		void finishNarrator(QMediaPlayer::State state);
 		void timerTick();
 
 		void clickCard();
@@ -42,6 +48,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void addCurrentSolution();
 		void fillCurrentClips();
 		void selectRandomSolution();
+
+		bool loadClipsFromFile(const QString &file);
+
+		Player *m_player;
 
 		QTimer m_timer;
 		long int m_remainingTime;
