@@ -23,3 +23,16 @@ target_link_libraries(fairytale Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::Mult
 install(TARGETS fairytale RUNTIME DESTINATION bin)
 
 #qt5_add_translation( qm_files ts_files ... )
+
+set(CPACK_GENERATOR NSIS)
+set(CPACK_PACKAGE_NAME "fairytale")
+set(CPACK_PACKAGE_VENDOR "CMake.org")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MyLib - CPack Component Installation Example")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "CPack Component Example")
+SET(CPACK_NSIS_MODIFY_PATH ON)
+
+INCLUDE(CPack)
