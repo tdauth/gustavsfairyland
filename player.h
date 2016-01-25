@@ -16,7 +16,7 @@ class Player : public QDialog, protected Ui::Player
 	Q_OBJECT
 
 	public slots:
-		void playVideo(fairytale *app, const QUrl &url);
+		void playVideo(fairytale *app, const QUrl &url, const QString &description);
 
 		void skip();
 	public:

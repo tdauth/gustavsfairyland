@@ -13,6 +13,9 @@
 
 class Clip;
 class Player;
+class ClipsDialog;
+class ClipPackageDialog;
+class ClipPackage;
 
 class fairytale : public QMainWindow, protected Ui::MainWindow
 {
@@ -28,9 +31,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void playFinalVideo();
 
 		void pauseGame();
+		void openClipsDialog();
+		ClipPackage* selectClipPackage();
 		void about();
 
 	public:
+		typedef QList<ClipPackage*> ClipPackages;
+
 		fairytale();
 		virtual ~fairytale();
 
@@ -38,7 +45,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void gameOver();
 
+		void addClipPackage(ClipPackage *package);
+		void setClipPackages(const ClipPackages &packages);
+		const ClipPackages& clipPackages() const;
+
 		QUrl resolveClipUrl(const QUrl &url) const;
+
+		QUrl clipsDir() const;
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
@@ -52,22 +65,30 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void fillCurrentClips();
 		void selectRandomSolution();
 
-		bool loadClipsFromFile(const QString &file, QList<Clip*> &clips);
-
 
 		QUrl m_clipsDir;
 
+		int m_turns;
+
+		Clip *m_startPerson;
+
 		Player *m_player;
+
+		ClipsDialog *m_clipsDialog;
+		ClipPackageDialog *m_clipPackageDialog;
 
 		QTimer m_timer;
 		long int m_remainingTime;
 
 		bool m_requiresPerson;
 
+		ClipPackage *m_clipPackage;
+		QList<Clip*> m_clips;
+
 		Clip *m_currentSolution;
 		QVector<QPushButton*> m_buttons;
 		QVector<Clip*> m_currentClips;
-		QList<Clip*> m_clips;
+		ClipPackages m_clipPackages;
 
 		QList<Clip*> m_completeSolution;
 		QList<QPushButton*> m_completeSolutionButtons;
@@ -76,5 +97,25 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		bool m_paused;
 };
+
+inline void fairytale::addClipPackage(ClipPackage* package)
+{
+	this->m_clipPackages.push_back(package);
+}
+
+inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
+{
+	this->m_clipPackages = packages;
+}
+
+inline const fairytale::ClipPackages& fairytale::clipPackages() const
+{
+	return this->m_clipPackages;
+}
+
+inline QUrl fairytale::clipsDir() const
+{
+	return this->m_clipsDir;
+}
 
 #endif // fairytale_H

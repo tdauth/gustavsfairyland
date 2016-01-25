@@ -1,5 +1,7 @@
 #include "fairytale.h"
 
+#include <QtCore/QSettings>
+
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -9,15 +11,12 @@
 
 #include <QtMultimedia/QMultimedia>
 
-#include <QtCore/QXmlStreamReader>
-
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
-
-#include <iostream>
-
 #include "clip.h"
 #include "player.h"
+#include "iconbutton.h"
+#include "clipsdialog.h"
+#include "clippackagedialog.h"
+#include "clippackage.h"
 
 void fairytale::newGame()
 {
@@ -26,33 +25,25 @@ void fairytale::newGame()
 	clearSolution();
 	clearClips();
 
-	const QString file = QFileDialog::getOpenFileName(this, tr("Clips"), QString(), "XML files (*.xml);;All files (*)");
+	this->m_paused = false;
+	this->actionPauseGame->setText(tr("Pause Game"));
+	this->m_player->pauseButton()->setText(tr("Pause Game"));
 
-	if (file.isEmpty())
+	// requires person in the first step always
+	this->m_requiresPerson = true;
+	this->m_turns = 0;
+
+	ClipPackage *clipPackage = this->selectClipPackage();
+
+	if (clipPackage != nullptr)
 	{
-		qDebug() << "no file selected";
+		this->m_clipPackage = clipPackage;
+		this->m_clips = clipPackage->clips();
 
-		return;
-	}
-
-	qDebug() << "After selecting file";
-
-	QList<Clip*> clips;
-
-	if (loadClipsFromFile(file, clips))
-	{
-		this->m_clips = clips;
 		qDebug() << "start";
-		nextTurn();
-	}
-	else
-	{
-		foreach (Clip *clip, clips)
-		{
-			delete clip;
-		}
 
-		qDebug() << this->m_clips.size() << " clips";
+		nextTurn();
+		actionPauseGame->setEnabled(true);
 	}
 }
 
@@ -100,7 +91,35 @@ void fairytale::pauseGame()
 	}
 }
 
-fairytale::fairytale() : m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false)
+void fairytale::openClipsDialog()
+{
+	if (this->m_clipsDialog == nullptr)
+	{
+		this->m_clipsDialog = new ClipsDialog(this, this);
+	}
+
+	this->m_clipsDialog->fill(this->clipPackages());
+	this->m_clipsDialog->show();
+}
+
+ClipPackage* fairytale::selectClipPackage()
+{
+	if (this->m_clipPackageDialog == nullptr)
+	{
+		this->m_clipPackageDialog = new ClipPackageDialog(this);
+	}
+
+	this->m_clipPackageDialog->fill(this->clipPackages());
+
+	if (this->m_clipPackageDialog->exec() == QDialog::Accepted)
+	{
+		return this->m_clipPackageDialog->clipPackage();
+	}
+
+	return nullptr;
+}
+
+fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr)
 {
 	this->m_player->hide();
 
@@ -122,21 +141,54 @@ fairytale::fairytale() : m_remainingTime(0), m_currentSolution(0), m_playComplet
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 	connect(this->playFinalVideoPushButton, SIGNAL(clicked()), this, SLOT(playFinalVideo()));
+
+	QSettings settings("fairytale");
+	const int size = settings.beginReadArray("clipPackages");
+
+	for (int i = 0; i < size; ++i)
+	{
+		settings.setArrayIndex(i);
+		const QString filePath = settings.value("filePath").toString();
+
+		ClipPackage *package = new ClipPackage(this);
+
+		if (package->loadClipsFromFile(filePath))
+		{
+			this->m_clipPackages.push_back(package);
+		}
+		else
+		{
+			delete package;
+		}
+	}
+
+	settings.endArray();
 }
 
 fairytale::~fairytale()
 {
+	QSettings settings("fairytale");
+	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
+
+	for (int i = 0; i < this->m_clipPackages.size(); ++i)
+	{
+		settings.setArrayIndex(i);
+		settings.setValue("filePath", this->clipPackages()[i]->filePath());
+	}
+
+	settings.endArray();
 }
 
 void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
-	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl());
+	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl(), this->m_completeSolution[index]->description());
 }
 
 void fairytale::playFinalVideo()
@@ -175,12 +227,41 @@ void fairytale::nextTurn()
 		{
 			this->selectRandomSolution();
 
+			if (this->m_turns == 0)
+			{
+				this->m_startPerson = this->m_currentSolution;
+			}
+
 			qDebug() << "Complete size " << m_clips.size();
 
+			QString description;
+
+			if (this->m_currentSolution->isPerson())
+			{
+				if (m_turns == 0)
+				{
+					description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+				}
+				else if (m_turns == 1)
+				{
+					description = tr("and <b>%1</b>").arg(this->m_currentSolution->description());
+				}
+				else
+				{
+					description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(this->m_currentSolution->description());
+				}
+			}
+			else
+			{
+				description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+			}
+
+			this->m_turns++;
+
 			/*
-			* Play the narrator clip for the current solution as hint.
-			*/
-			this->m_player->playVideo(this, this->m_currentSolution->narratorVideoUrl());
+			 * Play the narrator clip for the current solution as hint.
+			 */
+			this->m_player->playVideo(this, this->m_currentSolution->narratorVideoUrl(), description);
 		}
 		else
 		{
@@ -205,6 +286,7 @@ void fairytale::clear()
 
 	this->m_currentClips.clear();
 	this->m_currentSolution = 0;
+	actionPauseGame->setEnabled(false);
 }
 
 void fairytale::clearSolution()
@@ -239,7 +321,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 		if (!this->m_playCompleteSolution)
 		{
 			this->m_player->mediaPlayer()->stop();
-			this->m_remainingTime = 2000 * (this->m_clips.size() + 1);
+			this->m_remainingTime = 1000 * (this->m_clips.size() + 1);
 			this->updateTimeLabel();
 
 			for (int i = 0; i < this->m_currentClips.size(); ++i)
@@ -251,14 +333,14 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			// run every second
 			this->m_timer.start(1000);
 		}
-		else if (!this->m_player->skipped() && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+		else if (this->m_playCompleteSolution && !this->m_player->skipped() && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 		{
 			this->playFinalClip(this->m_completeSolutionIndex + 1);
 		}
 		/*
 		 * Stop playing the complete solution.
 		 */
-		else
+		else if (this->m_playCompleteSolution)
 		{
 			this->m_playCompleteSolution = false;
 			this->m_completeSolutionIndex = 0;
@@ -289,12 +371,12 @@ void fairytale::clickCard()
 
 	for (int i = 0; i < this->m_currentClips.size() && !success; ++i)
 	{
-		//if (QObject::sender() == this->m_buttons[i] && this->m_currentSolution == this->m_currentClips[i]) {
+		if (QObject::sender() == this->m_buttons[i] && this->m_currentSolution == this->m_currentClips[i]) {
 			addCurrentSolution();
 			nextTurn();
 
 			success = true;
-		// }
+		}
 	}
 
 	if (!success)
@@ -310,13 +392,13 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	QPushButton *button = new QPushButton(this);
-	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	button->setIcon(QIcon(this->m_currentSolution->imageUrl().toLocalFile()));
-	button->setEnabled(false);
+	QPushButton *button = new IconButton(this);
 	this->scrollAreaWidgetContents->layout()->addWidget(button);
 	this->m_completeSolutionButtons.push_back(button);
 	this->m_completeSolution.push_back(this->m_currentSolution);
+	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	button->setIcon(QIcon(this->m_currentSolution->imageUrl().toLocalFile()));
+	button->setEnabled(false);
 }
 
 void fairytale::fillCurrentClips()
@@ -343,7 +425,10 @@ void fairytale::fillCurrentClips()
 		return;
 	}
 
-	m_requiresPerson = !m_requiresPerson;
+	if (m_turns > 0)
+	{
+		m_requiresPerson = !m_requiresPerson;
+	}
 
 	qDebug() << "Size before" << copy.size();
 
@@ -366,71 +451,6 @@ void fairytale::selectRandomSolution()
 	this->m_clips.removeAll(solution); // solution is done forever
 }
 
-bool fairytale::loadClipsFromFile(const QString &file, QList<Clip*> &clips)
-{
-	QFile f(file);
-
-	if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		qDebug() << "Unable to open file" << file;
-
-		return false;
-	}
-
-	QDomDocument document;
-
-	if (!document.setContent(&f))
-	{
-		std::cerr << "Error on reading DOM tree" << std::endl;
-
-		return false;
-	}
-
-	std::cerr << document.nodeName().toUtf8().constData() << std::endl;
-
-	const QDomElement root = document.firstChildElement();
-
-	if (root.nodeName() != "clips")
-	{
-		std::cerr << "Missing <clips>" << std::endl;
-
-		return false;
-	}
-
-	QDomNodeList nodes = root.elementsByTagName("clip");
-
-	if (nodes.isEmpty())
-	{
-		std::cerr << "Missing clips" << std::endl;
-
-		return false;
-	}
-
-	for (int i = 0; i < nodes.size(); ++i)
-	{
-		QDomNode node = nodes.at(i);
-
-		if (node.nodeName() != "clip")
-		{
-			std::cerr << "Missing clip" << std::endl;
-
-			return false;
-		}
-
-		const QUrl image = QUrl(node.firstChildElement("image").text());
-		const QUrl video = QUrl(node.firstChildElement("video").text());
-		const QUrl narrator = QUrl(node.firstChildElement("narrator").text());
-
-		const QString isPerson = node.hasAttributes() && node.attributes().contains("isPerson") ?  node.attributes().namedItem("isPerson").nodeValue() : "";
-
-		clips.push_back(new Clip(image, video, narrator, isPerson == "true", this));
-	}
-
-	std::cerr << "Clips " << clips.size() << std::endl;
-
-	return true;
-}
-
 QUrl fairytale::resolveClipUrl(const QUrl& url) const
 {
 	if (!url.isRelative())
@@ -443,7 +463,5 @@ QUrl fairytale::resolveClipUrl(const QUrl& url) const
 
 	return result;
 }
-
-
 
 #include "fairytale.moc"

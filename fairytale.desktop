@@ -1,0 +1,12 @@
+[Desktop Entry]
+GenericName=Fairytale
+GenericName[de]=Märchen
+GenericName[en_GB]=Fairytale
+Name=Fairytale
+Name[de]=Märchen
+Name[en_GB]=Fairytale
+Exec=fairytale %U
+Icon=utilities-file-archiver
+Type=Application
+Terminal=false
+Categories=Game;

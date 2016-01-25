@@ -20,11 +20,13 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_videoWidget
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 }
 
-void Player::playVideo(fairytale *app, const QUrl& url)
+void Player::playVideo(fairytale *app, const QUrl& url, const QString &description)
 {
 	this->m_skipped = false;
 	this->show();
 	this->skipPushButton->setEnabled(true);
+
+	this->descriptionLabel->setText(description);
 	/*
 	 * Play the narrator clip for the current solution as hint.
 	 */
@@ -35,6 +37,7 @@ void Player::playVideo(fairytale *app, const QUrl& url)
 void Player::skip()
 {
 	this->m_skipped = true;
-	this->mediaPlayer()->stop();
 	this->hide();
+	// stop after hiding since stopping might lead to showing it again
+	this->mediaPlayer()->stop();
 }

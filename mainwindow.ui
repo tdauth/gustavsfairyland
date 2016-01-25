@@ -246,7 +246,14 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Setti&amp;ngs</string>
+    </property>
+    <addaction name="actionClips"/>
+   </widget>
    <addaction name="menuDatei"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -266,8 +273,16 @@
    </property>
   </action>
   <action name="actionPauseGame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Pause Game</string>
+    <string>&amp;Pause Game</string>
+   </property>
+  </action>
+  <action name="actionClips">
+   <property name="text">
+    <string>Clips</string>
    </property>
   </action>
  </widget>
