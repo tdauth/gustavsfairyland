@@ -251,6 +251,7 @@
      <string>Setti&amp;ngs</string>
     </property>
     <addaction name="actionClips"/>
+    <addaction name="actionEditor"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuSettings"/>
@@ -282,7 +283,12 @@
   </action>
   <action name="actionClips">
    <property name="text">
-    <string>Clips</string>
+    <string>&amp;Clips</string>
+   </property>
+  </action>
+  <action name="actionEditor">
+   <property name="text">
+    <string>Editor</string>
    </property>
   </action>
  </widget>

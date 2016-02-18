@@ -17,6 +17,7 @@
 #include "clipsdialog.h"
 #include "clippackagedialog.h"
 #include "clippackage.h"
+#include "clippackageeditor.h"
 
 void fairytale::newGame()
 {
@@ -102,6 +103,16 @@ void fairytale::openClipsDialog()
 	this->m_clipsDialog->show();
 }
 
+void fairytale::openEditor()
+{
+	if (this->m_editor == nullptr)
+	{
+		this->m_editor = new ClipPackageEditor(this);
+	}
+
+	this->m_editor->show();
+}
+
 ClipPackage* fairytale::selectClipPackage()
 {
 	if (this->m_clipPackageDialog == nullptr)
@@ -119,7 +130,7 @@ ClipPackage* fairytale::selectClipPackage()
 	return nullptr;
 }
 
-fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr)
+fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr), m_editor(nullptr)
 {
 	this->m_player->hide();
 
@@ -142,6 +153,7 @@ fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_cur
 	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
+	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));

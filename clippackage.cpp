@@ -86,3 +86,10 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 
 	return true;
 }
+
+bool ClipPackage::saveClipsToFile(const QString& file)
+{
+	// TODO implement
+
+	return false;
+}

@@ -21,9 +21,9 @@ if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
 	find_package(Qt5Xml)
 endif ()
 
-set(fairytale_SRCS fairytale.cpp main.cpp clip.cpp player.cpp iconbutton.cpp clipsdialog.cpp clippackage.cpp clippackagedialog.cpp)
+set(fairytale_SRCS fairytale.cpp main.cpp clip.cpp player.cpp iconbutton.cpp clipsdialog.cpp clippackage.cpp clippackagedialog.cpp clippackageeditor.cpp clipeditor.cpp)
 
-qt5_wrap_ui(fairytale_UI_HEADERS mainwindow.ui player.ui clips.ui clippackagedialog.ui)
+qt5_wrap_ui(fairytale_UI_HEADERS mainwindow.ui player.ui clips.ui clippackagedialog.ui clippackageeditor.ui clipeditor.ui)
 
 add_executable(fairytale ${fairytale_SRCS} ${fairytale_UI_HEADERS})
 target_link_libraries(fairytale Qt5::Core Qt5::Widgets Qt5::Multimedia)

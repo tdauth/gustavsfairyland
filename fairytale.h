@@ -16,6 +16,7 @@ class Player;
 class ClipsDialog;
 class ClipPackageDialog;
 class ClipPackage;
+class ClipPackageEditor;
 
 class fairytale : public QMainWindow, protected Ui::MainWindow
 {
@@ -32,6 +33,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void pauseGame();
 		void openClipsDialog();
+		void openEditor();
 		ClipPackage* selectClipPackage();
 		void about();
 
@@ -76,6 +78,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
+
+		ClipPackageEditor *m_editor;
 
 		QTimer m_timer;
 		long int m_remainingTime;

@@ -16,8 +16,14 @@ class ClipPackage : public QObject
 		ClipPackage(QObject *parent);
 
 		bool loadClipsFromFile(const QString &file);
+		bool saveClipsToFile(const QString &file);
+
+		void clear();
+
+		void addClip(Clip *clip);
 
 		const QString& filePath() const;
+		void setName(const QString &name);
 		const QString& name() const;
 		const Clips& clips() const;
 	private:
@@ -26,9 +32,24 @@ class ClipPackage : public QObject
 		Clips m_clips;
 };
 
+inline void ClipPackage::clear()
+{
+	this->m_clips.clear();
+}
+
+inline void ClipPackage::addClip(Clip* clip)
+{
+	this->m_clips.push_back(clip);
+}
+
 inline const QString& ClipPackage::filePath() const
 {
 	return this->m_filePath;
+}
+
+inline void ClipPackage::setName(const QString& name)
+{
+	this->m_name = name;
 }
 
 inline const QString& ClipPackage::name() const
