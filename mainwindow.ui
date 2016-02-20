@@ -23,7 +23,7 @@
          <widget class="QLabel" name="timeLabel">
           <property name="font">
            <font>
-            <pointsize>30</pointsize>
+            <pointsize>24</pointsize>
            </font>
           </property>
           <property name="text">
@@ -35,6 +35,21 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="descriptionLabel">
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_3">
@@ -186,7 +201,7 @@
          <x>0</x>
          <y>0</y>
          <width>859</width>
-         <height>93</height>
+         <height>73</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -288,7 +303,7 @@
   </action>
   <action name="actionEditor">
    <property name="text">
-    <string>Editor</string>
+    <string>&amp;Editor</string>
    </property>
   </action>
  </widget>

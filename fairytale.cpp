@@ -228,6 +228,7 @@ void fairytale::gameOver()
 void fairytale::nextTurn()
 {
 	this->timeLabel->setText(tr("Time"));
+	this->descriptionLabel->setText("");
 
 	this->clear();
 
@@ -246,27 +247,7 @@ void fairytale::nextTurn()
 
 			qDebug() << "Complete size " << m_clips.size();
 
-			QString description;
-
-			if (this->m_currentSolution->isPerson())
-			{
-				if (m_turns == 0)
-				{
-					description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
-				}
-				else if (m_turns == 1)
-				{
-					description = tr("and <b>%1</b>").arg(this->m_currentSolution->description());
-				}
-				else
-				{
-					description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(this->m_currentSolution->description());
-				}
-			}
-			else
-			{
-				description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
-			}
+			const QString description = this->description(this->m_turns);
 
 			this->m_turns++;
 
@@ -335,6 +316,8 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			this->m_player->mediaPlayer()->stop();
 			this->m_remainingTime = 1000 * (this->m_clips.size() + 1);
 			this->updateTimeLabel();
+			// the description label helps to remember
+			this->descriptionLabel->setText(this->description(this->m_turns - 1));
 
 			for (int i = 0; i < this->m_currentClips.size(); ++i)
 			{
@@ -461,6 +444,33 @@ void fairytale::selectRandomSolution()
 	Clip *solution = this->m_currentClips[index];
 	this->m_currentSolution = solution;
 	this->m_clips.removeAll(solution); // solution is done forever
+}
+
+QString fairytale::description(int turn)
+{
+	QString description;
+
+	if (this->m_currentSolution->isPerson())
+	{
+		if (turn == 0)
+		{
+			description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+		}
+		else if (turn == 1)
+		{
+			description = tr("and <b>%1</b>").arg(this->m_currentSolution->description());
+		}
+		else
+		{
+			description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(this->m_currentSolution->description());
+		}
+	}
+	else
+	{
+		description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+	}
+
+	return description;
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl& url) const

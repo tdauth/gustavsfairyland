@@ -66,6 +66,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void addCurrentSolution();
 		void fillCurrentClips();
 		void selectRandomSolution();
+		QString description(int turn);
 
 
 		QUrl m_clipsDir;
