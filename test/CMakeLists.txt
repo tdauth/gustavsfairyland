@@ -1,4 +1,6 @@
-find_package(Qt5Core)
+find_package(Qt5Test)
 
-add_executable(clip clip.cpp)
-add_test(NAME Clip COMMAND clip)
+add_executable(cliptest cliptest.cpp)
+target_link_libraries(cliptest Qt5::Core Qt5::Test fairytalelib)
+add_test(NAME ClipTest COMMAND cliptest)
+configure_file(clips.xml clips.xml COPYONLY)

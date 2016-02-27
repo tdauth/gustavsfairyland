@@ -16,7 +16,7 @@ class ClipPackage : public QObject
 	public:
 		typedef QList<Clip*> Clips;
 
-		ClipPackage(QObject *parent);
+		ClipPackage(QObject *parent = nullptr);
 
 		bool loadClipsFromArchive(const QString &file);
 		bool saveClipsToArchive(const QString &file);

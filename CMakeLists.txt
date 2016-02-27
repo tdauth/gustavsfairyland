@@ -25,7 +25,6 @@ add_subdirectory(ui)
 
 set(fairytale_SRCS
 	fairytale.cpp
-	main.cpp
 	clip.cpp
 	player.cpp
 	iconbutton.cpp
@@ -49,17 +48,20 @@ set(fairytale_UI
 
 qt5_wrap_ui(fairytale_UI_HEADERS ${fairytale_UI})
 
-add_executable(fairytale ${fairytale_SRCS} ${fairytale_UI_HEADERS})
-target_link_libraries(fairytale Qt5::Core Qt5::Widgets Qt5::Multimedia)
+add_library(fairytalelib ${fairytale_SRCS} ${fairytale_UI_HEADERS})
+target_link_libraries(fairytalelib Qt5::Core Qt5::Widgets Qt5::Multimedia)
 if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
-	target_link_libraries(fairytale Qt5::MultimediaWidgets Qt5::Xml)
+	target_link_libraries(fairytalelib Qt5::MultimediaWidgets Qt5::Xml)
 endif ()
+
+add_executable(fairytale main.cpp)
+target_link_libraries(fairytale fairytalelib)
 
 install(TARGETS fairytale RUNTIME DESTINATION bin)
 
 install(FILES fairytale.desktop DESTINATION share/applications)
 
-#add_subdirectory(test)
+add_subdirectory(test)
 
 #qt5_add_translation( qm_files ts_files ... )
 
