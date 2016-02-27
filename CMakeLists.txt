@@ -3,7 +3,7 @@ project(fairytale)
 
 enable_testing()
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++11 -Wall)
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
@@ -21,9 +21,33 @@ if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
 	find_package(Qt5Xml)
 endif ()
 
-set(fairytale_SRCS fairytale.cpp main.cpp clip.cpp player.cpp iconbutton.cpp clipsdialog.cpp clippackage.cpp clippackagedialog.cpp clippackageeditor.cpp clipeditor.cpp)
+add_subdirectory(ui)
 
-qt5_wrap_ui(fairytale_UI_HEADERS mainwindow.ui player.ui clips.ui clippackagedialog.ui clippackageeditor.ui clipeditor.ui)
+set(fairytale_SRCS
+	fairytale.cpp
+	main.cpp
+	clip.cpp
+	player.cpp
+	iconbutton.cpp
+	clipsdialog.cpp
+	clippackage.cpp
+	clippackagedialog.cpp
+	clippackageeditor.cpp
+	clipeditor.cpp
+	customfairytaledialog.cpp
+)
+
+set(fairytale_UI
+	ui/mainwindow.ui
+	ui/player.ui
+	ui/clips.ui
+	ui/clippackagedialog.ui
+	ui/clippackageeditor.ui
+	ui/clipeditor.ui
+	ui/customfairytale.ui
+)
+
+qt5_wrap_ui(fairytale_UI_HEADERS ${fairytale_UI})
 
 add_executable(fairytale ${fairytale_SRCS} ${fairytale_UI_HEADERS})
 target_link_libraries(fairytale Qt5::Core Qt5::Widgets Qt5::Multimedia)

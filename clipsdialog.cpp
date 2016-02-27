@@ -82,7 +82,7 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
 }
 
-void ClipsDialog::fill(const fairytale::ClipPackages& packages)
+void ClipsDialog::fill(const fairytale::ClipPackages &packages)
 {
 	this->treeWidget->clear();
 
@@ -96,13 +96,35 @@ void ClipsDialog::fill(ClipPackage* package)
 {
 	QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(this->treeWidget);
 	topLevelItem->setText(0, package->name());
-	topLevelItem->setText(1, QString::number(package->clips().size()));
+	topLevelItem->setText(1, QString::number(2));
 	this->treeWidget->addTopLevelItem(topLevelItem);
+
+	QTreeWidgetItem *personsItem = new QTreeWidgetItem(topLevelItem);
+	personsItem->setText(0, tr("Persons"));
+	//topLevelItem->setText(1, QString::number(package->clips().size()));
+	QTreeWidgetItem *actsItem = new QTreeWidgetItem(topLevelItem);
+	actsItem->setText(0, tr("Acts"));
+	//topLevelItem->setText(1, QString::number(package->clips().size()));
+
+	int persons = 0;
+	int acts = 0;
 
 	foreach (Clip *clip, package->clips())
 	{
-		QTreeWidgetItem *clipItem = new QTreeWidgetItem(topLevelItem);
+		QTreeWidgetItem *clipItem = new QTreeWidgetItem(clip->isPerson() ? personsItem : actsItem);
 		clipItem->setText(0, clip->description());
 		clipItem->setIcon(0, QIcon(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+
+		if (clip->isPerson())
+		{
+			++persons;
+		}
+		else
+		{
+			++acts;
+		}
 	}
+
+	personsItem->setText(1, QString::number(persons));
+	actsItem->setText(1, QString::number(acts));
 }

@@ -18,6 +18,7 @@
 #include "clippackagedialog.h"
 #include "clippackage.h"
 #include "clippackageeditor.h"
+#include "customfairytaledialog.h"
 
 void fairytale::newGame()
 {
@@ -44,8 +45,11 @@ void fairytale::newGame()
 		qDebug() << "start";
 
 		nextTurn();
-		actionPauseGame->setEnabled(true);
+
+		setGameButtonsEnabled(true);
 	}
+
+	this->m_isRunning = true;
 }
 
 void fairytale::pauseGame()
@@ -92,6 +96,16 @@ void fairytale::pauseGame()
 	}
 }
 
+void fairytale::showCustomFairytale()
+{
+	if (!this->m_paused)
+	{
+		pauseGame();
+	}
+
+	this->customFairytaleDialog()->show();
+}
+
 void fairytale::openClipsDialog()
 {
 	if (this->m_clipsDialog == nullptr)
@@ -130,7 +144,7 @@ ClipPackage* fairytale::selectClipPackage()
 	return nullptr;
 }
 
-fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr), m_editor(nullptr)
+fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_isRunning(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr), m_editor(nullptr), m_customFairytaleDialog(nullptr)
 {
 	this->m_player->hide();
 
@@ -151,13 +165,13 @@ fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_cur
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
+	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
-	connect(this->playFinalVideoPushButton, SIGNAL(clicked()), this, SLOT(playFinalVideo()));
 
 	QSettings settings("fairytale");
 	const int size = settings.beginReadArray("clipPackages");
@@ -221,16 +235,19 @@ void fairytale::about()
 
 void fairytale::gameOver()
 {
-	this->clear();
+	this->clearAll();
+	this->setGameButtonsEnabled(false);
+	this->timeLabel->setText(tr("Time"));
+	this->descriptionLabel->setText("");
 	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
 }
 
 void fairytale::nextTurn()
 {
-	this->timeLabel->setText(tr("Time"));
+	this->timeLabel->setText(tr(""));
 	this->descriptionLabel->setText("");
 
-	this->clear();
+	this->clearClipButtons();
 
 	if (!this->m_clips.empty())
 	{
@@ -258,18 +275,20 @@ void fairytale::nextTurn()
 		}
 		else
 		{
+			this->m_isRunning = false;
 			QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
-			this->playFinalVideoPushButton->setEnabled(true);
+			this->customFairytaleDialog()->show();
 		}
 	}
 	else
 	{
+		this->m_isRunning = false;
 		QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
-		this->playFinalVideoPushButton->setEnabled(true);
+		this->customFairytaleDialog()->show();
 	}
 }
 
-void fairytale::clear()
+void fairytale::clearClipButtons()
 {
 	for (int i = 0; i < this->m_currentClips.size(); ++i)
 	{
@@ -279,13 +298,10 @@ void fairytale::clear()
 
 	this->m_currentClips.clear();
 	this->m_currentSolution = 0;
-	actionPauseGame->setEnabled(false);
 }
 
 void fairytale::clearSolution()
 {
-	this->playFinalVideoPushButton->setEnabled(false);
-	this->m_playCompleteSolution = false;
 	this->m_completeSolutionIndex = 0;
 	this->m_completeSolution.clear();
 
@@ -295,6 +311,7 @@ void fairytale::clearSolution()
 	}
 
 	this->m_completeSolutionButtons.clear();
+	this->customFairytaleDialog()->clear();
 }
 
 void fairytale::clearClips()
@@ -305,6 +322,19 @@ void fairytale::clearClips()
 	}
 
 	this->m_clips.clear();
+}
+
+void fairytale::clearAll()
+{
+	clearClipButtons();
+	clearSolution();
+	clearClips();
+}
+
+void fairytale::setGameButtonsEnabled(bool enabled)
+{
+	actionPauseGame->setEnabled(enabled);
+	actionShowCustomFairytale->setEnabled(enabled);
 }
 
 void fairytale::finishNarrator(QMediaPlayer::State state)
@@ -330,6 +360,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 		}
 		else if (this->m_playCompleteSolution && !this->m_player->skipped() && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 		{
+			qDebug() << "Play next final clip";
 			this->playFinalClip(this->m_completeSolutionIndex + 1);
 		}
 		/*
@@ -337,9 +368,10 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 		 */
 		else if (this->m_playCompleteSolution)
 		{
+			qDebug() << "Finished final clips";
 			this->m_playCompleteSolution = false;
 			this->m_completeSolutionIndex = 0;
-			QMessageBox::information(this, tr("Finish"), tr("Finish"));
+			//QMessageBox::information(this, tr("Finish"), tr("Finish"));
 		}
 	}
 }
@@ -387,13 +419,8 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	QPushButton *button = new IconButton(this);
-	this->scrollAreaWidgetContents->layout()->addWidget(button);
-	this->m_completeSolutionButtons.push_back(button);
+	this->customFairytaleDialog()->addClip(this->m_currentSolution);
 	this->m_completeSolution.push_back(this->m_currentSolution);
-	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	button->setIcon(QIcon(this->m_currentSolution->imageUrl().toLocalFile()));
-	button->setEnabled(false);
 }
 
 void fairytale::fillCurrentClips()
@@ -484,6 +511,16 @@ QUrl fairytale::resolveClipUrl(const QUrl& url) const
 	result.setUrl(this->m_clipsDir.url() + "/" + url.url());
 
 	return result;
+}
+
+CustomFairytaleDialog* fairytale::customFairytaleDialog()
+{
+	if (this->m_customFairytaleDialog == nullptr)
+	{
+		this->m_customFairytaleDialog = new CustomFairytaleDialog(this, this);
+	}
+
+	return this->m_customFairytaleDialog;
 }
 
 #include "fairytale.moc"

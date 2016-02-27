@@ -6,6 +6,9 @@
 
 class Clip;
 
+/**
+ * \brief Clip packages contain one or several clips and can be packaged into an archive file or simply stored as XML file.
+ */
 class ClipPackage : public QObject
 {
 	Q_OBJECT
@@ -15,9 +18,15 @@ class ClipPackage : public QObject
 
 		ClipPackage(QObject *parent);
 
+		bool loadClipsFromArchive(const QString &file);
+		bool saveClipsToArchive(const QString &file);
+
 		bool loadClipsFromFile(const QString &file);
 		bool saveClipsToFile(const QString &file);
 
+		/**
+		 * Clears all clips from the package.
+		 */
 		void clear();
 
 		void addClip(Clip *clip);

@@ -1,4 +1,4 @@
-- Pause-Funktion
+- DONE: Pause-Funktion
 - Endvideo überspringbar machen
 - Musik während Auswahl
 - untere Anzeigen fixen
@@ -7,8 +7,9 @@
 - Zufällige Tastenkürzel für Karten
 - Spielmodus: Erzähler mehrere Clips, merken, dann auswählen
 - Clips werden erst freigeschaltet, je nach spielerischer Leistung
-- Erzähler kleiner
+- DONE: Erzähler kleiner
 
+DONE:
 - Hauptfigur am Anfang bestimmt
 - in jedem Zug eine Person treffen "und er traf"
 - in jedem Zug eine Handlung (unabhängig von den Personen)

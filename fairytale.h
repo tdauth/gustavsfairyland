@@ -17,21 +17,47 @@ class ClipsDialog;
 class ClipPackageDialog;
 class ClipPackage;
 class ClipPackageEditor;
+class CustomFairytaleDialog;
 
 class fairytale : public QMainWindow, protected Ui::MainWindow
 {
 	Q_OBJECT
 
 	public slots:
+		/**
+		 * Starts a new game.
+		 * First shows a dialog to select the clip package which should be played.
+		 * After that the game begins.
+		 */
 		void newGame();
+		/**
+		 * Changes to the next turn.
+		 * In every turn a narrator video is played which can be skipped and then the player has to select a clip in a specified time.
+		 */
 		void nextTurn();
-		void clear();
+
+		/**
+		 * Clears all clip buttons.
+		 */
+		void clearClipButtons();
 		void clearSolution();
 		void clearClips();
+
+		/**
+		 * Clears clip buttons, solution buttons and clips as well as stored solution clips etc.
+		 */
+		void clearAll();
+
+		/**
+		 * Enables or disables menu actions and buttons which are only enabled during a game.
+		 * \param enabled If this value is true the buttons and actions will be enabled. Otherwise they will be disabled.
+		 */
+		void setGameButtonsEnabled(bool enabled);
 
 		void playFinalVideo();
 
 		void pauseGame();
+		void showCustomFairytale();
 		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
@@ -54,6 +80,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QUrl resolveClipUrl(const QUrl &url) const;
 
 		QUrl clipsDir() const;
+
+		CustomFairytaleDialog* customFairytaleDialog();
+
+		bool isPaused() const;
+		bool isRunning() const;
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
@@ -82,6 +113,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		ClipPackageEditor *m_editor;
 
+		/**
+		 * The dialog to play the final custom fairytale of the game.
+		 */
+		CustomFairytaleDialog *m_customFairytaleDialog;
+
 		QTimer m_timer;
 		long int m_remainingTime;
 
@@ -101,6 +137,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool m_playCompleteSolution;
 
 		bool m_paused;
+		bool m_isRunning;
 };
 
 inline void fairytale::addClipPackage(ClipPackage* package)
@@ -121,6 +158,16 @@ inline const fairytale::ClipPackages& fairytale::clipPackages() const
 inline QUrl fairytale::clipsDir() const
 {
 	return this->m_clipsDir;
+}
+
+inline bool fairytale::isPaused() const
+{
+	return this->m_paused;
+}
+
+inline bool fairytale::isRunning() const
+{
+	return this->m_isRunning;
 }
 
 #endif // fairytale_H
