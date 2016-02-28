@@ -2,6 +2,7 @@
 
 #include "cliptest.h"
 #include "../clippackage.h"
+#include "../clip.h"
 
 QTEST_MAIN(ClipTest);
 
@@ -30,6 +31,31 @@ void ClipTest::testLoadXml()
 	ClipPackage pkg;
 	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
 	QCOMPARE(pkg.clips().size(), 9);
+}
+
+void ClipTest::testSaveLoadXml()
+{
+	ClipPackage pkg;
+	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
+	QCOMPARE(pkg.clips().size(), 9);
+	QVERIFY(pkg.saveClipsToFile("clips2.xml"));
+	pkg.clear();
+	QVERIFY(pkg.loadClipsFromFile("clips2.xml"));
+	QCOMPARE(pkg.clips().size(), 9);
+}
+
+void ClipTest::testSaveLoadArchive()
+{
+	ClipPackage pkg;
+	Clip *clip = new Clip();
+	pkg.addClip(clip);
+
+	QVERIFY(pkg.saveClipsToArchive("clips.pkg"));
+	QVERIFY(QFile::exists("clips.pkg"));
+
+	ClipPackage loaded;
+	QVERIFY(pkg.loadClipsFromArchive("clips.pkg"));
+	QVERIFY(loaded.clips().size() == 1);
 }
 
 #include "cliptest.moc"

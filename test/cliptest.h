@@ -15,6 +15,9 @@ class ClipTest : public QObject
 		void cleanup();
 
 		void testLoadXml();
+		void testSaveLoadXml();
+
+		void testSaveLoadArchive();
 
 };
 

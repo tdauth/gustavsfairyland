@@ -3,8 +3,10 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
+#include <QtCore/QFile>
 
 class Clip;
+struct Block;
 
 /**
  * \brief Clip packages contain one or several clips and can be packaged into an archive file or simply stored as XML file.
@@ -36,6 +38,21 @@ class ClipPackage : public QObject
 		const QString& name() const;
 		const Clips& clips() const;
 	private:
+		struct ArchiveHeader
+		{
+			int32_t version;
+			int32_t blocks;
+		};
+
+		struct Block
+		{
+			char name[256];
+			int32_t offset;
+			int32_t size;
+		};
+
+		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName);
+
 		QString m_filePath;
 		QString m_name;
 		Clips m_clips;
