@@ -54,8 +54,8 @@ void ClipTest::testSaveLoadArchive()
 	QVERIFY(QFile::exists("clips.pkg"));
 
 	ClipPackage loaded;
-	QVERIFY(pkg.loadClipsFromArchive("clips.pkg"));
-	QVERIFY(loaded.clips().size() == 1);
+	QVERIFY(loaded.loadClipsFromArchive("clips.pkg"));
+	QCOMPARE(loaded.clips().size(), 1);
 }
 
 #include "cliptest.moc"

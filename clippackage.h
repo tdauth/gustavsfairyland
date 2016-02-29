@@ -1,6 +1,8 @@
 #ifndef CLIPPACKAGE_H
 #define CLIPPACKAGE_H
 
+#include <cstdint>
+
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QFile>
@@ -38,20 +40,24 @@ class ClipPackage : public QObject
 		const QString& name() const;
 		const Clips& clips() const;
 	private:
+		/**
+		 * Header structure for the archive format which is used for serialization of clip packages.
+		 */
 		struct ArchiveHeader
 		{
-			int32_t version;
-			int32_t blocks;
+			uint64_t version;
+			/// The number of blocks stored in the archive. For each block one instanced of \ref Block is read.
+			uint64_t blocks;
 		};
 
 		struct Block
 		{
 			char name[256];
-			int32_t offset;
-			int32_t size;
+			uint64_t offset;
+			uint64_t size;
 		};
 
-		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName);
+		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter);
 
 		QString m_filePath;
 		QString m_name;

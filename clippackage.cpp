@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdint>
 #include <cassert>
 
 #include <QtCore/QFile>
@@ -34,30 +33,23 @@ bool ClipPackage::loadClipsFromArchive(const QString &file)
 	ArchiveHeader header;
 	f.read((char*)&header, sizeof(header));
 
+	// at the moment only version 0 is supported
 	if (header.version != 0)
 	{
 		return false;
 	}
 
-	typedef QMap<QString, Block> Blocks;
+	// access blocks by their file identifier
+	typedef QMultiMap<QString, Block> Blocks;
 	Blocks blocks;
 
 	std::cerr << "Blocks size " << header.blocks << std::endl;
 
-	for (int32_t i = 0; i < header.blocks; ++i)
+	for (uint64_t i = 0; i < header.blocks; ++i)
 	{
 		Block block;
 		f.read((char*)&block, sizeof(block));
 		const QString name(block.name);
-
-		// without file name it cannot be used
-		if (name.isEmpty())
-		{
-			std::cerr << "Empty block entry." << std::endl;
-
-			return false;
-		}
-
 		blocks.insert(name, block);
 	}
 
@@ -67,7 +59,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file)
 	for (Blocks::iterator iterator = blocks.begin(); iterator != blocks.end(); ++iterator)
 	{
 		QTemporaryFile file;
-		file.setFileName(iterator.key());
+		file.setFileTemplate(iterator.key());
 		std::cerr << "Loading file " << iterator.key().toUtf8().constData() << std::endl;
 		file.setAutoRemove(false);
 
@@ -76,16 +68,23 @@ bool ClipPackage::loadClipsFromArchive(const QString &file)
 			return false;
 		}
 
+		std::cerr << "Writing it into the temporary file: " << file.fileName().toUtf8().constData() << std::endl;
+
 		if (!f.seek(iterator.value().offset))
 		{
 			return false;
 		}
 
-		const int32_t dataSize = iterator.value().size;
-		char data[iterator.value().size];
-		f.read(data, iterator.value().size);
+		const uint64_t dataSize = iterator.value().size;
+		std::cerr << "Reading " << dataSize << " bytes " << std::endl;
+		// TODO create on heap? if stack is too small?
+		char data[dataSize];
+		f.read(data, dataSize);
 
-		file.write(data, dataSize);
+		if (file.write(data, dataSize) == -1)
+		{
+			return false;
+		}
 
 		if (iterator.key() == "clips.xml")
 		{
@@ -117,19 +116,22 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		return false;
 	}
 
-	ArchiveHeader header;
-	header.version = 0;
-	header.blocks = this->clips().size();
-	f.write((const char*)&header, sizeof(header));
+	const qint64 headerStart = 0;
+
+	if (!f.seek(sizeof(ArchiveHeader)))
+	{
+		return false;
+	}
 
 	/*
 	 * The block table starts directly after the header.
 	 */
 	const qint64 blockTableStart = f.pos();
 
+	qint64 blockTableOffset = blockTableStart;
 	// +1 for the block of the clips file
+	// if there is less blocks some bytes will stay unused
 	qint64 offset = (this->clips().size() + 1) * sizeof(Block);
-	qint64 currentPos = offset;
 
 	// skip the block table space and write it later when we have the information about the blocks
 	if (!f.seek(offset))
@@ -137,7 +139,9 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		return false;
 	}
 
-	for (int32_t i = 0; i < this->clips().size(); ++i)
+	uint64_t blocks = 0;
+
+	for (int i = 0; i < this->clips().size(); ++i)
 	{
 		const Clip *clip = this->clips().at(i);
 
@@ -149,7 +153,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		{
 			const QString filePath = clip->imageUrl().toString();
 
-			if (!writeBlock(filePath, f, imageBlock, offset, filePath))
+			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
 				return false;
 			}
@@ -163,7 +167,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		{
 			const QString filePath = clip->narratorVideoUrl().toString();
 
-			if (!writeBlock(filePath, f, narratorBlock, offset, filePath))
+			if (!writeBlock(filePath, f, narratorBlock, offset, filePath, blocks))
 			{
 				return false;
 			}
@@ -177,36 +181,46 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		{
 			const QString filePath = clip->videoUrl().toString();
 
-			if (!writeBlock(filePath, f, videoBlock, offset, filePath))
+			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{
 				return false;
 			}
 		}
 
-		// now write all blocks to the block table and jump back to offset
-		currentPos = f.pos();
-
-		if (!f.seek(blockTableStart + sizeof(Block) * i))
+		if (!f.seek(blockTableOffset))
 		{
 			return false;
 		}
 
 		if (imageBlockExists)
 		{
-			f.write((const char*)&imageBlock, sizeof(imageBlock));
+			if (f.write((const char*)&imageBlock, sizeof(imageBlock)) == -1)
+			{
+				return false;
+			}
 		}
 
 		if (narratorBlockExists)
 		{
-			f.write((const char*)&narratorBlock, sizeof(narratorBlock));
+			if (f.write((const char*)&narratorBlock, sizeof(narratorBlock)) == -1)
+			{
+				return false;
+			}
 		}
 
 		if (videoBlockExists)
 		{
-			f.write((const char*)&videoBlock, sizeof(videoBlock));
+			if (f.write((const char*)&videoBlock, sizeof(videoBlock)) == -1)
+			{
+				return false;
+			}
 		}
 
-		if (!f.seek(currentPos))
+		// store current block table offset for later use
+		blockTableOffset = f.pos();
+
+		// jump back to the data stream
+		if (!f.seek(offset))
 		{
 			return false;
 		}
@@ -232,20 +246,38 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	std::cerr << "Clips tmp file: " << clipsFile.fileName().toUtf8().constData() << std::endl;
 
-	if (!writeBlock(clipsFile.fileName(), f, clipsBlock, offset, "clips.xml"))
+	if (!writeBlock(clipsFile.fileName(), f, clipsBlock, offset, "clips.xml", blocks))
 	{
 		return false;
 	}
 
-	if (!f.seek(blockTableStart + sizeof(Block) * this->clips().size()))
+	if (!f.seek(blockTableOffset))
 	{
 		return false;
 	}
 
-	f.write((const char*)&clipsBlock, sizeof(clipsBlock));
+	if (f.write((const char*)&clipsBlock, sizeof(clipsBlock)) == -1)
+	{
+		return false;
+	}
+
 	std::cerr << "Size of clips block " << sizeof(clipsBlock) << std::endl;
 
-	if (!f.seek(currentPos))
+	ArchiveHeader header;
+	header.version = 0;
+	header.blocks = blocks;
+
+	if (!f.seek(headerStart))
+	{
+		return false;
+	}
+
+	if (f.write((const char*)&header, sizeof(header)) == -1)
+	{
+		return false;
+	}
+
+	if (!f.seek(offset))
 	{
 		return false;
 	}
@@ -390,7 +422,7 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 	return true;
 }
 
-bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, qint64 &offset, const QString &blockFileName)
+bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter)
 {
 	// write image file
 	QFile imageFile(filePath);
@@ -404,6 +436,7 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 	out.write(imageFileData);
 	block.offset = offset;
 	block.size = out.pos() - offset;
+	std::cerr << "Block size " << block.size << std::endl;
 	// TODO limit block name to 256!
 	memset(block.name, 0, 256);
 	const std::size_t filePathSize = std::min((std::size_t)255, strlen(blockFileName.toUtf8().constData()) + 1);
@@ -420,6 +453,7 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 	std::cerr << "Block name: " << block.name << std::endl;
 
 	offset += block.size;
+	blocksCounter += 1;
 
 	return true;
 }
