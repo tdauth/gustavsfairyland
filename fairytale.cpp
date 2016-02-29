@@ -214,7 +214,7 @@ void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
-	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl(), this->m_completeSolution[index]->description());
+	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl(), this->description(index, this->m_completeSolution[index]));
 }
 
 void fairytale::playFinalVideo()
@@ -249,6 +249,8 @@ void fairytale::nextTurn()
 
 	this->clearClipButtons();
 
+	bool won = false;
+
 	if (!this->m_clips.empty())
 	{
 		this->fillCurrentClips();
@@ -264,7 +266,7 @@ void fairytale::nextTurn()
 
 			qDebug() << "Complete size " << m_clips.size();
 
-			const QString description = this->description(this->m_turns);
+			const QString description = this->description(this->m_turns, this->m_currentSolution);
 
 			this->m_turns++;
 
@@ -275,16 +277,24 @@ void fairytale::nextTurn()
 		}
 		else
 		{
-			this->m_isRunning = false;
-			QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
-			this->customFairytaleDialog()->show();
+			won = true;
 		}
 	}
 	else
 	{
+		won = true;
+	}
+
+	if (won)
+	{
 		this->m_isRunning = false;
 		QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
-		this->customFairytaleDialog()->show();
+
+		if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
+		{
+			this->clearAll();
+			this->setGameButtonsEnabled(false);
+		}
 	}
 }
 
@@ -347,7 +357,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			this->m_remainingTime = 1000 * (this->m_clips.size() + 1);
 			this->updateTimeLabel();
 			// the description label helps to remember
-			this->descriptionLabel->setText(this->description(this->m_turns - 1));
+			this->descriptionLabel->setText(this->description(this->m_turns - 1, this->m_currentSolution));
 
 			for (int i = 0; i < this->m_currentClips.size(); ++i)
 			{
@@ -358,7 +368,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			// run every second
 			this->m_timer.start(1000);
 		}
-		else if (this->m_playCompleteSolution && !this->m_player->skipped() && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 		{
 			qDebug() << "Play next final clip";
 			this->playFinalClip(this->m_completeSolutionIndex + 1);
@@ -473,28 +483,28 @@ void fairytale::selectRandomSolution()
 	this->m_clips.removeAll(solution); // solution is done forever
 }
 
-QString fairytale::description(int turn)
+QString fairytale::description(int turn, Clip *clip)
 {
 	QString description;
 
-	if (this->m_currentSolution->isPerson())
+	if (clip->isPerson())
 	{
 		if (turn == 0)
 		{
-			description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+			description = tr("<b>%1</b>").arg(clip->description());
 		}
 		else if (turn == 1)
 		{
-			description = tr("and <b>%1</b>").arg(this->m_currentSolution->description());
+			description = tr("and <b>%1</b>").arg(clip->description());
 		}
 		else
 		{
-			description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(this->m_currentSolution->description());
+			description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
 		}
 	}
 	else
 	{
-		description = tr("<b>%1</b>").arg(this->m_currentSolution->description());
+		description = tr("<b>%1</b>").arg(clip->description());
 	}
 
 	return description;

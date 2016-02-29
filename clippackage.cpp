@@ -9,6 +9,7 @@
 
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
+#include <QtCore/qdir.h>
 
 #include "clippackage.h"
 #include "clip.h"
@@ -19,7 +20,65 @@ ClipPackage::ClipPackage(QObject *parent) : QObject(parent)
 {
 }
 
-bool ClipPackage::loadClipsFromArchive(const QString &file)
+ClipPackage::~ClipPackage()
+{
+	this->clear();
+}
+
+bool ClipPackage::loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir)
+{
+	QFile f(file);
+
+	if (!f.open(QIODevice::ReadOnly))
+	{
+		qDebug() << "Unable to open file" << file;
+
+		return false;
+	}
+
+	QTemporaryFile tmpOut;
+	tmpOut.setFileTemplate(f.fileName());
+
+	if (!tmpOut.open())
+	{
+		return false;
+	}
+
+	tmpOut.write(qUncompress(f.readAll()));
+	f.close();
+
+	return loadClipsFromArchive(tmpOut.fileName(), clipsDir);
+}
+
+bool ClipPackage::saveClipsToCompressedArchive(const QString &file)
+{
+	QFile f(file);
+
+	if (!f.open(QIODevice::WriteOnly))
+	{
+		qDebug() << "Unable to open file" << file;
+
+		return false;
+	}
+
+	QTemporaryFile tmpOut;
+	tmpOut.setFileTemplate(f.fileName());
+
+	if (!tmpOut.open())
+	{
+		return false;
+	}
+
+	if (!saveClipsToArchive(tmpOut.fileName()))
+	{
+		return false;
+	}
+
+	return (f.write(qCompress(tmpOut.readAll())) != -1);
+}
+
+
+bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clipsDir)
 {
 	QFile f(file);
 
@@ -53,17 +112,37 @@ bool ClipPackage::loadClipsFromArchive(const QString &file)
 		blocks.insert(name, block);
 	}
 
+	// write all clip files into sub dir with the name of the package
+	QDir dir(clipsDir);
+
+	if (!dir.exists())
+	{
+		return false;
+	}
+
+	QFileInfo fileInfo(file);
+
+	if (!dir.mkdir(fileInfo.baseName()))
+	{
+		return false;
+	}
+
+	dir = dir.filePath(fileInfo.baseName());
+
+	if (!dir.exists())
+	{
+		return false;
+	}
+
 	QString clipsFilePath;
 
-	// write all blocks into temporary files with file paths
+	// write all blocks into permanent files with file paths that they can be accessed
 	for (Blocks::iterator iterator = blocks.begin(); iterator != blocks.end(); ++iterator)
 	{
-		QTemporaryFile file;
-		file.setFileTemplate(iterator.key());
+		QFile file(dir.filePath(iterator.key()));
 		std::cerr << "Loading file " << iterator.key().toUtf8().constData() << std::endl;
-		file.setAutoRemove(false);
 
-		if (!file.open())
+		if (!file.open(QIODevice::WriteOnly))
 		{
 			return false;
 		}
@@ -102,7 +181,19 @@ bool ClipPackage::loadClipsFromArchive(const QString &file)
 	}
 
 	// TODO remove temporary files sometime or use permanent files in the clips dir
-	return loadClipsFromFile(clipsFilePath);
+	if (!loadClipsFromFile(clipsFilePath))
+	{
+		return false;
+	}
+
+	if (!this->removeDir())
+	{
+		return false;
+	}
+
+	m_dir = dir.absolutePath();
+
+	return true;
 }
 
 bool ClipPackage::saveClipsToArchive(const QString &file)
@@ -454,6 +545,21 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 
 	offset += block.size;
 	blocksCounter += 1;
+
+	return true;
+}
+
+bool ClipPackage::removeDir()
+{
+	if (!this->m_dir.isEmpty())
+	{
+		QDir dir(this->m_dir);
+
+		if (dir.exists())
+		{
+			return dir.removeRecursively();
+		}
+	}
 
 	return true;
 }

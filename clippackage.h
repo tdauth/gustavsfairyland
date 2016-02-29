@@ -21,8 +21,12 @@ class ClipPackage : public QObject
 		typedef QList<Clip*> Clips;
 
 		ClipPackage(QObject *parent = nullptr);
+		virtual ~ClipPackage();
 
-		bool loadClipsFromArchive(const QString &file);
+		bool loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir);
+		bool saveClipsToCompressedArchive(const QString &file);
+
+		bool loadClipsFromArchive(const QString &file, const QString &clipsDir);
 		bool saveClipsToArchive(const QString &file);
 
 		bool loadClipsFromFile(const QString &file);
@@ -59,6 +63,11 @@ class ClipPackage : public QObject
 
 		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter);
 
+		bool removeDir();
+
+		/// Directory with all extracted clip files
+		QString m_dir;
+		/// File path to the clips.xml file
 		QString m_filePath;
 		QString m_name;
 		Clips m_clips;
@@ -67,6 +76,7 @@ class ClipPackage : public QObject
 inline void ClipPackage::clear()
 {
 	this->m_clips.clear();
+	this->removeDir();
 }
 
 inline void ClipPackage::addClip(Clip* clip)

@@ -19,6 +19,8 @@ class ClipTest : public QObject
 
 		void testSaveLoadArchive();
 
+		void testSaveLoadCompressedArchive();
+
 };
 
 #endif // CLIPTEST_H

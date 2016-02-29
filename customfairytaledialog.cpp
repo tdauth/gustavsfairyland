@@ -22,7 +22,7 @@ CustomFairytaleDialog::CustomFairytaleDialog(fairytale* app, QWidget* parent) : 
 	this->setModal(true);
 
 	connect(this->playFinalVideoPushButton, &QPushButton::clicked, m_app, &fairytale::playFinalVideo);
-	connect(this->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &CustomFairytaleDialog::close);
+	connect(this->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &CustomFairytaleDialog::reject);
 }
 
 void CustomFairytaleDialog::clear()

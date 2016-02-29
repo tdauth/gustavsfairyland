@@ -54,7 +54,21 @@ void ClipTest::testSaveLoadArchive()
 	QVERIFY(QFile::exists("clips.pkg"));
 
 	ClipPackage loaded;
-	QVERIFY(loaded.loadClipsFromArchive("clips.pkg"));
+	QVERIFY(loaded.loadClipsFromArchive("clips.pkg", QDir::currentPath()));
+	QCOMPARE(loaded.clips().size(), 1);
+}
+
+void ClipTest::testSaveLoadCompressedArchive()
+{
+	ClipPackage pkg;
+	Clip *clip = new Clip();
+	pkg.addClip(clip);
+
+	QVERIFY(pkg.saveClipsToCompressedArchive("clips.pkgc"));
+	QVERIFY(QFile::exists("clips.pkgc"));
+
+	ClipPackage loaded;
+	QVERIFY(loaded.loadClipsFromCompressedArchive("clips.pkgc", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 }
 
