@@ -44,7 +44,10 @@ bool ClipPackage::loadClipsFromCompressedArchive(const QString &file, const QStr
 		return false;
 	}
 
-	tmpOut.write(qUncompress(f.readAll()));
+	const QByteArray fileContent = f.readAll();
+	const QByteArray decompressedFileContent = qUncompress(fileContent);
+	tmpOut.write(decompressedFileContent);
+	tmpOut.flush(); // write everything into the file for reading, this line is important since we dont close the temporary file before reading from it
 	f.close();
 
 	return loadClipsFromArchive(tmpOut.fileName(), clipsDir);
@@ -74,7 +77,12 @@ bool ClipPackage::saveClipsToCompressedArchive(const QString &file)
 		return false;
 	}
 
-	return (f.write(qCompress(tmpOut.readAll())) != -1);
+	// dont buffer anything
+	tmpOut.flush();
+	const QByteArray fileContent = tmpOut.readAll();
+	const QByteArray compressedFileContent = qCompress(fileContent, 9);
+
+	return (f.write(compressedFileContent) != -1);
 }
 
 

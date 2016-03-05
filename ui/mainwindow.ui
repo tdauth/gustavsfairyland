@@ -27,7 +27,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Time</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

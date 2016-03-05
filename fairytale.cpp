@@ -237,7 +237,7 @@ void fairytale::gameOver()
 {
 	this->clearAll();
 	this->setGameButtonsEnabled(false);
-	this->timeLabel->setText(tr("Time"));
+	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");
 	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
 }
