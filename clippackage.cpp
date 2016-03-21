@@ -118,6 +118,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 		f.read((char*)&block, sizeof(block));
 		const QString name(block.name);
 		blocks.insert(name, block);
+		std::cerr << "Got block " << name.toStdString() << std::endl;
 	}
 
 	// write all clip files into sub dir with the name of the package
@@ -157,20 +158,31 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 		std::cerr << "Writing it into the temporary file: " << file.fileName().toUtf8().constData() << std::endl;
 
-		if (!f.seek(iterator.value().offset))
+		const uint64_t offset = iterator.value().offset;
+
+		std::cerr << "Reading from offset " << offset << std::endl;
+
+		if (!f.seek(offset))
 		{
 			return false;
 		}
 
 		const uint64_t dataSize = iterator.value().size;
 		std::cerr << "Reading " << dataSize << " bytes " << std::endl;
-		// TODO create on heap? if stack is too small?
-		char data[dataSize];
-		f.read(data, dataSize);
-
-		if (file.write(data, dataSize) == -1)
+		// if the block is empty don't read anything
+		if (dataSize > 0)
 		{
-			return false;
+			// TODO create on heap? if stack is too small?
+			char data[dataSize];
+			f.read(data, dataSize);
+
+			std::cerr << "Read data: " << data << std::endl;
+
+
+			if (file.write(data, dataSize) == -1)
+			{
+				return false;
+			}
 		}
 
 		if (iterator.key() == "clips.xml")
@@ -187,6 +199,20 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 		return false;
 	}
+
+	std::cerr << "Loading clips from file " << clipsFilePath.toStdString() << std::endl;
+
+	// TEST
+	QFile test(clipsFilePath);
+	if (test.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		const QByteArray all = test.readAll();
+		std::cerr << "This is the content: " << std::endl << all.constData() << std::endl;
+		std::cerr << "Content size: " << all.size() << std::endl;
+		std::cerr << "File size: " << test.size() << std::endl;
+	}
+	test.close();
+	// TEST END
 
 	// TODO remove temporary files sometime or use permanent files in the clips dir
 	if (!loadClipsFromFile(clipsFilePath))
@@ -226,11 +252,12 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 	 * The block table starts directly after the header.
 	 */
 	const qint64 blockTableStart = f.pos();
-
 	qint64 blockTableOffset = blockTableStart;
+
+	// at most 3 blocks per clip
 	// +1 for the block of the clips file
 	// if there is less blocks some bytes will stay unused
-	qint64 offset = (this->clips().size() + 1) * sizeof(Block);
+	qint64 offset = blockTableStart + ((this->clips().size() * 3) + 1) * sizeof(Block);
 
 	// skip the block table space and write it later when we have the information about the blocks
 	if (!f.seek(offset))
@@ -344,6 +371,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 	Block clipsBlock;
 
 	std::cerr << "Clips tmp file: " << clipsFile.fileName().toUtf8().constData() << std::endl;
+	std::cerr << "Clips tmp file size: " << clipsFile.size() << std::endl;
 
 	if (!writeBlock(clipsFile.fileName(), f, clipsBlock, offset, "clips.xml", blocks))
 	{
@@ -359,6 +387,8 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 	{
 		return false;
 	}
+
+	blockTableOffset = f.pos();
 
 	std::cerr << "Size of clips block " << sizeof(clipsBlock) << std::endl;
 
@@ -531,10 +561,15 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 		return false;
 	}
 
+	assert(out.pos() == offset);
+
 	const QByteArray imageFileData = imageFile.readAll();
+	std::cerr << "Read content: " << imageFileData.constData() << std::endl;
+	std::cerr << "Writing at pos: " << out.pos() << std::endl;
 	out.write(imageFileData);
 	block.offset = offset;
 	block.size = out.pos() - offset;
+	std::cerr << "Block offset " << block.offset << std::endl;
 	std::cerr << "Block size " << block.size << std::endl;
 	// TODO limit block name to 256!
 	memset(block.name, 0, 256);
