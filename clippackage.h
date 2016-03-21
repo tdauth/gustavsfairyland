@@ -12,16 +12,27 @@ struct Block;
 
 /**
  * \brief Clip packages contain one or several clips and can be packaged into an archive file or simply stored as XML file.
+ *
+ * Packages of clips contain the clip information (meta data) as well as the clip file itself (data).
+ * They can be compressed as well to reduce the file space.
+ *
+ * Besides they can be encrypted to prevent users from opening it.
  */
 class ClipPackage : public QObject
 {
 	Q_OBJECT
 
 	public:
+		/**
+		 * \brief A list of clips which every package stores.
+		 */
 		typedef QList<Clip*> Clips;
 
 		ClipPackage(QObject *parent = nullptr);
 		virtual ~ClipPackage();
+
+		bool loadClipsFromEncryptedCompressedArchive(const QString &file, const QString &clipsDir);
+		bool saveClipsToEncryptedCompressedArchive(const QString &file);
 
 		bool loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir);
 		bool saveClipsToCompressedArchive(const QString &file);
@@ -54,16 +65,25 @@ class ClipPackage : public QObject
 			uint64_t blocks;
 		};
 
+		/**
+		 * Block structure. Each block is stored with this structure in the block table.
+		 */
 		struct Block
 		{
+			/// The file name of the block data.
 			char name[256];
+			/// The absolute offset of the block in the package file.
 			uint64_t offset;
+			/// The size of the block starting from the block's offset.
 			uint64_t size;
 		};
 
 		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter);
 
 		bool removeDir();
+
+		static QByteArray encryptData(const QByteArray &data);
+		static QByteArray decryptData(const QByteArray &data);
 
 		/// Directory with all extracted clip files
 		QString m_dir;

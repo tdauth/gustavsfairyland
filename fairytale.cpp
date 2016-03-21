@@ -121,7 +121,7 @@ void fairytale::openEditor()
 {
 	if (this->m_editor == nullptr)
 	{
-		this->m_editor = new ClipPackageEditor(this);
+		this->m_editor = new ClipPackageEditor(this, this);
 	}
 
 	this->m_editor->show();

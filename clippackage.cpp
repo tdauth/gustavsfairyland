@@ -25,6 +25,66 @@ ClipPackage::~ClipPackage()
 	this->clear();
 }
 
+bool ClipPackage::loadClipsFromEncryptedCompressedArchive(const QString &file, const QString &clipsDir)
+{
+	QFile f(file);
+
+	if (!f.open(QIODevice::ReadOnly))
+	{
+		qDebug() << "Unable to open file" << file;
+
+		return false;
+	}
+
+	QTemporaryFile tmpOut;
+	tmpOut.setFileTemplate(f.fileName());
+
+	if (!tmpOut.open())
+	{
+		return false;
+	}
+
+	const QByteArray fileContent = f.readAll();
+	const QByteArray decryptedFileContent = decryptData(fileContent);
+	tmpOut.write(decryptedFileContent);
+	tmpOut.flush(); // write everything into the file for reading, this line is important since we dont close the temporary file before reading from it
+	f.close();
+
+	return loadClipsFromCompressedArchive(tmpOut.fileName(), clipsDir);
+}
+
+bool ClipPackage::saveClipsToEncryptedCompressedArchive(const QString &file)
+{
+	QFile f(file);
+
+	if (!f.open(QIODevice::WriteOnly))
+	{
+		qDebug() << "Unable to open file" << file;
+
+		return false;
+	}
+
+	QTemporaryFile tmpOut;
+	tmpOut.setFileTemplate(f.fileName());
+
+	if (!tmpOut.open())
+	{
+		return false;
+	}
+
+	if (!saveClipsToCompressedArchive(tmpOut.fileName()))
+	{
+		return false;
+	}
+
+	// dont buffer anything
+	tmpOut.flush();
+	const QByteArray fileContent = tmpOut.readAll();
+	const QByteArray encryptedFileContent = encryptData(fileContent);
+
+	return (f.write(encryptedFileContent) != -1);
+}
+
 bool ClipPackage::loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir)
 {
 	QFile f(file);
@@ -570,3 +630,31 @@ bool ClipPackage::removeDir()
 
 	return true;
 }
+
+// TODO improve encryption, do real encryption
+static const uint64_t encryptionValue = 0xAA;
+
+QByteArray ClipPackage::encryptData(const QByteArray& data)
+{
+	QByteArray result(data);
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		result[i] = data[i] - encryptionValue;
+	}
+
+	return result;
+}
+
+QByteArray ClipPackage::decryptData(const QByteArray& data)
+{
+	QByteArray result(data);
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		result[i] = data[i] + encryptionValue;
+	}
+
+	return result;
+}
+

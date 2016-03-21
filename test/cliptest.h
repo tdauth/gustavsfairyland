@@ -23,6 +23,8 @@ class ClipTest : public QObject
 
 		void testSaveLoadCompressedArchive();
 
+		void testSaveLoadEncryptedCompressedArchive();
+
 };
 
 #endif // CLIPTEST_H

@@ -93,13 +93,18 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	QFile videoFile("video.mp4");
 	QFile narratorFile("narrator.mp4");
 
+	const QByteArray testContent("test");
+
 	QVERIFY(imageFile.open(QIODevice::WriteOnly));
+	imageFile.write(testContent);
 	imageFile.close();
 
 	QVERIFY(videoFile.open(QIODevice::WriteOnly));
+	videoFile.write(testContent);
 	videoFile.close();
 
 	QVERIFY(narratorFile.open(QIODevice::WriteOnly));
+	narratorFile.write(testContent);
 	narratorFile.close();
 
 	QVERIFY(imageFile.exists());
@@ -118,11 +123,25 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	QVERIFY(loaded.loadClipsFromArchive("clips.pkg", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 	clip = loaded.clips().at(0);
+
 	// check if the loading extracted the corresponding files
 	// since they all have the size 0 they wont exist
-	QVERIFY(!QFile::exists("image.jpg"));
-	QVERIFY(!QFile::exists("video.mp4"));
-	QVERIFY(!QFile::exists("narrator.mp4"));
+	const QDir extractDir = QDir("clips");
+
+	QFile loadedImageFile(extractDir.filePath("image.jpg"));
+	QVERIFY(loadedImageFile.open(QIODevice::ReadOnly));
+	QByteArray content = loadedImageFile.readAll();
+	QCOMPARE(content, testContent);
+
+	QFile loadedVideoFile(extractDir.filePath("video.mp4"));
+	QVERIFY(loadedVideoFile.open(QIODevice::ReadOnly));
+	content = loadedVideoFile.readAll();
+	QCOMPARE(content, testContent);
+
+	QFile loadedNarratorFile(extractDir.filePath("narrator.mp4"));
+	QVERIFY(loadedNarratorFile.open(QIODevice::ReadOnly));
+	content = loadedNarratorFile.readAll();
+	QCOMPARE(content, testContent);
 
 	QCOMPARE(clip->imageUrl().toString().toUtf8().constData(), "image.jpg");
 	QCOMPARE(clip->videoUrl().toString().toUtf8().constData(), "video.mp4");
@@ -142,6 +161,20 @@ void ClipTest::testSaveLoadCompressedArchive()
 
 	ClipPackage loaded;
 	QVERIFY(loaded.loadClipsFromCompressedArchive("clips.pkgc", QDir::currentPath()));
+	QCOMPARE(loaded.clips().size(), 1);
+}
+
+void ClipTest::testSaveLoadEncryptedCompressedArchive()
+{
+	ClipPackage pkg;
+	Clip *clip = new Clip();
+	pkg.addClip(clip);
+
+	QVERIFY(pkg.saveClipsToEncryptedCompressedArchive("clips.pkgce"));
+	QVERIFY(QFile::exists("clips.pkgc"));
+
+	ClipPackage loaded;
+	QVERIFY(loaded.loadClipsFromEncryptedCompressedArchive("clips.pkgce", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 }
 
