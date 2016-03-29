@@ -32,7 +32,7 @@ void ClipPackageEditor::addClip()
 
 void ClipPackageEditor::loadPackage()
 {
-	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), QString(),  tr("Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), QString(), tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
 
 	if (!fileName.isEmpty())
 	{
@@ -56,7 +56,7 @@ void ClipPackageEditor::loadPackage()
 
 void ClipPackageEditor::saveAs()
 {
-	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), QString(),  tr("Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), QString(), tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
 
 	if (!fileName.isEmpty())
 	{

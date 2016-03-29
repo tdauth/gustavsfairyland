@@ -69,11 +69,15 @@ bool ClipPackage::saveClipsToCompressedArchive(const QString &file)
 
 	if (!tmpOut.open())
 	{
+		qDebug() << "Unable to open temporary file" << tmpOut.fileName();
+
 		return false;
 	}
 
 	if (!saveClipsToArchive(tmpOut.fileName()))
 	{
+		qDebug() << "Unable to save clips to the archive.";
+
 		return false;
 	}
 
@@ -103,6 +107,8 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 	// at the moment only version 0 is supported
 	if (header.version != 0)
 	{
+		qDebug() << "Unknown version:" << header.version;
+
 		return false;
 	}
 
@@ -123,13 +129,18 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!dir.exists())
 	{
+		qDebug() << "Dir does not exist:" << dir;
+
 		return false;
 	}
 
 	QFileInfo fileInfo(file);
 
+	// TODO extract to specified output dir and not to basename. If the file has no extension it is even the same name as the file's name.
 	if (!dir.mkdir(fileInfo.baseName()))
 	{
+		qDebug() << "Dir cannot be created:" << dir;
+
 		return false;
 	}
 
@@ -137,6 +148,8 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!dir.exists())
 	{
+		qDebug() << "Dir does not exist:" << dir;
+
 		return false;
 	}
 
@@ -146,6 +159,8 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 	for (Blocks::iterator iterator = blocks.begin(); iterator != blocks.end(); ++iterator)
 	{
 		QFile file(dir.filePath(iterator.key()));
+
+		qDebug() << "Extracting file" << file.fileName();
 
 		if (!file.open(QIODevice::WriteOnly))
 		{
@@ -220,6 +235,8 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	if (!f.seek(sizeof(ArchiveHeader)))
 	{
+		qDebug() << "Unable to skip the archive header";
+
 		return false;
 	}
 
@@ -252,10 +269,12 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (imageBlockExists)
 		{
-			const QString filePath = clip->imageUrl().toString();
+			const QString filePath = clip->imageUrl().toLocalFile();
 
 			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
+				qDebug() << "Unable to write the image block.";
+
 				return false;
 			}
 		}
@@ -266,10 +285,12 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (narratorBlockExists)
 		{
-			const QString filePath = clip->narratorVideoUrl().toString();
+			const QString filePath = clip->narratorVideoUrl().toLocalFile();
 
 			if (!writeBlock(filePath, f, narratorBlock, offset, filePath, blocks))
 			{
+				qDebug() << "Unable to write the narrator block.";
+
 				return false;
 			}
 		}
@@ -280,16 +301,20 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (videoBlockExists)
 		{
-			const QString filePath = clip->videoUrl().toString();
+			const QString filePath = clip->videoUrl().toLocalFile();
 
 			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{
+				qDebug() << "Unable to write the video block.";
+
 				return false;
 			}
 		}
 
 		if (!f.seek(blockTableOffset))
 		{
+			qDebug() << "Unable to seek to the block table.";
+
 			return false;
 		}
 
@@ -526,8 +551,15 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 	// write image file
 	QFile imageFile(filePath);
 
+	if (!imageFile.exists())
+	{
+		return false;
+	}
+
 	if (!imageFile.open(QIODevice::ReadOnly))
 	{
+		qDebug() << "Cant open file " << filePath;
+
 		return false;
 	}
 

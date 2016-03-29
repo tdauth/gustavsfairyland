@@ -29,6 +29,10 @@ void ClipTest::cleanupTestCase()
 		QFile::remove("clips.pkgc");
 	}
 
+	QFile::remove("image.jpg");
+	QFile::remove("video.mp4");
+	QFile::remove("narrator.mp4");
+
 	QDir clipsDir("clips");
 
 	if (clipsDir.exists())
@@ -82,7 +86,7 @@ void ClipTest::testSaveLoadArchive()
 void ClipTest::testSaveLoadArchiveWithFiles()
 {
 	ClipPackage pkg;
-	Clip *clip = new Clip(QUrl("image.jpg"), QUrl("video.mp4"), QUrl("narrator.mp4"), "test", false);
+	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), QUrl::fromLocalFile("narrator.mp4"), "test", false);
 	pkg.addClip(clip);
 
 	// it is not possible to save an archive without the corresponding referenced files of the clip
@@ -143,9 +147,11 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	content = loadedNarratorFile.readAll();
 	QCOMPARE(content, testContent);
 
-	QCOMPARE(clip->imageUrl().toString().toUtf8().constData(), "image.jpg");
-	QCOMPARE(clip->videoUrl().toString().toUtf8().constData(), "video.mp4");
-	QCOMPARE(clip->narratorVideoUrl().toString().toUtf8().constData(), "narrator.mp4");
+	qDebug() << "Image URL: " << clip->imageUrl().toLocalFile();
+
+	QCOMPARE(clip->imageUrl().toLocalFile().toUtf8().constData(), "image.jpg");
+	QCOMPARE(clip->videoUrl().toLocalFile().toUtf8().constData(), "video.mp4");
+	QCOMPARE(clip->narratorVideoUrl().toLocalFile().toUtf8().constData(), "narrator.mp4");
 	QCOMPARE(clip->description().toUtf8().constData(), "test");
 	QCOMPARE(clip->isPerson(), false);
 }
