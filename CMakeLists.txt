@@ -38,6 +38,7 @@ set(fairytale_SRCS
 	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
+	roomwidget.cpp
 )
 
 set(fairytale_UI
