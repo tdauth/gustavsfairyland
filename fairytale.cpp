@@ -19,13 +19,13 @@
 #include "clippackage.h"
 #include "clippackageeditor.h"
 #include "customfairytaledialog.h"
+#include "gamemodeoneoutoffour.h"
 
 void fairytale::newGame()
 {
 	this->m_timer.stop();
 
 	clearSolution();
-	clearClips();
 
 	this->m_paused = false;
 	this->actionPauseGame->setText(tr("Pause Game"));
@@ -40,7 +40,7 @@ void fairytale::newGame()
 	if (clipPackage != nullptr)
 	{
 		this->m_clipPackage = clipPackage;
-		this->m_clips = clipPackage->clips();
+		this->gameMode()->start();
 
 		qDebug() << "start";
 
@@ -64,10 +64,7 @@ void fairytale::pauseGame()
 		{
 			this->m_timer.start();
 
-			foreach (QPushButton *button, this->m_buttons)
-			{
-				button->setEnabled(true);
-			}
+			this->gameMode()->resume();
 		}
 		else
 		{
@@ -84,10 +81,7 @@ void fairytale::pauseGame()
 		{
 			this->m_timer.stop();
 
-			foreach (QPushButton *button, this->m_buttons)
-			{
-				button->setEnabled(false);
-			}
+			this->gameMode()->pause();
 		}
 		else
 		{
@@ -155,11 +149,11 @@ fairytale::fairytale()
 , m_remainingTime(0)
 , m_requiresPerson(true)
 , m_clipPackage(nullptr)
-, m_currentSolution(nullptr)
 , m_completeSolutionIndex(0)
 , m_playCompleteSolution(false)
 , m_paused(false)
 , m_isRunning(false)
+, m_gameMode(new GameModeOneOutOfFour(this))
 {
 	this->m_player->hide();
 
@@ -167,16 +161,6 @@ fairytale::fairytale()
 
 
 	connect(&this->m_timer, SIGNAL(timeout()), this, SLOT(timerTick()));
-
-	this->m_buttons.push_back(this->card0PushButton);
-	this->m_buttons.push_back(this->card1PushButton);
-	this->m_buttons.push_back(this->card2PushButton);
-	this->m_buttons.push_back(this->card3PushButton);
-
-	for (int i = 0; i < this->m_buttons.size(); ++i)
-	{
-		connect(this->m_buttons[i], SIGNAL(clicked()), this, SLOT(clickCard()));
-	}
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
@@ -250,11 +234,25 @@ void fairytale::about()
 
 void fairytale::gameOver()
 {
-	this->clearAll();
+	this->gameMode()->end();
+	this->clearSolution();
 	this->setGameButtonsEnabled(false);
 	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");
 	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
+}
+
+void fairytale::win()
+{
+	this->gameMode()->end();
+	this->m_isRunning = false;
+	QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
+
+	if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
+	{
+		this->clearSolution();
+		this->setGameButtonsEnabled(false);
+	}
 }
 
 void fairytale::nextTurn()
@@ -262,67 +260,74 @@ void fairytale::nextTurn()
 	this->timeLabel->setText(tr(""));
 	this->descriptionLabel->setText("");
 
-	this->clearClipButtons();
-
-	bool won = false;
-
-	if (!this->m_clips.empty())
+	if (m_turns > 1)
 	{
-		this->fillCurrentClips();
+		m_requiresPerson = !m_requiresPerson;
+	}
 
-		if (!this->m_currentClips.empty())
+	// calling this leads to the next turn in the game mode which should then call on onFinishTurn()
+	this->gameMode()->nextTurn();
+
+	switch (gameMode()->state())
+	{
+		case GameMode::State::Won:
 		{
-			this->selectRandomSolution();
+			this->win();
+
+			break;
+		}
+
+		case GameMode::State::Running:
+		{
+			Clip *solution = this->gameMode()->solution();
 
 			if (this->m_turns == 0)
 			{
-				this->m_startPerson = this->m_currentSolution;
+				this->m_startPerson = solution;
 			}
 
-			qDebug() << "Complete size " << m_clips.size();
-
-			const QString description = this->description(this->m_turns, this->m_currentSolution);
-
-			this->m_turns++;
+			const QString description = this->description(this->m_turns, solution);
 
 			/*
 			 * Play the narrator clip for the current solution as hint.
 			 */
-			this->m_player->playVideo(this, this->m_currentSolution->narratorVideoUrl(), description);
-		}
-		else
-		{
-			won = true;
-		}
-	}
-	else
-	{
-		won = true;
-	}
+			this->m_player->playVideo(this, solution->narratorVideoUrl(), description);
 
-	if (won)
-	{
-		this->m_isRunning = false;
-		QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
-
-		if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
-		{
-			this->clearAll();
-			this->setGameButtonsEnabled(false);
+			break;
 		}
 	}
 }
 
-void fairytale::clearClipButtons()
+void fairytale::onFinishTurn()
 {
-	for (int i = 0; i < this->m_currentClips.size(); ++i)
-	{
-		this->m_buttons[i]->setIcon(QIcon());
-		this->m_buttons[i]->setEnabled(false);
-	}
+	this->m_timer.stop();
+	this->m_remainingTime = 0;
+	this->m_turns++;
+	addCurrentSolution();
 
-	this->m_currentClips.clear();
-	this->m_currentSolution = 0;
+	switch (this->gameMode()->state())
+	{
+		case GameMode::State::Won:
+		{
+			this->win();
+
+			break;
+		}
+
+		case GameMode::State::Lost:
+		{
+			this->gameOver();
+
+			break;
+		}
+
+		case GameMode::State::Running:
+		{
+			this->nextTurn();
+
+			break;
+		}
+	}
 }
 
 void fairytale::clearSolution()
@@ -339,23 +344,6 @@ void fairytale::clearSolution()
 	this->customFairytaleDialog()->clear();
 }
 
-void fairytale::clearClips()
-{
-	foreach (Clip *clip, this->m_clips)
-	{
-		delete clip;
-	}
-
-	this->m_clips.clear();
-}
-
-void fairytale::clearAll()
-{
-	clearClipButtons();
-	clearSolution();
-	clearClips();
-}
-
 void fairytale::setGameButtonsEnabled(bool enabled)
 {
 	actionPauseGame->setEnabled(enabled);
@@ -369,16 +357,12 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 		if (!this->m_playCompleteSolution)
 		{
 			this->m_player->mediaPlayer()->stop();
-			this->m_remainingTime = 1000 * (this->m_clips.size() + 1);
+			this->m_remainingTime = this->gameMode()->time();
 			this->updateTimeLabel();
 			// the description label helps to remember
-			this->descriptionLabel->setText(this->description(this->m_turns - 1, this->m_currentSolution));
+			this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
 
-			for (int i = 0; i < this->m_currentClips.size(); ++i)
-			{
-				this->m_buttons[i]->setIcon(QIcon(this->m_currentClips[i]->imageUrl().toLocalFile()));
-				this->m_buttons[i]->setEnabled(true);
-			}
+			this->gameMode()->afterNarrator();
 
 			// run every second
 			this->m_timer.start(1000);
@@ -396,7 +380,6 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			qDebug() << "Finished final clips";
 			this->m_playCompleteSolution = false;
 			this->m_completeSolutionIndex = 0;
-			//QMessageBox::information(this, tr("Finish"), tr("Finish"));
 		}
 	}
 }
@@ -415,28 +398,6 @@ void fairytale::timerTick()
 	}
 }
 
-void fairytale::clickCard()
-{
-	this->m_timer.stop();
-	this->m_remainingTime = 0; // set time to 0 that the method pauseGame() works
-	bool success = false;
-
-	for (int i = 0; i < this->m_currentClips.size() && !success; ++i)
-	{
-		if (QObject::sender() == this->m_buttons[i] && this->m_currentSolution == this->m_currentClips[i]) {
-			addCurrentSolution();
-			nextTurn();
-
-			success = true;
-		}
-	}
-
-	if (!success)
-	{
-		this->gameOver();
-	}
-}
-
 void fairytale::updateTimeLabel()
 {
 	this->timeLabel->setText(tr("%1 Seconds").arg(QString::number(this->m_remainingTime / 1000)));
@@ -444,58 +405,8 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	this->customFairytaleDialog()->addClip(this->m_currentSolution);
-	this->m_completeSolution.push_back(this->m_currentSolution);
-}
-
-void fairytale::fillCurrentClips()
-{
-	QList<Clip*> copy = this->m_clips;
-
-	/*
-	 * Allow only persons or acts.
-	 */
-	for (int i = 0; i < copy.size(); )
-	{
-		if ((m_requiresPerson && !copy[i]->isPerson()) || (!m_requiresPerson && copy[i]->isPerson()))
-		{
-			copy.removeAt(i);
-		}
-		else
-		{
-			++i;
-		}
-	}
-
-	if (copy.isEmpty())
-	{
-		return;
-	}
-
-	if (m_turns > 0)
-	{
-		m_requiresPerson = !m_requiresPerson;
-	}
-
-	qDebug() << "Size before" << copy.size();
-
-	for (int i = 0; i < this->m_buttons.size() && !copy.empty(); ++i)
-	{
-		const int index = qrand() % copy.size();
-		this->m_currentClips.push_back(copy[index]);
-		copy.removeAt(index);
-		//qDebug() << "Index: " << index << " and size " << copy.size();
-	}
-
-	qDebug() << "Current size of buttons " << this->m_currentClips.size();
-}
-
-void fairytale::selectRandomSolution()
-{
-	const int index = qrand() % this->m_currentClips.size();
-	Clip *solution = this->m_currentClips[index];
-	this->m_currentSolution = solution;
-	this->m_clips.removeAll(solution); // solution is done forever
+	this->customFairytaleDialog()->addClip(this->gameMode()->solution());
+	this->m_completeSolution.push_back(this->gameMode()->solution());
 }
 
 QString fairytale::description(int turn, Clip *clip)

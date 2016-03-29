@@ -6,7 +6,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QVector>
 #include <QtCore/QList>
-
+#include <QtWidgets/QPushButton>
 #include <QtMultimedia/QMediaPlayer>
 
 #include "ui_mainwindow.h"
@@ -18,7 +18,11 @@ class ClipPackageDialog;
 class ClipPackage;
 class ClipPackageEditor;
 class CustomFairytaleDialog;
+class GameMode;
 
+/**
+ * \brief The fairytale application which provdes a main window and the basic logic of the game.
+ */
 class fairytale : public QMainWindow, protected Ui::MainWindow
 {
 	Q_OBJECT
@@ -37,16 +41,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void nextTurn();
 
 		/**
-		 * Clears all clip buttons.
+		 * Clears all clip buttons from the solution widget.
 		 */
-		void clearClipButtons();
 		void clearSolution();
-		void clearClips();
-
-		/**
-		 * Clears clip buttons, solution buttons and clips as well as stored solution clips etc.
-		 */
-		void clearAll();
 
 		/**
 		 * Enables or disables menu actions and buttons which are only enabled during a game.
@@ -56,6 +53,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void playFinalVideo();
 
+		/**
+		 * Pauses the game if it is running. Otherwise if it is paused the game will be resumed.
+		 */
 		void pauseGame();
 		void showCustomFairytale();
 		void openClipsDialog();
@@ -69,9 +69,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		fairytale();
 		virtual ~fairytale();
 
+		/**
+		 * Event handler which is called by the current game mode.
+		 */
+		void onFinishTurn();
+
 		void playFinalClip(int index);
 
 		void gameOver();
+		void win();
 
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
@@ -83,14 +89,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		CustomFairytaleDialog* customFairytaleDialog();
 
+		bool requiresPerson() const;
+		ClipPackage* clipPackage() const;
 		bool isPaused() const;
 		bool isRunning() const;
+		GameMode* gameMode() const;
+
+		QGridLayout* gameAreaLayout() const;
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
 		void timerTick();
-
-		void clickCard();
 
 	private:
 		void updateTimeLabel();
@@ -102,10 +111,19 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QUrl m_clipsDir;
 
+		/**
+		 * The currently played turns.
+		 */
 		int m_turns;
 
+		/**
+		 * The initial clip for the initial person who is the protagonist of the fairytale.
+		 */
 		Clip *m_startPerson;
 
+		/**
+		 * The video player for clips and narrator clips.
+		 */
 		Player *m_player;
 
 		ClipsDialog *m_clipsDialog;
@@ -118,18 +136,28 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		CustomFairytaleDialog *m_customFairytaleDialog;
 
+		/**
+		 * The timer which is used for the limited time the player has to select the proper clip.
+		 */
 		QTimer m_timer;
+		/**
+		 * The remaining time of the timer in MS.
+		 */
 		long int m_remainingTime;
 
+		/**
+		 * If this value is true the current turn requires a person clip. Otherwise it requires an act clip.
+		 */
 		bool m_requiresPerson;
 
-		ClipPackage *m_clipPackage;
-		QList<Clip*> m_clips;
-
-		Clip *m_currentSolution;
-		QVector<QPushButton*> m_buttons;
-		QVector<Clip*> m_currentClips;
+		/**
+		 * All loaded clip packages of the game.
+		 */
 		ClipPackages m_clipPackages;
+		/**
+		 * The currently selected clip package which is used to play.
+		 */
+		ClipPackage *m_clipPackage;
 
 		QList<Clip*> m_completeSolution;
 		QList<QPushButton*> m_completeSolutionButtons;
@@ -138,6 +166,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		bool m_paused;
 		bool m_isRunning;
+
+		/**
+		 * The currently played game mode.
+		 */
+		GameMode *m_gameMode;
 };
 
 inline void fairytale::addClipPackage(ClipPackage* package)
@@ -160,6 +193,16 @@ inline QUrl fairytale::clipsDir() const
 	return this->m_clipsDir;
 }
 
+inline bool fairytale::requiresPerson() const
+{
+	return this->m_requiresPerson;
+}
+
+inline ClipPackage* fairytale::clipPackage() const
+{
+	return this->m_clipPackage;
+}
+
 inline bool fairytale::isPaused() const
 {
 	return this->m_paused;
@@ -168,6 +211,16 @@ inline bool fairytale::isPaused() const
 inline bool fairytale::isRunning() const
 {
 	return this->m_isRunning;
+}
+
+inline GameMode* fairytale::gameMode() const
+{
+	return this->m_gameMode;
+}
+
+inline QGridLayout* fairytale::gameAreaLayout() const
+{
+	return centralLayout;
 }
 
 #endif // fairytale_H
