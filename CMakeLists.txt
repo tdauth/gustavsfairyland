@@ -35,6 +35,7 @@ set(fairytale_SRCS
 	clipeditor.cpp
 	customfairytaledialog.cpp
 	gamemode.cpp
+	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
 )
