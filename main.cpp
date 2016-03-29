@@ -1,14 +1,15 @@
-#include <QtWidgets/QApplication>
 #include "fairytale.h"
 
 #include <QtGlobal>
 #include <QtDebug>
+#include <QtWidgets/QApplication>
+
 #include <stdio.h>
 #include <stdlib.h>
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &c, const QString &msg)
 {
-     //in this function, you can write the message to any stream!
+	//in this function, you can write the message to any stream!
 	switch (type) {
 		case QtInfoMsg:
 			fprintf(stderr, "Info: %s\n", msg.toUtf8().constData());
@@ -29,6 +30,10 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &c, const QString 
 		case QtFatalMsg:
 			fprintf(stderr, "Fatal: %s\n", msg.toUtf8().constData());
 			abort();
+
+		default:
+			fprintf(stderr, "Unknown: %s\n", msg.toUtf8().constData());
+			break;
 	}
 }
 

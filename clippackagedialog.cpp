@@ -33,5 +33,10 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages& packages)
 
 ClipPackage* ClipPackageDialog::clipPackage() const
 {
-	return m_packages[this->comboBox->currentIndex()];
+	if (this->m_packages.isEmpty())
+	{
+		return nullptr;
+	}
+
+	return this->m_packages[this->comboBox->currentIndex()];
 }

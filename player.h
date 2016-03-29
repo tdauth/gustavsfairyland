@@ -11,6 +11,9 @@
 
 class fairytale;
 
+/**
+ * \brief The video player which allows to play video sequences which can be skipped or paused as well.
+ */
 class Player : public QDialog, protected Ui::Player
 {
 	Q_OBJECT

@@ -4,7 +4,7 @@
 #include "../clippackage.h"
 #include "../clip.h"
 
-QTEST_MAIN(ClipTest);
+QTEST_GUILESS_MAIN(ClipTest);
 
 void ClipTest::initTestCase()
 {
@@ -161,20 +161,6 @@ void ClipTest::testSaveLoadCompressedArchive()
 
 	ClipPackage loaded;
 	QVERIFY(loaded.loadClipsFromCompressedArchive("clips.pkgc", QDir::currentPath()));
-	QCOMPARE(loaded.clips().size(), 1);
-}
-
-void ClipTest::testSaveLoadEncryptedCompressedArchive()
-{
-	ClipPackage pkg;
-	Clip *clip = new Clip();
-	pkg.addClip(clip);
-
-	QVERIFY(pkg.saveClipsToEncryptedCompressedArchive("clips.pkgce"));
-	QVERIFY(QFile::exists("clips.pkgc"));
-
-	ClipPackage loaded;
-	QVERIFY(loaded.loadClipsFromEncryptedCompressedArchive("clips.pkgce", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 }
 

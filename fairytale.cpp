@@ -144,7 +144,22 @@ ClipPackage* fairytale::selectClipPackage()
 	return nullptr;
 }
 
-fairytale::fairytale() : m_turns(0), m_startPerson(0), m_remainingTime(0), m_currentSolution(0), m_playCompleteSolution(false), m_completeSolutionIndex(0), m_player(new Player(this, this)), m_requiresPerson(true), m_paused(false), m_isRunning(false), m_clipsDialog(nullptr), m_clipPackageDialog(nullptr), m_clipPackage(nullptr), m_editor(nullptr), m_customFairytaleDialog(nullptr)
+fairytale::fairytale()
+: m_turns(0)
+, m_startPerson(nullptr)
+, m_player(new Player(this, this))
+, m_clipsDialog(nullptr)
+, m_clipPackageDialog(nullptr)
+, m_editor(nullptr)
+, m_customFairytaleDialog(nullptr)
+, m_remainingTime(0)
+, m_requiresPerson(true)
+, m_clipPackage(nullptr)
+, m_currentSolution(nullptr)
+, m_completeSolutionIndex(0)
+, m_playCompleteSolution(false)
+, m_paused(false)
+, m_isRunning(false)
 {
 	this->m_player->hide();
 

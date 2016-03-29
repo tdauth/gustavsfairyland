@@ -31,9 +31,6 @@ class ClipPackage : public QObject
 		ClipPackage(QObject *parent = nullptr);
 		virtual ~ClipPackage();
 
-		bool loadClipsFromEncryptedCompressedArchive(const QString &file, const QString &clipsDir);
-		bool saveClipsToEncryptedCompressedArchive(const QString &file);
-
 		bool loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir);
 		bool saveClipsToCompressedArchive(const QString &file);
 
@@ -81,9 +78,6 @@ class ClipPackage : public QObject
 		bool writeBlock(const QString &filePath, QFile &out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter);
 
 		bool removeDir();
-
-		static QByteArray encryptData(const QByteArray &data);
-		static QByteArray decryptData(const QByteArray &data);
 
 		/// Directory with all extracted clip files
 		QString m_dir;
