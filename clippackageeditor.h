@@ -23,13 +23,21 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		 * Opens a \ref ClipEditor dialog to create a new clip.
 		 */
 		void addClip();
+		void editClip();
+		void removeClip();
 		void loadPackage();
 		void saveAs();
+		void closePackage();
+
+	private slots:
+		void changedCurrentItem(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 	public:
 		ClipPackageEditor(fairytale *app, QWidget *parent);
 
 		fairytale* app() const;
+
+		ClipEditor* clipEditor();
 
 	private:
 		fairytale *m_app;

@@ -92,6 +92,21 @@ ClipEditor::~ClipEditor()
 	settings.setValue("clipeditordir", m_dir);
 }
 
+void ClipEditor::fill(Clip* clip)
+{
+	this->descriptionLineEdit->setText(clip->description());
+	this->isAPersonCheckBox->setChecked(clip->isPerson());
+	QPixmap pixmap(clip->imageUrl().toLocalFile());
+	this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+
+	this->m_clip->assign(*clip);
+}
+
+void ClipEditor::assignToClip(Clip* clip)
+{
+	clip->assign(this->m_clip);
+}
+
 Clip* ClipEditor::clip(QObject *parent)
 {
 	std::cerr << "Clips description on getting clip " << m_clip->description().toUtf8().constData() << std::endl;

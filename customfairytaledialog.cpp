@@ -1,16 +1,17 @@
+#include <QtGui>
+
 #include "customfairytaledialog.h"
 #include "fairytale.h"
 #include "iconbutton.h"
-#include <QtGui>
 
 #include "clip.h"
 
 void CustomFairytaleDialog::addClip(Clip* clip)
 {
-	QPushButton *button = new IconButton(this);
+	IconButton *button = new IconButton(this);
 	this->scrollAreaWidgetContents->layout()->addWidget(button);
 	this->m_clipButtons.push_back(button);
-	button->setIcon(QIcon(clip->imageUrl().toLocalFile()));
+	button->setFile(clip->imageUrl().toLocalFile());
 	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	button->setEnabled(false);
 	this->playFinalVideoPushButton->setEnabled(true);

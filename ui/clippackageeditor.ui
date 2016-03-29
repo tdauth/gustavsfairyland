@@ -42,6 +42,26 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="editClipPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Edit Clip</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeClipPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Remove Clip</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="loadPackagePushButton">
          <property name="text">
           <string>Load Package</string>
@@ -52,6 +72,13 @@
         <widget class="QPushButton" name="saveAsPushButton">
          <property name="text">
           <string>Save As</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="closePackagePushButton">
+         <property name="text">
+          <string>Close Package</string>
          </property>
         </widget>
        </item>

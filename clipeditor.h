@@ -27,6 +27,10 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		ClipEditor(QWidget *parent);
 		~ClipEditor();
 
+		void fill(Clip *clip);
+
+		void assignToClip(Clip *clip);
+
 		/**
 		 * Creates a newly allocated clip with parent \p parent.
 		 * The clip has all the choosen properties.

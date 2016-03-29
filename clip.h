@@ -14,6 +14,8 @@ class Clip : public QObject
 		Clip(const Clip &clip, QObject *parent = nullptr);
 		Clip(const QUrl &imageUrl, const QUrl &videoUrl, const QUrl &narratorVideoUrl, const QString &description, bool isPerson, QObject *parent = nullptr);
 
+		void assign(const Clip &clip);
+
 		void setImageUrl(const QUrl &url);
 		QUrl imageUrl() const;
 		void setVideoUrl(const QUrl &url);

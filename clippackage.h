@@ -50,6 +50,7 @@ class ClipPackage : public QObject
 		const QString& filePath() const;
 		void setName(const QString &name);
 		const QString& name() const;
+		Clips& clips();
 		const Clips& clips() const;
 	private:
 		/**
@@ -111,6 +112,11 @@ inline void ClipPackage::setName(const QString& name)
 inline const QString& ClipPackage::name() const
 {
 	return this->m_name;
+}
+
+inline ClipPackage::Clips& ClipPackage::clips()
+{
+	return this->m_clips;
 }
 
 inline const ClipPackage::Clips& ClipPackage::clips() const

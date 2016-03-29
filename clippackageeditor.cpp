@@ -13,20 +13,50 @@
 
 void ClipPackageEditor::addClip()
 {
-	if (this->m_clipEditor == nullptr)
-	{
-		this->m_clipEditor = new ClipEditor(this);
-	}
 
-	if (this->m_clipEditor->exec() == QDialog::Accepted)
+	if (this->clipEditor()->exec() == QDialog::Accepted)
 	{
-		Clip *clip = this->m_clipEditor->clip(m_clipPackage);
+		Clip *clip = this->clipEditor()->clip(m_clipPackage);
 		m_clipPackage->addClip(clip);
 		QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
 		item->setText(0, clip->description());
 		treeWidget->addTopLevelItem(item);
 
 		std::cerr << "Adding clip to tree widget with description " << clip->description().toUtf8().constData() << std::endl;
+	}
+}
+
+void ClipPackageEditor::editClip()
+{
+	if (!treeWidget->selectedItems().isEmpty())
+	{
+		QTreeWidgetItem *item = treeWidget->selectedItems().first();
+		const int index = treeWidget->indexOfTopLevelItem(item);
+		Clip *clip = this->m_clipPackage->clips().at(index);
+
+		this->clipEditor()->fill(clip);
+
+		if (this->clipEditor()->exec() == QDialog::Accepted)
+		{
+			this->clipEditor()->assignToClip(clip);
+		}
+	}
+}
+
+void ClipPackageEditor::removeClip()
+{
+	if (!treeWidget->selectedItems().isEmpty())
+	{
+		QTreeWidgetItem *item = treeWidget->selectedItems().first();
+		const int index = treeWidget->indexOfTopLevelItem(item);
+		Clip *clip = this->m_clipPackage->clips().at(index);
+		this->m_clipPackage->clips().removeAt(index);
+
+		delete clip;
+		clip = nullptr;
+
+		delete item;
+		item = nullptr;
 	}
 }
 
@@ -67,14 +97,45 @@ void ClipPackageEditor::saveAs()
 	}
 }
 
+void ClipPackageEditor::closePackage()
+{
+	if (QMessageBox::question(this, tr("Closing Package"), tr("Are you sure?")) == QMessageBox::Yes)
+	{
+		this->m_clipPackage->clear();
+		this->treeWidget->clear();
+	}
+}
+
+void ClipPackageEditor::changedCurrentItem(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+	const bool hasSelectedClip = (current != nullptr);
+	editClipPushButton->setEnabled(hasSelectedClip);
+	removeClipPushButton->setEnabled(hasSelectedClip);
+}
+
 ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app), m_clipEditor(nullptr), m_clipPackage(new ClipPackage(this))
 {
 	setupUi(this);
 
 	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
+	connect(this->editClipPushButton, SIGNAL(clicked()), this, SLOT(editClip()));
+	connect(this->removeClipPushButton, SIGNAL(clicked()), this, SLOT(removeClip()));
 	connect(this->loadPackagePushButton, SIGNAL(clicked()), this, SLOT(loadPackage()));
 	connect(this->saveAsPushButton, SIGNAL(clicked()), this, SLOT(saveAs()));
+	connect(this->closePackagePushButton, SIGNAL(clicked()), this, SLOT(closePackage()));
 
 	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	connect(this->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(changedCurrentItem(QTreeWidgetItem*,QTreeWidgetItem*)));
+}
+
+ClipEditor* ClipPackageEditor::clipEditor()
+{
+	if (this->m_clipEditor == nullptr)
+	{
+		this->m_clipEditor = new ClipEditor(this);
+	}
+
+	return this->m_clipEditor;
 }

@@ -134,12 +134,12 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 		return false;
 	}
 
-	QFileInfo fileInfo(file);
+	const QFileInfo fileInfo(file);
+	const QString subDirPath = fileInfo.baseName();
 
-	// TODO extract to specified output dir and not to basename. If the file has no extension it is even the same name as the file's name.
-	if (!dir.mkdir(fileInfo.baseName()))
+	if (!dir.mkdir(subDirPath))
 	{
-		qDebug() << "Dir cannot be created:" << dir;
+		qDebug() << "Dir cannot be created:" << dir.filePath(subDirPath);
 
 		return false;
 	}
