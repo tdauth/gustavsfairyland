@@ -15,10 +15,21 @@ void IconButton::updateIcon()
 {
 	if (!file().isEmpty())
 	{
-		QPixmap pixmap(m_file);
-		const int min = qMin(this->size().width(), this->size().height());
-		this->setIconSize(QSize(min, min));
-		this->setIcon(QIcon(pixmap.scaled(min, min)));
+		const int width = this->size().width() * 0.9;
+		const int height = this->size().height() * 0.9;
+		const bool useWidth = width < height;
+		const int value = useWidth ? width : height;
+		this->setIconSize(QSize(value, value));
+
+		// TODO slow
+		if (useWidth)
+		{
+			this->setIcon(QIcon(m_pixmap.scaledToWidth(value))); // keep the ratio otherwise th image looks like shit
+		}
+		else
+		{
+			this->setIcon(QIcon(m_pixmap.scaledToHeight(value))); // keep the ratio otherwise th image looks like shit
+		}
 	}
 	else
 	{

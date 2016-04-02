@@ -20,6 +20,7 @@
 #include "clippackageeditor.h"
 #include "customfairytaledialog.h"
 #include "gamemodeoneoutoffour.h"
+#include "gamemodemoving.h"
 
 void fairytale::newGame()
 {
@@ -138,8 +139,9 @@ ClipPackage* fairytale::selectClipPackage()
 	return nullptr;
 }
 
-fairytale::fairytale()
-: m_turns(0)
+fairytale::fairytale(Qt::WindowFlags flags)
+: QMainWindow(0, flags)
+, m_turns(0)
 , m_startPerson(nullptr)
 , m_player(new Player(this, this))
 , m_clipsDialog(nullptr)

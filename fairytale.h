@@ -66,7 +66,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 	public:
 		typedef QList<ClipPackage*> ClipPackages;
 
-		fairytale();
+		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
 
 		/**

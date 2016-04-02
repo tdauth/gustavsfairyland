@@ -21,8 +21,6 @@ if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
 	find_package(Qt5Xml)
 endif ()
 
-add_subdirectory(ui)
-
 set(fairytale_SRCS
 	fairytale.cpp
 	clip.cpp

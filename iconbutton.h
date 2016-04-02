@@ -16,6 +16,7 @@ class IconButton : public QPushButton
 		void updateIcon();
 
 		QString m_file;
+		QPixmap m_pixmap; // cache the pixmap for faster resizing
 
 	protected:
 		virtual void resizeEvent(QResizeEvent *e) override;
@@ -24,6 +25,7 @@ class IconButton : public QPushButton
 inline void IconButton::setFile(const QString &file)
 {
 	this->m_file = file;
+	this->m_pixmap = QPixmap(file);
 	updateIcon();
 }
 

@@ -1,4 +1,6 @@
 #include "gamemodemoving.h"
+#include "roomwidget.h"
+#include "fairytale.h"
 
 GameModeMoving::GameModeMoving(fairytale* app): GameMode(app), m_state(State::None), m_roomWidget(nullptr)
 {
@@ -46,5 +48,6 @@ void GameModeMoving::end()
 
 void GameModeMoving::start()
 {
-
+	this->m_roomWidget = new RoomWidget(this->app());
+	this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
 }

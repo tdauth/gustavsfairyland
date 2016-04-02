@@ -42,6 +42,6 @@ int main(int argc, char** argv)
 	qInstallMessageHandler(myMessageOutput); //install : set the callback
 	QApplication app(argc, argv);
 	fairytale fairytale;
-	fairytale.show();
+	fairytale.showFullScreen();
 	return app.exec();
 }

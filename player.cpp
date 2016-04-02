@@ -9,6 +9,8 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_videoWidget
 	this->setModal(true);
 
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
+
+	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	videoPlayerLayout->addWidget(m_videoWidget);
 	m_videoWidget->show();
 

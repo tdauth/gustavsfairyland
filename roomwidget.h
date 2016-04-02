@@ -12,7 +12,7 @@
 class RoomWidget : public QWidget
 {
 	public:
-		RoomWidget(QWidget* parent, Qt::WindowFlags f);
+		RoomWidget(QWidget* parent, Qt::WindowFlags f = 0);
 		virtual QPaintEngine* paintEngine() const override;
 
 	protected:

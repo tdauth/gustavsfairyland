@@ -147,12 +147,13 @@ void GameModeOneOutOfFour::afterNarrator()
 	{
 		this->m_buttons[i]->setFile(QString());
 		this->m_buttons[i]->setEnabled(false);
+		this->m_buttons[i]->hide();
 	}
 }
 
 long int GameModeOneOutOfFour::time()
 {
-	return 1000 * (this->m_remainingClips.size() + 1);
+	return 2000 * (this->m_remainingClips.size() + 1);
 }
 
 void GameModeOneOutOfFour::fillCurrentClips()
