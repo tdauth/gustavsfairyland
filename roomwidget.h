@@ -1,7 +1,14 @@
 #ifndef ROOMWIDGET_H
 #define ROOMWIDGET_H
 
+#include <random>
+
 #include <QtWidgets/QWidget>
+#include <QtCore/QTimer>
+#include <QtMultimedia/QSound>
+
+class Door;
+class FloatingClip;
 
 /**
  * \brief A widget which displays a room with four windows from the top.
@@ -11,12 +18,47 @@
  */
 class RoomWidget : public QWidget
 {
+	Q_OBJECT
+
+	signals:
+		void gotIt();
+
+	public slots:
+		void changeWind();
+
 	public:
+		typedef QVector<Door*> Doors;
+
 		RoomWidget(QWidget* parent, Qt::WindowFlags f = 0);
-		virtual QPaintEngine* paintEngine() const override;
+
+		void pause();
+		void start();
+		void resume();
+
+		const Doors doors() const;
+		FloatingClip *floatingClip() const;
 
 	protected:
 		virtual void paintEvent(QPaintEvent *event) override;
+		/// Catches all clicks.
+		virtual void mousePressEvent(QMouseEvent *event) override;
+
+	private:
+		std::random_device rd; // obtain a random number from hardware
+		QTimer *m_windTimer;
+		Doors m_doors;
+		FloatingClip *m_floatingClip;
+		QSound m_failSound;
 };
+
+inline const RoomWidget::Doors RoomWidget::doors() const
+{
+	return this->m_doors;
+}
+
+inline FloatingClip* RoomWidget::floatingClip() const
+{
+	return this->m_floatingClip;
+}
 
 #endif // ROOMWIDGET_H

@@ -10,6 +10,8 @@ class RoomWidget;
  */
 class GameModeMoving : public GameMode
 {
+	Q_OBJECT
+
 	public:
 		GameModeMoving(fairytale *app);
 
@@ -23,11 +25,25 @@ class GameModeMoving : public GameMode
 		virtual void end() override;
 		virtual void start() override;
 
+	private slots:
+		void gotIt();
+		void lost();
+
 	private:
+		void setState(State state);
+
 		State m_state;
-		QList<Clip*> m_remaining;
+		/**
+		 * All clips which have not yet been a solution in one round.
+		 */
+		QList<Clip*> m_remainingClips;
 		Clip *m_currentSolution;
 		RoomWidget *m_roomWidget;
 };
+
+inline void GameModeMoving::setState(GameMode::State state)
+{
+	this->m_state = state;
+}
 
 #endif // GAMEMODEMOVING_H

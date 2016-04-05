@@ -23,7 +23,9 @@ endif ()
 
 set(fairytale_SRCS
 	fairytale.cpp
+	floatingclip.cpp
 	clip.cpp
+	door.cpp
 	player.cpp
 	iconbutton.cpp
 	clipsdialog.cpp

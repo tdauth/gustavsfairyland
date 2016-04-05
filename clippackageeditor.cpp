@@ -66,14 +66,15 @@ void ClipPackageEditor::loadPackage()
 
 	if (!fileName.isEmpty())
 	{
+		this->m_clipPackage->clear();
+		treeWidget->clear();
+
 		if (!this->m_clipPackage->loadClipsFromCompressedArchive(fileName, this->app()->clipsDir().toLocalFile()))
 		{
 			QMessageBox::critical(this, tr("Error"), tr("Error on loading compressed package."));
 		}
 		else
 		{
-			treeWidget->clear();
-
 			for (int i = 0; i < this->m_clipPackage->clips().size(); ++i)
 			{
 				QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);

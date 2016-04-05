@@ -155,7 +155,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playCompleteSolution(false)
 , m_paused(false)
 , m_isRunning(false)
-, m_gameMode(new GameModeOneOutOfFour(this))
+, m_gameMode(new GameModeMoving(this))
 {
 	this->m_player->hide();
 
@@ -231,7 +231,7 @@ void fairytale::playFinalVideo()
 
 void fairytale::about()
 {
-	QMessageBox::information(this, tr("About"), tr("This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!"));
+	QMessageBox::information(this, tr("Gustav's Fairyland"), tr("This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!"));
 }
 
 void fairytale::gameOver()
