@@ -104,9 +104,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 	private:
 		void updateTimeLabel();
 		void addCurrentSolution();
-		void fillCurrentClips();
-		void selectRandomSolution();
 		QString description(int turn, Clip *clip);
+		void cleanupAfterOneGame();
 
 
 		QUrl m_clipsDir;

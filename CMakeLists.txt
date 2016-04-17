@@ -70,7 +70,7 @@ add_subdirectory(test)
 
 #qt5_add_translation( qm_files ts_files ... )
 
-set(CPACK_PACKAGE_NAME "fairytale")
+set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales.")
 set(CPACK_PACKAGE_VERSION "1.0.0")

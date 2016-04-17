@@ -8,7 +8,15 @@
 
 class fairytale;
 class Clip;
+class IconButton;
 
+/**
+ * \brief This dialog lists all clips of a custom fairytale in a row and allows playing the custom fairytale.
+ *
+ * Use \ref addClip() to add a new clip to the end of your custom fairytale.
+ *
+ * Use \ref clear() to clear the custom fairytale completely.
+ */
 class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidget
 {
 	Q_OBJECT
@@ -25,7 +33,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		virtual void closeEvent(QCloseEvent *event) override;
 
 	private:
-		typedef QList<QAbstractButton*> ClipButtons;
+		typedef QList<IconButton*> ClipButtons;
 
 		fairytale *m_app;
 		ClipButtons m_clipButtons;

@@ -237,8 +237,7 @@ void fairytale::about()
 void fairytale::gameOver()
 {
 	this->gameMode()->end();
-	this->clearSolution();
-	this->setGameButtonsEnabled(false);
+	this->cleanupAfterOneGame();
 	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");
 	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
@@ -252,8 +251,7 @@ void fairytale::win()
 
 	if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
 	{
-		this->clearSolution();
-		this->setGameButtonsEnabled(false);
+		this->cleanupAfterOneGame();
 	}
 }
 
@@ -382,6 +380,8 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			qDebug() << "Finished final clips";
 			this->m_playCompleteSolution = false;
 			this->m_completeSolutionIndex = 0;
+
+			this->cleanupAfterOneGame();
 		}
 	}
 }
@@ -436,6 +436,12 @@ QString fairytale::description(int turn, Clip *clip)
 	}
 
 	return description;
+}
+
+void fairytale::cleanupAfterOneGame()
+{
+	this->clearSolution();
+	this->setGameButtonsEnabled(false);
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl& url) const

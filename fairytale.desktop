@@ -1,10 +1,10 @@
 [Desktop Entry]
-GenericName=Fairytale
-GenericName[de]=Märchen
-GenericName[en_GB]=Fairytale
-Name=Fairytale
+GenericName=Gustav's Fairyland
+GenericName[de]=Gustavs Märchenwelt
+GenericName[en_GB]=Gustav's Fairyland
+Name=Gustav's Fairyland
 Name[de]=Märchen
-Name[en_GB]=Fairytale
+Name[en_GB]=Gustav's Fairyland
 Exec=fairytale %U
 Icon=utilities-file-archiver
 Type=Application

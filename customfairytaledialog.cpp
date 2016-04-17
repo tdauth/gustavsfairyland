@@ -6,7 +6,7 @@
 
 #include "clip.h"
 
-void CustomFairytaleDialog::addClip(Clip* clip)
+void CustomFairytaleDialog::addClip(Clip *clip)
 {
 	IconButton *button = new IconButton(this);
 	this->scrollAreaWidgetContents->layout()->addWidget(button);
@@ -17,7 +17,7 @@ void CustomFairytaleDialog::addClip(Clip* clip)
 	this->playFinalVideoPushButton->setEnabled(true);
 }
 
-CustomFairytaleDialog::CustomFairytaleDialog(fairytale* app, QWidget* parent) : QDialog(parent), m_app(app)
+CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
 	this->setModal(true);
@@ -37,13 +37,20 @@ void CustomFairytaleDialog::clear()
 	this->playFinalVideoPushButton->setEnabled(false);
 }
 
-void CustomFairytaleDialog::closeEvent(QCloseEvent* event)
+void CustomFairytaleDialog::closeEvent(QCloseEvent *event)
 {
+	qDebug() << "Before parent event";
+
 	QDialog::closeEvent(event);
+
+	qDebug() << "Before check";
 
 	if (this->m_app->isRunning() && this->m_app->isPaused())
 	{
+		qDebug() << "Unpause game";
 		// unpause game
 		this->m_app->pauseGame();
 	}
+
+	qDebug() << "After check";
 }

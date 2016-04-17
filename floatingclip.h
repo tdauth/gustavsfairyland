@@ -35,7 +35,7 @@ class FloatingClip : public QObject
 
 	private:
 		RoomWidget *m_roomWidget;
-		/// Width and height since it is a square.
+		/// Width and height since it is a square.p
 		int m_width;
 		int m_x;
 		int m_y;

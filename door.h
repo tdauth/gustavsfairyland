@@ -4,6 +4,12 @@
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
 
+/**
+ * \brief A door widget can be open or closed by wind from a specific direction.
+ *
+ * Every door has a specific location which is specified by the type \ref Door::Location.
+ * Besides it has a state which can be checked via \ref isOpen().
+ */
 class Door : public QObject
 {
 	public:
