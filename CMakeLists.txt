@@ -35,6 +35,7 @@ set(fairytale_SRCS
 	clipeditor.cpp
 	customfairytaledialog.cpp
 	gamemode.cpp
+	gamemodedialog.cpp
 	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
@@ -49,6 +50,7 @@ set(fairytale_UI
 	ui/clippackageeditor.ui
 	ui/clipeditor.ui
 	ui/customfairytale.ui
+	ui/gamemodedialog.ui
 )
 
 qt5_wrap_ui(fairytale_UI_HEADERS ${fairytale_UI})

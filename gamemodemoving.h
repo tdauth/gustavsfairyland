@@ -15,6 +15,7 @@ class GameModeMoving : public GameMode
 	public:
 		GameModeMoving(fairytale *app);
 
+		virtual QString name() const override;
 		virtual GameMode::State state() override;
 		virtual Clip* solution() override;
 		virtual long int time() override;
@@ -40,6 +41,11 @@ class GameModeMoving : public GameMode
 		Clip *m_currentSolution;
 		RoomWidget *m_roomWidget;
 };
+
+inline QString GameModeMoving::name() const
+{
+	return tr("Pages On The Ground");
+}
 
 inline void GameModeMoving::setState(GameMode::State state)
 {

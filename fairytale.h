@@ -15,6 +15,7 @@ class Clip;
 class Player;
 class ClipsDialog;
 class ClipPackageDialog;
+class GameModeDialog;
 class ClipPackage;
 class ClipPackageEditor;
 class CustomFairytaleDialog;
@@ -61,9 +62,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
+		GameMode* selectGameMode();
 		void about();
 
 	public:
+		typedef QList<GameMode*> GameModes;
 		typedef QList<ClipPackage*> ClipPackages;
 
 		fairytale(Qt::WindowFlags flags = 0);
@@ -81,6 +84,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
+		const GameModes& gameModes() const;
 		const ClipPackages& clipPackages() const;
 
 		QUrl resolveClipUrl(const QUrl &url) const;
@@ -127,6 +131,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
+		GameModeDialog *m_gameModeDialog;
 
 		ClipPackageEditor *m_editor;
 
@@ -149,6 +154,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		bool m_requiresPerson;
 
+		/**
+		 * All available game modes.
+		 */
+		GameModes m_gameModes;
 		/**
 		 * All loaded clip packages of the game.
 		 */
@@ -180,6 +189,11 @@ inline void fairytale::addClipPackage(ClipPackage* package)
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
 	this->m_clipPackages = packages;
+}
+
+inline const fairytale::GameModes& fairytale::gameModes() const
+{
+	return this->m_gameModes;
 }
 
 inline const fairytale::ClipPackages& fairytale::clipPackages() const

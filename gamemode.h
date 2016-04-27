@@ -29,6 +29,7 @@ class GameMode : public QObject
 		 */
 		fairytale* app() const;
 
+		virtual QString name() const = 0;
 		virtual void start() = 0;
 		virtual void end() = 0;
 		virtual void pause() = 0;

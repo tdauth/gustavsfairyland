@@ -16,6 +16,7 @@
 #include "iconbutton.h"
 #include "clipsdialog.h"
 #include "clippackagedialog.h"
+#include "gamemodedialog.h"
 #include "clippackage.h"
 #include "clippackageeditor.h"
 #include "customfairytaledialog.h"
@@ -41,13 +42,19 @@ void fairytale::newGame()
 	if (clipPackage != nullptr)
 	{
 		this->m_clipPackage = clipPackage;
-		this->gameMode()->start();
 
-		qDebug() << "start";
+		this->m_gameMode = this->selectGameMode();
 
-		nextTurn();
+		if (m_gameMode != nullptr)
+		{
+			this->gameMode()->start();
 
-		setGameButtonsEnabled(true);
+			qDebug() << "start";
+
+			nextTurn();
+
+			setGameButtonsEnabled(true);
+		}
 	}
 
 	this->m_isRunning = true;
@@ -139,6 +146,23 @@ ClipPackage* fairytale::selectClipPackage()
 	return nullptr;
 }
 
+GameMode* fairytale::selectGameMode()
+{
+	if (this->m_gameModeDialog == nullptr)
+	{
+		this->m_gameModeDialog = new GameModeDialog(this);
+	}
+
+	this->m_gameModeDialog->fill(this->gameModes());
+
+	if (this->m_gameModeDialog->exec() == QDialog::Accepted)
+	{
+		return this->m_gameModeDialog->gameMode();
+	}
+
+	return nullptr;
+}
+
 fairytale::fairytale(Qt::WindowFlags flags)
 : QMainWindow(0, flags)
 , m_turns(0)
@@ -146,6 +170,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_player(new Player(this, this))
 , m_clipsDialog(nullptr)
 , m_clipPackageDialog(nullptr)
+, m_gameModeDialog(nullptr)
 , m_editor(nullptr)
 , m_customFairytaleDialog(nullptr)
 , m_remainingTime(0)
@@ -155,7 +180,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playCompleteSolution(false)
 , m_paused(false)
 , m_isRunning(false)
-, m_gameMode(new GameModeMoving(this))
+, m_gameMode(nullptr)
 {
 	this->m_player->hide();
 
@@ -195,6 +220,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	}
 
 	settings.endArray();
+
+	m_gameModes.push_back(new GameModeMoving(this));
+	m_gameModes.push_back(new GameModeOneOutOfFour(this));
 }
 
 fairytale::~fairytale()

@@ -26,6 +26,7 @@ class GameModeOneOutOfFour : public GameMode
 		 */
 		int size() const;
 
+		virtual QString name() const override;
 		virtual void start() override;
 		virtual void end() override;
 		virtual void pause() override;
@@ -63,6 +64,11 @@ class GameModeOneOutOfFour : public GameMode
 		 */
 		State m_state;
 };
+
+inline QString GameModeOneOutOfFour::name() const
+{
+	return tr("One Page Out Of Four");
+}
 
 inline int GameModeOneOutOfFour::size() const
 {
