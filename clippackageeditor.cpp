@@ -62,25 +62,41 @@ void ClipPackageEditor::removeClip()
 
 void ClipPackageEditor::loadPackage()
 {
-	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), QString(), tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), QString(), tr("All Files (*);;Clip Description (*.xml);;Compressed Clip Package (*.pkgc)"));
 
 	if (!fileName.isEmpty())
 	{
 		this->m_clipPackage->clear();
 		treeWidget->clear();
 
-		if (!this->m_clipPackage->loadClipsFromCompressedArchive(fileName, this->app()->clipsDir().toLocalFile()))
+		const QFileInfo fileInfo(fileName);
+		const bool isCompressedPackage = fileInfo.suffix().toLower() == "pkgc";
+		const bool isDescriptionFile = fileInfo.suffix().toLower() == "xml";
+
+		if (isCompressedPackage)
 		{
-			QMessageBox::critical(this, tr("Error"), tr("Error on loading compressed package."));
-		}
-		else
-		{
-			for (int i = 0; i < this->m_clipPackage->clips().size(); ++i)
+			if (!this->m_clipPackage->loadClipsFromCompressedArchive(fileName, this->app()->clipsDir().toLocalFile()))
 			{
-				QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-				item->setText(0, this->m_clipPackage->clips().at(i)->description());
-				treeWidget->addTopLevelItem(item);
+				QMessageBox::critical(this, tr("Error"), tr("Error on loading compressed package."));
+
+				return;
 			}
+		}
+		else if (isDescriptionFile)
+		{
+			if (!this->m_clipPackage->loadClipsFromFile(fileName))
+			{
+				QMessageBox::critical(this, tr("Error"), tr("Error on loading clip description file."));
+
+				return;
+			}
+		}
+
+		for (int i = 0; i < this->m_clipPackage->clips().size(); ++i)
+		{
+			QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+			item->setText(0, this->m_clipPackage->clips().at(i)->description());
+			treeWidget->addTopLevelItem(item);
 		}
 	}
 }

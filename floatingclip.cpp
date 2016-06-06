@@ -18,7 +18,13 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 		const int x1 = this->m_x;
 		const int y1 = this->m_y;
 
-		painter->drawPixmap(x1, y1, m_width, m_width, m_clip->imageUrl().toLocalFile());
+		// draw some background if the image does not fit
+		painter->fillRect(x1, y1, m_width, m_width, Qt::black);
+		// scale the clip image but keep ratio
+		// TODO scaling is bad for the performance?
+		const int widthDifference = (m_width - m_scaledPixmap.width()) / 2;
+		const int heightDifference = (m_width - m_scaledPixmap.height()) / 2;
+		painter->drawPixmap(x1 + widthDifference, y1 + heightDifference, m_scaledPixmap);
 
 		//qDebug() << "Paint clip: " << m_clip->imageUrl().toLocalFile();
 	}
@@ -86,6 +92,11 @@ void FloatingClip::tick()
 	}
 
 	this->m_roomWidget->repaint();
+}
+
+void FloatingClip::updateScaledClipImage()
+{
+	this->m_scaledPixmap = QPixmap(m_clip->imageUrl().toLocalFile()).scaled(m_width, m_width, Qt::KeepAspectRatio);
 }
 
 #include "floatingclip.moc"

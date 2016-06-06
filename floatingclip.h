@@ -14,7 +14,7 @@ class FloatingClip : public QObject
 	Q_OBJECT
 
 	public:
-		FloatingClip(RoomWidget *parent, int width = 80);
+		FloatingClip(RoomWidget *parent, int width = 160);
 
 		void paint(QPainter *painter, QWidget *area);
 
@@ -34,12 +34,16 @@ class FloatingClip : public QObject
 		void tick();
 
 	private:
+		void updateScaledClipImage();
+
 		RoomWidget *m_roomWidget;
 		/// Width and height since it is a square.p
 		int m_width;
 		int m_x;
 		int m_y;
 		Clip *m_clip;
+		/// Store the scaled version of the clip's image to improve performance.
+		QPixmap m_scaledPixmap;
 		/// Updates the position of the floating clip depending on the open windows in a room.
 		QTimer *m_moveTimer;
 };
@@ -47,6 +51,7 @@ class FloatingClip : public QObject
 inline void FloatingClip::setClip(Clip *clip)
 {
 	this->m_clip = clip;
+	this->updateScaledClipImage();
 }
 
 inline int FloatingClip::x() const
