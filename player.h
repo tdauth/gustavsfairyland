@@ -31,6 +31,7 @@ class Player : public QDialog, protected Ui::Player
 		QPushButton* pauseButton() const;
 
 	private:
+		fairytale *m_app;
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;
 

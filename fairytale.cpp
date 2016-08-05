@@ -98,6 +98,26 @@ void fairytale::pauseGame()
 	}
 }
 
+void fairytale::cancelGame()
+{
+	// hold the game while asking to cancel
+	this->pauseGame();
+
+	if (QMessageBox::question(this, tr("Cancel Game?"), tr("Do you want to cancel the game?")) == QMessageBox::Yes)
+	{
+		this->gameMode()->end();
+		this->cleanupAfterOneGame();
+		this->timeLabel->setText("");
+		this->descriptionLabel->setText("");
+		this->m_player->hide();
+	}
+	else
+	{
+		// continue game
+		this->pauseGame();
+	}
+}
+
 void fairytale::showCustomFairytale()
 {
 	if (!this->m_paused)
@@ -191,6 +211,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
+	connect(actionCancelGame, SIGNAL(triggered()), this, SLOT(cancelGame()));
 	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
@@ -373,6 +394,7 @@ void fairytale::clearSolution()
 void fairytale::setGameButtonsEnabled(bool enabled)
 {
 	actionPauseGame->setEnabled(enabled);
+	actionCancelGame->setEnabled(enabled);
 	actionShowCustomFairytale->setEnabled(enabled);
 }
 
@@ -380,9 +402,11 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 {
 	if (state == QMediaPlayer::StoppedState)
 	{
+		// played a normal narrator clip
 		if (!this->m_playCompleteSolution)
 		{
 			this->m_player->mediaPlayer()->stop();
+			this->m_player->hide(); // hide the player, otherwise one cannot play the game
 			this->m_remainingTime = this->gameMode()->time();
 			this->updateTimeLabel();
 			// the description label helps to remember

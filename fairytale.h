@@ -58,6 +58,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Pauses the game if it is running. Otherwise if it is paused the game will be resumed.
 		 */
 		void pauseGame();
+		void cancelGame();
 		void showCustomFairytale();
 		void openClipsDialog();
 		void openEditor();

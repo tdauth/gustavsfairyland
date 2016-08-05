@@ -1,16 +1,19 @@
 #include <QtMultimedia/QMultimedia>
+#include <QMessageBox>
 
 #include "player.h"
 #include "fairytale.h"
 
-Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_skipped(false)
+Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_skipped(false)
 {
 	setupUi(this);
 	this->setModal(true);
 
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
 
-	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	// expanding makes sure that it uses the maximum possible size
+	this->m_videoWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+	this->m_videoWidget->setMinimumSize(QSize(240, 240)); // TODO set to maximum resolution!
 	videoPlayerLayout->addWidget(m_videoWidget);
 	m_videoWidget->show();
 
@@ -19,6 +22,7 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_videoWidget
 
 	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
 	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGame()));
+	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 }
 

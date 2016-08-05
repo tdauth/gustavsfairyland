@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <clips name="Gustav's Fairytale">
+	<!-- persons -->
 	<clip isPerson="true">
 		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/crazy/runterholer.jpg</image>
 		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/crazy/runterholer.mkv</video>
@@ -25,36 +26,13 @@
 		<description>der Werwolf</description>
 	</clip>
 	<clip isPerson="true">
-		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
-		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
-		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>
-		<description>the frog</description>
-	</clip>
-	<clip isPerson="true">
-		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hexe.jpg</image>
-		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
-		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>
-		<description>the witch</description>
-	</clip>
-	<clip isPerson="true">
-		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/ritter_kuniberg_reitet_2.jpg</image>
-		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
-		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>
-		<description>the knight</description>
-	</clip>
-	<clip isPerson="true">
-		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/riese.jpg</image>
-		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
-		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>
-		<description>the giant</description>
-	</clip>
-	<clip isPerson="true">
-		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Alexa,-Prinzessin-von-Wales.jpg</image>
-		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
-		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>
-		<description>the princess</description>
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/steampunk/steampunk.jpg</image>
+		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/steampunk/00069.MTS</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/steampunk/00069.MTS</narrator>
+		<description>der Pestarzt</description>
 	</clip>
 
+	<!-- acts -->
 	<clip isPerson="false">
 		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/1. belagerung von lissabon.jpg</image>
 		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>

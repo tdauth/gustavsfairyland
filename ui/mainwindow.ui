@@ -75,7 +75,7 @@
      <x>0</x>
      <y>0</y>
      <width>428</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -84,6 +84,7 @@
     </property>
     <addaction name="actionNewGame"/>
     <addaction name="actionPauseGame"/>
+    <addaction name="actionCancelGame"/>
     <addaction name="actionShowCustomFairytale"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -153,6 +154,14 @@
    </property>
    <property name="text">
     <string>&amp;Show Custom Fairytale</string>
+   </property>
+  </action>
+  <action name="actionCancelGame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Cancel Game</string>
    </property>
   </action>
  </widget>

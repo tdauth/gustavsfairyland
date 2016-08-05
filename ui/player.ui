@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>187</width>
-    <height>204</height>
+    <width>402</width>
+    <height>234</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -19,59 +19,73 @@
   <property name="windowTitle">
    <string>Player</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="videoPlayerLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QSlider" name="volumeSlider">
-       <property name="maximum">
-        <number>100</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="videoPlayerLayout">
+       <item>
+        <widget class="QSlider" name="volumeSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="skipPushButton">
+         <property name="text">
+          <string>Skip (Space)</string>
+         </property>
+         <property name="shortcut">
+          <string>Space</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pausePushButton">
+         <property name="text">
+          <string>Pause Game (P)</string>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+S</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cancelPushButton">
+         <property name="text">
+          <string>Cancel Game (C)</string>
+         </property>
+         <property name="shortcut">
+          <string>C</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
-   <item row="0" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="skipPushButton">
-       <property name="text">
-        <string>Skip (Space)</string>
-       </property>
-       <property name="shortcut">
-        <string>Space</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pausePushButton">
-       <property name="text">
-        <string>Pause Game (P)</string>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+S</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item>
     <widget class="QLabel" name="descriptionLabel">
      <property name="text">
       <string>TextLabel</string>
@@ -83,7 +97,6 @@
  <tabstops>
   <tabstop>skipPushButton</tabstop>
   <tabstop>pausePushButton</tabstop>
-  <tabstop>volumeSlider</tabstop>
  </tabstops>
  <resources/>
  <connections/>

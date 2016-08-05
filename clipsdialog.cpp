@@ -1,5 +1,6 @@
 #include <QtWidgets/QFileDialog>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 #include "clipsdialog.h"
 #include "clippackage.h"
@@ -72,6 +73,17 @@ void ClipsDialog::addDirectory()
 	}
 }
 
+void ClipsDialog::itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+	Clips::iterator iterator = m_clips.find(item);
+
+	if (iterator != m_clips.end())
+	{
+		// TODO just popup a modal dialog with the image
+		QDesktopServices::openUrl((*iterator)->imageUrl());
+	}
+}
+
 ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
@@ -80,11 +92,14 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 
 	connect(this->addFilePushButton, SIGNAL(clicked()), this, SLOT(addFile()));
 	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
+
+	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &ClipsDialog::itemDoubleClicked);
 }
 
 void ClipsDialog::fill(const fairytale::ClipPackages &packages)
 {
 	this->treeWidget->clear();
+	this->m_clips.clear();
 
 	foreach (ClipPackage *package, packages)
 	{
@@ -96,7 +111,6 @@ void ClipsDialog::fill(ClipPackage* package)
 {
 	QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(this->treeWidget);
 	topLevelItem->setText(0, package->name());
-	topLevelItem->setText(1, QString::number(2));
 	this->treeWidget->addTopLevelItem(topLevelItem);
 
 	QTreeWidgetItem *personsItem = new QTreeWidgetItem(topLevelItem);
@@ -112,6 +126,7 @@ void ClipsDialog::fill(ClipPackage* package)
 	foreach (Clip *clip, package->clips())
 	{
 		QTreeWidgetItem *clipItem = new QTreeWidgetItem(clip->isPerson() ? personsItem : actsItem);
+		this->m_clips.insert(clipItem, clip);
 		clipItem->setText(0, clip->description());
 		clipItem->setIcon(0, QIcon(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile()));
 
@@ -125,6 +140,7 @@ void ClipsDialog::fill(ClipPackage* package)
 		}
 	}
 
+	topLevelItem->setText(1, QString::number(persons + acts));
 	personsItem->setText(1, QString::number(persons));
 	actsItem->setText(1, QString::number(acts));
 }
