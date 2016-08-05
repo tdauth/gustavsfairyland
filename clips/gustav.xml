@@ -13,6 +13,18 @@
 		<description>Opa Jott</description>
 	</clip>
 	<clip isPerson="true">
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/vampir/vampir.png</image>
+		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/vampir/00062.MTS</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/vampir/00062.MTS</narrator>
+		<description>der Vampir</description>
+	</clip>
+	<clip isPerson="true">
+		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/werwolf/werwolf.png</image>
+		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/werwolf/00067.MTS</video>
+		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/werwolf/00067.MTS</narrator>
+		<description>der Werwolf</description>
+	</clip>
+	<clip isPerson="true">
 		<image>file:///home/tamino/Dokumente/Projekte/fairytale/clips/Frosch.jpg</image>
 		<video>file:///home/tamino/Dokumente/Projekte/fairytale/clips/hallo.mkv</video>
 		<narrator>file:///home/tamino/Dokumente/Projekte/fairytale/clips/peter.mkv</narrator>

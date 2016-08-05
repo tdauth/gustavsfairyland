@@ -49,7 +49,10 @@
      <item>
       <widget class="QPushButton" name="pausePushButton">
        <property name="text">
-        <string>Pause Game</string>
+        <string>Pause Game (P)</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
        </property>
       </widget>
      </item>
@@ -77,6 +80,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>skipPushButton</tabstop>
+  <tabstop>pausePushButton</tabstop>
+  <tabstop>volumeSlider</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

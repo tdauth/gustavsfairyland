@@ -55,6 +55,8 @@ void GameModeMoving::nextTurn()
 
 		if (copy.isEmpty())
 		{
+			// Disable click events and timers
+			this->pause();
 			setState(State::Won);
 
 			return;
@@ -68,6 +70,8 @@ void GameModeMoving::nextTurn()
 	}
 	else
 	{
+		// Disable click events and timers
+		this->pause();
 		setState(State::Won);
 	}
 }
@@ -90,6 +94,8 @@ void GameModeMoving::pause()
 
 void GameModeMoving::end()
 {
+	// Make sure the timers stop
+	this->m_roomWidget->pause();
 	delete this->m_roomWidget;
 	this->m_roomWidget = nullptr;
 
@@ -120,6 +126,8 @@ void GameModeMoving::gotIt()
 
 void GameModeMoving::lost()
 {
+	// Disable click events and timers
+	this->pause();
 	this->setState(State::Lost);
 
 	this->app()->onFinishTurn();

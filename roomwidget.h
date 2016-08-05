@@ -5,7 +5,7 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCore/QTimer>
-#include <QtMultimedia/QSound>
+#include <QtMultimedia/QSoundEffect>
 
 class Door;
 class FloatingClip;
@@ -48,7 +48,8 @@ class RoomWidget : public QWidget
 		QTimer *m_windTimer;
 		Doors m_doors;
 		FloatingClip *m_floatingClip;
-		QSound m_failSound;
+		/// This sound effect is played whenever the player misses a click.
+		QSoundEffect m_failSound;
 };
 
 inline const RoomWidget::Doors RoomWidget::doors() const

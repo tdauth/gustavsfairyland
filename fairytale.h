@@ -168,7 +168,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		ClipPackage *m_clipPackage;
 
 		QList<Clip*> m_completeSolution;
-		QList<QPushButton*> m_completeSolutionButtons;
 		int m_completeSolutionIndex;
 		bool m_playCompleteSolution;
 

@@ -28,13 +28,19 @@ CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : 
 
 void CustomFairytaleDialog::clear()
 {
+	qDebug() << "Clearing custom fairytale dialog";
+
 	foreach (QAbstractButton *button, this->m_clipButtons)
 	{
 		delete button;
 	}
 
+	qDebug() << "After deleting icon buttons";
+
 	this->m_clipButtons.clear();
 	this->playFinalVideoPushButton->setEnabled(false);
+
+	qDebug() << "After the rest";
 }
 
 void CustomFairytaleDialog::closeEvent(QCloseEvent *event)

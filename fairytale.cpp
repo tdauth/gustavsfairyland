@@ -31,7 +31,7 @@ void fairytale::newGame()
 
 	this->m_paused = false;
 	this->actionPauseGame->setText(tr("Pause Game"));
-	this->m_player->pauseButton()->setText(tr("Pause Game"));
+	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 
 	// requires person in the first step always
 	this->m_requiresPerson = true;
@@ -65,7 +65,7 @@ void fairytale::pauseGame()
 	if (this->m_paused)
 	{
 		this->actionPauseGame->setText(tr("Pause Game"));
-		this->m_player->pauseButton()->setText(tr("Pause Game"));
+		this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 		this->m_paused = false;
 
 		if (this->m_remainingTime > 0)
@@ -82,7 +82,7 @@ void fairytale::pauseGame()
 	else
 	{
 		this->actionPauseGame->setText(tr("Continue Game"));
-		this->m_player->pauseButton()->setText(tr("Continue Game"));
+		this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
 		this->m_paused = true;
 
 		if (this->m_remainingTime > 0)
@@ -259,7 +259,7 @@ void fairytale::playFinalVideo()
 
 void fairytale::about()
 {
-	QMessageBox::information(this, tr("Gustav's Fairyland"), tr("This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!"));
+	QMessageBox::information(this, tr("About Gustav's Fairyland"), tr("This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!"));
 }
 
 void fairytale::gameOver()
@@ -277,6 +277,7 @@ void fairytale::win()
 	this->m_isRunning = false;
 	QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
 
+	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
 	{
 		this->cleanupAfterOneGame();
@@ -360,16 +361,13 @@ void fairytale::onFinishTurn()
 
 void fairytale::clearSolution()
 {
+	qDebug() << "Clearing solution";
 	this->m_completeSolutionIndex = 0;
+	qDebug() << "Clearing solution 1";
 	this->m_completeSolution.clear();
-
-	foreach (QPushButton *button, this->m_completeSolutionButtons)
-	{
-		delete button;
-	}
-
-	this->m_completeSolutionButtons.clear();
+	qDebug() << "Clearing solution 2";
 	this->customFairytaleDialog()->clear();
+	qDebug() << "Clearing solution 3";
 }
 
 void fairytale::setGameButtonsEnabled(bool enabled)
@@ -395,10 +393,13 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			// run every second
 			this->m_timer.start(1000);
 		}
-		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+		// Play the next final clip of the complete solution.
+		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex < this->m_completeSolution.size())
 		{
 			qDebug() << "Play next final clip";
-			this->playFinalClip(this->m_completeSolutionIndex + 1);
+			this->playFinalClip(this->m_completeSolutionIndex);
+			// next time play the following clip
+			this->m_completeSolutionIndex++;
 		}
 		/*
 		 * Stop playing the complete solution.
@@ -409,6 +410,8 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			this->m_playCompleteSolution = false;
 			this->m_completeSolutionIndex = 0;
 
+			// The dialog has to disappear, after the player watched all final clips.
+			this->customFairytaleDialog()->hide();
 			this->cleanupAfterOneGame();
 		}
 	}
@@ -469,7 +472,9 @@ QString fairytale::description(int turn, Clip *clip)
 void fairytale::cleanupAfterOneGame()
 {
 	this->clearSolution();
+	qDebug() << "Before disabling game buttons";
 	this->setGameButtonsEnabled(false);
+	qDebug() << "After disabling game buttons";
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl& url) const

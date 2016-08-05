@@ -19,8 +19,9 @@ class Door : public QObject
 			South,
 			West,
 			East,
-			MaxLocations
 		};
+
+		static const int MaxLocations = 4;
 
 		Door(QObject *parent, Location location);
 

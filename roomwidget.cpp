@@ -89,16 +89,19 @@ void RoomWidget::changeWind()
 	}
 }
 
-RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_windTimer(new QTimer(this)), m_failSound(":/fail.wav")
+RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_windTimer(new QTimer(this)), m_failSound(this)
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	for (int i = 0; i < (int)Door::Location::MaxLocations; ++i)
+	for (int i = 0; i < Door::MaxLocations; ++i)
 	{
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
 	m_floatingClip = new FloatingClip(this);
+
+	// FIXME Path
+	//this->m_failSound.setSource(QUrl::fromLocalFile("fail.wav"));
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 }
@@ -155,8 +158,9 @@ void RoomWidget::mousePressEvent(QMouseEvent* event)
 	}
 	else
 	{
+		// FIXME, crash when destroying sound ??
 		// TODO play sound
-		m_failSound.play();
+		//m_failSound.play();
 	}
 }
 
