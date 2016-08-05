@@ -43,6 +43,9 @@ class RoomWidget : public QWidget
 		/// Catches all clicks.
 		virtual void mousePressEvent(QMouseEvent *event) override;
 
+	private slots:
+		void failSoundPlayingChanged();
+
 	private:
 		std::random_device rd; // obtain a random number from hardware
 		QTimer *m_windTimer;
@@ -50,6 +53,8 @@ class RoomWidget : public QWidget
 		FloatingClip *m_floatingClip;
 		/// This sound effect is played whenever the player misses a click.
 		QSoundEffect m_failSound;
+		bool m_playNewFailSound;
+		QStringList m_failSoundPaths;
 };
 
 inline const RoomWidget::Doors RoomWidget::doors() const

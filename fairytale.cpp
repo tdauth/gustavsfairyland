@@ -120,12 +120,20 @@ void fairytale::cancelGame()
 
 void fairytale::showCustomFairytale()
 {
-	if (!this->m_paused)
+	const bool pausedGame = !this->m_paused;
+
+	if (pausedGame)
 	{
 		pauseGame();
 	}
 
-	this->customFairytaleDialog()->show();
+	this->customFairytaleDialog()->exec();
+
+	// continue game
+	if (pausedGame)
+	{
+		pauseGame();
+	}
 }
 
 void fairytale::openClipsDialog()

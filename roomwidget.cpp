@@ -89,7 +89,7 @@ void RoomWidget::changeWind()
 	}
 }
 
-RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_windTimer(new QTimer(this)), m_failSound(this)
+RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_windTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -100,8 +100,12 @@ RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f),
 
 	m_floatingClip = new FloatingClip(this);
 
-	// FIXME Path
-	//this->m_failSound.setSource(QUrl::fromLocalFile("fail.wav"));
+	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
+	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
+	m_failSoundPaths.push_back("qrc:/resources/fuck3.wav");
+	this->m_failSound.setSource(QUrl(m_failSoundPaths.front()));
+
+	connect(&this->m_failSound, &QSoundEffect::playingChanged, this, &RoomWidget::failSoundPlayingChanged);
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 }
@@ -156,13 +160,28 @@ void RoomWidget::mousePressEvent(QMouseEvent* event)
 	{
 		emit gotIt();
 	}
-	else
+	// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
+	else if (m_playNewFailSound)
 	{
-		// FIXME, crash when destroying sound ??
-		// TODO play sound
-		//m_failSound.play();
+		m_playNewFailSound = false;
+		std::mt19937 eng(rd()); // seed the generator
+		std::uniform_int_distribution<> distr(0, m_failSoundPaths.size() - 1); // define the range
+		const int value = distr(eng);
+
+		m_failSound.setSource(QUrl(m_failSoundPaths[value]));
+		m_failSound.play();
 	}
 }
+
+void RoomWidget::failSoundPlayingChanged()
+{
+	if (!m_failSound.isPlaying())
+	{
+		this->m_playNewFailSound = true;
+		qDebug() << "Can play a new sound.";
+	}
+}
+
 
 
 #include "roomwidget.moc"
