@@ -25,6 +25,7 @@ if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
 endif ()
 
 set(fairytale_SRCS
+	aboutdialog.cpp
 	fairytale.cpp
 	floatingclip.cpp
 	clip.cpp
@@ -46,6 +47,7 @@ set(fairytale_SRCS
 )
 
 set(fairytale_UI
+	ui/aboutdialog.ui
 	ui/mainwindow.ui
 	ui/player.ui
 	ui/clips.ui

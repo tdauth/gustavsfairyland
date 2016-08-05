@@ -22,6 +22,7 @@
 #include "customfairytaledialog.h"
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
+#include "aboutdialog.h"
 
 void fairytale::newGame()
 {
@@ -209,6 +210,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_paused(false)
 , m_isRunning(false)
 , m_gameMode(nullptr)
+, m_aboutDialog(nullptr)
 {
 	this->m_player->hide();
 
@@ -288,7 +290,7 @@ void fairytale::playFinalVideo()
 
 void fairytale::about()
 {
-	QMessageBox::information(this, tr("About Gustav's Fairyland"), tr("This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!"));
+	this->aboutDialog()->exec();
 }
 
 void fairytale::gameOver()
@@ -531,5 +533,16 @@ CustomFairytaleDialog* fairytale::customFairytaleDialog()
 
 	return this->m_customFairytaleDialog;
 }
+
+AboutDialog* fairytale::aboutDialog()
+{
+	if (this->m_aboutDialog == nullptr)
+	{
+		this->m_aboutDialog = new AboutDialog(this, this);
+	}
+
+	return this->m_aboutDialog;
+}
+
 
 #include "fairytale.moc"
