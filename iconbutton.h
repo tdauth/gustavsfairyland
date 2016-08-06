@@ -12,6 +12,7 @@ class IconButton : public QPushButton
 
 		void setFile(const QString &file);
 		QString file() const;
+
 	private:
 		void updateIcon();
 

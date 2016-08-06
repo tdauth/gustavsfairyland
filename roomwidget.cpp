@@ -18,7 +18,7 @@ void RoomWidget::changeWind()
 		// north
 		case 0:
 		{
-			qDebug() << "North wind";
+			//qDebug() << "North wind";
 			m_doors[(int)Door::Location::North]->open();
 			m_doors[(int)Door::Location::South]->close();
 			m_doors[(int)Door::Location::West]->close();
@@ -30,7 +30,7 @@ void RoomWidget::changeWind()
 		// north west
 		case 1:
 		{
-			qDebug() << "North west wind";
+			//qDebug() << "North west wind";
 			m_doors[(int)Door::Location::North]->open();
 			m_doors[(int)Door::Location::South]->close();
 			m_doors[(int)Door::Location::West]->open();
@@ -42,7 +42,7 @@ void RoomWidget::changeWind()
 		// north east
 		case 2:
 		{
-			qDebug() << "North east wind";
+			//qDebug() << "North east wind";
 			m_doors[(int)Door::Location::North]->open();
 			m_doors[(int)Door::Location::South]->close();
 			m_doors[(int)Door::Location::West]->close();
@@ -54,7 +54,7 @@ void RoomWidget::changeWind()
 		// south
 		case 3:
 		{
-			qDebug() << "South wind";
+			//qDebug() << "South wind";
 			m_doors[(int)Door::Location::North]->close();
 			m_doors[(int)Door::Location::South]->open();
 			m_doors[(int)Door::Location::West]->close();
@@ -66,7 +66,7 @@ void RoomWidget::changeWind()
 		// south west
 		case 4:
 		{
-			qDebug() << "South west wind";
+			//qDebug() << "South west wind";
 			m_doors[(int)Door::Location::North]->close();
 			m_doors[(int)Door::Location::South]->open();
 			m_doors[(int)Door::Location::West]->open();
@@ -78,7 +78,7 @@ void RoomWidget::changeWind()
 		// south east
 		case 5:
 		{
-			qDebug() << "South east wind";
+			//qDebug() << "South east wind";
 			m_doors[(int)Door::Location::North]->close();
 			m_doors[(int)Door::Location::South]->open();
 			m_doors[(int)Door::Location::West]->close();

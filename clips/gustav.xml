@@ -2,62 +2,62 @@
 <clips name="Gustav's Fairytale">
 	<!-- persons -->
 	<clip isPerson="true">
-                <image>file://./crazy/runterholer.jpg</image>
-                <video>file://./crazy/runterholer.mkv</video>
-                <narrator>file://./crazy/runterholer.mkv</narrator>
+                <image>./crazy/runterholer.jpg</image>
+                <video>./crazy/runterholer.mkv</video>
+                <narrator>./crazy/runterholer.mkv</narrator>
 		<description>der Runterholer</description>
 	</clip>
 	<clip isPerson="true">
-                <image>file://./opajott/opajott1.jpg</image>
-                <video>file://./opajott/opajott1.mkv</video>
-                <narrator>file://./opajott/opajott1.mkv</narrator>
+                <image>./opajott/opajott1.jpg</image>
+                <video>./opajott/opajott1.mkv</video>
+                <narrator>./opajott/opajott1.mkv</narrator>
 		<description>Opa Jott</description>
 	</clip>
 	<clip isPerson="true">
-                <image>file://./vampir/vampir.png</image>
-                <video>file://./vampir/00062.MTS</video>
-                <narrator>file://./vampir/00062.MTS</narrator>
+                <image>./vampir/vampir.png</image>
+                <video>./vampir/00062.MTS</video>
+                <narrator>./vampir/00062.MTS</narrator>
 		<description>der Vampir</description>
 	</clip>
 	<clip isPerson="true">
-                <image>file://./werwolf/werwolf.png</image>
-                <video>file://./werwolf/00067.MTS</video>
-                <narrator>file://./werwolf/00067.MTS</narrator>
+                <image>./werwolf/werwolf.png</image>
+                <video>./werwolf/00067.MTS</video>
+                <narrator>./werwolf/00067.MTS</narrator>
 		<description>der Werwolf</description>
 	</clip>
 	<clip isPerson="true">
-                <image>file://./steampunk/steampunk.jpg</image>
-                <video>file://./steampunk/00069.MTS</video>
-                <narrator>file://./steampunk/00069.MTS</narrator>
+                <image>./steampunk/steampunk.jpg</image>
+                <video>./steampunk/00069.MTS</video>
+                <narrator>./steampunk/00069.MTS</narrator>
 		<description>der Pestarzt</description>
 	</clip>
 
 	<!-- acts -->
 	<clip isPerson="false">
-                <image>file://./1. belagerung von lissabon.jpg</image>
-                <video>file://./hallo.mkv</video>
-                <narrator>file://./peter.mkv</narrator>
+                <image>./1. belagerung von lissabon.jpg</image>
+                <video>./hallo.mkv</video>
+                <narrator>./peter.mkv</narrator>
 		<description>sieging a castle</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>file://./Hochzeit_08.jpg</image>
-                <video>file://./hallo.mkv</video>
-                <narrator>file://./peter.mkv</narrator>
+                <image>./Hochzeit_08.jpg</image>
+                <video>./hallo.mkv</video>
+                <narrator>./peter.mkv</narrator>
 		<description>marry</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>file://./Radern_(Variante_mit_Eisenstange).png</image>
-                <video>file://./hallo.mkv</video>
-                <narrator>file://./peter.mkv</narrator>
+                <image>./Radern_(Variante_mit_Eisenstange).png</image>
+                <video>./hallo.mkv</video>
+                <narrator>./peter.mkv</narrator>
 		<description>are executed</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>file://./scheiterhaufen.jpg</image>
-                <video>file://./hallo.mkv</video>
-                <narrator>file://./peter.mkv</narrator>
+                <image>./scheiterhaufen.jpg</image>
+                <video>./hallo.mkv</video>
+                <narrator>./peter.mkv</narrator>
 		<description>are burned</description>
 	</clip>
 

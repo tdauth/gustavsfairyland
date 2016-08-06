@@ -13,6 +13,7 @@
 
 class Clip;
 class Player;
+class SettingsDialog;
 class ClipsDialog;
 class ClipPackageDialog;
 class GameModeDialog;
@@ -93,6 +94,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QUrl resolveClipUrl(const QUrl &url) const;
 
+		void setClipsDir(const QUrl &url);
 		QUrl clipsDir() const;
 
 		CustomFairytaleDialog* customFairytaleDialog();
@@ -135,6 +137,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		Player *m_player;
 
+        SettingsDialog *m_settingsDialog;
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
 		GameModeDialog *m_gameModeDialog;
@@ -211,6 +214,11 @@ inline const fairytale::GameModes& fairytale::gameModes() const
 inline const fairytale::ClipPackages& fairytale::clipPackages() const
 {
 	return this->m_clipPackages;
+}
+
+inline void fairytale::setClipsDir(const QUrl &url)
+{
+	this->m_clipsDir = url;
 }
 
 inline QUrl fairytale::clipsDir() const

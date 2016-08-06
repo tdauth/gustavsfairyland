@@ -23,6 +23,7 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "aboutdialog.h"
+#include "settingsdialog.h"
 
 void fairytale::newGame()
 {
@@ -139,7 +140,13 @@ void fairytale::showCustomFairytale()
 
 void fairytale::settings()
 {
+    if (m_settingsDialog == nullptr)
+    {
+		m_settingsDialog = new SettingsDialog(this, this);
+    }
 
+	m_settingsDialog->update();
+    m_settingsDialog->exec();
 }
 
 void fairytale::openClipsDialog()
@@ -202,6 +209,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_turns(0)
 , m_startPerson(nullptr)
 , m_player(new Player(this, this))
+, m_settingsDialog(nullptr)
 , m_clipsDialog(nullptr)
 , m_clipPackageDialog(nullptr)
 , m_gameModeDialog(nullptr)
@@ -237,7 +245,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 
 	QSettings settings("fairytale");
-    m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", QDir::currentPath()).toString());
+	const QDir currentDir(QDir::currentPath());
+	// the default path is the "clips" sub directory
+	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", currentDir.filePath("clips")).toString());
 	const int size = settings.beginReadArray("clipPackages");
 
 	for (int i = 0; i < size; ++i)
@@ -461,7 +471,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 
 void fairytale::timerTick()
 {
-	qDebug() << "Tick";
+	//qDebug() << "Tick";
 	this->m_remainingTime -= 1000;
 	this->updateTimeLabel();
 
@@ -523,11 +533,13 @@ QUrl fairytale::resolveClipUrl(const QUrl& url) const
 {
 	if (!url.isRelative())
 	{
+		qDebug() << "Absolute: " << url;
 		return url;
 	}
 
 	QUrl result = this->m_clipsDir;
 	result.setUrl(this->m_clipsDir.url() + "/" + url.url());
+	qDebug() << "Resolved: " << result;
 
 	return result;
 }

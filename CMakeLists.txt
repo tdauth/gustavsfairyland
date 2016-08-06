@@ -43,6 +43,7 @@ set(fairytale_SRCS
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
 	roomwidget.cpp
+        settingsdialog.cpp
 )
 
 set(fairytale_UI
@@ -55,6 +56,7 @@ set(fairytale_UI
 	ui/clipeditor.ui
 	ui/customfairytale.ui
 	ui/gamemodedialog.ui
+        ui/settings.ui
 )
 
 qt5_wrap_ui(fairytale_UI_HEADERS ${fairytale_UI})
