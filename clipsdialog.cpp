@@ -73,14 +73,46 @@ void ClipsDialog::addDirectory()
 	}
 }
 
+void ClipsDialog::removeSelected()
+{
+    foreach (QTreeWidgetItem *item, this->treeWidget->selectedItems())
+    {
+        ClipPackages::iterator iterator = this->m_clipPackages.find(item);
+
+        if (iterator != this->m_clipPackages.end())
+        {
+            ClipPackage *package = iterator.value();
+
+            qDebug() << "Before removing package";
+            this->m_app->removeClipPackage(package);
+
+            qDebug() << "Before erasing item";
+            // erase package entry
+            this->m_clipPackages.erase(iterator);
+
+            // drop all children from the map
+            for (int i = 0; i < item->childCount(); ++i)
+            {
+                this->m_clips.remove(item->child(i));
+            }
+
+            // delete top level widget
+            delete item;
+            // Remove clip package from memory.
+            delete package;
+        }
+    }
+}
+
 void ClipsDialog::itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
 	Clips::iterator iterator = m_clips.find(item);
 
 	if (iterator != m_clips.end())
 	{
+        qDebug() << "Open URL: " << iterator.value()->imageUrl();
 		// TODO just popup a modal dialog with the image
-		QDesktopServices::openUrl((*iterator)->imageUrl());
+        QDesktopServices::openUrl(iterator.value()->imageUrl());
 	}
 }
 
@@ -92,6 +124,7 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 
 	connect(this->addFilePushButton, SIGNAL(clicked()), this, SLOT(addFile()));
 	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
+    connect(this->removePushButton, &QPushButton::clicked, this, &ClipsDialog::removeSelected);
 
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &ClipsDialog::itemDoubleClicked);
 }
@@ -99,6 +132,7 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 void ClipsDialog::fill(const fairytale::ClipPackages &packages)
 {
 	this->treeWidget->clear();
+    this->m_clipPackages.clear();
 	this->m_clips.clear();
 
 	foreach (ClipPackage *package, packages)
@@ -112,6 +146,7 @@ void ClipsDialog::fill(ClipPackage* package)
 	QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(this->treeWidget);
 	topLevelItem->setText(0, package->name());
 	this->treeWidget->addTopLevelItem(topLevelItem);
+    m_clipPackages.insert(topLevelItem, package);
 
 	QTreeWidgetItem *personsItem = new QTreeWidgetItem(topLevelItem);
 	personsItem->setText(0, tr("Persons"));

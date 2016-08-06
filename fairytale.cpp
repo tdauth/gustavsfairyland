@@ -137,6 +137,11 @@ void fairytale::showCustomFairytale()
 	}
 }
 
+void fairytale::settings()
+{
+
+}
+
 void fairytale::openClipsDialog()
 {
 	if (this->m_clipsDialog == nullptr)
@@ -224,6 +229,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionCancelGame, SIGNAL(triggered()), this, SLOT(cancelGame()));
 	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
@@ -231,6 +237,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 
 	QSettings settings("fairytale");
+    m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", QDir::currentPath()).toString());
 	const int size = settings.beginReadArray("clipPackages");
 
 	for (int i = 0; i < size; ++i)
@@ -259,6 +266,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 fairytale::~fairytale()
 {
 	QSettings settings("fairytale");
+    settings.setValue("clipsDir", m_clipsDir.toLocalFile());
 	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
 
 	for (int i = 0; i < this->m_clipPackages.size(); ++i)

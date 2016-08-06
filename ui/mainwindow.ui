@@ -75,7 +75,7 @@
      <x>0</x>
      <y>0</y>
      <width>428</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -98,6 +98,7 @@
     <property name="title">
      <string>Setti&amp;ngs</string>
     </property>
+    <addaction name="actionSettings"/>
     <addaction name="actionClips"/>
     <addaction name="actionEditor"/>
    </widget>
@@ -162,6 +163,11 @@
    </property>
    <property name="text">
     <string>Cancel Game</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

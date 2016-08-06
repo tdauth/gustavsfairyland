@@ -15,14 +15,13 @@ set(CMAKE_AUTOMOC ON)
 # Handle .rcc files automatically
 set(CMAKE_AUTORCC ON)
 
-# Find the QtWidgets library
+# Find all Qt modules which are required
 find_package(Qt5Core)
 find_package(Qt5Widgets)
 find_package(Qt5Multimedia)
-if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
-	find_package(Qt5MultimediaWidgets)
-	find_package(Qt5Xml)
-endif ()
+find_package(Qt5Xml)
+find_package(Qt5MultimediaWidgets)
+find_package(Qt5Xml)
 
 set(fairytale_SRCS
 	aboutdialog.cpp
@@ -63,13 +62,10 @@ qt5_wrap_ui(fairytale_UI_HEADERS ${fairytale_UI})
 QT5_ADD_RESOURCES(fairytale_RESOURCES_RCC resource.qrc)
 
 add_library(fairytalelib ${fairytale_SRCS} ${fairytale_UI_HEADERS})
-target_link_libraries(fairytalelib Qt5::Core Qt5::Widgets Qt5::Multimedia)
-if (NOT ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows"))
-	target_link_libraries(fairytalelib Qt5::MultimediaWidgets Qt5::Xml)
-endif ()
+target_link_libraries(fairytalelib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
 
 add_executable(fairytale main.cpp ${fairytale_RESOURCES_RCC})
-target_link_libraries(fairytale fairytalelib)
+target_link_libraries(fairytale fairytalelib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
 
 install(TARGETS fairytale RUNTIME DESTINATION bin)
 

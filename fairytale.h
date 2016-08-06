@@ -61,6 +61,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void pauseGame();
 		void cancelGame();
 		void showCustomFairytale();
+        void settings();
 		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
@@ -86,6 +87,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
+        void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
 		const ClipPackages& clipPackages() const;
 
@@ -194,6 +196,11 @@ inline void fairytale::addClipPackage(ClipPackage* package)
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
 	this->m_clipPackages = packages;
+}
+
+inline void fairytale::removeClipPackage(ClipPackage* package)
+{
+    this->m_clipPackages.removeAll(package);
 }
 
 inline const fairytale::GameModes& fairytale::gameModes() const
