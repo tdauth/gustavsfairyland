@@ -1,3 +1,10 @@
 "fairytale" is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale.
 
 Contact: tamino@cdauth.eu
+
+
+Compilation instructions:
+On Windows 7 the program has been compiled using the MinGW distributed with Qt.
+The shell path in CMake has to stay clear.
+Unfortunately there is only a 32 Bit compiler.
+Generator: Code Blocks - MinGW Makefiles

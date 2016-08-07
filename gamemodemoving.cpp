@@ -106,7 +106,7 @@ void GameModeMoving::end()
 
 void GameModeMoving::start()
 {
-	this->m_roomWidget = new RoomWidget(this->app());
+	this->m_roomWidget = new RoomWidget(this, this->app());
 	connect(this->m_roomWidget, SIGNAL(gotIt()), this, SLOT(gotIt()));
 	this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
 

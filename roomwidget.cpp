@@ -89,7 +89,13 @@ void RoomWidget::changeWind()
 	}
 }
 
-RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_windTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
+void RoomWidget::updatePaint()
+{
+	qDebug() << "Repaint";
+	this->repaint();
+}
+
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -108,18 +114,21 @@ RoomWidget::RoomWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f),
 	connect(&this->m_failSound, &QSoundEffect::playingChanged, this, &RoomWidget::failSoundPlayingChanged);
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
+	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
 }
 
 void RoomWidget::start()
 {
 	this->setEnabled(true);
 	m_windTimer->start(ROOM_WIND_CHANGE_INTERVAL_MS);
+	m_paintTimer->start(ROOM_REPAINT_INTERVAL_MS);
 	m_floatingClip->start();
 }
 
 void RoomWidget::pause()
 {
 	m_windTimer->stop();
+	m_paintTimer->stop();
 	m_floatingClip->pause();
 	this->setEnabled(false);
 }
@@ -133,7 +142,8 @@ void RoomWidget::resume()
 
 void RoomWidget::paintEvent(QPaintEvent *event)
 {
-	//QWidget::paintEvent(event);
+	QWidget::paintEvent(event);
+	qDebug() << "Paint event";
 
 	QPainter painter;
 	painter.begin(this);
@@ -150,6 +160,8 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	m_floatingClip->paint(&painter, this);
 
 	painter.end();
+
+	qDebug() << "Paint event end";
 }
 
 void RoomWidget::mousePressEvent(QMouseEvent* event)

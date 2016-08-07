@@ -34,6 +34,10 @@ class FloatingClip : public QObject
 		void tick();
 
 	private:
+		/**
+		 * Scales down the clip image from the current clip. This should not be done too often since
+		 * the performance is weak.
+		 */
 		void updateScaledClipImage();
 
 		RoomWidget *m_roomWidget;

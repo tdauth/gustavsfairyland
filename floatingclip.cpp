@@ -1,8 +1,11 @@
 #include <QtGui>
+#include <QtDebug>
 
 #include "floatingclip.h"
 #include "clip.h"
 #include "roomwidget.h"
+#include "gamemodemoving.h"
+#include "fairytale.h"
 #include "door.h"
 #include "speed.h"
 
@@ -90,13 +93,13 @@ void FloatingClip::tick()
 	{
 		this->m_y = 0;
 	}
-
-	this->m_roomWidget->repaint();
 }
 
 void FloatingClip::updateScaledClipImage()
 {
-	this->m_scaledPixmap = QPixmap(m_clip->imageUrl().toLocalFile()).scaled(m_width, m_width, Qt::KeepAspectRatio);
+	const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
+	this->m_scaledPixmap = QPixmap(clipUrl.toLocalFile()).scaled(m_width, m_width, Qt::KeepAspectRatio);
+	Q_ASSERT(!this->m_scaledPixmap.isNull());
 }
 
 #include "floatingclip.moc"

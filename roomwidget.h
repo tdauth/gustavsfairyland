@@ -7,6 +7,7 @@
 #include <QtCore/QTimer>
 #include <QtMultimedia/QSoundEffect>
 
+class GameModeMoving;
 class Door;
 class FloatingClip;
 
@@ -25,11 +26,14 @@ class RoomWidget : public QWidget
 
 	public slots:
 		void changeWind();
+		void updatePaint();
 
 	public:
 		typedef QVector<Door*> Doors;
 
-		RoomWidget(QWidget* parent, Qt::WindowFlags f = 0);
+		RoomWidget(GameModeMoving *gameMode, QWidget* parent, Qt::WindowFlags f = 0);
+
+		GameModeMoving* gameMode() const;
 
 		void pause();
 		void start();
@@ -39,6 +43,7 @@ class RoomWidget : public QWidget
 		FloatingClip *floatingClip() const;
 
 	protected:
+		/// Repaints the room widget and the doors as well as the floating clip.
 		virtual void paintEvent(QPaintEvent *event) override;
 		/// Catches all clicks.
 		virtual void mousePressEvent(QMouseEvent *event) override;
@@ -47,8 +52,10 @@ class RoomWidget : public QWidget
 		void failSoundPlayingChanged();
 
 	private:
+		GameModeMoving *m_gameMode;
 		std::random_device rd; // obtain a random number from hardware
 		QTimer *m_windTimer;
+		QTimer *m_paintTimer; // repaints the whole room widget with all doors and the floating clip
 		Doors m_doors;
 		FloatingClip *m_floatingClip;
 		/// This sound effect is played whenever the player misses a click.
@@ -56,6 +63,11 @@ class RoomWidget : public QWidget
 		bool m_playNewFailSound;
 		QStringList m_failSoundPaths;
 };
+
+inline GameModeMoving* RoomWidget::gameMode() const
+{
+	return this->m_gameMode;
+}
 
 inline const RoomWidget::Doors RoomWidget::doors() const
 {

@@ -7,5 +7,6 @@ const int FLOATING_CLIP_UPDATE_INTERVAL_MS = 1;
 const int FLOATING_CLIP_PIXELS_PER_MS = 1;
 const int FLOATING_CLIP_SPEED = FLOATING_CLIP_UPDATE_INTERVAL_MS * FLOATING_CLIP_PIXELS_PER_MS;
 const int ROOM_WIND_CHANGE_INTERVAL_MS = 350; /// This constant defines how often the wind changes its direction.
+const int ROOM_REPAINT_INTERVAL_MS = 200; /// This constant defines how often the complete room widget with doors and floating clip is repainted.
 
 #endif
