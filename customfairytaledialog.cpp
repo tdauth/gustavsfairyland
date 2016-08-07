@@ -43,21 +43,3 @@ void CustomFairytaleDialog::clear()
 
 	qDebug() << "After the rest";
 }
-
-void CustomFairytaleDialog::closeEvent(QCloseEvent *event)
-{
-	qDebug() << "Before parent event";
-
-	QDialog::closeEvent(event);
-
-	qDebug() << "Before check";
-
-	if (this->m_app->isRunning() && this->m_app->isPaused())
-	{
-		qDebug() << "Unpause game";
-		// unpause game
-		this->m_app->pauseGame();
-	}
-
-	qDebug() << "After check";
-}

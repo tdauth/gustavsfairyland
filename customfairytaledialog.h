@@ -29,9 +29,6 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 		void clear();
 
-	protected:
-		virtual void closeEvent(QCloseEvent *event) override;
-
 	private:
 		typedef QList<IconButton*> ClipButtons;
 

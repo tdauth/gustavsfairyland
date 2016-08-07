@@ -52,6 +52,13 @@ class RoomWidget : public QWidget
 		void failSoundPlayingChanged();
 
 	private:
+		/**
+		 * Only plays a random sound from the given list \p soundEffects if the last played sound did already finish.
+		 * Otherwise too many sounds will overlay each other.
+		 * \param soundEffects A list of possible file paths for the sound which is played. The path of the actual played sound is choosen randomly.
+		 */
+		void playSoundFromList(const QStringList &soundEffects);
+
 		GameModeMoving *m_gameMode;
 		std::random_device rd; // obtain a random number from hardware
 		QTimer *m_windTimer;
@@ -62,6 +69,7 @@ class RoomWidget : public QWidget
 		QSoundEffect m_failSound;
 		bool m_playNewFailSound;
 		QStringList m_failSoundPaths;
+		QStringList m_successSoundPaths;
 };
 
 inline GameModeMoving* RoomWidget::gameMode() const

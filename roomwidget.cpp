@@ -91,8 +91,9 @@ void RoomWidget::changeWind()
 
 void RoomWidget::updatePaint()
 {
-	qDebug() << "Repaint";
+	//qDebug() << "Repaint";
 	this->repaint();
+	//qDebug() << "Repaint end";
 }
 
 RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
@@ -110,6 +111,9 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent, Qt::WindowFlag
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck3.wav");
 	this->m_failSound.setSource(QUrl(m_failSoundPaths.front()));
+
+	m_successSoundPaths.push_back("qrc:/resources/success1.wav");
+	m_successSoundPaths.push_back("qrc:/resources/success2.wav");
 
 	connect(&this->m_failSound, &QSoundEffect::playingChanged, this, &RoomWidget::failSoundPlayingChanged);
 
@@ -143,7 +147,7 @@ void RoomWidget::resume()
 void RoomWidget::paintEvent(QPaintEvent *event)
 {
 	QWidget::paintEvent(event);
-	qDebug() << "Paint event";
+	//qDebug() << "Paint event";
 
 	QPainter painter;
 	painter.begin(this);
@@ -161,7 +165,7 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 
 	painter.end();
 
-	qDebug() << "Paint event end";
+	//qDebug() << "Paint event end";
 }
 
 void RoomWidget::mousePressEvent(QMouseEvent* event)
@@ -170,18 +174,14 @@ void RoomWidget::mousePressEvent(QMouseEvent* event)
 
 	if (this->m_floatingClip->contains(event->pos()))
 	{
+		playSoundFromList(m_successSoundPaths);
+
 		emit gotIt();
 	}
 	// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
-	else if (m_playNewFailSound)
+	else
 	{
-		m_playNewFailSound = false;
-		std::mt19937 eng(rd()); // seed the generator
-		std::uniform_int_distribution<> distr(0, m_failSoundPaths.size() - 1); // define the range
-		const int value = distr(eng);
-
-		m_failSound.setSource(QUrl(m_failSoundPaths[value]));
-		m_failSound.play();
+		playSoundFromList(m_failSoundPaths);
 	}
 }
 
@@ -194,6 +194,19 @@ void RoomWidget::failSoundPlayingChanged()
 	}
 }
 
+void RoomWidget::playSoundFromList(const QStringList &soundEffects)
+{
+	if (m_playNewFailSound)
+	{
+		m_playNewFailSound = false;
+		std::mt19937 eng(rd()); // seed the generator
+		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
+		const int value = distr(eng);
+
+		m_failSound.setSource(QUrl(soundEffects[value]));
+		m_failSound.play();
+	}
+}
 
 
 #include "roomwidget.moc"

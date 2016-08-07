@@ -325,10 +325,8 @@ void fairytale::win()
 	QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
-	if (this->customFairytaleDialog()->exec() == QDialog::Rejected)
-	{
-		this->cleanupAfterOneGame();
-	}
+	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
+	this->cleanupAfterOneGame();
 }
 
 void fairytale::nextTurn()
