@@ -11,9 +11,10 @@ void CustomFairytaleDialog::addClip(Clip *clip)
 	IconButton *button = new IconButton(this);
 	this->scrollAreaWidgetContents->layout()->addWidget(button);
 	this->m_clipButtons.push_back(button);
-	button->setFile(clip->imageUrl().toLocalFile());
 	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	button->setEnabled(false);
+	button->setMaximumSize(QSize(64, 64));
+	button->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
+	button->setEnabled(true); // dont grey out the clip icon
 	this->playFinalVideoPushButton->setEnabled(true);
 }
 
