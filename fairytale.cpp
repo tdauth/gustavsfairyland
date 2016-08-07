@@ -27,6 +27,11 @@
 
 void fairytale::newGame()
 {
+	if (this->gameMode() != nullptr && this->isRunning())
+	{
+		this->cleanupGame();
+	}
+
 	this->m_timer.stop();
 
 	clearSolution();
@@ -107,11 +112,7 @@ void fairytale::cancelGame()
 
 	if (QMessageBox::question(this, tr("Cancel Game?"), tr("Do you want to cancel the game?")) == QMessageBox::Yes)
 	{
-		this->gameMode()->end();
-		this->cleanupAfterOneGame();
-		this->timeLabel->setText("");
-		this->descriptionLabel->setText("");
-		this->m_player->hide();
+		this->cleanupGame();
 	}
 	else
 	{
@@ -313,10 +314,7 @@ void fairytale::about()
 
 void fairytale::gameOver()
 {
-	this->gameMode()->end();
-	this->cleanupAfterOneGame();
-	this->timeLabel->setText("");
-	this->descriptionLabel->setText("");
+	this->cleanupGame();
 	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
 }
 
@@ -471,8 +469,9 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 
 void fairytale::timerTick()
 {
+	const QTimer *sender = dynamic_cast<QTimer*>(QObject::sender());
 	//qDebug() << "Tick";
-	this->m_remainingTime -= 1000;
+	this->m_remainingTime -= sender->interval();
 	this->updateTimeLabel();
 
 	if (this->m_remainingTime <= 0)
@@ -486,6 +485,8 @@ void fairytale::timerTick()
 void fairytale::updateTimeLabel()
 {
 	this->timeLabel->setText(tr("%1 Seconds").arg(QString::number(this->m_remainingTime / 1000)));
+	// Make sure the label is update immediately.
+	this->timeLabel->repaint();
 }
 
 void fairytale::addCurrentSolution()
@@ -519,6 +520,15 @@ QString fairytale::description(int turn, Clip *clip)
 	}
 
 	return description;
+}
+
+void fairytale::cleanupGame()
+{
+	this->gameMode()->end();
+	this->cleanupAfterOneGame();
+	this->timeLabel->setText("");
+	this->descriptionLabel->setText("");
+	this->m_player->hide();
 }
 
 void fairytale::cleanupAfterOneGame()
