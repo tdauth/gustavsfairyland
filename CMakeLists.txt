@@ -73,19 +73,32 @@ install(TARGETS fairytale RUNTIME DESTINATION bin)
 
 install(FILES fairytale.desktop DESTINATION share/applications)
 
+if (WIN32)
+    get_target_property(QtCore_location Qt5::Core LOCATION)
+    get_filename_component(QtCore_dir "$[QtCore_location}" DIRECTORY)
+    message(STATUS "${QtCore_location}")
+    install(FILES ${QtCore_location} DESTINATION bin)
+    install(FILES "${QtCore_dir}/Qt5Cored.dll" DESTINATION bin)
+    #install(TARGETS Qt5::Core DESTINATION bin)
+endif ()
+
 add_subdirectory(test)
 
 #qt5_add_translation( qm_files ts_files ... )
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "CPack Component Example")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "gustavsfairyland")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+
+# NSIS Windows
 set(CPACK_NSIS_MODIFY_PATH ON)
+set(CPACK_CREATE_DESKTOP_LINKS "fairytale")
 
 # Fedora package
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
