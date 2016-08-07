@@ -139,7 +139,7 @@ void GameModeOneOutOfFour::afterNarrator()
 	for (int i = 0; i < this->m_currentClips.size(); ++i)
 	{
 		this->m_buttons[i]->show();
-		this->m_buttons[i]->setFile(this->m_currentClips[i]->imageUrl().toLocalFile());
+		this->m_buttons[i]->setFile(this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl()).toLocalFile());
 		this->m_buttons[i]->setEnabled(true);
 	}
 
