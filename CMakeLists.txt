@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(fairytale)
 
+# install libs
+include(InstallRequiredSystemLibraries)
+
 enable_testing()
 
 add_compile_options(-std=c++11 -Wall)
@@ -73,13 +76,29 @@ install(TARGETS fairytale RUNTIME DESTINATION bin)
 
 install(FILES fairytale.desktop DESTINATION share/applications)
 
+
+# Installs all required Qt binary files on Windows. This should be a temporary solution. It would be much better if a CMake module would do this.
 if (WIN32)
-    get_target_property(QtCore_location Qt5::Core LOCATION)
-    get_filename_component(QtCore_dir "$[QtCore_location}" DIRECTORY)
-    message(STATUS "${QtCore_location}")
-    install(FILES ${QtCore_location} DESTINATION bin)
-    install(FILES "${QtCore_dir}/Qt5Cored.dll" DESTINATION bin)
-    #install(TARGETS Qt5::Core DESTINATION bin)
+    set(qt_binary_files
+        qt/Qt5Core.dll
+        qt/Qt5Cored.dll
+        qt/Qt5Gui.dll
+        qt/Qt5Guid.dll
+        qt/Qt5Multimedia.dll
+        qt/Qt5Multimediad.dll
+        qt/Qt5Networkd.dll
+        qt/Qt5Network.dll
+        qt/Qt5MultimediaWidgetsd.dll
+        qt/Qt5MultimediaWidgets.dll
+        qt/Qt5OpenGLd.dll
+        qt/Qt5OpenGL.dll
+        qt/Qt5Widgetsd.dll
+        qt/Qt5Widgets.dll
+        qt/Qt5Xml.dll
+        qt/Qt5Xmld.dll
+    )
+    install(FILES ${qt_binary_files} DESTINATION bin)
+    install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION bin COMPONENT Libraries)
 endif ()
 
 add_subdirectory(test)
@@ -109,6 +128,5 @@ set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5
 # Debian
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
-
 
 include(CPack)
