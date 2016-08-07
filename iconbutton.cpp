@@ -15,9 +15,15 @@ void IconButton::updateIcon()
 {
 	if (!file().isEmpty())
 	{
-		const int width = this->size().width() * 0.9;
-		const int height = this->size().height() * 0.9;
-		const bool useWidth = width < height;
+		 // keep the ratio otherwise the image looks like shit
+		const double factor = 0.98;
+		const QPixmap scaled = m_pixmap.scaled(this->size().width() * factor, this->size().height() * factor, Qt::KeepAspectRatio);
+		this->setIconSize(QSize(scaled.width(), scaled.height()));
+		this->setIcon(QIcon(scaled));
+		/*
+		const int width = this->size().width();
+		const int height = this->size().height();
+		const bool useWidth = m_pixmap.width() > m_pixmap.height();
 		const int value = useWidth ? width : height;
 		this->setIconSize(QSize(value, value));
 
@@ -30,6 +36,7 @@ void IconButton::updateIcon()
 		{
 			this->setIcon(QIcon(m_pixmap.scaledToHeight(value))); // keep the ratio otherwise th image looks like shit
 		}
+		*/
 	}
 	else
 	{
