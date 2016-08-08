@@ -6,6 +6,7 @@
 #include "floatingclip.h"
 #include "speed.h"
 #include "gamemodemoving.h"
+#include "fairytale.h"
 
 void RoomWidget::changeWind()
 {
@@ -96,7 +97,7 @@ void RoomWidget::updatePaint()
 	//qDebug() << "Repaint end";
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

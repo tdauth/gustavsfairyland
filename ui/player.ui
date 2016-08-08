@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>234</height>
+    <width>137</width>
+    <height>128</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,6 +38,9 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <item>
         <widget class="QPushButton" name="skipPushButton">
          <property name="text">

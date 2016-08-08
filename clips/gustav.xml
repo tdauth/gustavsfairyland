@@ -31,6 +31,12 @@
                 <narrator>./steampunk/00069.MTS</narrator>
 		<description>der Pestarzt</description>
 	</clip>
+        <clip isPerson="true">
+                <image>./mahler/mahler.jpg</image>
+                <video>./mahler/mahler.avi</video>
+                <narrator>./mahler/mahler.avi</narrator>
+                <description>Gustav Mahler</description>
+        </clip>
 
 	<!-- acts -->
 	<clip isPerson="false">

@@ -42,6 +42,8 @@ int main(int argc, char** argv)
 	qInstallMessageHandler(myMessageOutput); //install : set the callback
 	QApplication app(argc, argv);
 	fairytale fairytale;
-	fairytale.showFullScreen();
+	// TODO in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call!
+	//fairytale.showFullScreen();
+	fairytale.show();
 	return app.exec();
 }

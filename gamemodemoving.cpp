@@ -96,8 +96,8 @@ void GameModeMoving::end()
 {
 	// Make sure the timers stop
 	this->m_roomWidget->pause();
-	delete this->m_roomWidget;
-	this->m_roomWidget = nullptr;
+	// dont delete the room widget, which leads to segmentation fault, since the end() method is called from the slot of the signal gotIt()
+	this->m_roomWidget->hide();
 
 	this->m_currentSolution = nullptr;
 	this->m_remainingClips.clear();
@@ -106,9 +106,18 @@ void GameModeMoving::end()
 
 void GameModeMoving::start()
 {
-	this->m_roomWidget = new RoomWidget(this, this->app());
-	connect(this->m_roomWidget, SIGNAL(gotIt()), this, SLOT(gotIt()));
-	this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
+	// the room widget is cached
+	if (this->m_roomWidget == nullptr)
+	{
+		this->m_roomWidget = new RoomWidget(this, this->app()->centralWidget());
+		connect(this->m_roomWidget, SIGNAL(gotIt()), this, SLOT(gotIt()));
+		this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
+	}
+	else
+	{
+		this->m_roomWidget->show();
+		this->m_roomWidget->setEnabled(true);
+	}
 
 	this->m_remainingClips.clear();
 

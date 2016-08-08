@@ -230,7 +230,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
-
 	connect(&this->m_timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
@@ -246,25 +245,59 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 
 	QSettings settings("fairytale");
+	QDir defaultClipsDir;
+#ifdef Q_OS_WIN
 	const QDir currentDir(QDir::currentPath());
+	defaultClipsDir = QDir(currentDir.filePath("../clips"));
+#else
+	defaultClipsDir = QDir("/usr/local/clips");
+#endif
 	// the default path is the "clips" sub directory
-	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", currentDir.filePath("clips")).toString());
+	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
+
 	const int size = settings.beginReadArray("clipPackages");
 
-	for (int i = 0; i < size; ++i)
+	if (size > 0)
 	{
-		settings.setArrayIndex(i);
-		const QString filePath = settings.value("filePath").toString();
-
-		ClipPackage *package = new ClipPackage(this);
-
-		if (package->loadClipsFromFile(filePath))
+		for (int i = 0; i < size; ++i)
 		{
-			this->m_clipPackages.push_back(package);
+			settings.setArrayIndex(i);
+			const QString filePath = settings.value("filePath").toString();
+
+			ClipPackage *package = new ClipPackage(this);
+
+			if (package->loadClipsFromFile(filePath))
+			{
+				this->m_clipPackages.push_back(package);
+			}
+			else
+			{
+				delete package;
+			}
+		}
+	}
+	// default package
+	else
+	{
+		const QString filePath = defaultClipsDir.filePath("gustav.xml");
+		const QFileInfo fileInfo(filePath);
+
+		if (fileInfo.exists() && fileInfo.isReadable())
+		{
+			ClipPackage *package = new ClipPackage(this);
+
+			if (package->loadClipsFromFile(filePath))
+			{
+				this->m_clipPackages.push_back(package);
+			}
+			else
+			{
+				delete package;
+			}
 		}
 		else
 		{
-			delete package;
+			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
 		}
 	}
 
@@ -326,7 +359,8 @@ void fairytale::win()
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
-	this->cleanupAfterOneGame();
+	// TEST
+	//this->cleanupAfterOneGame();
 }
 
 void fairytale::nextTurn()
@@ -522,11 +556,11 @@ QString fairytale::description(int turn, Clip *clip)
 
 void fairytale::cleanupGame()
 {
+	this->m_player->hide();
 	this->gameMode()->end();
 	this->cleanupAfterOneGame();
 	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");
-	this->m_player->hide();
 }
 
 void fairytale::cleanupAfterOneGame()

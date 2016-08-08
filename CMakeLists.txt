@@ -76,6 +76,17 @@ install(TARGETS fairytale RUNTIME DESTINATION bin)
 
 install(FILES fairytale.desktop DESTINATION share/applications)
 
+# the default fairytale
+install(FILES clips/gustav.xml DESTINATION clips)
+install(FILES clips/crazy/runterholer.jpg DESTINATION clips/crazy/)
+install(FILES clips/crazy/runterholer.mkv DESTINATION clips/crazy/)
+install(FILES clips/opajott/opajott1.mkv DESTINATION clips/opajott/)
+install(FILES clips/opajott/opajott1.jpg DESTINATION clips/opajott/)
+install(FILES clips/steampunk/steampunk.jpg DESTINATION clips/steampunk/)
+install(FILES clips/vampir/vampir.png DESTINATION clips/vampir/)
+install(FILES clips/werwolf/werwolf.png DESTINATION clips/werwolf/)
+install(FILES clips/mahler/mahler.jpg DESTINATION clips/mahler/)
+install(FILES clips/mahler/mahler.avi DESTINATION clips/mahler/)
 
 # Installs all required Qt binary files on Windows. This should be a temporary solution. It would be much better if a CMake module would do this.
 if (WIN32)

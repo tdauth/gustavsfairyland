@@ -14,6 +14,7 @@ class IconButton : public QPushButton
 
 	public:
 		explicit IconButton(QWidget *parent = 0);
+		virtual ~IconButton();
 
 		void setFile(const QString &file);
 		QString file() const;

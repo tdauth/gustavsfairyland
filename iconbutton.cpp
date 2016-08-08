@@ -11,6 +11,10 @@ IconButton::IconButton(QWidget *parent) : QPushButton(parent)
 	this->setMinimumSize(64, 64);
 }
 
+IconButton::~IconButton()
+{
+}
+
 void IconButton::updateIcon()
 {
 	if (!file().isEmpty())

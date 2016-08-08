@@ -33,6 +33,14 @@ void GameModeOneOutOfFour::clickCard()
 
 void GameModeOneOutOfFour::start()
 {
+
+	for (int i = 0; i < this->m_buttons.size(); ++i)
+	{
+		delete this->m_buttons[i];
+	}
+
+	this->m_buttons.clear();
+
 	this->m_remainingClips.clear();
 
 	foreach (Clip *clip, app()->clipPackage()->clips())
@@ -65,12 +73,12 @@ void GameModeOneOutOfFour::start()
 
 void GameModeOneOutOfFour::end()
 {
+	// dont delete buttons since their signal is connected to clickCard() from which this method might indirectly be called
 	for (int i = 0; i < this->size(); ++i)
 	{
-		delete this->m_buttons[i];
+		this->m_buttons[i]->hide();
 	}
 
-	this->m_buttons.clear();
 	this->m_currentClips.clear();
 	this->m_currentSolution = nullptr;
 	this->m_remainingClips.clear();

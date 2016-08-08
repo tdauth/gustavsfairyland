@@ -14,6 +14,12 @@
    <string>Gustav's Fairyland</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="2" column="0" rowspan="5">
      <layout class="QVBoxLayout" name="verticalLayout">

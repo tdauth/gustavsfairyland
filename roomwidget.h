@@ -31,7 +31,7 @@ class RoomWidget : public QWidget
 	public:
 		typedef QVector<Door*> Doors;
 
-		RoomWidget(GameModeMoving *gameMode, QWidget* parent, Qt::WindowFlags f = 0);
+		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
 
 		GameModeMoving* gameMode() const;
 
