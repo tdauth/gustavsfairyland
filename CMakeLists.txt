@@ -92,33 +92,15 @@ install(FILES clips/marry.jpg DESTINATION clips)
 install(FILES clips/torture.png DESTINATION clips)
 install(FILES clips/burn.jpg DESTINATION clips)
 
-# Installs all required Qt binary files on Windows. This should be a temporary solution. It would be much better if a CMake module would do this.
+# Installs all required Qt binary files on Windows.
+# The program windeployqt generates all files into the binary directory which have to be installed
 if (WIN32)
-    set(qt_binary_files
-        qt/Qt5Core.dll
-        qt/Qt5Cored.dll
-        qt/Qt5Gui.dll
-        qt/Qt5Guid.dll
-        qt/Qt5Multimedia.dll
-        qt/Qt5Multimediad.dll
-        qt/Qt5Networkd.dll
-        qt/Qt5Network.dll
-        qt/Qt5MultimediaWidgetsd.dll
-        qt/Qt5MultimediaWidgets.dll
-        qt/Qt5OpenGLd.dll
-        qt/Qt5OpenGL.dll
-        qt/Qt5Widgetsd.dll
-        qt/Qt5Widgets.dll
-        qt/Qt5Xml.dll
-        qt/Qt5Xmld.dll
-    )
-    install(FILES ${qt_binary_files} DESTINATION bin)
-    install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION bin COMPONENT Libraries)
+    find_program(WINDEPLOYQT_PROGRAM windeployqt)
+    add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairytale> --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairytale)
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
 endif ()
 
 add_subdirectory(test)
-
-#qt5_add_translation( qm_files ts_files ... )
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
@@ -138,7 +120,7 @@ set(CPACK_CREATE_DESKTOP_LINKS "fairytale")
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_GROUP "games")
 set(CPACK_RPM_PACKAGE_URL "http://wc3lib.org")
-set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1")
+set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1")
 
 # Debian
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
