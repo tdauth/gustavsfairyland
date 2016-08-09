@@ -40,28 +40,28 @@
 
 	<!-- acts -->
 	<clip isPerson="false">
-                <image>./1. belagerung von lissabon.jpg</image>
+                <image>./siege.jpg</image>
                 <video>./hallo.mkv</video>
                 <narrator>./peter.mkv</narrator>
 		<description>sieging a castle</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>./Hochzeit_08.jpg</image>
+                <image>./marry.jpg</image>
                 <video>./hallo.mkv</video>
                 <narrator>./peter.mkv</narrator>
 		<description>marry</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>./Radern_(Variante_mit_Eisenstange).png</image>
+                <image>./torture.png</image>
                 <video>./hallo.mkv</video>
                 <narrator>./peter.mkv</narrator>
 		<description>are executed</description>
 	</clip>
 
 	<clip isPerson="false">
-                <image>./scheiterhaufen.jpg</image>
+                <image>./burn.jpg</image>
                 <video>./hallo.mkv</video>
                 <narrator>./peter.mkv</narrator>
 		<description>are burned</description>

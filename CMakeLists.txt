@@ -87,6 +87,10 @@ install(FILES clips/vampir/vampir.png DESTINATION clips/vampir/)
 install(FILES clips/werwolf/werwolf.png DESTINATION clips/werwolf/)
 install(FILES clips/mahler/mahler.jpg DESTINATION clips/mahler/)
 install(FILES clips/mahler/mahler.avi DESTINATION clips/mahler/)
+install(FILES clips/siege.jpg DESTINATION clips)
+install(FILES clips/marry.jpg DESTINATION clips)
+install(FILES clips/torture.png DESTINATION clips)
+install(FILES clips/burn.jpg DESTINATION clips)
 
 # Installs all required Qt binary files on Windows. This should be a temporary solution. It would be much better if a CMake module would do this.
 if (WIN32)
