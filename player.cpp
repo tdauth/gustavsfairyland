@@ -12,13 +12,14 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
 
 	// expanding makes sure that it uses the maximum possible size
-	this->m_videoWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-	this->m_videoWidget->setMinimumSize(QSize(240, 240)); // TODO set to maximum resolution!
+	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	this->m_videoWidget->setMinimumSize(QSize(240, 240));
 	videoPlayerLayout->addWidget(m_videoWidget);
 	m_videoWidget->show();
 
 	volumeSlider->setValue(this->m_mediaPlayer->volume());
 	connect(volumeSlider, SIGNAL(valueChanged(int)), this->m_mediaPlayer, SLOT(setVolume(int)));
+	this->m_mediaPlayer->setVolume(volumeSlider->value());
 
 	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
 	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGame()));

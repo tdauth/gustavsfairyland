@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>274</width>
-    <height>263</height>
+    <height>304</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>2060</width>
-    <height>1569</height>
+    <width>274</width>
+    <height>304</height>
    </size>
   </property>
   <property name="windowTitle">

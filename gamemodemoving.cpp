@@ -53,6 +53,7 @@ void GameModeMoving::nextTurn()
 			}
 		}
 
+		// When no more clips are remaining, the game has been won.
 		if (copy.isEmpty())
 		{
 			// Disable click events and timers
@@ -62,6 +63,7 @@ void GameModeMoving::nextTurn()
 			return;
 		}
 
+		// Select a random clip.
 		const int index = qrand() % copy.size();
 		m_currentSolution = copy.at(index);
 		m_remainingClips.removeAll(m_currentSolution);

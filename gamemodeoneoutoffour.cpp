@@ -122,6 +122,7 @@ void GameModeOneOutOfFour::nextTurn()
 		{
 			this->m_buttons[i]->setIcon(QIcon());
 			this->m_buttons[i]->setEnabled(false);
+			this->m_buttons[i]->hide();
 		}
 
 		this->fillCurrentClips();
@@ -146,9 +147,7 @@ void GameModeOneOutOfFour::afterNarrator()
 {
 	for (int i = 0; i < this->m_currentClips.size(); ++i)
 	{
-		this->m_buttons[i]->show();
-		this->m_buttons[i]->setFile(this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl()).toLocalFile());
-		this->m_buttons[i]->setEnabled(true);
+		this->m_buttons[i]->show(); // first show and resize
 	}
 
 	for (int i = this->m_currentClips.size(); i < this->size(); ++i)
@@ -156,6 +155,13 @@ void GameModeOneOutOfFour::afterNarrator()
 		this->m_buttons[i]->setFile(QString());
 		this->m_buttons[i]->setEnabled(false);
 		this->m_buttons[i]->hide();
+	}
+
+	// set the pixmaps after adding all buttons so the resizing is only done once.
+	for (int i = 0; i < this->m_currentClips.size(); ++i)
+	{
+		this->m_buttons[i]->setFile(this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl()).toLocalFile());
+		this->m_buttons[i]->setEnabled(true);
 	}
 }
 
