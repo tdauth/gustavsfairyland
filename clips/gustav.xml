@@ -15,20 +15,20 @@
 	</clip>
 	<clip isPerson="true">
                 <image>./vampir/vampir.png</image>
-                <video>./vampir/00062.MTS</video>
-                <narrator>./vampir/00062.MTS</narrator>
+                <video>./vampir/vampir.avi</video>
+                <narrator>./vampir/vampir.avi</narrator>
 		<description>der Vampir</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./werwolf/werwolf.png</image>
-                <video>./werwolf/00067.MTS</video>
-                <narrator>./werwolf/00067.MTS</narrator>
+                <video>./werwolf/werwolf.avi</video>
+                <narrator>./werwolf/werwolf.avi</narrator>
 		<description>der Werwolf</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./steampunk/steampunk.jpg</image>
-                <video>./steampunk/00069.MTS</video>
-                <narrator>./steampunk/00069.MTS</narrator>
+                <video>./steampunk/steampunk.avi</video>
+                <narrator>./steampunk/steampunk.avi</narrator>
 		<description>der Pestarzt</description>
 	</clip>
         <clip isPerson="true">

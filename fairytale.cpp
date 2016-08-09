@@ -493,6 +493,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			this->m_completeSolutionIndex = 0;
 
 			// The dialog has to disappear, after the player watched all final clips.
+			this->m_player->hide();
 			this->customFairytaleDialog()->hide();
 			this->cleanupAfterOneGame();
 		}
