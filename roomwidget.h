@@ -46,7 +46,10 @@ class RoomWidget : public QWidget
 		/// Repaints the room widget and the doors as well as the floating clip.
 		virtual void paintEvent(QPaintEvent *event) override;
 		/// Catches all clicks.
-		virtual void mousePressEvent(QMouseEvent *event) override;
+		/**
+		 * Use a release event, otherwise the mouse position is corrupted after showing the player in the slot.
+		 */
+		virtual void mouseReleaseEvent(QMouseEvent *event) override;
 
 	private slots:
 		void failSoundPlayingChanged();

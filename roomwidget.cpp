@@ -172,9 +172,9 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	//qDebug() << "Paint event end";
 }
 
-void RoomWidget::mousePressEvent(QMouseEvent* event)
+void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	QWidget::mousePressEvent(event);
+	QWidget::mouseReleaseEvent(event);
 
 	if (this->m_floatingClip->contains(event->pos()))
 	{
