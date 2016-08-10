@@ -6,6 +6,7 @@
 #include <QtWidgets/QWidget>
 #include <QtCore/QTimer>
 #include <QtMultimedia/QSoundEffect>
+#include <QSvgRenderer>
 
 class GameModeMoving;
 class Door;
@@ -50,9 +51,7 @@ class RoomWidget : public QWidget
 		 * Use a release event, otherwise the mouse position is corrupted after showing the player in the slot.
 		 */
 		virtual void mouseReleaseEvent(QMouseEvent *event) override;
-
-	private slots:
-		void failSoundPlayingChanged();
+		virtual void resizeEvent(QResizeEvent *event) override;
 
 	private:
 		/**
@@ -68,11 +67,10 @@ class RoomWidget : public QWidget
 		QTimer *m_paintTimer; // repaints the whole room widget with all doors and the floating clip
 		Doors m_doors;
 		FloatingClip *m_floatingClip;
-		/// This sound effect is played whenever the player misses a click.
-		QSoundEffect m_failSound;
-		bool m_playNewFailSound;
 		QStringList m_failSoundPaths;
 		QStringList m_successSoundPaths;
+		QSvgRenderer m_woodSvg;
+		QImage m_woodImage;
 };
 
 inline GameModeMoving* RoomWidget::gameMode() const

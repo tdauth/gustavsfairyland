@@ -97,7 +97,7 @@ void RoomWidget::updatePaint()
 	//qDebug() << "Repaint end";
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -111,12 +111,9 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(pare
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck3.wav");
-	this->m_failSound.setSource(QUrl(m_failSoundPaths.front()));
 
 	m_successSoundPaths.push_back("qrc:/resources/success1.wav");
 	m_successSoundPaths.push_back("qrc:/resources/success2.wav");
-
-	connect(&this->m_failSound, &QSoundEffect::playingChanged, this, &RoomWidget::failSoundPlayingChanged);
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
@@ -159,6 +156,8 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	painter.setBrush(brush);
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());
+	// TODO slow
+	//painter.drawImage(0, 0, m_woodImage);
 
 	foreach (Door *door, m_doors)
 	{
@@ -189,27 +188,24 @@ void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 	}
 }
 
-void RoomWidget::failSoundPlayingChanged()
+void RoomWidget::resizeEvent(QResizeEvent* event)
 {
-	if (!m_failSound.isPlaying())
-	{
-		this->m_playNewFailSound = true;
-		qDebug() << "Can play a new sound.";
-	}
+	QWidget::resizeEvent(event);
+
+	qDebug() << "Resize SVG";
+	// Render SVG image whenever it is necessary
+	m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
+	QPainter painter(&m_woodImage);
+	m_woodSvg.render(&painter);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
-	if (m_playNewFailSound)
-	{
-		m_playNewFailSound = false;
-		std::mt19937 eng(rd()); // seed the generator
-		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
-		const int value = distr(eng);
-
-		m_failSound.setSource(QUrl(soundEffects[value]));
-		m_failSound.play();
-	}
+	std::mt19937 eng(rd()); // seed the generator
+	std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
+	const int value = distr(eng);
+	qDebug() << "Play sound:" << soundEffects[value];
+	gameMode()->app()->playSound(QUrl(soundEffects[value]));
 }
 
 

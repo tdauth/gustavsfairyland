@@ -224,6 +224,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playCompleteSolution(false)
 , m_paused(false)
 , m_isRunning(false)
+, m_audioPlayer(new QMediaPlayer(this))
+, m_playNewSound(true)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
@@ -245,6 +247,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
+
+	m_audioPlayer->setVolume(100);
+	m_audioPlayer->setAudioRole(QAudio::GameRole);
+	connect(this->m_audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishAudio(QMediaPlayer::State)));
 
 	QSettings settings("fairytale");
 	QDir defaultClipsDir;
@@ -502,6 +508,14 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 	}
 }
 
+void fairytale::finishAudio(QMediaPlayer::State state)
+{
+	if (state == QMediaPlayer::StoppedState)
+	{
+		m_playNewSound = true;
+	}
+}
+
 void fairytale::timerTick()
 {
 	const QTimer *sender = dynamic_cast<QTimer*>(QObject::sender());
@@ -583,6 +597,17 @@ QString fairytale::description(int turn, Clip *clip, bool markBold)
 	}
 
 	return description;
+}
+
+void fairytale::playSound(const QUrl &url)
+{
+	if (m_playNewSound)
+	{
+		m_playNewSound = false;
+		m_audioPlayer->setMedia(url);
+		m_audioPlayer->setVolume(50);
+		m_audioPlayer->play();
+	}
 }
 
 void fairytale::cleanupGame()

@@ -115,8 +115,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QString description(int turn, Clip *clip, bool markBold = true);
 
+		void playSound(const QUrl &url);
+
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
+		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
 
 	private:
@@ -188,6 +191,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		bool m_paused;
 		bool m_isRunning;
+
+		QMediaPlayer *m_audioPlayer;
+		bool m_playNewSound;
 
 		/**
 		 * The currently played game mode.

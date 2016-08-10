@@ -25,6 +25,7 @@ find_package(Qt5Multimedia)
 find_package(Qt5Xml)
 find_package(Qt5MultimediaWidgets)
 find_package(Qt5Xml)
+find_package(Qt5Svg)
 
 set(fairyland_SRCS
 	aboutdialog.cpp
@@ -69,10 +70,10 @@ qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 
 add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
+target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
-target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
+target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 install(TARGETS fairyland RUNTIME DESTINATION bin)
 
