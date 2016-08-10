@@ -136,4 +136,25 @@
                 <narrator>./well/well.mkv</narrator>
 		<description>tranken von einem Brunnen</description>
 	</clip>
+
+	<clip isPerson="false">
+                <image>./castle/castle.jpg</image>
+                <video>./castle/castle.mkv</video>
+                <narrator>./castle/castle.mkv</narrator>
+		<description>lebten in einer Burg</description>
+	</clip>
+
+	<clip isPerson="false">
+                <image>./tower/tower.jpg</image>
+                <video>./tower/tower.mkv</video>
+                <narrator>./tower/tower.mkv</narrator>
+		<description>hungerten im Turm</description>
+	</clip>
+
+	<clip isPerson="false">
+                <image>./throne/throne.jpg</image>
+                <video>./throne/throne.mkv</video>
+                <narrator>./throne/throne.mkv</narrator>
+		<description>bestiegen den Thron</description>
+	</clip>
 </clips>
