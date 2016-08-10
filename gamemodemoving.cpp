@@ -21,8 +21,9 @@ Clip* GameModeMoving::solution()
 
 long int GameModeMoving::time()
 {
-	const int factor = this->app()->clipPackage()->rounds() - this->app()->turns();
-	return 2000 * factor + 4000;
+	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+
+	return 2000 * factor + 6000;
 }
 
 void GameModeMoving::afterNarrator()

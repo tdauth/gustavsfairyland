@@ -24,6 +24,7 @@
 #include "gamemodemoving.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
+#include "wondialog.h"
 
 void fairytale::newGame()
 {
@@ -225,6 +226,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_isRunning(false)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
+, m_wonDialog(nullptr)
 {
 	this->m_player->hide();
 
@@ -355,7 +357,7 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
-	QMessageBox::information(this, tr("WIN!"), tr("You won the game!!!!"), QMessageBox::Ok);
+	this->wonDialog()->exec();
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
@@ -633,6 +635,16 @@ AboutDialog* fairytale::aboutDialog()
 	}
 
 	return this->m_aboutDialog;
+}
+
+WonDialog* fairytale::wonDialog()
+{
+	if (this->m_wonDialog == nullptr)
+	{
+		this->m_wonDialog = new WonDialog(this, this);
+	}
+
+	return this->m_wonDialog;
 }
 
 

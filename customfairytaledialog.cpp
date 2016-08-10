@@ -22,7 +22,6 @@ void CustomFairytaleDialog::addClip(Clip *clip)
 CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
-	this->textBrowser->setAlignment(Qt::AlignCenter);
 	this->setModal(true);
 
 	connect(this->playFinalVideoPushButton, &QPushButton::clicked, m_app, &fairytale::playFinalVideo);
@@ -76,6 +75,13 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 		text += tr("Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.<br/>Ende").arg(m_clips[0]->description());
 
 		textBrowser->setText(text);
+
+		// Align text at center
+		QTextCursor cursor = textBrowser->textCursor();
+		QTextBlockFormat textBlockFormat = cursor.blockFormat();
+		textBlockFormat.setAlignment(Qt::AlignCenter);
+		cursor.mergeBlockFormat(textBlockFormat);
+		textBrowser->setTextCursor(cursor);
 	}
 
 	QWidget::showEvent(event);

@@ -6,5 +6,6 @@
         <file>resources/fuck3.wav</file>
         <file>resources/success1.wav</file>
         <file>resources/success2.wav</file>
+	<file>resources/won.jpg</file>
     </qresource>
 </RCC>

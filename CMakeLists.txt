@@ -47,6 +47,7 @@ set(fairyland_SRCS
 	iconbutton.cpp
 	roomwidget.cpp
         settingsdialog.cpp
+        wondialog.cpp
 )
 
 set(fairyland_UI
@@ -60,6 +61,7 @@ set(fairyland_UI
         ui/customfairytale.ui
 	ui/gamemodedialog.ui
         ui/settings.ui
+        ui/wondialog.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})

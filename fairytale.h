@@ -22,6 +22,7 @@ class ClipPackageEditor;
 class CustomFairytaleDialog;
 class GameMode;
 class AboutDialog;
+class WonDialog;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -110,6 +111,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QGridLayout* gameAreaLayout() const;
 
 		AboutDialog* aboutDialog();
+		WonDialog* wonDialog();
 
 		QString description(int turn, Clip *clip, bool markBold = true);
 
@@ -193,6 +195,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		GameMode *m_gameMode;
 
 		AboutDialog *m_aboutDialog;
+		WonDialog *m_wonDialog;
 };
 
 inline void fairytale::addClipPackage(ClipPackage* package)
