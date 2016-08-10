@@ -237,7 +237,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionCancelGame, SIGNAL(triggered()), this, SLOT(cancelGame()));
 	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-    connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
+	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
@@ -326,7 +326,7 @@ void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
-	this->m_player->playVideo(this, this->m_completeSolution[index]->narratorVideoUrl(), this->description(index, this->m_completeSolution[index]));
+	this->m_player->playVideo(this, this->m_completeSolution[index]->videoUrl(), this->description(index, this->m_completeSolution[index]));
 }
 
 void fairytale::playFinalVideo()
@@ -476,12 +476,12 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 			this->m_timer.start(1000);
 		}
 		// Play the next final clip of the complete solution.
-		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex < this->m_completeSolution.size())
+		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 		{
 			qDebug() << "Play next final clip";
-			this->playFinalClip(this->m_completeSolutionIndex);
 			// next time play the following clip
 			this->m_completeSolutionIndex++;
+			this->playFinalClip(this->m_completeSolutionIndex);
 		}
 		/*
 		 * Stop playing the complete solution.
@@ -528,7 +528,7 @@ void fairytale::addCurrentSolution()
 	this->m_completeSolution.push_back(this->gameMode()->solution());
 }
 
-QString fairytale::description(int turn, Clip *clip)
+QString fairytale::description(int turn, Clip *clip, bool markBold)
 {
 	QString description;
 
@@ -536,20 +536,48 @@ QString fairytale::description(int turn, Clip *clip)
 	{
 		if (turn == 0)
 		{
-			description = tr("<b>%1</b>").arg(clip->description());
+			if (markBold)
+			{
+				description = tr("<b>%1</b>").arg(clip->description());
+			}
+			else
+			{
+				description = tr("%1").arg(clip->description());
+			}
 		}
 		else if (turn == 1)
 		{
-			description = tr("and <b>%1</b>").arg(clip->description());
+			if (markBold)
+			{
+				description = tr("und <b>%1</b>").arg(clip->description());
+			}
+			else
+			{
+				description = tr("und %1").arg(clip->description());
+			}
 		}
 		else
 		{
-			description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
+			if (markBold)
+			{
+				description = tr("%1 und <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
+			}
+			else
+			{
+				description = tr("%1 und %2").arg(this->m_startPerson->description()).arg(clip->description());
+			}
 		}
 	}
 	else
 	{
-		description = tr("<b>%1</b>").arg(clip->description());
+		if (markBold)
+		{
+			description = tr("<b>%1</b>").arg(clip->description());
+		}
+		else
+		{
+			description = tr("%1").arg(clip->description());
+		}
 	}
 
 	return description;

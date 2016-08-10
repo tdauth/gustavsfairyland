@@ -81,7 +81,7 @@
      <x>0</x>
      <y>0</y>
      <width>428</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -108,8 +108,14 @@
     <addaction name="actionClips"/>
     <addaction name="actionEditor"/>
    </widget>
+   <widget class="QMenu" name="menuErfolge">
+    <property name="title">
+     <string>Erfol&amp;ge</string>
+    </property>
+   </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuSettings"/>
+   <addaction name="menuErfolge"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -168,12 +174,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Cancel Game</string>
+    <string>&amp;Cancel Game</string>
    </property>
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
  </widget>

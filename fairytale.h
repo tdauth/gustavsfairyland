@@ -88,7 +88,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
-        void removeClipPackage(ClipPackage *package);
+		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
 		const ClipPackages& clipPackages() const;
 
@@ -96,6 +96,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void setClipsDir(const QUrl &url);
 		QUrl clipsDir() const;
+
+		int turns() const;
 
 		CustomFairytaleDialog* customFairytaleDialog();
 
@@ -109,6 +111,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		AboutDialog* aboutDialog();
 
+		QString description(int turn, Clip *clip, bool markBold = true);
+
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
 		void timerTick();
@@ -116,7 +120,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 	private:
 		void updateTimeLabel();
 		void addCurrentSolution();
-		QString description(int turn, Clip *clip);
 		void cleanupGame();
 		void cleanupAfterOneGame();
 
@@ -138,7 +141,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		Player *m_player;
 
-        SettingsDialog *m_settingsDialog;
+		SettingsDialog *m_settingsDialog;
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
 		GameModeDialog *m_gameModeDialog;
@@ -225,6 +228,11 @@ inline void fairytale::setClipsDir(const QUrl &url)
 inline QUrl fairytale::clipsDir() const
 {
 	return this->m_clipsDir;
+}
+
+inline int fairytale::turns() const
+{
+	return this->m_turns;
 }
 
 inline bool fairytale::requiresPerson() const

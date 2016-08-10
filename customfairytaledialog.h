@@ -29,10 +29,15 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 		void clear();
 
+	protected:
+		virtual void showEvent(QShowEvent *event) override;
+
 	private:
+		typedef QList<Clip*> Clips;
 		typedef QList<IconButton*> ClipButtons;
 
 		fairytale *m_app;
+		Clips m_clips;
 		ClipButtons m_clipButtons;
 };
 

@@ -52,6 +52,11 @@ class ClipPackage : public QObject
 		const QString& name() const;
 		Clips& clips();
 		const Clips& clips() const;
+
+		/**
+		 * \return Returns the number of rounds possible with these clips.
+		 */
+		int rounds() const;
 	private:
 		/**
 		 * Header structure for the archive format which is used for serialization of clip packages.

@@ -110,9 +110,11 @@ void ClipsDialog::itemDoubleClicked(QTreeWidgetItem *item, int column)
 
 	if (iterator != m_clips.end())
 	{
-        qDebug() << "Open URL: " << iterator.value()->imageUrl();
+		const QUrl url = this->m_app->resolveClipUrl(iterator.value()->imageUrl());
+		qDebug() << "Open URL: " << url;
 		// TODO just popup a modal dialog with the image
-        QDesktopServices::openUrl(iterator.value()->imageUrl());
+		QDesktopServices::openUrl(url);
+
 	}
 }
 
@@ -124,7 +126,7 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 
 	connect(this->addFilePushButton, SIGNAL(clicked()), this, SLOT(addFile()));
 	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
-    connect(this->removePushButton, &QPushButton::clicked, this, &ClipsDialog::removeSelected);
+	connect(this->removePushButton, &QPushButton::clicked, this, &ClipsDialog::removeSelected);
 
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &ClipsDialog::itemDoubleClicked);
 }
@@ -132,7 +134,7 @@ ClipsDialog::ClipsDialog(fairytale *app, QWidget* parent) : QDialog(parent), m_a
 void ClipsDialog::fill(const fairytale::ClipPackages &packages)
 {
 	this->treeWidget->clear();
-    this->m_clipPackages.clear();
+	this->m_clipPackages.clear();
 	this->m_clips.clear();
 
 	foreach (ClipPackage *package, packages)
@@ -146,7 +148,7 @@ void ClipsDialog::fill(ClipPackage* package)
 	QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(this->treeWidget);
 	topLevelItem->setText(0, package->name());
 	this->treeWidget->addTopLevelItem(topLevelItem);
-    m_clipPackages.insert(topLevelItem, package);
+	m_clipPackages.insert(topLevelItem, package);
 
 	QTreeWidgetItem *personsItem = new QTreeWidgetItem(topLevelItem);
 	personsItem->setText(0, tr("Persons"));
@@ -176,6 +178,7 @@ void ClipsDialog::fill(ClipPackage* package)
 	}
 
 	topLevelItem->setText(1, QString::number(persons + acts));
+	topLevelItem->setText(2, QString::number(package->rounds()));
 	personsItem->setText(1, QString::number(persons));
 	actsItem->setText(1, QString::number(acts));
 }

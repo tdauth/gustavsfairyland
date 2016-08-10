@@ -136,6 +136,7 @@ void RoomWidget::pause()
 	m_paintTimer->stop();
 	m_floatingClip->pause();
 	this->setEnabled(false);
+	this->repaint(); // repaint once disable
 }
 
 void RoomWidget::resume()
@@ -152,7 +153,9 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 
 	QPainter painter;
 	painter.begin(this);
-	QBrush brush(QColor(Qt::red), Qt::SolidPattern);
+
+	const QColor color = this->isEnabled() ? QColor(Qt::red) : QColor(Qt::darkRed);
+	QBrush brush(color, Qt::SolidPattern);
 	painter.setBrush(brush);
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());

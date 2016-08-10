@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>196</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,11 @@
      <column>
       <property name="text">
        <string>Number of Clips</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Possible Rounds</string>
       </property>
      </column>
     </widget>

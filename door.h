@@ -4,6 +4,8 @@
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
 
+class RoomWidget;
+
 /**
  * \brief A door widget can be open or closed by wind from a specific direction.
  *
@@ -23,7 +25,7 @@ class Door : public QObject
 
 		static const int MaxLocations = 4;
 
-		Door(QObject *parent, Location location);
+		Door(RoomWidget *parent, Location location);
 
 		void paint(QPainter *painter, QWidget *area);
 
@@ -32,6 +34,7 @@ class Door : public QObject
 		bool isOpen() const;
 
 	private:
+		RoomWidget *m_roomWidget;
 		Location m_location;
 		bool m_isOpen;
 };

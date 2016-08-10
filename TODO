@@ -1,13 +1,14 @@
 - DONE: Pause-Funktion
 - DONE: Endvideo überspringbar machen
 - Musik während Auswahl
-- untere Anzeigen fixen
+- DEPRECATED: untere Anzeigen fixen
 - Oberfläche mittelalterlich
 - Schwierigkeitsgrade: mit Vertauschungen oder Springen links rechts
 - Zufällige Tastenkürzel für Karten
 - Spielmodus: Erzähler mehrere Clips, merken, dann auswählen
 - Clips werden erst freigeschaltet, je nach spielerischer Leistung
 - DONE: Erzähler kleiner
+- Wenn der Player geschlossen wird, ist die Maus woanders
 
 DONE:
 - Hauptfigur am Anfang bestimmt

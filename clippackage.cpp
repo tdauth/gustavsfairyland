@@ -546,6 +546,31 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 	return true;
 }
 
+int ClipPackage::rounds() const
+{
+	int persons = 0;
+	int acts = 0;
+
+	foreach (Clip *clip, m_clips)
+	{
+		if (clip->isPerson())
+		{
+			++persons;
+		}
+		else
+		{
+			++acts;
+		}
+	}
+
+	if (acts > persons - 1)
+	{
+		return persons - 1;
+	}
+
+	return acts;
+}
+
 bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, qint64 &offset, const QString &blockFileName, uint64_t &blocksCounter)
 {
 	// write image file
