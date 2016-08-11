@@ -187,11 +187,13 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	QPainter painter;
 	painter.begin(this);
 
+	/*
 	const QColor color = this->isEnabled() ? QColor(Qt::red) : QColor(Qt::darkRed);
 	QBrush brush(color, Qt::SolidPattern);
 	painter.setBrush(brush);
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());
+	*/
 	// TODO slow
 	painter.drawImage(0, 0, m_woodImage);
 
