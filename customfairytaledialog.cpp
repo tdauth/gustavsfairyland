@@ -2,20 +2,20 @@
 
 #include "customfairytaledialog.h"
 #include "fairytale.h"
-#include "iconbutton.h"
-
+#include "iconlabel.h"
 #include "clip.h"
 
 void CustomFairytaleDialog::addClip(Clip *clip)
 {
 	m_clips.push_back(clip);
-	IconButton *button = new IconButton(this);
-	this->horizontalLayout->addWidget(button);
-	this->m_clipButtons.push_back(button);
-	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	button->setMaximumSize(QSize(64, 64));
-	button->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
-	button->setEnabled(true); // dont grey out the clip icon
+	IconLabel *label = new IconLabel(this);
+	this->horizontalLayout->addWidget(label);
+	this->m_clipLabels.push_back(label);
+	label->setAlignment(Qt::AlignCenter);
+	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	label->setMaximumSize(QSize(64, 64));
+	label->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
+	label->setEnabled(true); // dont grey out the clip icon
 	this->playFinalVideoPushButton->setEnabled(true);
 }
 
@@ -35,14 +35,14 @@ void CustomFairytaleDialog::clear()
 	this->m_clips.clear();
 	this->textBrowser->clear();
 
-	foreach (QAbstractButton *button, this->m_clipButtons)
+	foreach (IconLabel *label, this->m_clipLabels)
 	{
-		delete button;
+		delete label;
 	}
 
 	qDebug() << "After deleting icon buttons";
 
-	this->m_clipButtons.clear();
+	this->m_clipLabels.clear();
 	this->playFinalVideoPushButton->setEnabled(false);
 
 	qDebug() << "After the rest";

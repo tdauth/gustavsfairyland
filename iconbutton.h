@@ -10,8 +10,6 @@
  */
 class IconButton : public QPushButton
 {
-	Q_OBJECT
-
 	public:
 		explicit IconButton(QWidget *parent = 0);
 		virtual ~IconButton();

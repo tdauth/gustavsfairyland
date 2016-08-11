@@ -338,6 +338,7 @@ void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
+	this->playSound(this->resolveClipUrl(this->m_completeSolution[index]->narratorVideoUrl()));
 	this->m_player->playVideo(this, this->m_completeSolution[index]->videoUrl(), this->description(index, this->m_completeSolution[index]));
 }
 
@@ -513,24 +514,28 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 		// played narrator stuff
 		if (!this->m_playCompleteSolution)
 		{
-			// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
-			if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+			// Only react if the game mode has not been canceled
+			if (this->gameMode()->state() == GameMode::State::Running)
 			{
-				this->m_player->mediaPlayer()->stop();
-				this->m_player->hide(); // hide the player, otherwise one cannot play the game
+				// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+				if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+				{
+					this->m_player->mediaPlayer()->stop();
+					this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
-				this->m_playerSounds.clear();
+					this->m_playerSounds.clear();
 
-				this->gameMode()->afterNarrator();
+					this->gameMode()->afterNarrator();
 
-				// run every second
-				this->m_timer.start(1000);
-			}
-			// played only the word "and" or the first person sound then we always expect another sound
-			else
-			{
-				const PlayerSoundData data = m_playerSounds.dequeue();
-				this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+					// run every second
+					this->m_timer.start(1000);
+				}
+				// played only the word "and" or the first person sound then we always expect another sound
+				else
+				{
+					const PlayerSoundData data = m_playerSounds.dequeue();
+					this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+				}
 			}
 		}
 		// Play the next final clip of the complete solution.
@@ -685,9 +690,10 @@ void fairytale::queuePlayerSound(const PlayerSoundData &data)
 
 void fairytale::cleanupGame()
 {
+	this->m_playerSounds.clear();
+	this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
 	this->m_player->mediaPlayer()->stop();
 	this->m_player->hide();
-	this->gameMode()->end();
 	this->cleanupAfterOneGame();
 	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");

@@ -1,36 +1,35 @@
 #include <QtCore/QDebug>
 
-#include "iconbutton.h"
+#include "iconlabel.h"
 
-IconButton::IconButton(QWidget *parent) : QPushButton(parent)
+IconLabel::IconLabel(QWidget *parent) : QLabel(parent)
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->setMinimumSize(64, 64);
 }
 
-IconButton::~IconButton()
+IconLabel::~IconLabel()
 {
 }
 
-void IconButton::updateIcon()
+void IconLabel::updateIcon()
 {
 	if (!file().isEmpty())
 	{
 		 // keep the ratio otherwise the image looks like shit
 		const double factor = 0.98;
 		const QPixmap scaled = m_pixmap.scaled(this->size().width() * factor, this->size().height() * factor, Qt::KeepAspectRatio);
-		this->setIconSize(QSize(scaled.width(), scaled.height()));
-		this->setIcon(QIcon(scaled));
+		this->setPixmap(scaled);
 	}
 	else
 	{
-		this->setIcon(QIcon());
+		this->setPixmap(QPixmap());
 	}
 }
 
-void IconButton::resizeEvent(QResizeEvent* e)
+void IconLabel::resizeEvent(QResizeEvent* e)
 {
-	QPushButton::resizeEvent(e);
+	QLabel::resizeEvent(e);
 
 	//qDebug() << "button was resized!";
 	updateIcon();

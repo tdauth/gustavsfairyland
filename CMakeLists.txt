@@ -49,6 +49,7 @@ set(fairyland_SRCS
 	roomwidget.cpp
         settingsdialog.cpp
         wondialog.cpp
+        iconlabel.cpp
 )
 
 set(fairyland_UI
