@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>156</width>
-    <height>154</height>
+    <width>169</width>
+    <height>170</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -116,6 +116,9 @@
      <property name="text">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
@@ -123,6 +126,8 @@
  <tabstops>
   <tabstop>skipPushButton</tabstop>
   <tabstop>pausePushButton</tabstop>
+  <tabstop>cancelPushButton</tabstop>
+  <tabstop>volumeSlider</tabstop>
  </tabstops>
  <resources/>
  <connections/>

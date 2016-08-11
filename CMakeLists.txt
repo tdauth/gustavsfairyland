@@ -25,6 +25,7 @@ find_package(Qt5Multimedia)
 find_package(Qt5Xml)
 find_package(Qt5MultimediaWidgets)
 find_package(Qt5Xml)
+find_package(Qt5Svg)
 
 set(fairyland_SRCS
 	aboutdialog.cpp
@@ -47,6 +48,7 @@ set(fairyland_SRCS
 	iconbutton.cpp
 	roomwidget.cpp
         settingsdialog.cpp
+        wondialog.cpp
 )
 
 set(fairyland_UI
@@ -60,6 +62,7 @@ set(fairyland_UI
         ui/customfairytale.ui
 	ui/gamemodedialog.ui
         ui/settings.ui
+        ui/wondialog.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
@@ -67,10 +70,10 @@ qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 
 add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
+target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
-target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml)
+target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 install(TARGETS fairyland RUNTIME DESTINATION bin)
 
@@ -78,22 +81,81 @@ install(FILES fairyland.desktop DESTINATION share/applications)
 
 # the default fairyland
 install(FILES clips/gustav.xml DESTINATION clips)
+install(FILES clips/boar/boar.jpg DESTINATION clips/boar/)
+install(FILES clips/boar/boar.mkv DESTINATION clips/boar/)
+install(FILES clips/boar/boar.wav DESTINATION clips/boar/)
+install(FILES clips/castle/castle.jpg DESTINATION clips/castle/)
+install(FILES clips/castle/castle.mkv DESTINATION clips/castle/)
+install(FILES clips/castle/castle.wav DESTINATION clips/castle/)
+install(FILES clips/cave/cave.jpg DESTINATION clips/cave/)
+install(FILES clips/cave/cave.mkv DESTINATION clips/cave/)
+install(FILES clips/cave/cave.wav DESTINATION clips/cave/)
+install(FILES clips/caveman/caveman.jpg DESTINATION clips/caveman/)
+install(FILES clips/caveman/caveman.mkv DESTINATION clips/caveman/)
+install(FILES clips/caveman/caveman.wav DESTINATION clips/caveman/)
+install(FILES clips/chess/chess.jpg DESTINATION clips/chess/)
+install(FILES clips/chess/chess.mkv DESTINATION clips/chess/)
+install(FILES clips/chess/chess.wav DESTINATION clips/chess/)
+install(FILES clips/climbing/climbing.jpg DESTINATION clips/climbing/)
+install(FILES clips/climbing/climbing.mkv DESTINATION clips/climbing/)
+install(FILES clips/climbing/climbing.wav DESTINATION clips/climbing/)
 install(FILES clips/crazy/runterholer.jpg DESTINATION clips/crazy/)
 install(FILES clips/crazy/runterholer.mkv DESTINATION clips/crazy/)
+install(FILES clips/crazy/crazy.wav DESTINATION clips/crazy/)
 install(FILES clips/opajott/opajott1.mkv DESTINATION clips/opajott/)
 install(FILES clips/opajott/opajott1.jpg DESTINATION clips/opajott/)
+install(FILES clips/opajott/opajott.wav DESTINATION clips/opajott/)
 install(FILES clips/steampunk/steampunk.jpg DESTINATION clips/steampunk/)
 install(FILES clips/steampunk/steampunk.avi DESTINATION clips/steampunk/)
+install(FILES clips/steampunk/steampunk.wav DESTINATION clips/steampunk/)
 install(FILES clips/vampir/vampir.png DESTINATION clips/vampir/)
 install(FILES clips/vampir/vampir.avi DESTINATION clips/vampir/)
+install(FILES clips/vampir/vampir.wav DESTINATION clips/vampir/)
 install(FILES clips/werwolf/werwolf.png DESTINATION clips/werwolf/)
 install(FILES clips/werwolf/werwolf.avi DESTINATION clips/werwolf/)
+install(FILES clips/werwolf/werwolf.wav DESTINATION clips/werwolf/)
 install(FILES clips/mahler/mahler.jpg DESTINATION clips/mahler/)
 install(FILES clips/mahler/mahler.avi DESTINATION clips/mahler/)
-install(FILES clips/siege.jpg DESTINATION clips)
-install(FILES clips/marry.jpg DESTINATION clips)
-install(FILES clips/torture.png DESTINATION clips)
-install(FILES clips/burn.jpg DESTINATION clips)
+install(FILES clips/mahler/mahler.wav DESTINATION clips/mahler/)
+install(FILES clips/gate/gate.jpg DESTINATION clips/gate/)
+install(FILES clips/gate/gate.mkv DESTINATION clips/gate/)
+install(FILES clips/gate/gate.wav DESTINATION clips/gate/)
+install(FILES clips/gate/gate2.jpg DESTINATION clips/gate/)
+install(FILES clips/gate/gate2.mkv DESTINATION clips/gate/)
+install(FILES clips/gate/gate2.wav DESTINATION clips/gate/)
+install(FILES clips/maninthebox/maninthebox.jpg DESTINATION clips/maninthebox/)
+install(FILES clips/maninthebox/maninthebox.mkv DESTINATION clips/maninthebox/)
+install(FILES clips/maninthebox/maninthebox.wav DESTINATION clips/maninthebox/)
+install(FILES clips/prison/prison.jpg DESTINATION clips/prison/)
+install(FILES clips/prison/prison.mkv DESTINATION clips/prison/)
+install(FILES clips/prison/prison.wav DESTINATION clips/prison/)
+install(FILES clips/robery/robery.jpg DESTINATION clips/robery/)
+install(FILES clips/robery/robery.mkv DESTINATION clips/robery/)
+install(FILES clips/robery/robery.wav DESTINATION clips/robery/)
+
+install(FILES clips/throne/throne.jpg DESTINATION clips/throne/)
+install(FILES clips/throne/throne.mkv DESTINATION clips/throne/)
+install(FILES clips/throne/throne.wav DESTINATION clips/throne/)
+
+install(FILES clips/tower/tower.jpg DESTINATION clips/tower/)
+install(FILES clips/tower/tower.mkv DESTINATION clips/tower/)
+install(FILES clips/tower/tower.wav DESTINATION clips/tower/)
+
+install(FILES clips/train/train.jpg DESTINATION clips/train/)
+install(FILES clips/train/train.mkv DESTINATION clips/train/)
+install(FILES clips/train/train.wav DESTINATION clips/train/)
+
+install(FILES clips/trash/trash.jpg DESTINATION clips/trash/)
+install(FILES clips/trash/trash.mkv DESTINATION clips/trash/)
+install(FILES clips/trash/trash.wav DESTINATION clips/trash/)
+
+install(FILES clips/treasure/treasure.jpg DESTINATION clips/treasure/)
+install(FILES clips/treasure/treasure.mkv DESTINATION clips/treasure/)
+install(FILES clips/treasure/treasure.wav DESTINATION clips/treasure/)
+
+install(FILES clips/well/well.jpg DESTINATION clips/well/)
+install(FILES clips/well/well.mkv DESTINATION clips/well/)
+install(FILES clips/well/well.wav DESTINATION clips/well/)
 
 # Installs all required Qt binary files on Windows.
 # The program windeployqt generates all files into the binary directory which have to be installed

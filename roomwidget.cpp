@@ -92,12 +92,18 @@ void RoomWidget::changeWind()
 
 void RoomWidget::updatePaint()
 {
+	// move floating clips
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->updatePosition(this->m_paintTimer->interval());
+	}
+
 	//qDebug() << "Repaint";
 	this->repaint();
 	//qDebug() << "Repaint end";
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_failSound(this), m_playNewFailSound(true)
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -106,17 +112,14 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(pare
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
-	m_floatingClip = new FloatingClip(this);
+	m_floatingClips.push_back(new FloatingClip(this));
 
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck3.wav");
-	this->m_failSound.setSource(QUrl(m_failSoundPaths.front()));
 
 	m_successSoundPaths.push_back("qrc:/resources/success1.wav");
 	m_successSoundPaths.push_back("qrc:/resources/success2.wav");
-
-	connect(&this->m_failSound, &QSoundEffect::playingChanged, this, &RoomWidget::failSoundPlayingChanged);
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
@@ -127,22 +130,53 @@ void RoomWidget::start()
 	this->setEnabled(true);
 	m_windTimer->start(ROOM_WIND_CHANGE_INTERVAL_MS);
 	m_paintTimer->start(ROOM_REPAINT_INTERVAL_MS);
-	m_floatingClip->start();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->start();
+	}
 }
 
 void RoomWidget::pause()
 {
 	m_windTimer->stop();
 	m_paintTimer->stop();
-	m_floatingClip->pause();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->pause();
+	}
+
 	this->setEnabled(false);
+	this->repaint(); // repaint once disable
 }
 
 void RoomWidget::resume()
 {
 	this->setEnabled(true);
 	start();
-	m_floatingClip->resume();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->resume();
+	}
+}
+
+void RoomWidget::addFloatingClip(Clip *clip, int width, int speed)
+{
+	FloatingClip *floatingClip = new FloatingClip(this, width, speed);
+	floatingClip->setClip(clip);
+	m_floatingClips.push_back(floatingClip);
+}
+
+void RoomWidget::clearFloatingClipsExceptFirst()
+{
+	for (int i = 1; i < this->m_floatingClips.size(); ++i)
+	{
+		delete this->m_floatingClips.at(i);
+	}
+
+	this->m_floatingClips.resize(1);
 }
 
 void RoomWidget::paintEvent(QPaintEvent *event)
@@ -152,28 +186,36 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 
 	QPainter painter;
 	painter.begin(this);
-	QBrush brush(QColor(Qt::red), Qt::SolidPattern);
+
+	const QColor color = this->isEnabled() ? QColor(Qt::red) : QColor(Qt::darkRed);
+	QBrush brush(color, Qt::SolidPattern);
 	painter.setBrush(brush);
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());
+	// TODO slow
+	//painter.drawImage(0, 0, m_woodImage);
 
 	foreach (Door *door, m_doors)
 	{
 		door->paint(&painter, this);
 	}
 
-	m_floatingClip->paint(&painter, this);
+	// reverse foreach, make sure the solution is always printed on top
+	for (FloatingClips::reverse_iterator iterator = m_floatingClips.rbegin(); iterator != m_floatingClips.rend(); ++iterator)
+	{
+		(*iterator)->paint(&painter, this);
+	}
 
 	painter.end();
 
 	//qDebug() << "Paint event end";
 }
 
-void RoomWidget::mousePressEvent(QMouseEvent* event)
+void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	QWidget::mousePressEvent(event);
+	QWidget::mouseReleaseEvent(event);
 
-	if (this->m_floatingClip->contains(event->pos()))
+	if (this->m_floatingClips.at(0)->contains(event->pos()))
 	{
 		playSoundFromList(m_successSoundPaths);
 
@@ -186,27 +228,25 @@ void RoomWidget::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void RoomWidget::failSoundPlayingChanged()
+void RoomWidget::resizeEvent(QResizeEvent* event)
 {
-	if (!m_failSound.isPlaying())
-	{
-		this->m_playNewFailSound = true;
-		qDebug() << "Can play a new sound.";
-	}
+	QWidget::resizeEvent(event);
+
+	qDebug() << "Resize SVG";
+	// Render SVG image whenever it is necessary
+	// TODO slow?
+	//m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
+	//QPainter painter(&m_woodImage);
+	//m_woodSvg.render(&painter);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
-	if (m_playNewFailSound)
-	{
-		m_playNewFailSound = false;
-		std::mt19937 eng(rd()); // seed the generator
-		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
-		const int value = distr(eng);
-
-		m_failSound.setSource(QUrl(soundEffects[value]));
-		m_failSound.play();
-	}
+	std::mt19937 eng(rd()); // seed the generator
+	std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
+	const int value = distr(eng);
+	qDebug() << "Play sound:" << soundEffects[value];
+	gameMode()->app()->playSound(QUrl(soundEffects[value]));
 }
 
 

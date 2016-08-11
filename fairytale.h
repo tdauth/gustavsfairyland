@@ -6,6 +6,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QVector>
 #include <QtCore/QList>
+#include <QtCore/QQueue>
 #include <QtWidgets/QPushButton>
 #include <QtMultimedia/QMediaPlayer>
 
@@ -22,6 +23,7 @@ class ClipPackageEditor;
 class CustomFairytaleDialog;
 class GameMode;
 class AboutDialog;
+class WonDialog;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -62,7 +64,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void pauseGame();
 		void cancelGame();
 		void showCustomFairytale();
-        void settings();
+		void settings();
 		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
@@ -88,7 +90,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
-        void removeClipPackage(ClipPackage *package);
+		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
 		const ClipPackages& clipPackages() const;
 
@@ -96,6 +98,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void setClipsDir(const QUrl &url);
 		QUrl clipsDir() const;
+
+		int turns() const;
 
 		CustomFairytaleDialog* customFairytaleDialog();
 
@@ -105,18 +109,46 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool isRunning() const;
 		GameMode* gameMode() const;
 
+		typedef QList<Clip*> CompleteSolution;
+		const CompleteSolution& completeSolution() const;
+
 		QGridLayout* gameAreaLayout() const;
 
 		AboutDialog* aboutDialog();
+		WonDialog* wonDialog();
+
+		QString description(int turn, Clip *clip, bool markBold = true);
+
+		/**
+		 * Plays a sound if no sound is already played. Otherwise it doesn't play the sound at all.
+		 * \return Returns true if the sound is played. Otherwise it returns false.
+		 */
+		bool playSound(const QUrl &url);
+
+		/**
+		 * Sound data to queue for the \ref Player to play a sound.
+		 */
+		struct PlayerSoundData
+		{
+			QUrl narratorSoundUrl;
+			QUrl imageUrl;
+			QString description;
+			bool prefix;
+		};
+
+		/**
+		 * Plays the sound immediately if the queue is empty. Otherwise it queues the sound.
+		 */
+		void queuePlayerSound(const PlayerSoundData &soundData);
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
+		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
 
 	private:
 		void updateTimeLabel();
 		void addCurrentSolution();
-		QString description(int turn, Clip *clip);
 		void cleanupGame();
 		void cleanupAfterOneGame();
 
@@ -138,7 +170,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		Player *m_player;
 
-        SettingsDialog *m_settingsDialog;
+		SettingsDialog *m_settingsDialog;
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
 		GameModeDialog *m_gameModeDialog;
@@ -179,19 +211,30 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		ClipPackage *m_clipPackage;
 
-		QList<Clip*> m_completeSolution;
+		CompleteSolution m_completeSolution;
 		int m_completeSolutionIndex;
 		bool m_playCompleteSolution;
 
 		bool m_paused;
+		bool m_pausedTimer;
 		bool m_isRunning;
+
+		/// Custom audio player which allows only to play one sound at once and discards all other sounds which are played during that time.
+		QMediaPlayer *m_audioPlayer;
+		/// Flag which indicates if a new sound can be played at the moment.
+		bool m_playNewSound;
+		/// A queue with sounds waiting for the player to become available.
+		QQueue<PlayerSoundData> m_playerSounds;
 
 		/**
 		 * The currently played game mode.
 		 */
 		GameMode *m_gameMode;
 
+		/// This dialog appears when the "About" action is triggered.
 		AboutDialog *m_aboutDialog;
+		/// This dialog appears when a game is won.
+		WonDialog *m_wonDialog;
 };
 
 inline void fairytale::addClipPackage(ClipPackage* package)
@@ -229,6 +272,11 @@ inline QUrl fairytale::clipsDir() const
 	return this->m_clipsDir;
 }
 
+inline int fairytale::turns() const
+{
+	return this->m_turns;
+}
+
 inline bool fairytale::requiresPerson() const
 {
 	return this->m_requiresPerson;
@@ -252,6 +300,11 @@ inline bool fairytale::isRunning() const
 inline GameMode* fairytale::gameMode() const
 {
 	return this->m_gameMode;
+}
+
+inline const fairytale::CompleteSolution& fairytale::completeSolution() const
+{
+	return this->m_completeSolution;
 }
 
 inline QGridLayout* fairytale::gameAreaLayout() const

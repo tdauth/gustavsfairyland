@@ -21,12 +21,24 @@ Clip* GameModeMoving::solution()
 
 long int GameModeMoving::time()
 {
-	return 2000 * (this->m_remainingClips.size() + 1);
+	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+
+	return 2000 * factor + 6000;
 }
 
 void GameModeMoving::afterNarrator()
 {
-	this->m_roomWidget->floatingClip()->setClip(m_currentSolution);
+	this->m_roomWidget->floatingClips().at(0)->setClip(m_currentSolution);
+
+	// add more floating clips every round to make it a bit harder
+	if (this->app()->turns() > 1)
+	{
+		const int index = qrand() % this->app()->completeSolution().size();
+
+		// make them faster than the  first clip
+		this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), FLOATING_CLIP_PIXELS_PER_S + this->app()->turns() * 10);
+	}
+
 	this->m_roomWidget->start();
 }
 
@@ -118,8 +130,9 @@ void GameModeMoving::start()
 	else
 	{
 		this->m_roomWidget->show();
-		this->m_roomWidget->setEnabled(true);
 	}
+
+	this->m_roomWidget->setEnabled(false);
 
 	this->m_remainingClips.clear();
 
