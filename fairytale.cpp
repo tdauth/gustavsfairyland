@@ -366,10 +366,14 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
+
 	this->wonDialog()->exec();
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
+
+	// make sure everything is cleaned up
+	this->cleanupAfterOneGame();
 }
 
 void fairytale::nextTurn()
