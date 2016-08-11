@@ -158,6 +158,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The remaining time of the timer in MS.
 		 */
 		long int m_remainingTime;
+		/// The total elapsed time for one game.
+		long int m_totalElapsedTime;
 
 		/**
 		 * If this value is true the current turn requires a person clip. Otherwise it requires an act clip.

@@ -6,6 +6,11 @@
 class fairytale;
 class Clip;
 
+/**
+ * \brief Abstract game mode class for implementing custom game modes.
+ *
+ * The game mode is choosen by the player when the game is started.
+ */
 class GameMode : public QObject
 {
 	public:

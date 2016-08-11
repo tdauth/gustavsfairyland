@@ -43,6 +43,7 @@ void fairytale::newGame()
 	// requires person in the first step always
 	this->m_requiresPerson = true;
 	this->m_turns = 0;
+	this->m_totalElapsedTime = 0;
 
 	ClipPackage *clipPackage = this->selectClipPackage();
 
@@ -408,6 +409,8 @@ void fairytale::nextTurn()
 
 void fairytale::onFinishTurn()
 {
+	// Store the time it took to finish the turn, ignore pauses!
+	this->m_totalElapsedTime += this->gameMode()->time() - m_remainingTime;
 	this->m_timer.stop();
 	this->m_remainingTime = 0;
 	this->m_turns++;

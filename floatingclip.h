@@ -9,6 +9,11 @@
 class RoomWidget;
 class Clip;
 
+/**
+ * \brief The floating clip which has to be catched in time. Otherwise the game is lost.
+ *
+ * The floating clip moves around in the room widget (\ref RoomWidget) depending on the current wind direction.
+ */
 class FloatingClip : public QObject
 {
 	Q_OBJECT
@@ -16,8 +21,15 @@ class FloatingClip : public QObject
 	public:
 		FloatingClip(RoomWidget *parent, int width = 160);
 
+		/**
+		 * Paints the floating clip with \p painter on \p area.
+		 */
 		void paint(QPainter *painter, QWidget *area);
 
+		/**
+		 * Sets the current clip reference for the floating clip. The image of the clip will be shown on the floating clip.
+		 * \param clip The referenced clip
+		 */
 		void setClip(Clip *clip);
 		int x() const;
 		int y() const;
