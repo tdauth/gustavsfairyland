@@ -11,6 +11,7 @@
 class GameModeMoving;
 class Door;
 class FloatingClip;
+class Clip;
 
 /**
  * \brief A widget which displays a room with four windows from the top.
@@ -31,6 +32,7 @@ class RoomWidget : public QWidget
 
 	public:
 		typedef QVector<Door*> Doors;
+		typedef QVector<FloatingClip*> FloatingClips;
 
 		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
 
@@ -40,8 +42,10 @@ class RoomWidget : public QWidget
 		void start();
 		void resume();
 
-		const Doors doors() const;
-		FloatingClip *floatingClip() const;
+		void addFloatingClip(Clip *clip, int width, int speed);
+		void clearFloatingClipsExceptFirst();
+		const Doors& doors() const;
+		const FloatingClips& floatingClips() const;
 
 	protected:
 		/// Repaints the room widget and the doors as well as the floating clip.
@@ -66,7 +70,7 @@ class RoomWidget : public QWidget
 		QTimer *m_windTimer;
 		QTimer *m_paintTimer; // repaints the whole room widget with all doors and the floating clip
 		Doors m_doors;
-		FloatingClip *m_floatingClip;
+		FloatingClips m_floatingClips;
 		QStringList m_failSoundPaths;
 		QStringList m_successSoundPaths;
 		QSvgRenderer m_woodSvg;
@@ -78,14 +82,14 @@ inline GameModeMoving* RoomWidget::gameMode() const
 	return this->m_gameMode;
 }
 
-inline const RoomWidget::Doors RoomWidget::doors() const
+inline const RoomWidget::Doors& RoomWidget::doors() const
 {
 	return this->m_doors;
 }
 
-inline FloatingClip* RoomWidget::floatingClip() const
+inline const RoomWidget::FloatingClips& RoomWidget::floatingClips() const
 {
-	return this->m_floatingClip;
+	return this->m_floatingClips;
 }
 
 #endif // ROOMWIDGET_H

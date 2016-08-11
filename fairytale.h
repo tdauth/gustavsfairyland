@@ -64,7 +64,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void pauseGame();
 		void cancelGame();
 		void showCustomFairytale();
-        void settings();
+		void settings();
 		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
@@ -108,6 +108,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool isPaused() const;
 		bool isRunning() const;
 		GameMode* gameMode() const;
+
+		typedef QList<Clip*> CompleteSolution;
+		const CompleteSolution& completeSolution() const;
 
 		QGridLayout* gameAreaLayout() const;
 
@@ -206,7 +209,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		ClipPackage *m_clipPackage;
 
-		QList<Clip*> m_completeSolution;
+		CompleteSolution m_completeSolution;
 		int m_completeSolutionIndex;
 		bool m_playCompleteSolution;
 
@@ -295,6 +298,11 @@ inline bool fairytale::isRunning() const
 inline GameMode* fairytale::gameMode() const
 {
 	return this->m_gameMode;
+}
+
+inline const fairytale::CompleteSolution& fairytale::completeSolution() const
+{
+	return this->m_completeSolution;
 }
 
 inline QGridLayout* fairytale::gameAreaLayout() const

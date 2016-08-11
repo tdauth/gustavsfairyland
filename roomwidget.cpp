@@ -92,6 +92,12 @@ void RoomWidget::changeWind()
 
 void RoomWidget::updatePaint()
 {
+	// move floating clips
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->updatePosition(this->m_paintTimer->interval());
+	}
+
 	//qDebug() << "Repaint";
 	this->repaint();
 	//qDebug() << "Repaint end";
@@ -106,7 +112,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(pare
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
-	m_floatingClip = new FloatingClip(this);
+	m_floatingClips.push_back(new FloatingClip(this));
 
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
@@ -124,14 +130,23 @@ void RoomWidget::start()
 	this->setEnabled(true);
 	m_windTimer->start(ROOM_WIND_CHANGE_INTERVAL_MS);
 	m_paintTimer->start(ROOM_REPAINT_INTERVAL_MS);
-	m_floatingClip->start();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->start();
+	}
 }
 
 void RoomWidget::pause()
 {
 	m_windTimer->stop();
 	m_paintTimer->stop();
-	m_floatingClip->pause();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->pause();
+	}
+
 	this->setEnabled(false);
 	this->repaint(); // repaint once disable
 }
@@ -140,7 +155,28 @@ void RoomWidget::resume()
 {
 	this->setEnabled(true);
 	start();
-	m_floatingClip->resume();
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->resume();
+	}
+}
+
+void RoomWidget::addFloatingClip(Clip *clip, int width, int speed)
+{
+	FloatingClip *floatingClip = new FloatingClip(this, width, speed);
+	floatingClip->setClip(clip);
+	m_floatingClips.push_back(floatingClip);
+}
+
+void RoomWidget::clearFloatingClipsExceptFirst()
+{
+	for (int i = 1; i < this->m_floatingClips.size(); ++i)
+	{
+		delete this->m_floatingClips.at(i);
+	}
+
+	this->m_floatingClips.resize(1);
 }
 
 void RoomWidget::paintEvent(QPaintEvent *event)
@@ -164,7 +200,11 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 		door->paint(&painter, this);
 	}
 
-	m_floatingClip->paint(&painter, this);
+	// reverse foreach, make sure the solution is always printed on top
+	for (FloatingClips::reverse_iterator iterator = m_floatingClips.rbegin(); iterator != m_floatingClips.rend(); ++iterator)
+	{
+		(*iterator)->paint(&painter, this);
+	}
 
 	painter.end();
 
@@ -175,7 +215,7 @@ void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	QWidget::mouseReleaseEvent(event);
 
-	if (this->m_floatingClip->contains(event->pos()))
+	if (this->m_floatingClips.at(0)->contains(event->pos()))
 	{
 		playSoundFromList(m_successSoundPaths);
 

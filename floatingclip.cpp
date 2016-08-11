@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QtGui>
 #include <QtDebug>
 
@@ -9,9 +11,8 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width) : QObject(parent), m_roomWidget(parent), m_width(width), m_x(0), m_y(0), m_clip(nullptr), m_moveTimer(new QTimer(this))
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_clip(nullptr)
 {
-	connect(this->m_moveTimer, SIGNAL(timeout()), this, SLOT(tick()));
 }
 
 void FloatingClip::paint(QPainter *painter, QWidget *area)
@@ -29,6 +30,14 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 		const int heightDifference = (m_width - m_scaledPixmap.height()) / 2;
 		painter->drawPixmap(x1 + widthDifference, y1 + heightDifference, m_scaledPixmap);
 
+		// paint a border to show differences between floating clips
+		const QColor color = this->m_roomWidget->isEnabled() ? QColor(Qt::green) : QColor(Qt::darkGreen);
+		painter->setPen(QPen(color, 12));
+		painter->drawLine(this->x(), this->y(), this->x() + this->width(), this->y());
+		painter->drawLine(this->x(), this->y(), this->x(), this->y() + this->width());
+		painter->drawLine(this->x() + this->width(), this->y(), this->x() + this->width(), this->y() + this->width());
+		painter->drawLine(this->x(), this->y() + this->width(), this->x() + this->width(), this->y() + this->width());
+
 		//qDebug() << "Paint clip: " << m_clip->imageUrl().toLocalFile();
 	}
 }
@@ -38,13 +47,10 @@ void FloatingClip::start()
 	// set initial position to random coordinates
 	this->m_x = qrand() % (this->m_roomWidget->size().height() - m_width);
 	this->m_y = qrand() % (this->m_roomWidget->size().width() - m_width);
-
-	m_moveTimer->start(FLOATING_CLIP_UPDATE_INTERVAL_MS); // tick every MS
 }
 
 void FloatingClip::pause()
 {
-	this->m_moveTimer->stop();
 }
 
 void FloatingClip::resume()
@@ -52,9 +58,10 @@ void FloatingClip::resume()
 	start();
 }
 
-void FloatingClip::tick()
+void FloatingClip::updatePosition(int intervalMs)
 {
-	const int distance = FLOATING_CLIP_SPEED; // distance per MS
+	const int distance = (intervalMs * this->speed()) / 1000; // distance per MS
+	Q_ASSERT(distance > 0);
 
 	if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
 	{
