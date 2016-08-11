@@ -1,5 +1,3 @@
-#include "fairytale.h"
-
 #include <QtCore/QSettings>
 
 #include <QtWidgets/QLabel>
@@ -11,6 +9,7 @@
 
 #include <QtMultimedia/QMultimedia>
 
+#include "fairytale.h"
 #include "clip.h"
 #include "player.h"
 #include "iconbutton.h"
@@ -76,8 +75,9 @@ void fairytale::pauseGame()
 		this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 		this->m_paused = false;
 
-		if (this->m_remainingTime > 0)
+		if (m_pausedTimer)
 		{
+			m_pausedTimer = false;
 			this->m_timer.start();
 
 			this->gameMode()->resume();
@@ -93,7 +93,9 @@ void fairytale::pauseGame()
 		this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
 		this->m_paused = true;
 
-		if (this->m_remainingTime > 0)
+		m_pausedTimer = this->m_timer.isActive();
+
+		if (m_pausedTimer)
 		{
 			this->m_timer.stop();
 
@@ -223,6 +225,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_completeSolutionIndex(0)
 , m_playCompleteSolution(false)
 , m_paused(false)
+, m_pausedTimer(false)
 , m_isRunning(false)
 , m_audioPlayer(new QMediaPlayer(this))
 , m_playNewSound(true)
@@ -318,7 +321,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 fairytale::~fairytale()
 {
 	QSettings settings("fairytale");
-    settings.setValue("clipsDir", m_clipsDir.toLocalFile());
+	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
 	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
 
 	for (int i = 0; i < this->m_clipPackages.size(); ++i)
@@ -367,8 +370,6 @@ void fairytale::win()
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
-	// TEST
-	//this->cleanupAfterOneGame();
 }
 
 void fairytale::nextTurn()
@@ -404,10 +405,44 @@ void fairytale::nextTurn()
 
 			const QString description = this->description(this->m_turns, solution);
 
+			this->m_remainingTime = this->gameMode()->time();
+			this->updateTimeLabel();
+			// the description label helps to remember
+			this->descriptionLabel->setText(description);
+
+			// play the sound for the inital character again
+			if (solution->isPerson() && turns() > 1)
+			{
+				PlayerSoundData data;
+				data.narratorSoundUrl = this->m_startPerson->narratorVideoUrl();
+				data.description = this->description(0, this->m_startPerson);
+				data.imageUrl = this->m_startPerson->imageUrl();
+				data.prefix = true;
+				this->queuePlayerSound(data);
+			}
+
+			// play the sound "and"
+			if (solution->isPerson() && turns() > 0)
+			{
+				const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
+				PlayerSoundData data;
+				data.narratorSoundUrl = narratorSoundUrl;
+				data.description = tr("and");
+				data.imageUrl = solution->imageUrl();
+				data.prefix = true;
+				this->queuePlayerSound(data);
+			}
+
 			/*
-			 * Play the narrator clip for the current solution as hint.
+			 * Play the narrator sound for the current solution as hint.
 			 */
-			this->m_player->playVideo(this, solution->narratorVideoUrl(), description);
+			// Make sure that the current click sound ends before playing the narrator sound.
+			PlayerSoundData data;
+			data.narratorSoundUrl = solution->narratorVideoUrl();
+			data.description = this->description(0, solution); // use always the stand alone description
+			data.imageUrl = solution->imageUrl();
+			data.prefix = false;
+			this->queuePlayerSound(data);
 
 			break;
 		}
@@ -468,20 +503,28 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 {
 	if (state == QMediaPlayer::StoppedState)
 	{
-		// played a normal narrator clip
+		// played narrator stuff
 		if (!this->m_playCompleteSolution)
 		{
-			this->m_player->mediaPlayer()->stop();
-			this->m_player->hide(); // hide the player, otherwise one cannot play the game
-			this->m_remainingTime = this->gameMode()->time();
-			this->updateTimeLabel();
-			// the description label helps to remember
-			this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
+			// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+			if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+			{
+				this->m_player->mediaPlayer()->stop();
+				this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
-			this->gameMode()->afterNarrator();
+				this->m_playerSounds.clear();
 
-			// run every second
-			this->m_timer.start(1000);
+				this->gameMode()->afterNarrator();
+
+				// run every second
+				this->m_timer.start(1000);
+			}
+			// played only the word "and" or the first person sound then we always expect another sound
+			else
+			{
+				const PlayerSoundData data = m_playerSounds.dequeue();
+				this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+			}
 		}
 		// Play the next final clip of the complete solution.
 		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
@@ -513,6 +556,12 @@ void fairytale::finishAudio(QMediaPlayer::State state)
 	if (state == QMediaPlayer::StoppedState)
 	{
 		m_playNewSound = true;
+
+		// If any player sound is queued play it next.
+		if (!m_playerSounds.empty())
+		{
+			queuePlayerSound(m_playerSounds.dequeue());
+		}
 	}
 }
 
@@ -599,7 +648,7 @@ QString fairytale::description(int turn, Clip *clip, bool markBold)
 	return description;
 }
 
-void fairytale::playSound(const QUrl &url)
+bool fairytale::playSound(const QUrl &url)
 {
 	if (m_playNewSound)
 	{
@@ -607,11 +656,29 @@ void fairytale::playSound(const QUrl &url)
 		m_audioPlayer->setMedia(url);
 		m_audioPlayer->setVolume(50);
 		m_audioPlayer->play();
+
+		return true;
+	}
+
+	return false;
+}
+
+void fairytale::queuePlayerSound(const PlayerSoundData &data)
+{
+	// TODO get all states when a media is still being played or loaded etc.
+	if (!m_playNewSound || this->m_player->mediaPlayer()->state() != QMediaPlayer::StoppedState)
+	{
+		this->m_playerSounds.push_back(data);
+	}
+	else
+	{
+		this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
 	}
 }
 
 void fairytale::cleanupGame()
 {
+	this->m_player->mediaPlayer()->stop();
 	this->m_player->hide();
 	this->gameMode()->end();
 	this->cleanupAfterOneGame();

@@ -10,6 +10,7 @@
 #include "ui_player.h"
 
 class fairytale;
+class IconButton;
 
 /**
  * \brief The video player which allows to play video sequences which can be skipped or paused as well.
@@ -20,6 +21,7 @@ class Player : public QDialog, protected Ui::Player
 
 	public slots:
 		void playVideo(fairytale *app, const QUrl &url, const QString &description);
+		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
 
 		void skip();
 	public:
@@ -27,6 +29,7 @@ class Player : public QDialog, protected Ui::Player
 
 		QMediaPlayer* mediaPlayer() const;
 		bool skipped() const;
+		bool isPrefix() const;
 
 		QPushButton* pauseButton() const;
 
@@ -34,8 +37,10 @@ class Player : public QDialog, protected Ui::Player
 		fairytale *m_app;
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;
+		IconButton *m_iconButton;
 
 		bool m_skipped;
+		bool m_isPrefix;
 };
 
 inline QMediaPlayer* Player::mediaPlayer() const
@@ -46,6 +51,11 @@ inline QMediaPlayer* Player::mediaPlayer() const
 inline bool Player::skipped() const
 {
 	return this->m_skipped;
+}
+
+inline bool Player::isPrefix() const
+{
+	return this->m_isPrefix;
 }
 
 inline QPushButton* Player::pauseButton() const

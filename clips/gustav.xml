@@ -4,37 +4,37 @@
 	<clip isPerson="true">
                 <image>./crazy/runterholer.jpg</image>
                 <video>./crazy/runterholer.mkv</video>
-                <narrator>./crazy/runterholer.mkv</narrator>
+                <narrator>./crazy/crazy.wav</narrator>
 		<description>der Runterholer</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./opajott/opajott1.jpg</image>
                 <video>./opajott/opajott1.mkv</video>
-                <narrator>./opajott/opajott1.mkv</narrator>
+                <narrator>./opajott/opajott.wav</narrator>
 		<description>Opa Jott</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./vampir/vampir.png</image>
                 <video>./vampir/vampir.avi</video>
-                <narrator>./vampir/vampir.avi</narrator>
+                <narrator>./vampir/vampir.wav</narrator>
 		<description>der Vampir</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./werwolf/werwolf.png</image>
                 <video>./werwolf/werwolf.avi</video>
-                <narrator>./werwolf/werwolf.avi</narrator>
+                <narrator>./werwolf/werwolf.wav</narrator>
 		<description>der Werwolf</description>
 	</clip>
 	<clip isPerson="true">
                 <image>./steampunk/steampunk.jpg</image>
                 <video>./steampunk/steampunk.avi</video>
-                <narrator>./steampunk/steampunk.avi</narrator>
+                <narrator>./steampunk/steampunk.wav</narrator>
 		<description>der Pestarzt</description>
 	</clip>
         <clip isPerson="true">
                 <image>./mahler/mahler.jpg</image>
                 <video>./mahler/mahler.avi</video>
-                <narrator>./mahler/mahler.avi</narrator>
+		<narrator>./mahler/mahler.wav</narrator>
                 <description>Gustav Mahler</description>
         </clip>
 
@@ -42,119 +42,119 @@
 	<clip isPerson="false">
                 <image>./boar/boar.jpg</image>
                 <video>./boar/boar.mkv</video>
-                <narrator>./boar/boar.mkv</narrator>
+                <narrator>./boar/boar.wav</narrator>
 		<description>ritten auf einem Wildschwein</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./cave/cave.jpg</image>
                 <video>./cave/cave.mkv</video>
-                <narrator>./cave/cave.mkv</narrator>
+                <narrator>./cave/cave.wav</narrator>
 		<description>fanden eine Höhle</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./caveman/caveman.jpg</image>
                 <video>./caveman/caveman.mkv</video>
-                <narrator>./caveman/caveman.mkv</narrator>
+                <narrator>./caveman/caveman.wav</narrator>
 		<description>trafen auf einen Höhlenmenschen</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./chess/chess.jpg</image>
                 <video>./chess/chess.mkv</video>
-                <narrator>./chess/chess.mkv</narrator>
+                <narrator>./chess/chess.wav</narrator>
 		<description>spielten Schach</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./climbing/climbing.jpg</image>
                 <video>./climbing/climbing.mkv</video>
-                <narrator>./climbing/climbing.mkv</narrator>
+                <narrator>./climbing/climbing.wav</narrator>
 		<description>erklommen einen Berg</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./gate/gate.jpg</image>
                 <video>./gate/gate.mkv</video>
-                <narrator>./gate/gate.mkv</narrator>
+                <narrator>./gate/gate.wav</narrator>
 		<description>trafen auf einen Wächter</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./gate/gate2.jpg</image>
                 <video>./gate/gate2.mkv</video>
-                <narrator>./gate/gate2.mkv</narrator>
+                <narrator>./gate/gate2.wav</narrator>
 		<description>trafen auf ein Tor</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./maninthebox/maninthebox.jpg</image>
                 <video>./maninthebox/maninthebox.mkv</video>
-                <narrator>./maninthebox/maninthebox.mkv</narrator>
+                <narrator>./maninthebox/maninthebox.wav</narrator>
 		<description>fanden einen Mann in einer Kiste</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./prison/prison.jpg</image>
                 <video>./prison/prison.mkv</video>
-                <narrator>./prison/prison.mkv</narrator>
+                <narrator>./prison/prison.wav</narrator>
 		<description>wurden eingesperrt</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./robery/robery.jpg</image>
                 <video>./robery/robery.mkv</video>
-                <narrator>./robery/robery.mkv</narrator>
+                <narrator>./robery/robery.wav</narrator>
 		<description>wurden ausgeraubt</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./train/train.jpg</image>
                 <video>./train/train.mkv</video>
-                <narrator>./train/train.mkv</narrator>
+                <narrator>./train/train.wav</narrator>
 		<description>fuhren mit einem Zug</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./trash/trash.jpg</image>
                 <video>./trash/trash.mkv</video>
-                <narrator>./trash/trash.mkv</narrator>
+                <narrator>./trash/trash.wav</narrator>
 		<description>durchwühlten den Müll</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./treasure/treasure.jpg</image>
                 <video>./treasure/treasure.mkv</video>
-                <narrator>./treasure/treasure.mkv</narrator>
+                <narrator>./treasure/treasure.wav</narrator>
 		<description>fanden einen Schatz</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./well/well.jpg</image>
                 <video>./well/well.mkv</video>
-                <narrator>./well/well.mkv</narrator>
+                <narrator>./well/well.wav</narrator>
 		<description>tranken von einem Brunnen</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./castle/castle.jpg</image>
                 <video>./castle/castle.mkv</video>
-                <narrator>./castle/castle.mkv</narrator>
+                <narrator>./castle/castle.wav</narrator>
 		<description>lebten in einer Burg</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./tower/tower.jpg</image>
                 <video>./tower/tower.mkv</video>
-                <narrator>./tower/tower.mkv</narrator>
+                <narrator>./tower/tower.wav</narrator>
 		<description>hungerten im Turm</description>
 	</clip>
 
 	<clip isPerson="false">
                 <image>./throne/throne.jpg</image>
                 <video>./throne/throne.mkv</video>
-                <narrator>./throne/throne.mkv</narrator>
+                <narrator>./throne/throne.wav</narrator>
 		<description>bestiegen den Thron</description>
 	</clip>
 </clips>

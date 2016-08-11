@@ -6,6 +6,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QVector>
 #include <QtCore/QList>
+#include <QtCore/QQueue>
 #include <QtWidgets/QPushButton>
 #include <QtMultimedia/QMediaPlayer>
 
@@ -115,7 +116,27 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QString description(int turn, Clip *clip, bool markBold = true);
 
-		void playSound(const QUrl &url);
+		/**
+		 * Plays a sound if no sound is already played. Otherwise it doesn't play the sound at all.
+		 * \return Returns true if the sound is played. Otherwise it returns false.
+		 */
+		bool playSound(const QUrl &url);
+
+		/**
+		 * Sound data to queue for the \ref Player to play a sound.
+		 */
+		struct PlayerSoundData
+		{
+			QUrl narratorSoundUrl;
+			QUrl imageUrl;
+			QString description;
+			bool prefix;
+		};
+
+		/**
+		 * Plays the sound immediately if the queue is empty. Otherwise it queues the sound.
+		 */
+		void queuePlayerSound(const PlayerSoundData &soundData);
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
@@ -190,17 +211,24 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool m_playCompleteSolution;
 
 		bool m_paused;
+		bool m_pausedTimer;
 		bool m_isRunning;
 
+		/// Custom audio player which allows only to play one sound at once and discards all other sounds which are played during that time.
 		QMediaPlayer *m_audioPlayer;
+		/// Flag which indicates if a new sound can be played at the moment.
 		bool m_playNewSound;
+		/// A queue with sounds waiting for the player to become available.
+		QQueue<PlayerSoundData> m_playerSounds;
 
 		/**
 		 * The currently played game mode.
 		 */
 		GameMode *m_gameMode;
 
+		/// This dialog appears when the "About" action is triggered.
 		AboutDialog *m_aboutDialog;
+		/// This dialog appears when a game is won.
 		WonDialog *m_wonDialog;
 };
 

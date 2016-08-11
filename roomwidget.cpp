@@ -194,9 +194,10 @@ void RoomWidget::resizeEvent(QResizeEvent* event)
 
 	qDebug() << "Resize SVG";
 	// Render SVG image whenever it is necessary
-	m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
-	QPainter painter(&m_woodImage);
-	m_woodSvg.render(&painter);
+	// TODO slow?
+	//m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
+	//QPainter painter(&m_woodImage);
+	//m_woodSvg.render(&painter);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)

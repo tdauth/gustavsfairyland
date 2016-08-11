@@ -3,8 +3,9 @@
 
 #include "player.h"
 #include "fairytale.h"
+#include "iconbutton.h"
 
-Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_skipped(false)
+Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_iconButton(new IconButton(this)), m_skipped(false), m_isPrefix(false)
 {
 	setupUi(this);
 	this->setModal(true);
@@ -16,6 +17,10 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m
 	this->m_videoWidget->setMinimumSize(QSize(240, 240));
 	videoPlayerLayout->addWidget(m_videoWidget);
 	m_videoWidget->show();
+
+	this->m_iconButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	this->m_iconButton->setMinimumSize(QSize(240, 240));
+	videoPlayerLayout->addWidget(m_iconButton);
 
 	volumeSlider->setValue(this->m_mediaPlayer->volume());
 	connect(volumeSlider, SIGNAL(valueChanged(int)), this->m_mediaPlayer, SLOT(setVolume(int)));
@@ -29,7 +34,11 @@ Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m
 
 void Player::playVideo(fairytale *app, const QUrl& url, const QString &description)
 {
+	this->m_isPrefix = false;
 	this->m_skipped = false;
+	this->m_iconButton->hide();
+	this->m_iconButton->setFile("");
+	this->m_videoWidget->show();
 	this->show();
 	this->skipPushButton->setEnabled(true);
 
@@ -38,6 +47,27 @@ void Player::playVideo(fairytale *app, const QUrl& url, const QString &descripti
 	 * Play the narrator clip for the current solution as hint.
 	 */
 	this->m_mediaPlayer->setMedia(app->resolveClipUrl(url));
+	this->m_mediaPlayer->play();
+}
+
+void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix)
+{
+	const QString imageFile = app->resolveClipUrl(imageUrl).toLocalFile();
+	const QUrl soundUrl = app->resolveClipUrl(url);
+
+	this->m_isPrefix = prefix;
+	this->m_skipped = false;
+	this->m_videoWidget->hide();
+	this->m_iconButton->show();
+	this->m_iconButton->setFile(imageFile);
+	this->show();
+	this->skipPushButton->setEnabled(true);
+
+	this->descriptionLabel->setText(description);
+	/*
+	 * Play the narrator clip for the current solution as hint.
+	 */
+	this->m_mediaPlayer->setMedia(soundUrl);
 	this->m_mediaPlayer->play();
 }
 

@@ -120,8 +120,9 @@ void GameModeMoving::start()
 	else
 	{
 		this->m_roomWidget->show();
-		this->m_roomWidget->setEnabled(true);
 	}
+
+	this->m_roomWidget->setEnabled(false);
 
 	this->m_remainingClips.clear();
 
