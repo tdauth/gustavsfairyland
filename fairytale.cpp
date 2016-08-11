@@ -261,7 +261,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	const QDir currentDir(QDir::currentPath());
 	defaultClipsDir = QDir(currentDir.filePath("../clips"));
 #else
-	defaultClipsDir = QDir("/usr/local/clips");
+	defaultClipsDir = QDir("/usr/clips");
 #endif
 	// the default path is the "clips" sub directory
 	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());

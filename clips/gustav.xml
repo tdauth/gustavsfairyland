@@ -29,7 +29,7 @@
                 <image>./steampunk/steampunk.jpg</image>
                 <video>./steampunk/steampunk.avi</video>
                 <narrator>./steampunk/steampunk.wav</narrator>
-		<description>der Pestarzt</description>
+		<description>der Pestdoktor</description>
 	</clip>
         <clip isPerson="true">
                 <image>./mahler/mahler.jpg</image>
