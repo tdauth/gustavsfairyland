@@ -37,6 +37,12 @@
 		<narrator>./mahler/mahler.wav</narrator>
                 <description>Gustav Mahler</description>
         </clip>
+        <clip isPerson="true">
+                <image>./popcorn/popcorn.jpg</image>
+                <video>./popcorn/popcorn.avi</video>
+                <narrator>./popcorn/popcorn.wav</narrator>
+                <description>die Popcornverkäuferin</description>
+        </clip>
 
 	<!-- new acts -->
 	<clip isPerson="false">

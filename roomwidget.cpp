@@ -193,7 +193,7 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());
 	// TODO slow
-	//painter.drawImage(0, 0, m_woodImage);
+	painter.drawImage(0, 0, m_woodImage);
 
 	foreach (Door *door, m_doors)
 	{
@@ -235,9 +235,9 @@ void RoomWidget::resizeEvent(QResizeEvent* event)
 	qDebug() << "Resize SVG";
 	// Render SVG image whenever it is necessary
 	// TODO slow?
-	//m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
-	//QPainter painter(&m_woodImage);
-	//m_woodSvg.render(&painter);
+	m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
+	QPainter painter(&m_woodImage);
+	m_woodSvg.render(&painter);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)

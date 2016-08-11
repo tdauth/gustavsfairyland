@@ -5,7 +5,7 @@
 #include "fairytale.h"
 #include "iconlabel.h"
 
-Player::Player(QWidget* parent, fairytale *app) : QDialog(parent), m_app(app), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_iconButton(new IconLabel(this)), m_skipped(false), m_isPrefix(false)
+Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_videoWidget(new QVideoWidget(this)), m_mediaPlayer(new QMediaPlayer(this)), m_iconButton(new IconLabel(this)), m_skipped(false), m_isPrefix(false)
 {
 	setupUi(this);
 	this->setModal(true);
@@ -40,7 +40,16 @@ void Player::playVideo(fairytale *app, const QUrl& url, const QString &descripti
 	this->m_iconButton->hide();
 	this->m_iconButton->setFile("");
 	this->m_videoWidget->show();
-	this->show();
+
+	if (app->isFullScreen())
+	{
+		this->showFullScreen();
+	}
+	else
+	{
+		this->show();
+	}
+
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
 
@@ -62,7 +71,16 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_videoWidget->hide();
 	this->m_iconButton->show();
 	this->m_iconButton->setFile(imageFile);
-	this->show();
+
+	if (app->isFullScreen())
+	{
+		this->showFullScreen();
+	}
+	else
+	{
+		this->show();
+	}
+
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
 

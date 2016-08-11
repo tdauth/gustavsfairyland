@@ -21,6 +21,21 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
+    <widget class="QLabel" name="descriptionLabel">
+     <property name="font">
+      <font>
+       <pointsize>24</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QHBoxLayout" name="videoPlayerLayout">
@@ -105,21 +120,6 @@
       </layout>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="descriptionLabel">
-     <property name="font">
-      <font>
-       <pointsize>24</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
