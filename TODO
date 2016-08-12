@@ -10,7 +10,7 @@
 - DONE: Erzähler kleiner
 - FIXED: Wenn der Player geschlossen wird, ist die Maus woanders
 - Schwierigkeit steigern und mehrere Clips herumfliegen lassen, mit Kollision, Spieler muss den richtigen auswählen.
-- Geschwindigkeit erhöhen?
+- DONE: Geschwindigkeit erhöhen?
 - DONE: Highscores
 - kleines Icon
 - Titelschriftzug, Logo
@@ -22,7 +22,7 @@
 - Märchen während Spielanzeigen fixen (geht nur einmal)
 - Iconsymbol für Märchen: Frosch, Krone
 - Schriftzüge, Holzbode, GUI eher wie Märchen aussehen lassen, Vorhänge
-- Offenes Fenster, licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
+- Offenes Fenster, Licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
 - Sounds: Fenster auf, Windsound
 - GIF mit Vorhängen von oben die durch Wind bewegt werden
 
