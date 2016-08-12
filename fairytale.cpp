@@ -24,6 +24,7 @@
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
+#include "highscores.h"
 
 void fairytale::newGame()
 {
@@ -233,6 +234,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
+, m_highScores(new HighScores(this))
 {
 	this->m_player->hide();
 
@@ -248,6 +250,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
+	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
@@ -315,6 +318,18 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	settings.endArray();
 
+	const int highScoresSize = settings.beginReadArray("highscores");
+
+	for (int i = 0; i < highScoresSize; ++i)
+	{
+			settings.setArrayIndex(i);
+			HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
+			this->highScores()->addHighScore(highScore);
+			++i;
+	}
+
+	settings.endArray();
+
 	m_gameModes.push_back(new GameModeMoving(this));
 	m_gameModes.push_back(new GameModeOneOutOfFour(this));
 }
@@ -329,6 +344,27 @@ fairytale::~fairytale()
 	{
 		settings.setArrayIndex(i);
 		settings.setValue("filePath", this->clipPackages()[i]->filePath());
+	}
+
+	settings.endArray();
+
+	settings.beginWriteArray("highscores");
+	int i = 0;
+
+	foreach (const HighScores::HighScoreVector &highScoreVector, this->highScores()->highScores().values())
+	{
+		foreach (const HighScore &highScore, highScoreVector)
+		{
+			settings.setArrayIndex(i);
+
+			settings.setValue("name", highScore.name());
+			settings.setValue("package", highScore.package());
+			settings.setValue("gameMode", highScore.gameMode());
+			settings.setValue("rounds", highScore.rounds());
+			settings.setValue("time", highScore.time());
+
+			++i;
+		}
 	}
 
 	settings.endArray();
@@ -353,6 +389,11 @@ void fairytale::playFinalVideo()
 	this->playFinalClip(0);
 }
 
+void fairytale::showHighScores()
+{
+	this->highScores()->exec();
+}
+
 void fairytale::about()
 {
 	this->aboutDialog()->exec();
@@ -370,6 +411,16 @@ void fairytale::win()
 	this->m_isRunning = false;
 
 	this->wonDialog()->exec();
+
+	QString name = qgetenv("USER");
+
+	if (name.isEmpty())
+	{
+		name = qgetenv("USERNAME");
+	}
+
+	HighScore highScore(name, this->clipPackage()->name(), this->gameMode()->name(), this->m_turns, this->m_totalElapsedTime);
+	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
@@ -396,6 +447,14 @@ void fairytale::nextTurn()
 		case GameMode::State::Won:
 		{
 			this->win();
+
+			break;
+		}
+
+		// Should never happen
+		case GameMode::State::Lost:
+		{
+			this->gameOver();
 
 			break;
 		}

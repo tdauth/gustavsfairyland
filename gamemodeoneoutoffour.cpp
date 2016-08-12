@@ -167,7 +167,9 @@ void GameModeOneOutOfFour::afterNarrator()
 
 long int GameModeOneOutOfFour::time()
 {
-	return 2000 * (this->m_remainingClips.size() + 1);
+	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+
+	return 2000 * factor + 2000;
 }
 
 void GameModeOneOutOfFour::fillCurrentClips()

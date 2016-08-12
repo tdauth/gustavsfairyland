@@ -112,6 +112,7 @@
     <property name="title">
      <string>Achievements</string>
     </property>
+    <addaction name="actionHighScores"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuSettings"/>
@@ -180,6 +181,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionHighScores">
+   <property name="text">
+    <string>Highscores</string>
    </property>
   </action>
  </widget>

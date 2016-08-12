@@ -131,6 +131,7 @@ void GameModeMoving::start()
 	}
 	else
 	{
+		this->m_roomWidget->clearFloatingClipsExceptFirst();
 		this->m_roomWidget->show();
 	}
 

@@ -50,6 +50,7 @@ set(fairyland_SRCS
         settingsdialog.cpp
         wondialog.cpp
         iconlabel.cpp
+        highscores.cpp
 )
 
 set(fairyland_UI
@@ -64,6 +65,7 @@ set(fairyland_UI
 	ui/gamemodedialog.ui
         ui/settings.ui
         ui/wondialog.ui
+        ui/highscores.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})

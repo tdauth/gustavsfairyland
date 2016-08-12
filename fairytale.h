@@ -24,6 +24,7 @@ class CustomFairytaleDialog;
 class GameMode;
 class AboutDialog;
 class WonDialog;
+class HighScores;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -69,6 +70,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void openEditor();
 		ClipPackage* selectClipPackage();
 		GameMode* selectGameMode();
+		void showHighScores();
 		void about();
 
 	public:
@@ -116,6 +118,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		AboutDialog* aboutDialog();
 		WonDialog* wonDialog();
+		HighScores* highScores() const;
 
 		QString description(int turn, Clip *clip, bool markBold = true);
 
@@ -235,6 +238,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		AboutDialog *m_aboutDialog;
 		/// This dialog appears when a game is won.
 		WonDialog *m_wonDialog;
+
+		HighScores *m_highScores;
 };
 
 inline void fairytale::addClipPackage(ClipPackage* package)
@@ -310,6 +315,11 @@ inline const fairytale::CompleteSolution& fairytale::completeSolution() const
 inline QGridLayout* fairytale::gameAreaLayout() const
 {
 	return centralLayout;
+}
+
+inline HighScores* fairytale::highScores() const
+{
+	return this->m_highScores;
 }
 
 #endif // fairytale_H
