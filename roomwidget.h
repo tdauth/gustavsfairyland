@@ -3,8 +3,9 @@
 
 #include <random>
 
-#include <QtWidgets/QWidget>
+#include <QOpenGLWidget>
 #include <QtCore/QTimer>
+#include <QtCore/QElapsedTimer>
 #include <QtMultimedia/QSoundEffect>
 #include <QSvgRenderer>
 
@@ -18,8 +19,10 @@ class Clip;
  *
  * Every window can open randomly and the wind can blow from that window and move the current piece of paper which contains the clip.
  * This makes it much harder for the player to select it without any hotkey.
+ *
+ * \note Inherits QOpenGLWidget therefore painting should be faster on platforms where OpenGL is available.
  */
-class RoomWidget : public QWidget
+class RoomWidget : public QOpenGLWidget
 {
 	Q_OBJECT
 
@@ -51,8 +54,10 @@ class RoomWidget : public QWidget
 		/// Repaints the room widget and the doors as well as the floating clip.
 		virtual void paintEvent(QPaintEvent *event) override;
 		/// Catches all clicks.
+		/// Use the press event to detect if the player has won or to play specific sounds but do never trigger the signal which would lead to a crash.
+		virtual void mousePressEvent(QMouseEvent *event) override;
 		/**
-		 * Use a release event, otherwise the mouse position is corrupted after showing the player in the slot.
+		 * Use a release event to emit the signal, otherwise the mouse position is corrupted after showing the player in the slot.
 		 */
 		virtual void mouseReleaseEvent(QMouseEvent *event) override;
 		virtual void resizeEvent(QResizeEvent *event) override;
@@ -66,9 +71,12 @@ class RoomWidget : public QWidget
 		void playSoundFromList(const QStringList &soundEffects);
 
 		GameModeMoving *m_gameMode;
+		bool m_won;
 		std::random_device rd; // obtain a random number from hardware
 		QTimer *m_windTimer;
 		QTimer *m_paintTimer; // repaints the whole room widget with all doors and the floating clip
+		/// Measures the time the painting takes to prevent wrong distances when it takes longer than the repaint timer interval.
+		qint64 m_paintTime;
 		Doors m_doors;
 		FloatingClips m_floatingClips;
 		QStringList m_failSoundPaths;

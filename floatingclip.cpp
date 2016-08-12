@@ -64,48 +64,58 @@ void FloatingClip::resume()
 	start();
 }
 
-void FloatingClip::updatePosition(int intervalMs)
+QPair<int,int> FloatingClip::updatePosition(qint64 elapsedTime)
 {
-	const int distance = (intervalMs * this->speed()) / 1000; // distance per MS
-	Q_ASSERT(distance > 0);
+	int x = this->x();
+	int y = this->y();
+	QPair<int, int> result(x, y);
+	const int distance = (elapsedTime * this->speed()) / 1000; // distance per MS
 
-	if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
+	if (distance > 0)
 	{
-		this->m_y += distance;
+		if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
+		{
+			y += distance;
+		}
+
+		if (this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen())
+		{
+			y -= distance;
+		}
+
+		if (this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen())
+		{
+			x += distance;
+		}
+
+		if (this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen())
+		{
+			x -= distance;
+		}
+
+		if (x + m_width > this->m_roomWidget->size().width())
+		{
+			x = this->m_roomWidget->size().width() - m_width;
+		}
+		else if (x < 0)
+		{
+			x = 0;
+		}
+
+		if (y + m_width > this->m_roomWidget->size().height())
+		{
+			y = this->m_roomWidget->size().height() - m_width;
+		}
+		else if (y < 0)
+		{
+			y = 0;
+		}
+
+		result.first = x;
+		result.second = y;
 	}
 
-	if (this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen())
-	{
-		this->m_y -= distance;
-	}
-
-	if (this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen())
-	{
-		this->m_x += distance;
-	}
-
-	if (this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen())
-	{
-		this->m_x -= distance;
-	}
-
-	if (this->m_x + m_width > this->m_roomWidget->size().width())
-	{
-		this->m_x = this->m_roomWidget->size().width() - m_width;
-	}
-	else if (this->m_x < 0)
-	{
-		this->m_x = 0;
-	}
-
-	if (this->m_y + m_width > this->m_roomWidget->size().height())
-	{
-		this->m_y = this->m_roomWidget->size().height() - m_width;
-	}
-	else if (this->m_y < 0)
-	{
-		this->m_y = 0;
-	}
+	return result;
 }
 
 void FloatingClip::updateScaledClipImage()

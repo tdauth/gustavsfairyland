@@ -2,6 +2,7 @@
 
 #include <QtGlobal>
 #include <QtDebug>
+#include <QSplashScreen>
 #include <QtWidgets/QApplication>
 #include <QTime>
 
@@ -17,10 +18,17 @@ int main(int argc, char** argv)
 	QTime time = QTime::currentTime();
 	qsrand((uint)time.msec());
 
+	QSplashScreen splash;
+	splash.setPixmap(QPixmap(":/resources/splashscreen.jpg").scaled(256, 256, Qt::KeepAspectRatio));
+	splash.show();
+	app.processEvents();
+
 	fairytale fairytale;
 	// TODO in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
 	fairytale.show();
 	fairytale.showFullScreen();
+
+	splash.finish(&fairytale);
 
 	return app.exec();
 }

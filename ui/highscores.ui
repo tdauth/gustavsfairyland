@@ -37,6 +37,15 @@
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
      <column>
       <property name="text">
        <string>Name</string>
@@ -59,7 +68,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Time</string>
+       <string>Time (ms)</string>
       </property>
      </column>
     </widget>

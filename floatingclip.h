@@ -33,6 +33,7 @@ class FloatingClip : public QObject
 		 * \param clip The referenced clip
 		 */
 		void setClip(Clip *clip);
+		void setSpeed(int speed);
 		int speed() const;
 		int width() const;
 		int x() const;
@@ -51,7 +52,7 @@ class FloatingClip : public QObject
 		 */
 		bool contains(const QPoint &pos) const;
 
-		void updatePosition(int intervalMs);
+		QPair<int,int> updatePosition(qint64 elapsedTime);
 
 	private:
 		/**
@@ -76,6 +77,12 @@ inline void FloatingClip::setClip(Clip *clip)
 {
 	this->m_clip = clip;
 	this->updateScaledClipImage();
+}
+
+
+inline void FloatingClip::setSpeed(int speed)
+{
+	this->m_speed = speed;
 }
 
 inline int FloatingClip::speed() const

@@ -319,13 +319,13 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	settings.endArray();
 
 	const int highScoresSize = settings.beginReadArray("highscores");
+	qDebug() << "Read high scores:" << highScoresSize;
 
 	for (int i = 0; i < highScoresSize; ++i)
 	{
 			settings.setArrayIndex(i);
 			HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
 			this->highScores()->addHighScore(highScore);
-			++i;
 	}
 
 	settings.endArray();
@@ -356,7 +356,6 @@ fairytale::~fairytale()
 		foreach (const HighScore &highScore, highScoreVector)
 		{
 			settings.setArrayIndex(i);
-
 			settings.setValue("name", highScore.name());
 			settings.setValue("package", highScore.package());
 			settings.setValue("gameMode", highScore.gameMode());
@@ -366,6 +365,8 @@ fairytale::~fairytale()
 			++i;
 		}
 	}
+
+	qDebug() << "Wrote high scores:" << i;
 
 	settings.endArray();
 }

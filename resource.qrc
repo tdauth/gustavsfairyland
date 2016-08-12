@@ -11,5 +11,6 @@
         <file>resources/wood.svg</file>
         <file>resources/paper.eps</file>
         <file>resources/paper.jpg</file>
+        <file>resources/splashscreen.jpg</file>
     </qresource>
 </RCC>

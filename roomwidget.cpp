@@ -92,18 +92,40 @@ void RoomWidget::changeWind()
 
 void RoomWidget::updatePaint()
 {
+	const qint64 interval = m_paintTime > this->m_paintTimer->interval() ? m_paintTime : this->m_paintTimer->interval();
+
+	// The elapsed time in this timer tick slot has to be measured if it is longer than the actual interval. This additional time as to be considered when updating the distance.
+	m_paintTime = 0;
+	QElapsedTimer overrunTimer;
+	overrunTimer.start();
+
+	//qDebug() << "Interval:" << interval;
+
+	QList<QPair<int,int>> newPositions;
+
 	// move floating clips
 	foreach (FloatingClip *clip, m_floatingClips)
 	{
-		clip->updatePosition(this->m_paintTimer->interval());
+		newPositions.push_back(clip->updatePosition(interval));
 	}
 
 	//qDebug() << "Repaint";
 	this->repaint();
-	//qDebug() << "Repaint end";
+
+	// update positions when they are painted already, otherwise clicks will miss since the player sees the clips at the old positions but the coordinates are already updated
+	int i = 0;
+
+	foreach (FloatingClip *clip, m_floatingClips)
+	{
+		clip->move(newPositions[i].first, newPositions[i].second);
+		++i;
+	}
+
+	//qDebug() << "Repaint end:" << overrunTimer.elapsed();
+	m_paintTime = overrunTimer.elapsed();
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(parent), m_gameMode(gameMode), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_woodSvg(QString(":/resources/wood.svg"))
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidget(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -122,7 +144,12 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QWidget(pare
 	m_successSoundPaths.push_back("qrc:/resources/success2.wav");
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
+	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
+	connect(this->m_paintTimer, SIGNAL(activated()), this, SLOT(timerOverruns()));
+
+	qDebug() << "Current Context:" << this->format();
+
 }
 
 void RoomWidget::start()
@@ -213,20 +240,36 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	//qDebug() << "Paint event end";
 }
 
+void RoomWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+
+	if (!this->m_won)
+	{
+		if (this->m_floatingClips.at(0)->contains(event->pos()))
+		{
+			playSoundFromList(m_successSoundPaths);
+
+			this->m_won = true;
+		}
+		// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
+		else
+		{
+			playSoundFromList(m_failSoundPaths);
+		}
+	}
+
+}
+
 void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	QWidget::mouseReleaseEvent(event);
 
-	if (this->m_floatingClips.at(0)->contains(event->pos()))
+	if (m_won)
 	{
-		playSoundFromList(m_successSoundPaths);
+		m_won = false;
 
 		emit gotIt();
-	}
-	// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
-	else
-	{
-		playSoundFromList(m_failSoundPaths);
 	}
 }
 

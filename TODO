@@ -8,13 +8,30 @@
 - Spielmodus: Erzähler mehrere Clips, merken, dann auswählen
 - Clips werden erst freigeschaltet, je nach spielerischer Leistung
 - DONE: Erzähler kleiner
-- Wenn der Player geschlossen wird, ist die Maus woanders
+- FIXED: Wenn der Player geschlossen wird, ist die Maus woanders
+- Schwierigkeit steigern und mehrere Clips herumfliegen lassen, mit Kollision, Spieler muss den richtigen auswählen.
+- Geschwindigkeit erhöhen?
+- DONE: Highscores
+- kleines Icon
+- Titelschriftzug, Logo
+- Holzboden
+- Fenster öffnen, anders darstellen
+- Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
+- Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
+- Bei Pause RoomWidget ausgrauen
+- Märchen während Spielanzeigen fixen (geht nur einmal)
+- Iconsymbol für Märchen: Frosch, Krone
+- Schriftzüge, Holzbode, GUI eher wie Märchen aussehen lassen, Vorhänge
+- Offenes Fenster, licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
+- Sounds: Fenster auf, Windsound
+- GIF mit Vorhängen von oben die durch Wind bewegt werden
 
 DONE:
 - Hauptfigur am Anfang bestimmt
-- in jedem Zug eine Person treffen "und er traf"
+- DEPRECATED: in jedem Zug eine Person treffen "und er traf"
 - in jedem Zug eine Handlung (unabhängig von den Personen)
 
+Ablauf:
 der Frosch
 die Prinzessin
 der Ritter
