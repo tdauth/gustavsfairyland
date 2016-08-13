@@ -51,6 +51,7 @@ set(fairyland_SRCS
         wondialog.cpp
         iconlabel.cpp
         highscores.cpp
+        bonusclip.cpp
 )
 
 set(fairyland_UI

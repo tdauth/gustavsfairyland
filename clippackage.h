@@ -8,6 +8,7 @@
 #include <QtCore/QFile>
 
 class Clip;
+class BonusClip;
 struct Block;
 
 /**
@@ -27,6 +28,7 @@ class ClipPackage : public QObject
 		 * \brief A list of clips which every package stores.
 		 */
 		typedef QList<Clip*> Clips;
+		typedef QList<BonusClip*> BonusClips;
 
 		ClipPackage(QObject *parent = nullptr);
 		virtual ~ClipPackage();
@@ -52,11 +54,13 @@ class ClipPackage : public QObject
 		const QString& name() const;
 		Clips& clips();
 		const Clips& clips() const;
+		const BonusClips& bonusClips() const;
 
 		/**
 		 * \return Returns the number of rounds possible with these clips.
 		 */
 		int rounds() const;
+
 	private:
 		/**
 		 * Header structure for the archive format which is used for serialization of clip packages.
@@ -91,11 +95,14 @@ class ClipPackage : public QObject
 		QString m_filePath;
 		QString m_name;
 		Clips m_clips;
+		/// Additional clips which can be unlocked.
+		BonusClips m_bonusClips;
 };
 
 inline void ClipPackage::clear()
 {
 	this->m_clips.clear();
+	this->m_bonusClips.clear();
 	this->removeDir();
 }
 
@@ -129,5 +136,9 @@ inline const ClipPackage::Clips& ClipPackage::clips() const
 	return this->m_clips;
 }
 
+inline const ClipPackage::BonusClips& ClipPackage::bonusClips() const
+{
+	return this->m_bonusClips;
+}
 
 #endif // CLIPPACKAGE_H

@@ -13,6 +13,7 @@
 #include "ui_mainwindow.h"
 
 class Clip;
+class BonusClip;
 class Player;
 class SettingsDialog;
 class ClipsDialog;
@@ -148,6 +149,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishNarrator(QMediaPlayer::State state);
 		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
+		void playBonusClip();
 
 	private:
 		void updateTimeLabel();
@@ -240,12 +242,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		WonDialog *m_wonDialog;
 
 		HighScores *m_highScores;
-};
 
-inline void fairytale::addClipPackage(ClipPackage* package)
-{
-	this->m_clipPackages.push_back(package);
-}
+		typedef QMap<QAction*, BonusClip*> BonusClipActions;
+		BonusClipActions m_bonusClipActions;
+		bool m_playingBonusClip;
+};
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {

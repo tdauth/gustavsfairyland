@@ -21,6 +21,7 @@ class Player : public QDialog, protected Ui::Player
 
 	public slots:
 		void playVideo(fairytale *app, const QUrl &url, const QString &description);
+		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
 		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
 
 		void skip();

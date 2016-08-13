@@ -84,7 +84,7 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuDatei">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
@@ -114,7 +114,7 @@
     </property>
     <addaction name="actionHighScores"/>
    </widget>
-   <addaction name="menuDatei"/>
+   <addaction name="menuFile"/>
    <addaction name="menuSettings"/>
    <addaction name="menuAchievements"/>
    <addaction name="menuHelp"/>

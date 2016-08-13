@@ -8,6 +8,7 @@
 #include "clipsdialog.moc"
 #include "fairytale.h"
 #include "clip.h"
+#include "bonusclip.h"
 
 void ClipsDialog::addFile()
 {
@@ -136,6 +137,7 @@ void ClipsDialog::fill(const fairytale::ClipPackages &packages)
 	this->treeWidget->clear();
 	this->m_clipPackages.clear();
 	this->m_clips.clear();
+	this->m_bonusClips.clear();
 
 	foreach (ClipPackage *package, packages)
 	{
@@ -152,13 +154,14 @@ void ClipsDialog::fill(ClipPackage* package)
 
 	QTreeWidgetItem *personsItem = new QTreeWidgetItem(topLevelItem);
 	personsItem->setText(0, tr("Persons"));
-	//topLevelItem->setText(1, QString::number(package->clips().size()));
 	QTreeWidgetItem *actsItem = new QTreeWidgetItem(topLevelItem);
 	actsItem->setText(0, tr("Acts"));
-	//topLevelItem->setText(1, QString::number(package->clips().size()));
+	QTreeWidgetItem *bonusesItem = new QTreeWidgetItem(topLevelItem);
+	bonusesItem->setText(0, tr("Bonuses"));
 
 	int persons = 0;
 	int acts = 0;
+	int bonuses = 0;
 
 	foreach (Clip *clip, package->clips())
 	{
@@ -177,8 +180,19 @@ void ClipsDialog::fill(ClipPackage* package)
 		}
 	}
 
+	foreach (BonusClip *clip, package->bonusClips())
+	{
+		QTreeWidgetItem *clipItem = new QTreeWidgetItem(bonusesItem);
+		this->m_bonusClips.insert(clipItem, clip);
+		clipItem->setText(0, clip->description());
+		clipItem->setIcon(0, QIcon(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+
+		++bonuses;
+	}
+
 	topLevelItem->setText(1, QString::number(persons + acts));
 	topLevelItem->setText(2, QString::number(package->rounds()));
 	personsItem->setText(1, QString::number(persons));
 	actsItem->setText(1, QString::number(acts));
+	bonusesItem->setText(1, QString::number(bonuses));
 }

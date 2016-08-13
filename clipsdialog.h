@@ -9,6 +9,7 @@
 class fairytale;
 class ClipPackage;
 class Clip;
+class BonusClip;
 
 class ClipsDialog : public QDialog, protected Ui::ClipsWidget
 {
@@ -41,6 +42,8 @@ class ClipsDialog : public QDialog, protected Ui::ClipsWidget
         ClipPackages m_clipPackages;
 		typedef QMap<QTreeWidgetItem*, Clip*> Clips;
 		Clips m_clips;
+		typedef QMap<QTreeWidgetItem*, BonusClip*> BonusClips;
+		BonusClips m_bonusClips;
 };
 
 #endif // CLIPSDIALOG_H

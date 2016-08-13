@@ -163,4 +163,16 @@
                 <narrator>./throne/throne.wav</narrator>
 		<description>bestiegen den Thron</description>
 	</clip>
+
+        <bonusClip>
+            <image>./mahler/mahler.jpg</image>
+            <video>./mahler/bonus/ueberalma.avi</video>
+            <description>Gustav Mahler über Alma</description>
+        </bonusClip>
+
+        <bonusClip>
+            <image>./mahler/mahler.jpg</image>
+            <video>./mahler/bonus/trauer.avi</video>
+            <description>Gustav Mahler trauert um Alma</description>
+        </bonusClip>
 </clips>
