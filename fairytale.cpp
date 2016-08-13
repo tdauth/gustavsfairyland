@@ -11,6 +11,7 @@
 
 #include "fairytale.h"
 #include "clip.h"
+#include "bonusclip.h"
 #include "player.h"
 #include "iconbutton.h"
 #include "clipsdialog.h"
@@ -24,6 +25,7 @@
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
+#include "highscores.h"
 
 void fairytale::newGame()
 {
@@ -43,6 +45,7 @@ void fairytale::newGame()
 	// requires person in the first step always
 	this->m_requiresPerson = true;
 	this->m_turns = 0;
+	this->m_totalElapsedTime = 0;
 
 	ClipPackage *clipPackage = this->selectClipPackage();
 
@@ -111,13 +114,18 @@ void fairytale::pauseGame()
 void fairytale::cancelGame()
 {
 	// hold the game while asking to cancel
-	this->pauseGame();
+	const bool pause = !this->m_paused;
+
+	if (pause)
+	{
+		this->pauseGame();
+	}
 
 	if (QMessageBox::question(this, tr("Cancel Game?"), tr("Do you want to cancel the game?")) == QMessageBox::Yes)
 	{
 		this->cleanupGame();
 	}
-	else
+	else if (pause)
 	{
 		// continue game
 		this->pauseGame();
@@ -232,6 +240,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
+, m_highScores(new HighScores(this))
+, m_playingBonusClip(false)
 {
 	this->m_player->hide();
 
@@ -247,6 +257,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
 	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
+	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
@@ -279,7 +290,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 			if (package->loadClipsFromFile(filePath))
 			{
-				this->m_clipPackages.push_back(package);
+				this->addClipPackage(package);
 			}
 			else
 			{
@@ -299,7 +310,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 			if (package->loadClipsFromFile(filePath))
 			{
-				this->m_clipPackages.push_back(package);
+				this->addClipPackage(package);
 			}
 			else
 			{
@@ -310,6 +321,18 @@ fairytale::fairytale(Qt::WindowFlags flags)
 		{
 			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
 		}
+	}
+
+	settings.endArray();
+
+	const int highScoresSize = settings.beginReadArray("highscores");
+	qDebug() << "Read high scores:" << highScoresSize;
+
+	for (int i = 0; i < highScoresSize; ++i)
+	{
+			settings.setArrayIndex(i);
+			HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
+			this->highScores()->addHighScore(highScore);
 	}
 
 	settings.endArray();
@@ -331,12 +354,35 @@ fairytale::~fairytale()
 	}
 
 	settings.endArray();
+
+	settings.beginWriteArray("highscores");
+	int i = 0;
+
+	foreach (const HighScores::HighScoreVector &highScoreVector, this->highScores()->highScores().values())
+	{
+		foreach (const HighScore &highScore, highScoreVector)
+		{
+			settings.setArrayIndex(i);
+			settings.setValue("name", highScore.name());
+			settings.setValue("package", highScore.package());
+			settings.setValue("gameMode", highScore.gameMode());
+			settings.setValue("rounds", highScore.rounds());
+			settings.setValue("time", highScore.time());
+
+			++i;
+		}
+	}
+
+	qDebug() << "Wrote high scores:" << i;
+
+	settings.endArray();
 }
 
 void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
+	this->playSound(this->resolveClipUrl(this->m_completeSolution[index]->narratorVideoUrl()));
 	this->m_player->playVideo(this, this->m_completeSolution[index]->videoUrl(), this->description(index, this->m_completeSolution[index]));
 }
 
@@ -349,6 +395,11 @@ void fairytale::playFinalVideo()
 
 	this->m_playCompleteSolution = true;
 	this->playFinalClip(0);
+}
+
+void fairytale::showHighScores()
+{
+	this->highScores()->exec();
 }
 
 void fairytale::about()
@@ -368,6 +419,16 @@ void fairytale::win()
 	this->m_isRunning = false;
 
 	this->wonDialog()->exec();
+
+	QString name = qgetenv("USER");
+
+	if (name.isEmpty())
+	{
+		name = qgetenv("USERNAME");
+	}
+
+	HighScore highScore(name, this->clipPackage()->name(), this->gameMode()->name(), this->m_turns, this->m_totalElapsedTime);
+	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
@@ -394,6 +455,14 @@ void fairytale::nextTurn()
 		case GameMode::State::Won:
 		{
 			this->win();
+
+			break;
+		}
+
+		// Should never happen
+		case GameMode::State::Lost:
+		{
+			this->gameOver();
 
 			break;
 		}
@@ -455,6 +524,8 @@ void fairytale::nextTurn()
 
 void fairytale::onFinishTurn()
 {
+	// Store the time it took to finish the turn, ignore pauses!
+	this->m_totalElapsedTime += this->gameMode()->time() - m_remainingTime;
 	this->m_timer.stop();
 	this->m_remainingTime = 0;
 	this->m_turns++;
@@ -501,56 +572,73 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	actionPauseGame->setEnabled(enabled);
 	actionCancelGame->setEnabled(enabled);
 	actionShowCustomFairytale->setEnabled(enabled);
+
+	foreach (QAction *action, this->m_bonusClipActions.keys())
+	{
+		action->setEnabled(!enabled);
+	}
 }
 
 void fairytale::finishNarrator(QMediaPlayer::State state)
 {
 	if (state == QMediaPlayer::StoppedState)
 	{
-		// played narrator stuff
-		if (!this->m_playCompleteSolution)
+		if (!this->m_playingBonusClip)
 		{
-			// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
-			if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+			// played narrator stuff
+			if (!this->m_playCompleteSolution)
 			{
-				this->m_player->mediaPlayer()->stop();
-				this->m_player->hide(); // hide the player, otherwise one cannot play the game
+				// Only react if the game mode has not been canceled
+				if (this->gameMode()->state() == GameMode::State::Running)
+				{
+					// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+					if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+					{
+						this->m_player->mediaPlayer()->stop();
+						this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
-				this->m_playerSounds.clear();
+						this->m_playerSounds.clear();
 
-				this->gameMode()->afterNarrator();
+						this->gameMode()->afterNarrator();
 
-				// run every second
-				this->m_timer.start(1000);
+						// run every second
+						this->m_timer.start(1000);
+					}
+					// played only the word "and" or the first person sound then we always expect another sound
+					else
+					{
+						const PlayerSoundData data = m_playerSounds.dequeue();
+						this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+					}
+				}
 			}
-			// played only the word "and" or the first person sound then we always expect another sound
-			else
+			// Play the next final clip of the complete solution.
+			else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 			{
-				const PlayerSoundData data = m_playerSounds.dequeue();
-				this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+				qDebug() << "Play next final clip";
+				// next time play the following clip
+				this->m_completeSolutionIndex++;
+				this->playFinalClip(this->m_completeSolutionIndex);
+			}
+			/*
+			 * Stop playing the complete solution.
+			 */
+			else if (this->m_playCompleteSolution)
+			{
+				qDebug() << "Finished final clips";
+				this->m_playCompleteSolution = false;
+				this->m_completeSolutionIndex = 0;
+
+				// The dialog has to disappear, after the player watched all final clips.
+				this->m_player->hide();
+				this->customFairytaleDialog()->hide();
+				this->cleanupAfterOneGame();
 			}
 		}
-		// Play the next final clip of the complete solution.
-		else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+		else
 		{
-			qDebug() << "Play next final clip";
-			// next time play the following clip
-			this->m_completeSolutionIndex++;
-			this->playFinalClip(this->m_completeSolutionIndex);
-		}
-		/*
-		 * Stop playing the complete solution.
-		 */
-		else if (this->m_playCompleteSolution)
-		{
-			qDebug() << "Finished final clips";
-			this->m_playCompleteSolution = false;
-			this->m_completeSolutionIndex = 0;
-
-			// The dialog has to disappear, after the player watched all final clips.
+			this->m_playingBonusClip = false;
 			this->m_player->hide();
-			this->customFairytaleDialog()->hide();
-			this->cleanupAfterOneGame();
 		}
 	}
 }
@@ -682,9 +770,10 @@ void fairytale::queuePlayerSound(const PlayerSoundData &data)
 
 void fairytale::cleanupGame()
 {
+	this->m_playerSounds.clear();
+	this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
 	this->m_player->mediaPlayer()->stop();
 	this->m_player->hide();
-	this->gameMode()->end();
 	this->cleanupAfterOneGame();
 	this->timeLabel->setText("");
 	this->descriptionLabel->setText("");
@@ -743,5 +832,34 @@ WonDialog* fairytale::wonDialog()
 	return this->m_wonDialog;
 }
 
+void fairytale::addClipPackage(ClipPackage* package)
+{
+	this->m_clipPackages.push_back(package);
+
+	foreach (BonusClip *bonusClip, package->bonusClips())
+	{
+		QAction *action = menuAchievements->addAction(bonusClip->description());
+		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
+		this->m_bonusClipActions.insert(action, bonusClip);
+	}
+}
+
+void fairytale::playBonusClip()
+{
+	if (m_playingBonusClip || this->m_isRunning)
+	{
+		return;
+	}
+
+	QAction *action = dynamic_cast<QAction*>(sender());
+
+	BonusClipActions::iterator iterator = this->m_bonusClipActions.find(action);
+
+	if (iterator != this->m_bonusClipActions.end())
+	{
+		this->m_playingBonusClip = true;
+		this->m_player->playBonusVideo(this, iterator.value()->videoUrl(), iterator.value()->description());
+	}
+}
 
 #include "fairytale.moc"

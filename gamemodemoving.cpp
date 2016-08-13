@@ -36,7 +36,14 @@ void GameModeMoving::afterNarrator()
 		const int index = qrand() % this->app()->completeSolution().size();
 
 		// make them faster than the  first clip
-		this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), FLOATING_CLIP_PIXELS_PER_S + this->app()->turns() * 10);
+		const int speed = FLOATING_CLIP_PIXELS_PER_S + this->app()->turns() * 40;
+		qDebug() << "Speed: " << speed;
+		this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), speed);
+
+		foreach (FloatingClip *clip, this->m_roomWidget->floatingClips())
+		{
+			clip->setSpeed(speed);
+		}
 	}
 
 	this->m_roomWidget->start();
@@ -129,6 +136,7 @@ void GameModeMoving::start()
 	}
 	else
 	{
+		this->m_roomWidget->clearFloatingClipsExceptFirst();
 		this->m_roomWidget->show();
 	}
 

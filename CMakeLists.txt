@@ -49,6 +49,9 @@ set(fairyland_SRCS
 	roomwidget.cpp
         settingsdialog.cpp
         wondialog.cpp
+        iconlabel.cpp
+        highscores.cpp
+        bonusclip.cpp
 )
 
 set(fairyland_UI
@@ -63,6 +66,7 @@ set(fairyland_UI
 	ui/gamemodedialog.ui
         ui/settings.ui
         ui/wondialog.ui
+        ui/highscores.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
@@ -132,6 +136,9 @@ install(FILES clips/prison/prison.wav DESTINATION clips/prison/)
 install(FILES clips/robery/robery.jpg DESTINATION clips/robery/)
 install(FILES clips/robery/robery.mkv DESTINATION clips/robery/)
 install(FILES clips/robery/robery.wav DESTINATION clips/robery/)
+install(FILES clips/popcorn/popcorn.jpg DESTINATION clips/popcorn/)
+install(FILES clips/popcorn/popcorn.avi DESTINATION clips/popcorn/)
+install(FILES clips/popcorn/popcorn.wav DESTINATION clips/popcorn/)
 
 install(FILES clips/throne/throne.jpg DESTINATION clips/throne/)
 install(FILES clips/throne/throne.mkv DESTINATION clips/throne/)
@@ -185,6 +192,8 @@ set(CPACK_CREATE_DESKTOP_LINKS "fairyland")
 # NSIS Windows
 set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_NSIS_URL_INFO_ABOUT "http://wc3lib.org")
+# improve the compression since we have many clips and Qt binaries
+set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
 
 # Fedora package
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")

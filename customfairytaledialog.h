@@ -8,7 +8,7 @@
 
 class fairytale;
 class Clip;
-class IconButton;
+class IconLabel;
 
 /**
  * \brief This dialog lists all clips of a custom fairytale in a row and allows playing the custom fairytale.
@@ -34,11 +34,11 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 	private:
 		typedef QList<Clip*> Clips;
-		typedef QList<IconButton*> ClipButtons;
+		typedef QList<IconLabel*> ClipLabels;
 
 		fairytale *m_app;
 		Clips m_clips;
-		ClipButtons m_clipButtons;
+		ClipLabels m_clipLabels;
 };
 
 #endif // CUSTOMFAIRYTALEDIALOG_H

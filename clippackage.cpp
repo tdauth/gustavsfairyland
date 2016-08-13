@@ -13,6 +13,7 @@
 
 #include "clippackage.h"
 #include "clip.h"
+#include "bonusclip.h"
 
 #include "clippackage.moc"
 
@@ -352,6 +353,75 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		}
 	}
 
+	for (int i = 0; i < this->bonusClips().size(); ++i)
+	{
+		const BonusClip *clip = this->bonusClips().at(i);
+
+		// write image file
+		Block imageBlock;
+		const bool imageBlockExists = !clip->imageUrl().isEmpty();
+
+		if (imageBlockExists)
+		{
+			const QString filePath = clip->imageUrl().toLocalFile();
+
+			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
+			{
+				qDebug() << "Unable to write the image block.";
+
+				return false;
+			}
+		}
+
+		// write video file
+		Block videoBlock;
+		const bool videoBlockExists = !clip->videoUrl().isEmpty();
+
+		if (videoBlockExists)
+		{
+			const QString filePath = clip->videoUrl().toLocalFile();
+
+			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
+			{
+				qDebug() << "Unable to write the video block.";
+
+				return false;
+			}
+		}
+
+		if (!f.seek(blockTableOffset))
+		{
+			qDebug() << "Unable to seek to the block table.";
+
+			return false;
+		}
+
+		if (imageBlockExists)
+		{
+			if (f.write((const char*)&imageBlock, sizeof(imageBlock)) == -1)
+			{
+				return false;
+			}
+		}
+
+		if (videoBlockExists)
+		{
+			if (f.write((const char*)&videoBlock, sizeof(videoBlock)) == -1)
+			{
+				return false;
+			}
+		}
+
+		// store current block table offset for later use
+		blockTableOffset = f.pos();
+
+		// jump back to the data stream
+		if (!f.seek(offset))
+		{
+			return false;
+		}
+	}
+
 	/*
 	 * The file "clips.xml" contains a list of all clip data which is contained in the archive.
 	 */
@@ -455,24 +525,43 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 	{
 		QDomNode node = nodes.at(i);
 
-		if (node.nodeName() != "clip")
+		if (node.nodeName() == "clip")
 		{
-			std::cerr << "Missing clip" << std::endl;
+			const QUrl image = QUrl(node.firstChildElement("image").text());
+			const QUrl video = QUrl(node.firstChildElement("video").text());
+			const QUrl narrator = QUrl(node.firstChildElement("narrator").text());
+			const QString description = node.firstChildElement("description").text();
 
-			return false;
+			const QString isPerson = node.hasAttributes() && node.attributes().contains("isPerson") ?  node.attributes().namedItem("isPerson").nodeValue() : "";
+
+			m_clips.push_back(new Clip(image, video, narrator, description, isPerson == "true", this));
 		}
+		else
+		{
+			qDebug() << "Unknow node:" << node.nodeName();
+		}
+	}
 
-		const QUrl image = QUrl(node.firstChildElement("image").text());
-		const QUrl video = QUrl(node.firstChildElement("video").text());
-		const QUrl narrator = QUrl(node.firstChildElement("narrator").text());
-		const QString description = node.firstChildElement("description").text();
+	nodes = root.elementsByTagName("bonusClip");
 
-		const QString isPerson = node.hasAttributes() && node.attributes().contains("isPerson") ?  node.attributes().namedItem("isPerson").nodeValue() : "";
+	for (int i = 0; i < nodes.size(); ++i)
+	{
+		QDomNode node = nodes.at(i);
 
-		m_clips.push_back(new Clip(image, video, narrator, description, isPerson == "true", this));
+		if (node.nodeName() == "bonusClip")
+		{
+			qDebug() << "Read bonus clip";
+
+			const QUrl image = QUrl(node.firstChildElement("image").text());
+			const QUrl video = QUrl(node.firstChildElement("video").text());
+			const QString description = node.firstChildElement("description").text();
+
+			m_bonusClips.push_back(new BonusClip(image, video, description, this));
+		}
 	}
 
 	std::cerr << "Clips " << m_clips.size() << std::endl;
+	std::cerr << "Bonus Clips Size " << m_bonusClips.size() << std::endl;
 
 	this->m_filePath = file;
 
@@ -529,7 +618,41 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 		}
 
 		root.appendChild(clipElement);
+	}
 
+	for (int i = 0; i < this->bonusClips().size(); ++i)
+	{
+		const BonusClip *clip = this->bonusClips().at(i);
+		QDomElement clipElement = document.createElement("bonusClip");
+
+		if (!clip->imageUrl().isEmpty())
+		{
+			QDomElement imageElement = document.createElement("image");
+			clipElement.appendChild(imageElement);
+
+			QDomText imageTextNode = document.createTextNode(clip->imageUrl().toString());
+			imageElement.appendChild(imageTextNode);
+		}
+
+		if (!clip->videoUrl().isEmpty())
+		{
+			QDomElement videoElement = document.createElement("video");
+			clipElement.appendChild(videoElement);
+
+			QDomText videoTextNode = document.createTextNode(clip->videoUrl().toString());
+			videoElement.appendChild(videoTextNode);
+		}
+
+		if (!clip->description().isEmpty())
+		{
+			QDomElement descriptionElement = document.createElement("description");
+			clipElement.appendChild(descriptionElement);
+
+			QDomText descriptionTextNode = document.createTextNode(clip->description());
+			descriptionElement.appendChild(descriptionTextNode);
+		}
+
+		root.appendChild(clipElement);
 	}
 
 	QFile f(file);

@@ -5,6 +5,9 @@
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 
+/**
+ * \brief A single video clip with narration and preview image.
+ */
 class Clip : public QObject
 {
 	Q_OBJECT

@@ -13,6 +13,7 @@
 #include "ui_mainwindow.h"
 
 class Clip;
+class BonusClip;
 class Player;
 class SettingsDialog;
 class ClipsDialog;
@@ -24,6 +25,7 @@ class CustomFairytaleDialog;
 class GameMode;
 class AboutDialog;
 class WonDialog;
+class HighScores;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -69,6 +71,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void openEditor();
 		ClipPackage* selectClipPackage();
 		GameMode* selectGameMode();
+		void showHighScores();
 		void about();
 
 	public:
@@ -116,6 +119,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		AboutDialog* aboutDialog();
 		WonDialog* wonDialog();
+		HighScores* highScores() const;
 
 		QString description(int turn, Clip *clip, bool markBold = true);
 
@@ -145,6 +149,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishNarrator(QMediaPlayer::State state);
 		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
+		void playBonusClip();
 
 	private:
 		void updateTimeLabel();
@@ -190,6 +195,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The remaining time of the timer in MS.
 		 */
 		long int m_remainingTime;
+		/// The total elapsed time for one game.
+		long int m_totalElapsedTime;
 
 		/**
 		 * If this value is true the current turn requires a person clip. Otherwise it requires an act clip.
@@ -233,12 +240,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		AboutDialog *m_aboutDialog;
 		/// This dialog appears when a game is won.
 		WonDialog *m_wonDialog;
-};
 
-inline void fairytale::addClipPackage(ClipPackage* package)
-{
-	this->m_clipPackages.push_back(package);
-}
+		HighScores *m_highScores;
+
+		typedef QMap<QAction*, BonusClip*> BonusClipActions;
+		BonusClipActions m_bonusClipActions;
+		bool m_playingBonusClip;
+};
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
@@ -308,6 +316,11 @@ inline const fairytale::CompleteSolution& fairytale::completeSolution() const
 inline QGridLayout* fairytale::gameAreaLayout() const
 {
 	return centralLayout;
+}
+
+inline HighScores* fairytale::highScores() const
+{
+	return this->m_highScores;
 }
 
 #endif // fairytale_H

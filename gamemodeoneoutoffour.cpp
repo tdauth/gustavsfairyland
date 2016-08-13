@@ -134,6 +134,8 @@ void GameModeOneOutOfFour::nextTurn()
 		}
 		else
 		{
+			// Disable click events and timers
+			this->pause();
 			setState(State::Won);
 		}
 	}
@@ -145,16 +147,17 @@ void GameModeOneOutOfFour::nextTurn()
 
 void GameModeOneOutOfFour::afterNarrator()
 {
-	for (int i = 0; i < this->m_currentClips.size(); ++i)
-	{
-		this->m_buttons[i]->show(); // first show and resize
-	}
-
 	for (int i = this->m_currentClips.size(); i < this->size(); ++i)
 	{
 		this->m_buttons[i]->setFile(QString());
 		this->m_buttons[i]->setEnabled(false);
 		this->m_buttons[i]->hide();
+	}
+
+	for (int i = 0; i < this->m_currentClips.size(); ++i)
+	{
+		this->m_buttons[i]->show(); // first show and resize
+		this->m_buttons[i]->updateGeometry();
 	}
 
 	// set the pixmaps after adding all buttons so the resizing is only done once.
@@ -167,7 +170,9 @@ void GameModeOneOutOfFour::afterNarrator()
 
 long int GameModeOneOutOfFour::time()
 {
-	return 2000 * (this->m_remainingClips.size() + 1);
+	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+
+	return 2000 * factor + 2000;
 }
 
 void GameModeOneOutOfFour::fillCurrentClips()

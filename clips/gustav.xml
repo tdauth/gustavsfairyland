@@ -37,6 +37,12 @@
 		<narrator>./mahler/mahler.wav</narrator>
                 <description>Gustav Mahler</description>
         </clip>
+        <clip isPerson="true">
+                <image>./popcorn/popcorn.jpg</image>
+                <video>./popcorn/popcorn.avi</video>
+                <narrator>./popcorn/popcorn.wav</narrator>
+                <description>die Popcornverkäuferin</description>
+        </clip>
 
 	<!-- new acts -->
 	<clip isPerson="false">
@@ -157,4 +163,16 @@
                 <narrator>./throne/throne.wav</narrator>
 		<description>bestiegen den Thron</description>
 	</clip>
+
+        <bonusClip>
+            <image>./mahler/mahler.jpg</image>
+            <video>./mahler/bonus/ueberalma.avi</video>
+            <description>Gustav Mahler über Alma</description>
+        </bonusClip>
+
+        <bonusClip>
+            <image>./mahler/mahler.jpg</image>
+            <video>./mahler/bonus/trauer.avi</video>
+            <description>Gustav Mahler trauert um Alma</description>
+        </bonusClip>
 </clips>
