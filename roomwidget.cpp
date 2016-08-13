@@ -146,7 +146,6 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidge
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
-	connect(this->m_paintTimer, SIGNAL(activated()), this, SLOT(timerOverruns()));
 
 	qDebug() << "Current Context:" << this->format();
 

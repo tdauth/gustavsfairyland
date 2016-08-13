@@ -79,6 +79,8 @@ target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::M
 add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
 target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
+configure_file(doc/doxygen.conf doc/doxygen.conf)
+
 install(TARGETS fairyland RUNTIME DESTINATION bin)
 
 install(FILES fairyland.desktop DESTINATION share/applications)
