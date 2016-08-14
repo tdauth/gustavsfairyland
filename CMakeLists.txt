@@ -3,26 +3,13 @@ project(fairyland)
 
 # install libs
 include(InstallRequiredSystemLibraries)
+#include("cmake/Apk.cmake" REQUIRED)
+include("cmake/AddQtAndroidApk.cmake" REQUIRED)
+include_directories("/home/tamino/android-ndk-r12b/sources/android/native_app_glue/")
 
 enable_testing()
 
 add_compile_options(-std=c++11 -Wall)
-
-#if (ANDROID)
-
-include("cmake/Apk.cmake" REQUIRED)
-include_directories(${ANDROID_NDK}/sources/android/native_app_glue)
-
-#set(CMAKE_LINKER "/home/tamino/android-ndk-r12b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ld")
-#set(CMAKE_CXX_FLAGS "--sysroot=/home/tamino/android-ndk-r12b/platforms/android-24/arch-arm/ /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a -DANDROID -fexceptions -frtti")
-#include_directories("/home/tamino/android-ndk-r12b/sources/lvm-libc++/libcxx/include" "/home/tamino/android-ndk-r12b/sources/cxx-stl/llvm-libc++/libcxx/include/" "/home/tamino/android-ndk-r12b/sources/android/support/include/")
-#set(CMAKE_PREFIX_PATH "/home/tamino/Qt5.7.0/5.7/android_armv7/lib/cmake")
-
-#set(CMAKE_EXE_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
-#set(CMAKE_MODULE_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
-#set(CMAKE_SHARED_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
-#set(CMAKE_STATIC_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
-#endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
@@ -70,6 +57,10 @@ set(fairyland_SRCS
 	bonusclip.cpp
 )
 
+if (ANDROID)
+    set(fairyland_SRCS ${fairyland_SRCS} mainandroid.cpp)
+endif ()
+
 set(fairyland_UI
 	ui/aboutdialog.ui
 	ui/mainwindow.ui
@@ -92,12 +83,17 @@ QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
-add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
+if (ANDROID)
+	add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC})
+	install(TARGETS fairyland LIBRARY DESTINATION lib)
+else ()
+	add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
+	install(TARGETS fairyland RUNTIME DESTINATION bin)
+endif()
+
 target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)
-
-install(TARGETS fairyland RUNTIME DESTINATION bin)
 
 install(FILES fairyland.desktop DESTINATION share/applications)
 
@@ -192,6 +188,11 @@ if (WIN32)
     install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
 endif ()
 
+if (ANDROID)
+	# TODO uses the wrong architecture
+	#add_qt_android_apk(my_app_apk fairyland)
+endif ()
+
 add_subdirectory(test)
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
@@ -222,12 +223,5 @@ set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5
 # Debian
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
-
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    get_property(lib_location TARGET fairylandlib PROPERTY LOCATION)
-    set(APP_STATIC_LIBRARIES "$<TARGET_FILE:fairylandlib>")
-    set(ANDROID_API_LEVEL "24")
-    android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${lib_location}" "clips/treasure/treasure.jpg" "Data")
-endif ()
 
 include(CPack)
