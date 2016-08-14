@@ -224,8 +224,10 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    get_property(lib_location TARGET fairylandlib PROPERTY LOCATION)
     set(APP_STATIC_LIBRARIES "$<TARGET_FILE:fairylandlib>")
-    android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${APP_STATIC_LIBRARIES}" "" "Data")
+    set(ANDROID_API_LEVEL "24")
+    android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${lib_location}" "clips/treasure/treasure.jpg" "Data")
 endif ()
 
 include(CPack)
