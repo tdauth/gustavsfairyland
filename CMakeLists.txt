@@ -8,6 +8,22 @@ enable_testing()
 
 add_compile_options(-std=c++11 -Wall)
 
+#if (ANDROID)
+
+include("cmake/Apk.cmake" REQUIRED)
+include_directories(${ANDROID_NDK}/sources/android/native_app_glue)
+
+#set(CMAKE_LINKER "/home/tamino/android-ndk-r12b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ld")
+#set(CMAKE_CXX_FLAGS "--sysroot=/home/tamino/android-ndk-r12b/platforms/android-24/arch-arm/ /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a -DANDROID -fexceptions -frtti")
+#include_directories("/home/tamino/android-ndk-r12b/sources/lvm-libc++/libcxx/include" "/home/tamino/android-ndk-r12b/sources/cxx-stl/llvm-libc++/libcxx/include/" "/home/tamino/android-ndk-r12b/sources/android/support/include/")
+#set(CMAKE_PREFIX_PATH "/home/tamino/Qt5.7.0/5.7/android_armv7/lib/cmake")
+
+#set(CMAKE_EXE_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
+#set(CMAKE_MODULE_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
+#set(CMAKE_SHARED_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
+#set(CMAKE_STATIC_LINKER_FLAGS "/home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libgnustl_static.a /home/tamino/android-ndk-r12b/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/libsupc++.a")
+#endif ()
+
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 # Find includes in corresponding build directories
@@ -29,7 +45,7 @@ find_package(Qt5Svg)
 
 set(fairyland_SRCS
 	aboutdialog.cpp
-        fairytale.cpp
+	fairytale.cpp
 	floatingclip.cpp
 	clip.cpp
 	door.cpp
@@ -40,18 +56,18 @@ set(fairyland_SRCS
 	clippackagedialog.cpp
 	clippackageeditor.cpp
 	clipeditor.cpp
-        customfairytaledialog.cpp
+	customfairytaledialog.cpp
 	gamemode.cpp
 	gamemodedialog.cpp
 	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
 	roomwidget.cpp
-        settingsdialog.cpp
-        wondialog.cpp
-        iconlabel.cpp
-        highscores.cpp
-        bonusclip.cpp
+	settingsdialog.cpp
+	wondialog.cpp
+	iconlabel.cpp
+	highscores.cpp
+	bonusclip.cpp
 )
 
 set(fairyland_UI
@@ -62,11 +78,11 @@ set(fairyland_UI
 	ui/clippackagedialog.ui
 	ui/clippackageeditor.ui
 	ui/clipeditor.ui
-        ui/customfairytale.ui
+	ui/customfairytale.ui
 	ui/gamemodedialog.ui
-        ui/settings.ui
-        ui/wondialog.ui
-        ui/highscores.ui
+	ui/settings.ui
+	ui/wondialog.ui
+	ui/highscores.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
@@ -206,5 +222,10 @@ set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5
 # Debian
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
+
+# if ANDROID
+set(APP_STATIC_LIBRARIES "$<TARGET_FILE:fairylandlib>")
+android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${APP_STATIC_LIBRARIES}" "" "Data")
+#endif
 
 include(CPack)

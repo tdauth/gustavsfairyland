@@ -8,3 +8,12 @@ On Windows 7 the program has been compiled using the MinGW distributed with Qt.
 The shell path in CMake has to stay clear.
 Unfortunately there is only a 32 Bit compiler.
 Generator: Code Blocks - MinGW Makefiles
+
+Qt Creator does not autodetect Qt on Fedora:
+ln -s /usr/bin/qmake-qt5 /usr/bin/qmake
+ln -s /usr/lib/qt5/ /usr/lib/qt
+
+For Android:
+Download SDK and NDK.
+Use the corresponding CMake module.
+Add the path to "android" to your PATH ./Android/Sdk/tools/
