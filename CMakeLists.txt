@@ -223,9 +223,9 @@ set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
 
-# if ANDROID
-set(APP_STATIC_LIBRARIES "$<TARGET_FILE:fairylandlib>")
-android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${APP_STATIC_LIBRARIES}" "" "Data")
-#endif
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    set(APP_STATIC_LIBRARIES "$<TARGET_FILE:fairylandlib>")
+    android_create_apk(fairyland "${CMAKE_BINARY_DIR}/apk" "${APP_STATIC_LIBRARIES}" "" "Data")
+endif ()
 
 include(CPack)
