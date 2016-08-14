@@ -22,17 +22,20 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 		const int x1 = this->m_x;
 		const int y1 = this->m_y;
 
+		const QImage &imagePaper = this->m_roomWidget->isEnabled() ? m_scaledImagePaper : m_scaledImagePaperDisabled;
+		const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
+
 		// draw some background if the image does not fit
 		//painter->fillRect(x1, y1, m_width, m_width, Qt::black);
 		// scale the clip image but keep ratio
-		const int widthDifferencePaper = (m_width - m_scaledPixmapPaper.width()) / 2;
-		const int heightDifferencePaper = (m_width - m_scaledPixmapPaper.height()) / 2;
-		painter->drawPixmap(x1 + widthDifferencePaper, y1 + heightDifferencePaper, this->m_scaledPixmapPaper);
+		const int widthDifferencePaper = (m_width - imagePaper.width()) / 2;
+		const int heightDifferencePaper = (m_width - imagePaper.height()) / 2;
+		painter->drawImage(x1 + widthDifferencePaper, y1 + heightDifferencePaper, imagePaper);
 
 		// TODO scaling is bad for the performance?
-		const int widthDifference = (m_width - m_scaledPixmap.width()) / 2;
-		const int heightDifference = (m_width - m_scaledPixmap.height()) / 2;
-		painter->drawPixmap(x1 + widthDifference, y1 + heightDifference, m_scaledPixmap);
+		const int widthDifference = (m_width - image.width()) / 2;
+		const int heightDifference = (m_width - image.height()) / 2;
+		painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
 
 		// paint a border to show differences between floating clips
 		/*
@@ -120,12 +123,15 @@ QPair<int,int> FloatingClip::updatePosition(qint64 elapsedTime)
 
 void FloatingClip::updateScaledClipImage()
 {
-	m_scaledPixmapPaper = QPixmap(":/resources/paper.jpg").scaled(m_width, m_width, Qt::KeepAspectRatio);
-	const int width = qMin(m_scaledPixmapPaper.width(), m_scaledPixmapPaper.height());
+	m_scaledImagePaper = QImage(":/resources/paper.jpg").scaled(m_width, m_width, Qt::KeepAspectRatio);
+	const int width = qMin(m_scaledImagePaper.width(), m_scaledImagePaper.height());
+
+	m_scaledImagePaperDisabled = QImage(":/resources/paper.jpg").convertToFormat(QImage::Format_Grayscale8).scaled(m_width, m_width, Qt::KeepAspectRatio);
 
 	const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
-	this->m_scaledPixmap = QPixmap(clipUrl.toLocalFile()).scaled(width, width, Qt::KeepAspectRatio);
-	Q_ASSERT(!this->m_scaledPixmap.isNull());
+	this->m_scaledImage = QImage(clipUrl.toLocalFile()).scaled(width, width, Qt::KeepAspectRatio);
+	Q_ASSERT(!this->m_scaledImage.isNull());
+	this->m_scaledImageDisabled = QImage(clipUrl.toLocalFile()).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
 }
 
 #include "floatingclip.moc"

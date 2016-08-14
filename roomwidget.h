@@ -83,6 +83,7 @@ class RoomWidget : public QOpenGLWidget
 		QStringList m_successSoundPaths;
 		QSvgRenderer m_woodSvg;
 		QImage m_woodImage;
+		QImage m_woodImageDisabled;
 };
 
 inline GameModeMoving* RoomWidget::gameMode() const

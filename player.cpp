@@ -1,5 +1,6 @@
+#include <QtGui>
 #include <QtMultimedia/QMultimedia>
-#include <QMessageBox>
+#include <QShortcut>
 
 #include "player.h"
 #include "fairytale.h"
@@ -31,6 +32,13 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGame()));
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
+
+	QShortcut *shortcut = new QShortcut(QKeySequence("S"), this);
+	connect(shortcut, &QShortcut::activated, this->skipPushButton, &QPushButton::click);
+	shortcut = new QShortcut(QKeySequence("P"), this);
+	connect(shortcut, &QShortcut::activated, this->pausePushButton, &QPushButton::click);
+	shortcut = new QShortcut(QKeySequence("C"), this);
+	connect(shortcut, &QShortcut::activated, this->cancelPushButton, &QPushButton::click);
 }
 
 void Player::playVideo(fairytale *app, const QUrl& url, const QString &description)

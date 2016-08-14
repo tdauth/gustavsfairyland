@@ -479,9 +479,8 @@ void fairytale::nextTurn()
 			const QString description = this->description(this->m_turns, solution);
 
 			this->m_remainingTime = this->gameMode()->time();
-			this->updateTimeLabel();
-			// the description label helps to remember
-			this->descriptionLabel->setText(description);
+			this->descriptionLabel->clear();
+			this->timeLabel->clear();
 
 			// play the sound for the inital character again
 			if (solution->isPerson() && turns() > 1)
@@ -598,6 +597,10 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 						this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
 						this->m_playerSounds.clear();
+
+						this->updateTimeLabel();
+						// the description label helps to remember
+						this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
 
 						this->gameMode()->afterNarrator();
 

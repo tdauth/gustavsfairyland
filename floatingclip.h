@@ -69,8 +69,10 @@ class FloatingClip : public QObject
 		int m_y;
 		Clip *m_clip;
 		/// Store the scaled version of the clip's image to improve performance.
-		QPixmap m_scaledPixmap;
-		QPixmap m_scaledPixmapPaper;
+		QImage m_scaledImage;
+		QImage m_scaledImageDisabled;
+		QImage m_scaledImagePaper;
+		QImage m_scaledImagePaperDisabled;
 };
 
 inline void FloatingClip::setClip(Clip *clip)
@@ -113,7 +115,7 @@ inline void FloatingClip::move(int x, int y)
 
 inline bool FloatingClip::contains(const QPoint &pos) const
 {
-	return QRect(x(), y(), m_scaledPixmapPaper.width(), m_scaledPixmapPaper.height()).contains(pos);
+	return QRect(x(), y(), m_scaledImagePaper.width(), m_scaledImagePaper.height()).contains(pos);
 }
 
 #endif // FLOATINGCLIP_H

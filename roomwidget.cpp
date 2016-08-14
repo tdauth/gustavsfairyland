@@ -121,7 +121,7 @@ void RoomWidget::updatePaint()
 		++i;
 	}
 
-	//qDebug() << "Repaint end:" << overrunTimer.elapsed();
+	qDebug() << "Repaint end:" << overrunTimer.elapsed();
 	m_paintTime = overrunTimer.elapsed();
 }
 
@@ -147,8 +147,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidge
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
 
-	qDebug() << "Current Context:" << this->format();
-
+//	qDebug() << "Current Context:" << this->format();
 }
 
 void RoomWidget::start()
@@ -168,12 +167,13 @@ void RoomWidget::pause()
 	m_windTimer->stop();
 	m_paintTimer->stop();
 
+	this->setEnabled(false);
+
 	foreach (FloatingClip *clip, m_floatingClips)
 	{
 		clip->pause();
 	}
 
-	this->setEnabled(false);
 	this->repaint(); // repaint once disable
 }
 
@@ -221,7 +221,14 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	painter.drawRect(this->rect());
 	*/
 	// TODO slow
-	painter.drawImage(0, 0, m_woodImage);
+	if (this->isEnabled())
+	{
+		painter.drawImage(0, 0, m_woodImage);
+	}
+	else
+	{
+		painter.drawImage(0, 0, m_woodImageDisabled);
+	}
 
 	foreach (Door *door, m_doors)
 	{
@@ -282,6 +289,10 @@ void RoomWidget::resizeEvent(QResizeEvent* event)
 	m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
 	QPainter painter(&m_woodImage);
 	m_woodSvg.render(&painter);
+	m_woodImageDisabled = QImage(this->rect().width(), this->rect().height(), QImage::Format_Grayscale8);
+	m_woodImageDisabled.fill(Qt::transparent);
+	QPainter painter2(&m_woodImageDisabled);
+	m_woodSvg.render(&painter2);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
