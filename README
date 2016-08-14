@@ -21,3 +21,8 @@ Add the path to "android" to your PATH ./Android/Sdk/tools/
 Use the following CMake modules for Android deployment:
 https://github.com/taka-no-me/android-cmake
 https://github.com/LaurentGomila/qt-android-cmake/
+
+Use the following command to get debugging output:
+/home/tamino/Android/Sdk/platform-tools/adb logcat
+
+https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device

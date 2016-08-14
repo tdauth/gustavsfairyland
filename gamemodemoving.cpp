@@ -36,7 +36,7 @@ void GameModeMoving::afterNarrator()
 		const int index = qrand() % this->app()->completeSolution().size();
 
 		// make them faster than the  first clip
-		const int speed = FLOATING_CLIP_PIXELS_PER_S + this->app()->turns() * 40;
+		const int speed = this->startSpeed() + this->app()->turns() * (this->app()->hasTouchDevice() ? 100 : 40);
 		qDebug() << "Speed: " << speed;
 		this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), speed);
 
@@ -163,6 +163,16 @@ void GameModeMoving::lost()
 	this->setState(State::Lost);
 
 	this->app()->onFinishTurn();
+}
+
+int GameModeMoving::startSpeed() const
+{
+	if (this->app()->hasTouchDevice())
+	{
+		return FLOATING_CLIP_PIXELS_PER_S + 400;
+	}
+
+	return FLOATING_CLIP_PIXELS_PER_S;
 }
 
 #include "gamemodemoving.moc"

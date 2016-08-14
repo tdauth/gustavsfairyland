@@ -134,7 +134,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidge
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
-	m_floatingClips.push_back(new FloatingClip(this));
+	m_floatingClips.push_back(new FloatingClip(this, 200, gameMode->startSpeed()));
 
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");

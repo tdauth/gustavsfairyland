@@ -21,7 +21,7 @@ class FloatingClip : public QObject
 	Q_OBJECT
 
 	public:
-		FloatingClip(RoomWidget *parent, int width = 200, int speed = FLOATING_CLIP_PIXELS_PER_S);
+		FloatingClip(RoomWidget *parent, int width, int speed);
 
 		/**
 		 * Paints the floating clip with \p painter on \p area.

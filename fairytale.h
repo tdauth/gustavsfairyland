@@ -78,6 +78,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QList<GameMode*> GameModes;
 		typedef QList<ClipPackage*> ClipPackages;
 
+		/**
+		 * \return Returns true if the user has a touch device to press at the floating clips.
+		 */
+		static bool hasTouchDevice();
+
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
 

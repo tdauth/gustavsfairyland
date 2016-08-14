@@ -12,4 +12,6 @@ cd ./buildandroid
 cmake -DJAVA_HOME="/usr/java/default/" -DANDROID_SDK="$ANDROID_HOME" -DQT_ANDROID_SDK_ROOT="$ANDROID_HOME" -DQT_ANDROID_ANT="$ANT_PATH" -DCMAKE_MODULE_PATH="../cmake" -DCMAKE_PREFIX_PATH="$HOME/Qt5.7.0/5.7/android_x86/lib/cmake" -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DANDROID_NDK="$HOME/android-ndk-r12b" -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI="x86"  -DANDROID_NATIVE_API_LEVEL="24" ../
 cmake --build .
 # Manual installation of the packed apk file for the emulator
-#$ANDROID_HOME/platform-tools/adb install ./apk/bin/fairyland-debug.apk
+echo "Installing the APK file"
+$ANDROID_HOME/platform-tools/adb install -r ./bin/QtApp-debug.apk
+echo "Result: $?"

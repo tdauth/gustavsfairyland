@@ -26,6 +26,8 @@ class GameModeMoving : public GameMode
 		virtual void end() override;
 		virtual void start() override;
 
+		int startSpeed() const;
+
 	private slots:
 		void gotIt();
 		void lost();

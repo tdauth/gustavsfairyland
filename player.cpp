@@ -103,7 +103,13 @@ void Player::playBonusVideo(fairytale *app, const QUrl &url, const QString &desc
 
 void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix)
 {
-	const QString imageFile = app->resolveClipUrl(imageUrl).toLocalFile();
+	const QUrl resolvedImageUrl = app->resolveClipUrl(imageUrl);
+#ifndef Q_OS_ANDROID
+	const QString imageFile = resolvedImageUrl.toLocalFile();
+#else
+	const QString imageFile = resolvedImageUrl.url();
+#endif
+	qDebug() << "Image file:" << imageFile;
 	const QUrl soundUrl = app->resolveClipUrl(url);
 
 	this->m_isPrefix = prefix;

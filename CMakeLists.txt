@@ -59,10 +59,6 @@ set(fairyland_SRCS
 	bonusclip.cpp
 )
 
-if (ANDROID)
-    set(fairyland_SRCS ${fairyland_SRCS} mainandroid.cpp)
-endif ()
-
 set(fairyland_UI
 	ui/aboutdialog.ui
 	ui/mainwindow.ui
@@ -101,7 +97,7 @@ configure_file(doc/doxygen.conf doc/doxygen.conf)
 install(FILES fairyland.desktop DESTINATION share/applications)
 
 # the default fairyland
-install(DIRECTORY clips DESTINATION clips)
+install(DIRECTORY clips/ DESTINATION clips)
 
 # Installs all required Qt binary files on Windows.
 # The program windeployqt generates all files into the binary directory which have to be installed
@@ -114,6 +110,9 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
+	# Copy all clips and xml files into a subfolder in assets
+	add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
+	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
 	add_qt_android_apk(my_app_apk fairyland)
 endif ()
 

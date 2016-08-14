@@ -15,6 +15,8 @@ HighScores::HighScores(QWidget *parent) : QDialog(parent)
 {
 	setupUi(this);
 
+	this->setModal(true);
+
 	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
 }
 

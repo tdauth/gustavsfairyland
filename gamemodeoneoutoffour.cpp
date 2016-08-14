@@ -163,7 +163,13 @@ void GameModeOneOutOfFour::afterNarrator()
 	// set the pixmaps after adding all buttons so the resizing is only done once.
 	for (int i = 0; i < this->m_currentClips.size(); ++i)
 	{
-		this->m_buttons[i]->setFile(this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl()).toLocalFile());
+		const QUrl url = this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl());
+#ifndef Q_OS_ANDROID
+		const QString filePath = url.toLocalFile();
+#else
+		const QString filePath = url.url();
+#endif
+		this->m_buttons[i]->setFile(filePath);
 		this->m_buttons[i]->setEnabled(true);
 	}
 }

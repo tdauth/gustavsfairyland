@@ -129,9 +129,14 @@ void FloatingClip::updateScaledClipImage()
 	m_scaledImagePaperDisabled = QImage(":/resources/paper.jpg").convertToFormat(QImage::Format_Grayscale8).scaled(m_width, m_width, Qt::KeepAspectRatio);
 
 	const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
-	this->m_scaledImage = QImage(clipUrl.toLocalFile()).scaled(width, width, Qt::KeepAspectRatio);
+#ifndef Q_OS_ANDROID
+	const QString filePath = clipUrl.toLocalFile();
+#else
+	const QString filePath = clipUrl.url();
+#endif
+	this->m_scaledImage = QImage(filePath).scaled(width, width, Qt::KeepAspectRatio);
 	Q_ASSERT(!this->m_scaledImage.isNull());
-	this->m_scaledImageDisabled = QImage(clipUrl.toLocalFile()).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
+	this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
 }
 
 #include "floatingclip.moc"

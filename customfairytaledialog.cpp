@@ -14,7 +14,12 @@ void CustomFairytaleDialog::addClip(Clip *clip)
 	label->setAlignment(Qt::AlignCenter);
 	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	label->setMaximumSize(QSize(64, 64));
-	label->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
+#ifndef Q_OS_ANDROID
+	const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).toLocalFile();
+#else
+	const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).url();
+#endif
+	label->setFile(imageFile);
 	label->setEnabled(true); // dont grey out the clip icon
 	this->playFinalVideoPushButton->setEnabled(true);
 }

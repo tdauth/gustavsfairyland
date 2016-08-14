@@ -6,6 +6,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QFileDialog>
+#include <QTouchDevice>
 
 #include <QtMultimedia/QMultimedia>
 
@@ -216,6 +217,19 @@ GameMode* fairytale::selectGameMode()
 	return nullptr;
 }
 
+bool fairytale::hasTouchDevice()
+{
+	foreach (const QTouchDevice *device, QTouchDevice::devices())
+	{
+		if (device->capabilities() & QTouchDevice::MouseEmulation)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 fairytale::fairytale(Qt::WindowFlags flags)
 : QMainWindow(0, flags)
 , m_turns(0)
@@ -274,6 +288,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 #else
 	defaultClipsDir = QDir("/usr/clips");
 #endif
+
+#ifndef Q_OS_ANDROID
 	// the default path is the "clips" sub directory
 	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
 
@@ -324,6 +340,23 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	}
 
 	settings.endArray();
+// Android uses a different protocol for assets only
+#else
+	ClipPackage *package = new ClipPackage(this);
+
+	const QString fileName("assets:/clips/gustav.xml");
+
+	qDebug() << "Opening package:" << fileName;
+
+	if (package->loadClipsFromFile(fileName))
+	{
+		this->addClipPackage(package);
+	}
+	else
+	{
+		delete package;
+	}
+#endif
 
 	const int highScoresSize = settings.beginReadArray("highscores");
 	qDebug() << "Read high scores:" << highScoresSize;
@@ -790,16 +823,30 @@ void fairytale::cleanupAfterOneGame()
 	qDebug() << "After disabling game buttons";
 }
 
-QUrl fairytale::resolveClipUrl(const QUrl& url) const
+QUrl fairytale::resolveClipUrl(const QUrl &url) const
 {
 	if (!url.isRelative())
 	{
 		qDebug() << "Absolute: " << url;
+
 		return url;
 	}
 
+#ifndef Q_OS_ANDROID
 	QUrl result = this->m_clipsDir;
 	result.setUrl(this->m_clipsDir.url() + "/" + url.url());
+#else
+	// Android uses assets as local files and Qt provides this protocol for these files
+	QString relativePath = url.toString();
+
+	if (relativePath.startsWith("./"))
+	{
+		relativePath = relativePath.mid(2);
+	}
+
+	QUrl result("assets:/clips/" + relativePath);
+#endif
+
 	qDebug() << "Resolved: " << result;
 
 	return result;
