@@ -38,6 +38,10 @@ class FloatingClip : public QObject
 		int width() const;
 		int x() const;
 		int y() const;
+		void setDirX(int dirX);
+		int dirX() const;
+		void setDirY(int dirY);
+		int dirY() const;
 
 		void move(int x, int y);
 
@@ -52,7 +56,7 @@ class FloatingClip : public QObject
 		 */
 		bool contains(const QPoint &pos) const;
 
-		QPair<int,int> updatePosition(qint64 elapsedTime);
+		void updatePosition(qint64 elapsedTime);
 
 	private:
 		/**
@@ -67,6 +71,8 @@ class FloatingClip : public QObject
 		int m_width;
 		int m_x;
 		int m_y;
+		int m_dirX;
+		int m_dirY;
 		Clip *m_clip;
 		/// Store the scaled version of the clip's image to improve performance.
 		QImage m_scaledImage;
@@ -105,6 +111,26 @@ inline int FloatingClip::x() const
 inline int FloatingClip::y() const
 {
 	return this->m_y;
+}
+
+inline void FloatingClip::setDirX(int dirX)
+{
+	this->m_dirX = dirX;
+}
+
+inline int FloatingClip::dirX() const
+{
+	return this->m_dirX;
+}
+
+inline void FloatingClip::setDirY(int dirY)
+{
+	this->m_dirY = dirY;
+}
+
+inline int FloatingClip::dirY() const
+{
+	return this->m_dirY;
 }
 
 inline void FloatingClip::move(int x, int y)

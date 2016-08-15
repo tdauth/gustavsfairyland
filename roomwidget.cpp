@@ -101,25 +101,14 @@ void RoomWidget::updatePaint()
 
 	//qDebug() << "Interval:" << interval;
 
-	QList<QPair<int,int>> newPositions;
-
 	// move floating clips
 	foreach (FloatingClip *clip, m_floatingClips)
 	{
-		newPositions.push_back(clip->updatePosition(interval));
+		clip->updatePosition(interval);
 	}
 
 	//qDebug() << "Repaint";
 	this->repaint();
-
-	// update positions when they are painted already, otherwise clicks will miss since the player sees the clips at the old positions but the coordinates are already updated
-	int i = 0;
-
-	foreach (FloatingClip *clip, m_floatingClips)
-	{
-		clip->move(newPositions[i].first, newPositions[i].second);
-		++i;
-	}
 
 	qDebug() << "Repaint end:" << overrunTimer.elapsed();
 	m_paintTime = overrunTimer.elapsed();

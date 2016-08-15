@@ -11,7 +11,7 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_clip(nullptr)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_clip(nullptr)
 {
 }
 
@@ -56,6 +56,29 @@ void FloatingClip::start()
 	// set initial position to random coordinates
 	this->m_x = qrand() % (this->m_roomWidget->size().height() - m_width);
 	this->m_y = qrand() % (this->m_roomWidget->size().width() - m_width);
+
+	// set random dir
+	const int randomDirX = qrand() % 1;
+
+	if (randomDirX == 0)
+	{
+		this->m_dirX = 1;
+	}
+	else
+	{
+		this->m_dirX = -1;
+	}
+
+	const int randomDirY = qrand() % 1;
+
+	if (randomDirY == 0)
+	{
+		this->m_dirY = 1;
+	}
+	else
+	{
+		this->m_dirY = -1;
+	}
 }
 
 void FloatingClip::pause()
@@ -67,15 +90,18 @@ void FloatingClip::resume()
 	start();
 }
 
-QPair<int,int> FloatingClip::updatePosition(qint64 elapsedTime)
+void FloatingClip::updatePosition(qint64 elapsedTime)
 {
 	int x = this->x();
 	int y = this->y();
-	QPair<int, int> result(x, y);
+	const int height = this->m_scaledImagePaper.height();
+	const int width = this->m_scaledImagePaper.width();
 	const int distance = (elapsedTime * this->speed()) / 1000; // distance per MS
 
 	if (distance > 0)
 	{
+		// check the wind first and calculate direction
+		/*
 		if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
 		{
 			y += distance;
@@ -95,30 +121,86 @@ QPair<int,int> FloatingClip::updatePosition(qint64 elapsedTime)
 		{
 			x -= distance;
 		}
+		*/
 
-		if (x + m_width > this->m_roomWidget->size().width())
+		// Check for collisions with other clips.
+		foreach (FloatingClip *otherClip, this->m_roomWidget->floatingClips())
 		{
-			x = this->m_roomWidget->size().width() - m_width;
+			if (otherClip != this)
+			{
+				const QRect clipRect(this->x(), this->y(), width, height);
+				const QRect otherClipRect(otherClip->x(), otherClip->y(), otherClip->m_scaledImagePaper.width(), otherClip->m_scaledImagePaper.height());
+
+				if (clipRect.intersects(otherClipRect))
+				{
+					if (otherClip->x() > this->x())
+					{
+						setDirX(-1);
+					}
+					else
+					{
+						setDirX(1);
+					}
+
+					if (otherClip->y() > this->y())
+					{
+						setDirY(-1);
+					}
+					else
+					{
+						setDirY(1);
+					}
+
+					qDebug() << "Collide!";
+
+					break;
+				}
+			}
+		}
+
+		// Check for collisions with the boundary.
+		if (this->x() + width == this->m_roomWidget->size().width())
+		{
+			setDirX(-1);
+		}
+		else if (this->x() == 0)
+		{
+			setDirX(1);
+		}
+
+		if (this->y() + height == this->m_roomWidget->size().height())
+		{
+			setDirY(-1);
+		}
+		else if (this->y() == 0)
+		{
+			setDirY(1);
+		}
+
+		x += this->dirX() * distance;
+		y += this->dirY() * distance;
+
+		// Make sure boundaries are not violated
+		if (x + width > this->m_roomWidget->size().width())
+		{
+			x = this->m_roomWidget->size().width() - width;
 		}
 		else if (x < 0)
 		{
 			x = 0;
 		}
 
-		if (y + m_width > this->m_roomWidget->size().height())
+		if (y + height > this->m_roomWidget->size().height())
 		{
-			y = this->m_roomWidget->size().height() - m_width;
+			y = this->m_roomWidget->size().height() - height;
 		}
 		else if (y < 0)
 		{
 			y = 0;
 		}
-
-		result.first = x;
-		result.second = y;
 	}
 
-	return result;
+	this->move(x, y);
 }
 
 void FloatingClip::updateScaledClipImage()
