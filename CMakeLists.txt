@@ -15,6 +15,8 @@ add_compile_options(-std=c++11 -Wall)
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
+option(USE_COMPRESSED_VIDEOS "Enable this optio to install much smaller videos." TRUE)
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
@@ -96,8 +98,52 @@ configure_file(doc/doxygen.conf doc/doxygen.conf)
 
 install(FILES fairyland.desktop DESTINATION share/applications)
 
-# the default fairyland
-install(DIRECTORY clips/ DESTINATION clips)
+if (USE_COMPRESSED_VIDEOS)
+	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES "${CMAKE_SOURCE_DIR}/clips/*/*_compressed*")
+else ()
+	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES_AVI "${CMAKE_SOURCE_DIR}/clips/*/*.avi")
+	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES_MKV "${CMAKE_SOURCE_DIR}/clips/*/*.mkv")
+	list(APPEND COMPRESSED_VIDEO_FILES ${COMPRESSED_VIDEO_FILES_AVI} ${COMPRESSED_VIDEO_FILES_MKV})
+endif ()
+
+# the default fairyland package gustav
+# Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
+install(FILES clips/gustav.xml DESTINATION clips)
+message(STATUS "Compressed files: ${COMPRESSED_VIDEO_FILES}")
+file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
+file(GLOB_RECURSE IMAGE_FILES_PNG "${CMAKE_SOURCE_DIR}/clips/*/*.png")
+list(APPEND IMAGE_FILES ${IMAGE_FILES_JPG} ${IMAGE_FILES_PNG})
+message(STATUS "Image files: ${IMAGE_FILES}")
+file(GLOB_RECURSE SPEECH_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.wav")
+message(STATUS "Sound files: ${SPEECH_FILES}")
+list(APPEND INSTALL_FILES ${COMPRESSED_VIDEO_FILES} ${IMAGE_FILES} ${SPEECH_FILES})
+
+# This custom target is referenced by all install commands for Android.
+if (ANDROID)
+	add_custom_target(CopyAssets ALL)
+endif ()
+
+# Specify the install directory for every found file.
+foreach (f ${INSTALL_FILES})
+	#message(STATUS "Install: ${f}")
+	get_filename_component(f_name "${f}" NAME)
+	string(REPLACE "_compressed" "" fileName "${f_name}")
+	get_filename_component(f_dir "${f}" DIRECTORY)
+	string(FIND "${f_dir}" "clips/" f_clipsPos REVERSE)
+	string(LENGTH "clips/" clipsLength)
+	string(LENGTH "${f_dir}" dirLength)
+	math(EXPR subStringPos "${f_clipsPos}+${clipsLength}")
+	math(EXPR subStringLength "${dirLength}-${subStringPos}")
+	string(SUBSTRING "${f_dir}" ${subStringPos} ${subStringLength} dirName)
+	set(INSTALL_PATH "${dirName}/${fileName}")
+	message(STATUS "Install path: ${INSTALL_PATH}")
+	install(FILES "${f}" DESTINATION clips/${INSTALL_PATH})
+
+	# Copy files into assets folder for Android.
+	if (ANDROID)
+		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/clips/${INSTALL_PATH})
+	endif ()
+endforeach ()
 
 # Installs all required Qt binary files on Windows.
 # The program windeployqt generates all files into the binary directory which have to be installed
@@ -111,7 +157,7 @@ endif ()
 
 if (ANDROID)
 	# Copy all clips and xml files into a subfolder in assets
-	add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
+	#add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
 	add_qt_android_apk(my_app_apk fairyland)
 endif ()
