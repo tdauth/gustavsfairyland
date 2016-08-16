@@ -125,13 +125,13 @@ void fairytale::showCustomFairytale()
 
 void fairytale::settings()
 {
-    if (m_settingsDialog == nullptr)
-    {
+	if (m_settingsDialog == nullptr)
+	{
 		m_settingsDialog = new SettingsDialog(this, this);
-    }
+	}
 
 	m_settingsDialog->update();
-    m_settingsDialog->exec();
+	m_settingsDialog->exec();
 }
 
 void fairytale::openClipsDialog()
@@ -435,15 +435,14 @@ void fairytale::loadLanguage(const QString &language)
 #else
 	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
 #endif
-	const QString file = language + ".ts";
 	bool loaded = false;
 	std::cerr << "Translation directory: " << translationsDir.path().toStdString() << std::endl;
-	std::cerr << "Translation: " << file.toStdString() << std::endl;
+	std::cerr << "Translation: " << language.toStdString() << std::endl;
 
-	if (m_translator.load(file, translationsDir.path()))
+	if (m_translator.load(language, translationsDir.path()))
 	{
 		std::cerr << "Loaded file!" << std::endl;
-		qDebug() << "File loaded:" << file;
+		qDebug() << "File loaded:" << language;
 		loaded = true;
 	}
 	else
