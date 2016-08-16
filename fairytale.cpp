@@ -1,5 +1,6 @@
-#include <QtCore/QSettings>
+#include <iostream>
 
+#include <QtCore/QSettings>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -436,14 +437,18 @@ void fairytale::loadLanguage(const QString &language)
 #endif
 	const QString file = language + ".ts";
 	bool loaded = false;
+	std::cerr << "Translation directory: " << translationsDir.path().toStdString() << std::endl;
+	std::cerr << "Translation: " << file.toStdString() << std::endl;
 
 	if (m_translator.load(file, translationsDir.path()))
 	{
+		std::cerr << "Loaded file!" << std::endl;
 		qDebug() << "File loaded:" << file;
 		loaded = true;
 	}
 	else
 	{
+		std::cerr << "Did not laod file!" << std::endl;
 		qWarning() << "File not loaded";
 	}
 
