@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -19,7 +19,7 @@
         <location filename="../build/ui_aboutdialog.h" line="95"/>
         <location filename="../buildandroid/ui_aboutdialog.h" line="95"/>
         <source>Gustav&apos;s Fairyland</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gustavs Märchenwelt</translation>
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="96"/>

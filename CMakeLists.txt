@@ -15,7 +15,7 @@ add_compile_options(-std=c++11 -Wall)
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
-option(USE_COMPRESSED_VIDEOS "Enable this optio to install much smaller videos." TRUE)
+option(USE_COMPRESSED_VIDEOS "Enable this option to install much smaller videos." FALSE)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -84,10 +84,7 @@ set(fairyland_TRANSLATIONS
 	translations/de.ts
 )
 
-find_program(LUPDATE_PATH lupdate REQUIRED)
-
 file(GLOB_RECURSE fairytale_TRANSLATION_SRCS GLOB_RECURSE "${CMAKE_BINARY_DIR}/src" "*.cpp" "*.h")
-message(STATUS "Got translatable srcs: ${fairytale_TRANSLATION_SRCS}")
 QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyland_TRANSLATIONS})
 
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
@@ -148,13 +145,13 @@ foreach (f ${INSTALL_FILES})
 	math(EXPR subStringPos "${f_clipsPos}+${clipsLength}")
 	math(EXPR subStringLength "${dirLength}-${subStringPos}")
 	string(SUBSTRING "${f_dir}" ${subStringPos} ${subStringLength} dirName)
-	set(INSTALL_PATH "${dirName}/${fileName}")
-	message(STATUS "Install path: ${INSTALL_PATH}")
-	install(FILES "${f}" DESTINATION share/gustavsfairyland/clips/${INSTALL_PATH})
+	set(INSTALL_DIR "${dirName}")
+	message(STATUS "Install path: ${INSTALL_DIR}/${fileName}")
+	install(FILES "${f}" DESTINATION share/gustavsfairyland/clips/${INSTALL_DIR} RENAME "${fileName}")
 
 	# Copy files into assets folder for Android.
 	if (ANDROID)
-		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/clips/${INSTALL_PATH})
+		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/clips/${INSTALL_DIR}/${fileName})
 	endif ()
 endforeach ()
 
