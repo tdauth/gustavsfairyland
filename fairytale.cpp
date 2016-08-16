@@ -444,6 +444,12 @@ void fairytale::loadLanguage(const QString &language)
 		std::cerr << "Loaded file!" << std::endl;
 		qDebug() << "File loaded:" << language;
 		loaded = true;
+
+		// The event is not fired the first time.
+		if (!m_installedTranslator)
+		{
+			this->retranslateUi(this);
+		}
 	}
 	else
 	{
@@ -943,6 +949,7 @@ void fairytale::changeEvent(QEvent* event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
+			std::cerr << "Retranslate UI";
 			this->retranslateUi(this);
 
 			break;
