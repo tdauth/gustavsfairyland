@@ -1,185 +1,294 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <clips name="Gustav's Fairytale">
 	<!-- persons -->
-	<clip isPerson="true">
-                <image>./crazy/runterholer.jpg</image>
-                <video>./crazy/runterholer.mkv</video>
-                <narrator>./crazy/crazy.wav</narrator>
-		<description>der Runterholer</description>
-	</clip>
-	<clip isPerson="true">
-                <image>./opajott/opajott1.jpg</image>
-                <video>./opajott/opajott1.mkv</video>
-                <narrator>./opajott/opajott.wav</narrator>
-		<description>Opa Jott</description>
-	</clip>
-	<clip isPerson="true">
-                <image>./vampir/vampir.png</image>
-                <video>./vampir/vampir.avi</video>
-                <narrator>./vampir/vampir.wav</narrator>
-		<description>der Vampir</description>
-	</clip>
-	<clip isPerson="true">
-                <image>./werwolf/werwolf.png</image>
-                <video>./werwolf/werwolf.avi</video>
-                <narrator>./werwolf/werwolf.wav</narrator>
-		<description>der Werwolf</description>
-	</clip>
-	<clip isPerson="true">
-                <image>./steampunk/steampunk.jpg</image>
-                <video>./steampunk/steampunk.avi</video>
-                <narrator>./steampunk/steampunk.wav</narrator>
-		<description>der Pestdoktor</description>
-	</clip>
-        <clip isPerson="true">
-                <image>./mahler/mahler.jpg</image>
-                <video>./mahler/mahler.avi</video>
-		<narrator>./mahler/mahler.wav</narrator>
-                <description>Gustav Mahler</description>
-        </clip>
-        <clip isPerson="true">
-                <image>./popcorn/popcorn.jpg</image>
-                <video>./popcorn/popcorn.avi</video>
-                <narrator>./popcorn/popcorn.wav</narrator>
-                <description>die Popcornverkäuferin</description>
-        </clip>
+	<persons>
+		<clip>
+			<image>./crazy/runterholer.jpg</image>
+			<video>./crazy/runterholer.mkv</video>
+			<narrator>
+				<de>./crazy/crazy.wav</de>
+			</narrator>
+			<description>
+				<en>the pedophile</en>
+				<de>der Runterholer</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./opajott/opajott1.jpg</image>
+			<video>./opajott/opajott1.mkv</video>
+			<narrator>
+				<de>./opajott/opajott.wav</de>
+			</narrator>
+			<description>
+				<de>Opa Jott</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./vampir/vampir.png</image>
+			<video>./vampir/vampir.avi</video>
+			<narrator>
+				<de>./vampir/vampir.wav</de>
+			</narrator>
+			<description>
+				<de>der Vampir</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./werwolf/werwolf.png</image>
+			<video>./werwolf/werwolf.avi</video>
+			<narrator>.
+				<de>/werwolf/werwolf.wav</de>
+			</narrator>
+			<description>
+				<de>der Werwolf</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./steampunk/steampunk.jpg</image>
+			<video>./steampunk/steampunk.avi</video>
+			<narrator>
+				<de>./steampunk/steampunk.wav</de>
+			</narrator>
+			<description>
+				<de>der Pestdoktor</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./mahler/mahler.jpg</image>
+			<video>./mahler/mahler.avi</video>
+			<narrator>
+				<de>./mahler/mahler.wav</de>
+			</narrator>
+			<description>
+				<de>Gustav Mahler</de>
+			</description>
+		</clip>
+		<clip>
+			<image>./popcorn/popcorn.jpg</image>
+			<video>./popcorn/popcorn.avi</video>
+			<narrator>
+				<de>./popcorn/popcorn.wav</de>
+			</narrator>
+			<description>
+				<de>die Popcornverkäuferin</de>
+			</description>
+		</clip>
 
-	<clip isPerson="true">
-                <image>./fairy/fairy.jpg</image>
-                <video>./fairy/fairy.mkv</video>
-                <narrator>./popcorn/popcorn.wav</narrator>
-                <description>die Fee</description>
-        </clip>
+		<clip>
+			<image>./fairy/fairy.jpg</image>
+			<video>./fairy/fairy.mkv</video>
+			<narrator>
+				<de>./popcorn/popcorn.wav</de>
+			</narrator>
+			<description>
+				<de>die Fee</de>
+			</description>
+		</clip>
+	</persons>
 
 	<!-- new acts -->
-	<clip isPerson="false">
-                <image>./boar/boar.jpg</image>
-                <video>./boar/boar.mkv</video>
-                <narrator>./boar/boar.wav</narrator>
-		<description>ritten auf einem Wildschwein</description>
-	</clip>
+	<acts>
+		<clip>
+			<image>./boar/boar.jpg</image>
+			<video>./boar/boar.mkv</video>
+			<narrator>
+				<de>./boar/boar.wav</de>
+			</narrator>
+			<description>
+				<de>ritten auf einem Wildschwein</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./cave/cave.jpg</image>
-                <video>./cave/cave.mkv</video>
-                <narrator>./cave/cave.wav</narrator>
-		<description>fanden eine Höhle</description>
-	</clip>
+		<clip>
+			<image>./cave/cave.jpg</image>
+			<video>./cave/cave.mkv</video>
+			<narrator>
+				<de>./cave/cave.wav</de>
+			</narrator>
+			<description>
+				<de>fanden eine Höhle</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./caveman/caveman.jpg</image>
-                <video>./caveman/caveman.mkv</video>
-                <narrator>./caveman/caveman.wav</narrator>
-		<description>trafen auf einen Höhlenmenschen</description>
-	</clip>
+		<clip>
+			<image>./caveman/caveman.jpg</image>
+			<video>./caveman/caveman.mkv</video>
+			<narrator>
+				<de>./caveman/caveman.wav</de>
+			</narrator>
+			<description>
+				<de>trafen auf einen Höhlenmenschen</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./chess/chess.jpg</image>
-                <video>./chess/chess.mkv</video>
-                <narrator>./chess/chess.wav</narrator>
-		<description>spielten Schach</description>
-	</clip>
+		<clip>
+			<image>./chess/chess.jpg</image>
+			<video>./chess/chess.mkv</video>
+			<narrator>
+				<de>./chess/chess.wav</de>
+			</narrator>
+			<description>
+				<de>spielten Schach</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./climbing/climbing.jpg</image>
-                <video>./climbing/climbing.mkv</video>
-                <narrator>./climbing/climbing.wav</narrator>
-		<description>erklommen einen Berg</description>
-	</clip>
+		<clip>
+			<image>./climbing/climbing.jpg</image>
+			<video>./climbing/climbing.mkv</video>
+			<narrator>
+				<de>./climbing/climbing.wav</de>
+			</narrator>
+			<description>
+				<de>erklommen einen Berg</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./gate/gate.jpg</image>
-                <video>./gate/gate.mkv</video>
-                <narrator>./gate/gate.wav</narrator>
-		<description>trafen auf einen Wächter</description>
-	</clip>
+		<clip>
+			<image>./gate/gate.jpg</image>
+			<video>./gate/gate.mkv</video>
+			<narrator>
+				<de>./gate/gate.wav</de>
+			</narrator>
+			<description>
+				<de>trafen auf einen Wächter</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./gate/gate2.jpg</image>
-                <video>./gate/gate2.mkv</video>
-                <narrator>./gate/gate2.wav</narrator>
-		<description>trafen auf ein Tor</description>
-	</clip>
+		<clip>
+			<image>./gate/gate2.jpg</image>
+			<video>./gate/gate2.mkv</video>
+			<narrator>
+				<de>./gate/gate2.wav</de>
+			</narrator>
+			<description>
+				<de>trafen auf ein Tor</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./maninthebox/maninthebox.jpg</image>
-                <video>./maninthebox/maninthebox.mkv</video>
-                <narrator>./maninthebox/maninthebox.wav</narrator>
-		<description>fanden einen Mann in einer Kiste</description>
-	</clip>
+		<clip>
+			<image>./maninthebox/maninthebox.jpg</image>
+			<video>./maninthebox/maninthebox.mkv</video>
+			<narrator>
+				<de>./maninthebox/maninthebox.wav</de>
+			</narrator>
+			<description>
+				<de>fanden einen Mann in einer Kiste</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./prison/prison.jpg</image>
-                <video>./prison/prison.mkv</video>
-                <narrator>./prison/prison.wav</narrator>
-		<description>wurden eingesperrt</description>
-	</clip>
+		<clip>
+			<image>./prison/prison.jpg</image>
+			<video>./prison/prison.mkv</video>
+			<narrator>
+				<de>./prison/prison.wav</de>
+			</narrator>
+			<description>
+				<de>wurden eingesperrt</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./robery/robery.jpg</image>
-                <video>./robery/robery.mkv</video>
-                <narrator>./robery/robery.wav</narrator>
-		<description>wurden ausgeraubt</description>
-	</clip>
+		<clip>
+			<image>./robery/robery.jpg</image>
+			<video>./robery/robery.mkv</video>
+			<narrator>
+				<de>./robery/robery.wav</de>
+			</narrator>
+			<description>
+				<de>wurden ausgeraubt</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./train/train.jpg</image>
-                <video>./train/train.mkv</video>
-                <narrator>./train/train.wav</narrator>
-		<description>fuhren mit einem Zug</description>
-	</clip>
+		<clip>
+			<image>./train/train.jpg</image>
+			<video>./train/train.mkv</video>
+			<narrator>
+				<de>./train/train.wav</de>
+			</narrator>
+			<description>
+				<de>fuhren mit einem Zug</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./trash/trash.jpg</image>
-                <video>./trash/trash.mkv</video>
-                <narrator>./trash/trash.wav</narrator>
-		<description>durchwühlten den Müll</description>
-	</clip>
+		<clip>
+			<image>./trash/trash.jpg</image>
+			<video>./trash/trash.mkv</video>
+			<narrator>
+				<de>./trash/trash.wav</de>
+			</narrator>
+			<description>
+				<de>durchwühlten den Müll</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./treasure/treasure.jpg</image>
-                <video>./treasure/treasure.mkv</video>
-                <narrator>./treasure/treasure.wav</narrator>
-		<description>fanden einen Schatz</description>
-	</clip>
+		<clip>
+			<image>./treasure/treasure.jpg</image>
+			<video>./treasure/treasure.mkv</video>
+			<narrator>
+				<de>./treasure/treasure.wav</de>
+			</narrator>
+			<description>
+				<de>fanden einen Schatz</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./well/well.jpg</image>
-                <video>./well/well.mkv</video>
-                <narrator>./well/well.wav</narrator>
-		<description>tranken von einem Brunnen</description>
-	</clip>
+		<clip>
+			<image>./well/well.jpg</image>
+			<video>./well/well.mkv</video>
+			<narrator>
+				<de>./well/well.wav</de>
+			</narrator>
+			<description>
+				<de>tranken von einem Brunnen</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./castle/castle.jpg</image>
-                <video>./castle/castle.mkv</video>
-                <narrator>./castle/castle.wav</narrator>
-		<description>lebten in einer Burg</description>
-	</clip>
+		<clip>
+			<image>./castle/castle.jpg</image>
+			<video>./castle/castle.mkv</video>
+			<narrator>
+				<de>./castle/castle.wav</de>
+			</narrator>
+			<description>
+				<de>lebten in einer Burg</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./tower/tower.jpg</image>
-                <video>./tower/tower.mkv</video>
-                <narrator>./tower/tower.wav</narrator>
-		<description>hungerten im Turm</description>
-	</clip>
+		<clip>
+			<image>./tower/tower.jpg</image>
+			<video>./tower/tower.mkv</video>
+			<narrator>
+				<de>./tower/tower.wav</de>
+			</narrator>
+			<description>
+				<de>hungerten im Turm</de>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-                <image>./throne/throne.jpg</image>
-                <video>./throne/throne.mkv</video>
-                <narrator>./throne/throne.wav</narrator>
-		<description>bestiegen den Thron</description>
-	</clip>
+		<clip>
+			<image>./throne/throne.jpg</image>
+			<video>./throne/throne.mkv</video>
+			<narrator>
+				<de>./throne/throne.wav</de>
+			</narrator>
+			<description>
+				<de>bestiegen den Thron</de>
+			</description>
+		</clip>
+	</acts>
 
-        <bonusClip>
-            <image>./mahler/mahler.jpg</image>
-            <video>./mahler/bonus/ueberalma.avi</video>
-            <description>Gustav Mahler über Alma</description>
-        </bonusClip>
+	<bonusClip>
+		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/bonus/ueberalma.avi</video>
+		<description>
+			<de>Gustav Mahler über Alma</de>
+		</description>
+	</bonusClip>
 
-        <bonusClip>
-            <image>./mahler/mahler.jpg</image>
-            <video>./mahler/bonus/trauer.avi</video>
-            <description>Gustav Mahler trauert um Alma</description>
-        </bonusClip>
+	<bonusClip>
+		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/bonus/trauer.avi</video>
+		<description>
+			<de>Gustav Mahler trauert um Alma</de>
+		</description>
+	</bonusClip>
 </clips>

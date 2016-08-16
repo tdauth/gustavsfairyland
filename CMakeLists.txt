@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(fairyland)
 
-# install libs
-include(InstallRequiredSystemLibraries)
-#include("cmake/Apk.cmake" REQUIRED)
 if (ANDROID)
 	include("cmake/AddQtAndroidApk.cmake" REQUIRED)
 	include_directories("/home/tamino/android-ndk-r12b/sources/android/native_app_glue/")
@@ -16,6 +13,19 @@ add_compile_options(-std=c++11 -Wall)
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_VIDEOS "Enable this option to install much smaller videos." FALSE)
+
+# Validate XML files if possible
+find_program(XMLLINT_PATH xmllint)
+
+if (XMLLINT_PATH)
+	message(STATUS "Validating XML files.")
+	set(XML_FILES
+		"${CMAKE_SOURCE_DIR}/clips/gustav.xml"
+		"${CMAKE_SOURCE_DIR}/test/clips.xml"
+	)
+	# TODO check against an XML schema as well
+	add_custom_target(ValidateXMLFiles ALL ${XMLLINT_PATH} --noout "${CMAKE_SOURCE_DIR}/clips/gustav.xml" "${CMAKE_SOURCE_DIR}/test/clips.xml"  SOURCES ${XML_FILES})
+endif ()
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -84,7 +94,7 @@ set(fairyland_TRANSLATIONS
 	translations/de.ts
 )
 
-file(GLOB_RECURSE fairytale_TRANSLATION_SRCS GLOB_RECURSE "${CMAKE_BINARY_DIR}/src" "*.cpp" "*.h")
+file(GLOB_RECURSE fairytale_TRANSLATION_SRCS GLOB_RECURSE "${CMAKE_BINARY_DIR}" "*.cpp" "*.h")
 QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyland_TRANSLATIONS})
 
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)

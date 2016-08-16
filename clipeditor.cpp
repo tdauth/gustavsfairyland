@@ -11,7 +11,8 @@
 
 void ClipEditor::descriptionChanged(const QString& description)
 {
-	this->m_clip->setDescription(description);
+	// TODO update list
+	//this->m_clip->setDescription(description);
 	checkForValidFields();
 
 	std::cerr << "New description: " << description.toUtf8().constData() << std::endl;
@@ -59,7 +60,9 @@ void ClipEditor::chooseNarratorVideo()
 	if (!filePath.isEmpty())
 	{
 		const QUrl url = QUrl::fromLocalFile(filePath);
-		this->m_clip->setNarratorVideoUrl(url);
+
+		// TODO support locales
+		//this->m_clip->setNarratorVideoUrl(url);
 		// TODO set frame from video into label
 
 		checkForValidFields();
@@ -116,7 +119,7 @@ Clip* ClipEditor::clip(QObject *parent)
 
 bool ClipEditor::checkForValidFields()
 {
-	const bool result = !this->m_clip->description().isEmpty() && !this->m_clip->imageUrl().isEmpty() && !this->m_clip->videoUrl().isEmpty() && !this->m_clip->narratorVideoUrl().isEmpty();
+	const bool result = !this->m_clip->descriptions().isEmpty() && !this->m_clip->imageUrl().isEmpty() && !this->m_clip->videoUrl().isEmpty() && !this->m_clip->narratorUrls().isEmpty();
 
 	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(result);
 

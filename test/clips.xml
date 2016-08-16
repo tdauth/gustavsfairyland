@@ -1,68 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <clips name="Fairytale">
-	<clip isPerson="true">
-		<image>./fairytale/clips/Frosch.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>the frog</description>
-	</clip>
-	<clip isPerson="true">
-		<image>./fairytale/clips/hexe.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>the witch</description>
-	</clip>
-	<clip isPerson="true">
-		<image>./fairytale/clips/ritter_kuniberg_reitet_2.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>the knight</description>
-	</clip>
-	<clip isPerson="true">
-		<image>./fairytale/clips/riese.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>the giant</description>
-	</clip>
-	<clip isPerson="true">
-		<image>./fairytale/clips/Alexa,-Prinzessin-von-Wales.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>the princess</description>
-	</clip>
+	<persons>
+		<clip>
+			<image>./fairytale/clips/Frosch.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>the frog</en>
+			</description>
+		</clip>
+		<clip>
+			<image>./fairytale/clips/hexe.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>the witch</en>
+			</description>
+		</clip>
+		<clip>
+			<image>./fairytale/clips/ritter_kuniberg_reitet_2.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>the knight</en>
+			</description>
+		</clip>
+		<clip>
+			<image>./fairytale/clips/riese.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>the giant</en>
+			</description>
+		</clip>
+		<clip>
+			<image>./fairytale/clips/Alexa,-Prinzessin-von-Wales.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>the princess</en>
+			</description>
+		</clip>
+	</persons>
 
-	<clip isPerson="false">
-		<image>./fairytale/clips/1. belagerung von lissabon.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>sieging a castle</description>
-	</clip>
+	<acts>
+		<clip>
+			<image>./fairytale/clips/1. belagerung von lissabon.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>sieging a castle</en>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-		<image>./fairytale/clips/Hochzeit_08.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>marry</description>
-	</clip>
+		<clip>
+			<image>./fairytale/clips/Hochzeit_08.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>marry</en>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-		<image>./fairytale/clips/Radern_(Variante_mit_Eisenstange).png</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>are executed</description>
-	</clip>
+		<clip>
+			<image>./fairytale/clips/Radern_(Variante_mit_Eisenstange).png</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>are executed</en>
+			</description>
+		</clip>
 
-	<clip isPerson="false">
-		<image>./fairytale/clips/scheiterhaufen.jpg</image>
-		<video>./Film (TaCaMo)/output.mp4</video>
-		<narrator>./Film (TaCaMo)/output.mp4</narrator>
-		<description>are burned</description>
-	</clip>
+		<clip>
+			<image>./fairytale/clips/scheiterhaufen.jpg</image>
+			<video>./Film (TaCaMo)/output.mp4</video>
+			<narrator>
+				<en>./Film (TaCaMo)/output.mp4</en>
+			</narrator>
+			<description>
+				<en>are burned</en>
+			</description>
+		</clip>
+	</acts>
 
         <bonusClip>
             <image>./fairytale/clips/scheiterhaufen.jpg</image>
             <video>./Film (TaCaMo)/output.mp4</video>
             <description>are burned</description>
         </bonusClip>
-
 </clips>

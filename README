@@ -4,14 +4,23 @@ Contact: tamino@cdauth.eu
 
 
 Compilation instructions:
+Create a binary directory and run:
+cmake <path to fairytale folder>
+
+Now compile everything in the binary directory:
+make -j4
+
+For Linux:
+Just use cpack in the build directory:
+cpack .
+
+It creates an RPM and a DEB package.
+
 On Windows 7 the program has been compiled using the MinGW distributed with Qt.
 The shell path in CMake has to stay clear.
 Unfortunately there is only a 32 Bit compiler.
 Generator: Code Blocks - MinGW Makefiles
-
-Qt Creator does not autodetect Qt on Fedora:
-ln -s /usr/bin/qmake-qt5 /usr/bin/qmake
-ln -s /usr/lib/qt5/ /usr/lib/qt
+CPack creates an NSIS based Windows installer.
 
 For Android:
 Download SDK and NDK.
@@ -21,6 +30,9 @@ Add the path to "android" to your PATH ./Android/Sdk/tools/
 Use the following CMake modules for Android deployment:
 https://github.com/taka-no-me/android-cmake
 https://github.com/LaurentGomila/qt-android-cmake/
+
+There is a Bash script "buildandroid.sh" which does everything as long a virtual Android device is installed properly
+and the paths are correct.
 
 Use the following command to get debugging output:
 /home/tamino/Android/Sdk/platform-tools/adb logcat

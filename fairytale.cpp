@@ -348,7 +348,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.push_back(new GameModeMoving(this));
 	m_gameModes.push_back(new GameModeOneOutOfFour(this));
 
-	loadLanguage("en");
+	// Try to load the current locale. If no translation file exists it will remain English.
+	QString locale = QLocale::system().name();
+	locale.truncate(locale.lastIndexOf('_'));
+	loadLanguage(locale);
 }
 
 fairytale::~fairytale()
@@ -398,7 +401,7 @@ void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
 
-	this->playSound(this->resolveClipUrl(this->m_completeSolution[index]->narratorVideoUrl()));
+	this->playSound(this->resolveClipUrl(this->m_completeSolution[index]->narratorUrl()));
 	this->m_player->playVideo(this, this->m_completeSolution[index]->videoUrl(), this->description(index, this->m_completeSolution[index]));
 }
 
@@ -621,7 +624,7 @@ void fairytale::nextTurn()
 			if (solution->isPerson() && turns() > 1)
 			{
 				PlayerSoundData data;
-				data.narratorSoundUrl = this->m_startPerson->narratorVideoUrl();
+				data.narratorSoundUrl = this->m_startPerson->narratorUrl();
 				data.description = this->description(0, this->m_startPerson);
 				data.imageUrl = this->m_startPerson->imageUrl();
 				data.prefix = true;
@@ -645,7 +648,7 @@ void fairytale::nextTurn()
 			 */
 			// Make sure that the current click sound ends before playing the narrator sound.
 			PlayerSoundData data;
-			data.narratorSoundUrl = solution->narratorVideoUrl();
+			data.narratorSoundUrl = solution->narratorUrl();
 			data.description = this->description(0, solution); // use always the stand alone description
 			data.imageUrl = solution->imageUrl();
 			data.prefix = false;
@@ -948,6 +951,11 @@ void fairytale::changeEvent(QEvent* event)
 			locale.truncate(locale.lastIndexOf('_'));
 			loadLanguage(locale);
 
+			break;
+		}
+
+		default:
+		{
 			break;
 		}
 	}

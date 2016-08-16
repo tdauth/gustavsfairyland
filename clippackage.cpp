@@ -32,7 +32,7 @@ bool ClipPackage::loadClipsFromCompressedArchive(const QString &file, const QStr
 
 	if (!f.open(QIODevice::ReadOnly))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -60,7 +60,7 @@ bool ClipPackage::saveClipsToCompressedArchive(const QString &file)
 
 	if (!f.open(QIODevice::WriteOnly))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -70,14 +70,14 @@ bool ClipPackage::saveClipsToCompressedArchive(const QString &file)
 
 	if (!tmpOut.open())
 	{
-		qDebug() << "Unable to open temporary file" << tmpOut.fileName();
+		std::cerr << "Unable to open temporary file" << tmpOut.fileName().toStdString();
 
 		return false;
 	}
 
 	if (!saveClipsToArchive(tmpOut.fileName()))
 	{
-		qDebug() << "Unable to save clips to the archive.";
+		std::cerr << "Unable to save clips to the archive.";
 
 		return false;
 	}
@@ -97,7 +97,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!f.open(QIODevice::ReadOnly))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -108,7 +108,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 	// at the moment only version 0 is supported
 	if (header.version != 0)
 	{
-		qDebug() << "Unknown version:" << header.version;
+		std::cerr << "Unknown version:" << header.version;
 
 		return false;
 	}
@@ -130,7 +130,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!dir.exists())
 	{
-		qDebug() << "Dir does not exist:" << dir;
+		std::cerr << "Dir does not exist:" << dir.path().toStdString();
 
 		return false;
 	}
@@ -140,7 +140,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!dir.mkdir(subDirPath))
 	{
-		qDebug() << "Dir cannot be created:" << dir.filePath(subDirPath);
+		std::cerr << "Dir cannot be created:" << dir.filePath(subDirPath).toStdString();
 
 		return false;
 	}
@@ -149,7 +149,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 
 	if (!dir.exists())
 	{
-		qDebug() << "Dir does not exist:" << dir;
+		std::cerr << "Dir does not exist:" << dir.path().toStdString();
 
 		return false;
 	}
@@ -161,7 +161,7 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 	{
 		QFile file(dir.filePath(iterator.key()));
 
-		qDebug() << "Extracting file" << file.fileName();
+		std::cerr << "Extracting file" << file.fileName().toStdString();
 
 		if (!file.open(QIODevice::WriteOnly))
 		{
@@ -208,11 +208,15 @@ bool ClipPackage::loadClipsFromArchive(const QString &file, const QString &clips
 	// TODO remove temporary files sometime or use permanent files in the clips dir
 	if (!loadClipsFromFile(clipsFilePath))
 	{
+		std::cerr << "Error on loading clips from file." << std::endl;
+
 		return false;
 	}
 
 	if (!this->removeDir())
 	{
+		std::cerr << "Error on removing directory." << std::endl;
+
 		return false;
 	}
 
@@ -227,7 +231,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	if (!f.open(QIODevice::WriteOnly))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -236,7 +240,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	if (!f.seek(sizeof(ArchiveHeader)))
 	{
-		qDebug() << "Unable to skip the archive header";
+		std::cerr << "Unable to skip the archive header";
 
 		return false;
 	}
@@ -247,10 +251,18 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 	const qint64 blockTableStart = f.pos();
 	qint64 blockTableOffset = blockTableStart;
 
-	// at most 3 blocks per clip
+	qint64 countNarratorBlocks = 0;
+
+	foreach (Clip *clip, this->clips())
+	{
+		countNarratorBlocks += clip->narratorUrls().size();
+	}
+
+	// at most 2 blocks per clip
+	// + the number of narrator blocks
 	// +1 for the block of the clips file
 	// if there is less blocks some bytes will stay unused
-	qint64 offset = blockTableStart + ((this->clips().size() * 3) + 1) * sizeof(Block);
+	qint64 offset = blockTableStart + ((this->clips().size() * 2) + countNarratorBlocks + 1) * sizeof(Block);
 
 	// skip the block table space and write it later when we have the information about the blocks
 	if (!f.seek(offset))
@@ -274,26 +286,32 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
-				qDebug() << "Unable to write the image block.";
+				std::cerr << "Unable to write the image block.";
 
 				return false;
 			}
 		}
 
-		// write narrator file
-		Block narratorBlock;
-		const bool narratorBlockExists = !clip->narratorVideoUrl().isEmpty();
+		// write narrator files
+		QList<Block> narratorBlocks;
 
-		if (narratorBlockExists)
+		Clip::Urls::const_iterator iterator = clip->narratorUrls().constBegin();
+
+		while (iterator != clip->narratorUrls().constEnd())
 		{
-			const QString filePath = clip->narratorVideoUrl().toLocalFile();
+			const QString filePath = iterator.value().toLocalFile();
+			Block narratorBlock;
 
 			if (!writeBlock(filePath, f, narratorBlock, offset, filePath, blocks))
 			{
-				qDebug() << "Unable to write the narrator block.";
+				std::cerr << "Unable to write the narrator block.";
 
 				return false;
 			}
+
+			narratorBlocks.push_back(narratorBlock);
+
+			++iterator;
 		}
 
 		// write video file
@@ -306,7 +324,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{
-				qDebug() << "Unable to write the video block.";
+				std::cerr << "Unable to write the video block.";
 
 				return false;
 			}
@@ -314,7 +332,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (!f.seek(blockTableOffset))
 		{
-			qDebug() << "Unable to seek to the block table.";
+			std::cerr << "Unable to seek to the block table.";
 
 			return false;
 		}
@@ -327,7 +345,8 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 			}
 		}
 
-		if (narratorBlockExists)
+		// write all blocks for all written narrator files
+		foreach (Block narratorBlock, narratorBlocks)
 		{
 			if (f.write((const char*)&narratorBlock, sizeof(narratorBlock)) == -1)
 			{
@@ -367,7 +386,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
-				qDebug() << "Unable to write the image block.";
+				std::cerr << "Unable to write the image block.";
 
 				return false;
 			}
@@ -383,7 +402,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{
-				qDebug() << "Unable to write the video block.";
+				std::cerr << "Unable to write the video block.";
 
 				return false;
 			}
@@ -391,7 +410,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (!f.seek(blockTableOffset))
 		{
-			qDebug() << "Unable to seek to the block table.";
+			std::cerr << "Unable to seek to the block table.";
 
 			return false;
 		}
@@ -485,7 +504,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 
 	if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -512,37 +531,58 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 
 	this->m_name = root.attribute("name");
 
-	QDomNodeList nodes = root.elementsByTagName("clip");
+	const QDomNodeList childs = root.childNodes();
 
-	if (nodes.isEmpty())
+	for (int j = 0; j < childs.size(); ++j)
 	{
-		std::cerr << "Missing clips" << std::endl;
+		const QDomNode parentNode = childs.at(j);
+		const QDomElement parentElement = parentNode.toElement();
 
-		return false;
+		if (parentElement.nodeName() == "bonusClip")
+		{
+			continue;
+		}
+
+		const bool isPerson = parentElement.nodeName() == "persons";
+		const QDomNodeList nodes = parentElement.elementsByTagName("clip");
+
+		for (int i = 0; i < nodes.size(); ++i)
+		{
+			const QDomNode node = nodes.at(i);
+
+			if (node.nodeName() == "clip")
+			{
+				const QUrl image = QUrl(node.firstChildElement("image").text());
+				const QUrl video = QUrl(node.firstChildElement("video").text());
+				const QDomNodeList narratorNodes = node.firstChildElement("narrator").childNodes();
+				const QDomNodeList descriptionNodes = node.firstChildElement("description").childNodes();
+
+				Clip::Urls narratorUrls;
+
+				for (int i = 0; i < narratorNodes.size(); ++i)
+				{
+					const QDomNode node = narratorNodes.at(i);
+					narratorUrls.insert(node.nodeName(), QUrl(node.toElement().text()));
+				}
+
+				Clip::Descriptions descriptions;
+
+				for (int i = 0; i < descriptionNodes.size(); ++i)
+				{
+					const QDomNode node = descriptionNodes.at(i);
+					descriptions.insert(node.nodeName(), node.toElement().text());
+				}
+
+				m_clips.push_back(new Clip(image, video, narratorUrls, descriptions, isPerson, this));
+			}
+			else
+			{
+				std::cerr << "Unknow node:" << node.nodeName().toStdString();
+			}
+		}
 	}
 
-	for (int i = 0; i < nodes.size(); ++i)
-	{
-		QDomNode node = nodes.at(i);
-
-		if (node.nodeName() == "clip")
-		{
-			const QUrl image = QUrl(node.firstChildElement("image").text());
-			const QUrl video = QUrl(node.firstChildElement("video").text());
-			const QUrl narrator = QUrl(node.firstChildElement("narrator").text());
-			const QString description = node.firstChildElement("description").text();
-
-			const QString isPerson = node.hasAttributes() && node.attributes().contains("isPerson") ?  node.attributes().namedItem("isPerson").nodeValue() : "";
-
-			m_clips.push_back(new Clip(image, video, narrator, description, isPerson == "true", this));
-		}
-		else
-		{
-			qDebug() << "Unknow node:" << node.nodeName();
-		}
-	}
-
-	nodes = root.elementsByTagName("bonusClip");
+	const QDomNodeList nodes = root.elementsByTagName("bonusClip");
 
 	for (int i = 0; i < nodes.size(); ++i)
 	{
@@ -550,13 +590,21 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 
 		if (node.nodeName() == "bonusClip")
 		{
-			qDebug() << "Read bonus clip";
+			std::cerr << "Read bonus clip";
 
 			const QUrl image = QUrl(node.firstChildElement("image").text());
 			const QUrl video = QUrl(node.firstChildElement("video").text());
-			const QString description = node.firstChildElement("description").text();
+			const QDomNodeList descriptionNodes = node.firstChildElement("description").childNodes();
 
-			m_bonusClips.push_back(new BonusClip(image, video, description, this));
+			Clip::Descriptions descriptions;
+
+			for (int i = 0; i < descriptionNodes.size(); ++i)
+			{
+				const QDomNode node = descriptionNodes.at(i);
+				descriptions.insert(node.nodeName(), node.toElement().text());
+			}
+
+			m_bonusClips.push_back(new BonusClip(image, video, descriptions, this));
 		}
 	}
 
@@ -575,11 +623,15 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 	root.setAttribute("name", this->name());
 	document.appendChild(root);
 
+	QDomElement persons = document.createElement("persons");
+	root.appendChild(persons);
+	QDomElement acts = document.createElement("acts");
+	root.appendChild(acts);
+
 	for (int i = 0; i < this->clips().size(); ++i)
 	{
 		const Clip *clip = this->clips().at(i);
 		QDomElement clipElement = document.createElement("clip");
-		clipElement.setAttribute("isPerson", (int)clip->isPerson());
 
 		if (!clip->imageUrl().isEmpty())
 		{
@@ -590,13 +642,23 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 			imageElement.appendChild(imageTextNode);
 		}
 
-		if (!clip->narratorVideoUrl().isEmpty())
+		if (!clip->narratorUrls().isEmpty())
 		{
 			QDomElement narratorElement = document.createElement("narrator");
 			clipElement.appendChild(narratorElement);
 
-			QDomText narratorTextNode = document.createTextNode(clip->narratorVideoUrl().toString());
-			narratorElement.appendChild(narratorTextNode);
+			Clip::Urls::const_iterator i = clip->narratorUrls().constBegin();
+
+			while (i != clip->narratorUrls().constEnd())
+			{
+				QDomElement localeElement = document.createElement(i.key());
+				narratorElement.appendChild(localeElement);
+
+				QDomText narratorTextNode = document.createTextNode(i.value().toString());
+				localeElement.appendChild(narratorTextNode);
+
+				++i;
+			}
 		}
 
 		if (!clip->videoUrl().isEmpty())
@@ -608,16 +670,34 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 			videoElement.appendChild(videoTextNode);
 		}
 
-		if (!clip->description().isEmpty())
+		if (!clip->descriptions().isEmpty())
 		{
 			QDomElement descriptionElement = document.createElement("description");
 			clipElement.appendChild(descriptionElement);
 
-			QDomText descriptionTextNode = document.createTextNode(clip->description());
-			descriptionElement.appendChild(descriptionTextNode);
+
+			Clip::Descriptions::const_iterator i = clip->descriptions().constBegin();
+
+			while (i != clip->descriptions().constEnd())
+			{
+				QDomElement localeElement = document.createElement(i.key());
+				descriptionElement.appendChild(localeElement);
+
+				QDomText textNode = document.createTextNode(i.value());
+				localeElement.appendChild(textNode);
+
+				++i;
+			}
 		}
 
-		root.appendChild(clipElement);
+		if (clip->isPerson())
+		{
+			persons.appendChild(clipElement);
+		}
+		else
+		{
+			acts.appendChild(clipElement);
+		}
 	}
 
 	for (int i = 0; i < this->bonusClips().size(); ++i)
@@ -659,7 +739,7 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 
 	if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
-		qDebug() << "Unable to open file" << file;
+		std::cerr << "Unable to open file" << file.toStdString();
 
 		return false;
 	}
@@ -706,7 +786,7 @@ bool ClipPackage::writeBlock(const QString& filePath, QFile& out, Block &block, 
 
 	if (!imageFile.open(QIODevice::ReadOnly))
 	{
-		qDebug() << "Cant open file " << filePath;
+		std::cerr << "Cant open file " << filePath.toStdString();
 
 		return false;
 	}

@@ -80,28 +80,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../clipeditor.cpp" line="28"/>
+        <location filename="../clipeditor.cpp" line="29"/>
         <source>Choose Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../clipeditor.cpp" line="28"/>
+        <location filename="../clipeditor.cpp" line="29"/>
         <source>JPEG (*.jpg *.jpeg);;PNG (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../clipeditor.cpp" line="43"/>
+        <location filename="../clipeditor.cpp" line="44"/>
         <source>Choose Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../clipeditor.cpp" line="43"/>
-        <location filename="../clipeditor.cpp" line="57"/>
+        <location filename="../clipeditor.cpp" line="44"/>
+        <location filename="../clipeditor.cpp" line="58"/>
         <source>MKV (*.mkv);;AVI (*.avi);;MP4 (*.mp4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../clipeditor.cpp" line="57"/>
+        <location filename="../clipeditor.cpp" line="58"/>
         <source>Choose Narrator Video</source>
         <translation type="unfinished"></translation>
     </message>
@@ -609,13 +609,13 @@ p, li { white-space: pre-wrap; }
     <name>fairytale</name>
     <message>
         <location filename="../fairytale.cpp" line="43"/>
-        <location filename="../fairytale.cpp" line="522"/>
+        <location filename="../fairytale.cpp" line="525"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="44"/>
-        <location filename="../fairytale.cpp" line="523"/>
+        <location filename="../fairytale.cpp" line="526"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -630,64 +630,64 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="457"/>
+        <location filename="../fairytale.cpp" line="460"/>
         <source>Game over!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="457"/>
+        <location filename="../fairytale.cpp" line="460"/>
         <source>GAME OVER!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="498"/>
+        <location filename="../fairytale.cpp" line="501"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="499"/>
+        <location filename="../fairytale.cpp" line="502"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="637"/>
+        <location filename="../fairytale.cpp" line="640"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="838"/>
+        <location filename="../fairytale.cpp" line="841"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="859"/>
-        <location filename="../fairytale.cpp" line="893"/>
+        <location filename="../fairytale.cpp" line="862"/>
+        <location filename="../fairytale.cpp" line="896"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="863"/>
-        <location filename="../fairytale.cpp" line="897"/>
+        <location filename="../fairytale.cpp" line="866"/>
+        <location filename="../fairytale.cpp" line="900"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="870"/>
+        <location filename="../fairytale.cpp" line="873"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="874"/>
+        <location filename="../fairytale.cpp" line="877"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="881"/>
+        <location filename="../fairytale.cpp" line="884"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="885"/>
+        <location filename="../fairytale.cpp" line="888"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

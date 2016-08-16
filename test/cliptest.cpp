@@ -76,6 +76,9 @@ void ClipTest::testSaveLoadArchive()
 	pkg.addClip(clip);
 
 	QVERIFY(pkg.saveClipsToArchive("clips.pkg"));
+
+	pkg.saveClipsToFile("testit.xml");
+
 	QVERIFY(QFile::exists("clips.pkg"));
 
 	ClipPackage loaded;
@@ -86,7 +89,11 @@ void ClipTest::testSaveLoadArchive()
 void ClipTest::testSaveLoadArchiveWithFiles()
 {
 	ClipPackage pkg;
-	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), QUrl::fromLocalFile("narrator.mp4"), "test", false);
+	Clip::Urls narratorUrls;
+	narratorUrls.insert("en", QUrl::fromLocalFile("narrator.mp4"));
+	Clip::Descriptions descriptions;
+	descriptions.insert("en", "test");
+	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), narratorUrls, descriptions, false);
 	pkg.addClip(clip);
 
 	// it is not possible to save an archive without the corresponding referenced files of the clip
@@ -151,8 +158,8 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 
 	QCOMPARE(clip->imageUrl().toLocalFile().toUtf8().constData(), "image.jpg");
 	QCOMPARE(clip->videoUrl().toLocalFile().toUtf8().constData(), "video.mp4");
-	QCOMPARE(clip->narratorVideoUrl().toLocalFile().toUtf8().constData(), "narrator.mp4");
-	QCOMPARE(clip->description().toUtf8().constData(), "test");
+	QCOMPARE(clip->narratorUrls().first().toLocalFile().toUtf8().constData(), "narrator.mp4");
+	QCOMPARE(clip->descriptions().first().toUtf8().constData(), "test");
 	QCOMPARE(clip->isPerson(), false);
 }
 
