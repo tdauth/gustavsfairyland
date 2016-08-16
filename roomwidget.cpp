@@ -209,7 +209,6 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	painter.setBackground(brush);
 	painter.drawRect(this->rect());
 	*/
-	// TODO slow
 	if (this->isEnabled())
 	{
 		painter.drawImage(0, 0, m_woodImage);
@@ -246,6 +245,8 @@ void RoomWidget::mousePressEvent(QMouseEvent *event)
 			playSoundFromList(m_successSoundPaths);
 
 			this->m_won = true;
+			// Pause immediately that the timer stops, otherwise there might still be time in which the player can lose. Don't pause the game mode, otherwise the release event is never triggered.
+			this->gameMode()->app()->pauseTimer();
 		}
 		// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
 		else
@@ -270,15 +271,15 @@ void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 
 void RoomWidget::resizeEvent(QResizeEvent* event)
 {
+	// When resizeEvent() is called, the widget already has its new geometry.
 	QWidget::resizeEvent(event);
 
 	qDebug() << "Resize SVG";
 	// Render SVG image whenever it is necessary
-	// TODO slow?
-	m_woodImage = QImage(this->rect().width(), this->rect().height(), QImage::Format_ARGB32);
+	m_woodImage = QImage(this->width(), this->height(), QImage::Format_ARGB32);
 	QPainter painter(&m_woodImage);
 	m_woodSvg.render(&painter);
-	m_woodImageDisabled = QImage(this->rect().width(), this->rect().height(), QImage::Format_Grayscale8);
+	m_woodImageDisabled = QImage(this->width(), this->height(), QImage::Format_Grayscale8);
 	m_woodImageDisabled.fill(Qt::transparent);
 	QPainter painter2(&m_woodImageDisabled);
 	m_woodSvg.render(&painter2);

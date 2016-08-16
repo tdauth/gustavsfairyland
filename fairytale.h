@@ -9,6 +9,7 @@
 #include <QtCore/QQueue>
 #include <QtWidgets/QPushButton>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtCore/QTranslator>
 
 #include "ui_mainwindow.h"
 
@@ -63,7 +64,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * Pauses the game if it is running. Otherwise if it is paused the game will be resumed.
 		 */
-		void pauseGame();
+		void pauseGameAction();
 		void cancelGame();
 		void showCustomFairytale();
 		void settings();
@@ -73,6 +74,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		GameMode* selectGameMode();
 		void showHighScores();
 		void about();
+
+		void loadLanguage(const QString &language);
 
 	public:
 		typedef QList<GameMode*> GameModes;
@@ -96,6 +99,20 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void gameOver();
 		void win();
 
+		bool isMediaPlayerPaused() const;
+		bool isMediaPlayerPlaying() const;
+
+		bool isGamePaused() const;
+		/// \return Returns true if the game is running. Returns also true if the game is paused, yet it is still running in this case. Returns false if no game is running.
+		bool isGameRunning() const;
+		void pauseGame();
+		void resumeGame();
+
+		bool isTimerPaused() const;
+		bool isTimerRunning() const;
+		void pauseTimer();
+		void resumeTimer();
+
 		void addClipPackage(ClipPackage *package);
 		void setClipPackages(const ClipPackages &packages);
 		void removeClipPackage(ClipPackage *package);
@@ -113,8 +130,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		bool requiresPerson() const;
 		ClipPackage* clipPackage() const;
-		bool isPaused() const;
-		bool isRunning() const;
 		GameMode* gameMode() const;
 
 		typedef QList<Clip*> CompleteSolution;
@@ -149,6 +164,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Plays the sound immediately if the queue is empty. Otherwise it queues the sound.
 		 */
 		void queuePlayerSound(const PlayerSoundData &soundData);
+
+	protected:
+		virtual void changeEvent(QEvent *event) override;
 
 	private slots:
 		void finishNarrator(QMediaPlayer::State state);
@@ -227,6 +245,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		bool m_paused;
 		bool m_pausedTimer;
+		bool m_isRunningTimer;
+		bool m_pausedMediaPlayer;
+		bool m_isPlayingMediaPlayer;
 		bool m_isRunning;
 
 		/// Custom audio player which allows only to play one sound at once and discards all other sounds which are played during that time.
@@ -251,7 +272,20 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QMap<QAction*, BonusClip*> BonusClipActions;
 		BonusClipActions m_bonusClipActions;
 		bool m_playingBonusClip;
+
+		QTranslator m_translator;
+		bool m_installedTranslator;
 };
+
+inline bool fairytale::isMediaPlayerPaused() const
+{
+	return this->m_pausedMediaPlayer;
+}
+
+inline bool fairytale::isMediaPlayerPlaying() const
+{
+	return this->m_isPlayingMediaPlayer;
+}
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
@@ -298,12 +332,7 @@ inline ClipPackage* fairytale::clipPackage() const
 	return this->m_clipPackage;
 }
 
-inline bool fairytale::isPaused() const
-{
-	return this->m_paused;
-}
-
-inline bool fairytale::isRunning() const
+inline bool fairytale::isGameRunning() const
 {
 	return this->m_isRunning;
 }

@@ -57,12 +57,12 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Name</string>
+       <string>Rounds</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Package</string>
+       <string>Time (ms)</string>
       </property>
      </column>
      <column>
@@ -72,12 +72,12 @@
      </column>
      <column>
       <property name="text">
-       <string>Rounds</string>
+       <string>Package</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Time (ms)</string>
+       <string>Name</string>
       </property>
      </column>
     </widget>

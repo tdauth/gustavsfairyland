@@ -44,6 +44,13 @@
                 <description>die Popcornverkäuferin</description>
         </clip>
 
+	<clip isPerson="true">
+                <image>./fairy/fairy.jpg</image>
+                <video>./fairy/fairy.mkv</video>
+                <narrator>./popcorn/popcorn.wav</narrator>
+                <description>die Fee</description>
+        </clip>
+
 	<!-- new acts -->
 	<clip isPerson="false">
                 <image>./boar/boar.jpg</image>

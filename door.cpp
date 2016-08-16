@@ -82,8 +82,8 @@ void Door::paint(QPainter *painter, QWidget *area)
 				p0 = QPoint(0.7 * area->size().width(), penWidthHalf);
 				p1 = QPoint(0.9 * area->size().width(), distance);
 
-				std::cerr << "Point 0:" << p0.x() << "|" << p0.y() << std::endl;
-				std::cerr << "Point 1:" << p1.x() << "|" << p1.y() << std::endl;
+				//std::cerr << "Point 0:" << p0.x() << "|" << p0.y() << std::endl;
+				//std::cerr << "Point 1:" << p1.x() << "|" << p1.y() << std::endl;
 
 				p2 = QPoint(0.3 * area->size().width(), penWidthHalf);
 				p3 = QPoint(0.1 * area->size().width(), distance);

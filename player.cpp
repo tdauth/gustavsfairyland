@@ -29,10 +29,11 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	this->m_mediaPlayer->setVolume(volumeSlider->value());
 
 	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
-	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGame()));
+	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGameAction()));
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 
+	// Global shortcuts in the widget are required since the push buttons would have to be in focus to work with shortcuts.
 	QShortcut *shortcut = new QShortcut(QKeySequence("S"), this);
 	connect(shortcut, &QShortcut::activated, this->skipPushButton, &QPushButton::click);
 	shortcut = new QShortcut(QKeySequence("P"), this);

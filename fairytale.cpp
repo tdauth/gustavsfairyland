@@ -30,7 +30,7 @@
 
 void fairytale::newGame()
 {
-	if (this->gameMode() != nullptr && this->isRunning())
+	if (this->gameMode() != nullptr && this->isGameRunning())
 	{
 		this->cleanupGame();
 	}
@@ -71,51 +71,22 @@ void fairytale::newGame()
 	this->m_isRunning = true;
 }
 
-void fairytale::pauseGame()
+void fairytale::pauseGameAction()
 {
-	if (this->m_paused)
+	if (this->isGamePaused())
 	{
-		this->actionPauseGame->setText(tr("Pause Game"));
-		this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
-		this->m_paused = false;
-
-		if (m_pausedTimer)
-		{
-			m_pausedTimer = false;
-			this->m_timer.start();
-
-			this->gameMode()->resume();
-		}
-		else
-		{
-			this->m_player->mediaPlayer()->play();
-		}
+		this->resumeGame();
 	}
 	else
 	{
-		this->actionPauseGame->setText(tr("Continue Game"));
-		this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
-		this->m_paused = true;
-
-		m_pausedTimer = this->m_timer.isActive();
-
-		if (m_pausedTimer)
-		{
-			this->m_timer.stop();
-
-			this->gameMode()->pause();
-		}
-		else
-		{
-			this->m_player->mediaPlayer()->pause();
-		}
+		this->pauseGame();
 	}
 }
 
 void fairytale::cancelGame()
 {
 	// hold the game while asking to cancel
-	const bool pause = !this->m_paused;
+	const bool pause = !this->isGamePaused();
 
 	if (pause)
 	{
@@ -129,13 +100,13 @@ void fairytale::cancelGame()
 	else if (pause)
 	{
 		// continue game
-		this->pauseGame();
+		this->resumeGame();
 	}
 }
 
 void fairytale::showCustomFairytale()
 {
-	const bool pausedGame = !this->m_paused;
+	const bool pausedGame = !this->isGamePaused();
 
 	if (pausedGame)
 	{
@@ -147,7 +118,7 @@ void fairytale::showCustomFairytale()
 	// continue game
 	if (pausedGame)
 	{
-		pauseGame();
+		resumeGame();
 	}
 }
 
@@ -248,6 +219,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playCompleteSolution(false)
 , m_paused(false)
 , m_pausedTimer(false)
+, m_isRunningTimer(false)
+, m_pausedMediaPlayer(false)
+, m_isPlayingMediaPlayer(false)
 , m_isRunning(false)
 , m_audioPlayer(new QMediaPlayer(this))
 , m_playNewSound(true)
@@ -256,6 +230,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_wonDialog(nullptr)
 , m_highScores(new HighScores(this))
 , m_playingBonusClip(false)
+, m_installedTranslator(false)
 {
 	this->m_player->hide();
 
@@ -264,7 +239,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(&this->m_timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
-	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGame()));
+	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGameAction()));
 	connect(actionCancelGame, SIGNAL(triggered()), this, SLOT(cancelGame()));
 	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
@@ -284,9 +259,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	QDir defaultClipsDir;
 #ifdef Q_OS_WIN
 	const QDir currentDir(QDir::currentPath());
-	defaultClipsDir = QDir(currentDir.filePath("../clips"));
+	defaultClipsDir = QDir(currentDir.filePath("../share/gustavsfairyland/clips"));
 #else
-	defaultClipsDir = QDir("/usr/clips");
+	defaultClipsDir = QDir("/usr/share/gustavsfairyland/clips");
 #endif
 
 #ifndef Q_OS_ANDROID
@@ -372,6 +347,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	m_gameModes.push_back(new GameModeMoving(this));
 	m_gameModes.push_back(new GameModeOneOutOfFour(this));
+
+	loadLanguage("en");
 }
 
 fairytale::~fairytale()
@@ -409,6 +386,12 @@ fairytale::~fairytale()
 	qDebug() << "Wrote high scores:" << i;
 
 	settings.endArray();
+
+	// remove the old translator
+	if (m_installedTranslator)
+	{
+		qApp->removeTranslator(&m_translator);
+	}
 }
 
 void fairytale::playFinalClip(int index)
@@ -440,6 +423,34 @@ void fairytale::about()
 	this->aboutDialog()->exec();
 }
 
+void fairytale::loadLanguage(const QString &language)
+{
+#ifdef Q_OS_WIN
+	const QDir currentDir(QDir::currentPath());
+	const QDir translationsDir = QDir(currentDir.filePath("../share/gustavsfairyland/translations"));
+#else
+	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
+#endif
+	const QString file = language + ".ts";
+	bool loaded = false;
+
+	if (m_translator.load(file, translationsDir.path()))
+	{
+		qDebug() << "File loaded:" << file;
+		loaded = true;
+	}
+	else
+	{
+		qWarning() << "File not loaded";
+	}
+
+	if (!m_installedTranslator && loaded)
+	{
+		m_installedTranslator = true;
+		qApp->installTranslator(&m_translator);
+	}
+}
+
 void fairytale::gameOver()
 {
 	this->cleanupGame();
@@ -468,6 +479,97 @@ void fairytale::win()
 
 	// make sure everything is cleaned up
 	this->cleanupAfterOneGame();
+}
+
+bool fairytale::isGamePaused() const
+{
+	return this->m_paused;
+}
+
+void fairytale::pauseGame()
+{
+	if (this->isGamePaused() || !this->isGameRunning())
+	{
+		qDebug() << "Warning: Invalid call of pauseGame()";
+
+		return;
+	}
+
+	this->actionPauseGame->setText(tr("Continue Game"));
+	this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
+	this->m_paused = true;
+
+	if (this->isMediaPlayerPlaying())
+	{
+		this->m_player->mediaPlayer()->pause();
+	}
+	else
+	{
+		this->pauseTimer();
+		this->gameMode()->pause();
+	}
+}
+
+void fairytale::resumeGame()
+{
+	if (!this->isGamePaused() || !this->isGameRunning())
+	{
+		qDebug() << "Warning: Invalid call of resumeGame()";
+
+		return;
+	}
+
+	this->actionPauseGame->setText(tr("Pause Game"));
+	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
+	this->m_paused = false;
+
+	if (this->isMediaPlayerPaused())
+	{
+		this->m_player->mediaPlayer()->play();
+	}
+	else
+	{
+		this->resumeTimer();
+		this->gameMode()->resume();
+	}
+}
+
+bool fairytale::isTimerPaused() const
+{
+	return this->m_pausedTimer;
+}
+
+bool fairytale::isTimerRunning() const
+{
+	return this->m_isRunningTimer;
+}
+
+void fairytale::pauseTimer()
+{
+	if (this->isTimerPaused())
+	{
+		qDebug() << "Warning: Invalid call of pauseTimer()";
+
+		return;
+	}
+
+	this->m_timer.stop();
+	this->m_isRunningTimer = false;
+	this->m_pausedTimer = true;
+}
+
+void fairytale::resumeTimer()
+{
+	if (!this->isTimerPaused())
+	{
+		qDebug() << "Warning: Invalid call of resumeTimer()";
+
+		return;
+	}
+
+	this->m_pausedTimer = false;
+	this->m_isRunningTimer = true;
+	this->m_timer.start();
 }
 
 void fairytale::nextTurn()
@@ -613,68 +715,91 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 
 void fairytale::finishNarrator(QMediaPlayer::State state)
 {
-	if (state == QMediaPlayer::StoppedState)
+	switch (state)
 	{
-		if (!this->m_playingBonusClip)
+		case QMediaPlayer::StoppedState:
 		{
-			// played narrator stuff
-			if (!this->m_playCompleteSolution)
+			this->m_isPlayingMediaPlayer = false;
+			this->m_pausedMediaPlayer = false;
+
+			if (!this->m_playingBonusClip)
 			{
-				// Only react if the game mode has not been canceled
-				if (this->gameMode()->state() == GameMode::State::Running)
+				// played narrator stuff
+				if (!this->m_playCompleteSolution)
 				{
-					// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
-					if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+					// Only react if the game mode has not been canceled
+					if (this->gameMode()->state() == GameMode::State::Running)
 					{
-						this->m_player->mediaPlayer()->stop();
-						this->m_player->hide(); // hide the player, otherwise one cannot play the game
+						// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+						if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+						{
+							this->m_player->mediaPlayer()->stop();
+							this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
-						this->m_playerSounds.clear();
+							this->m_playerSounds.clear();
 
-						this->updateTimeLabel();
-						// the description label helps to remember
-						this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
+							this->updateTimeLabel();
+							// the description label helps to remember
+							this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
 
-						this->gameMode()->afterNarrator();
+							this->gameMode()->afterNarrator();
 
-						// run every second
-						this->m_timer.start(1000);
-					}
-					// played only the word "and" or the first person sound then we always expect another sound
-					else
-					{
-						const PlayerSoundData data = m_playerSounds.dequeue();
-						this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+							// run every second
+							this->m_timer.start(1000);
+						}
+						// played only the word "and" or the first person sound then we always expect another sound
+						else
+						{
+							const PlayerSoundData data = m_playerSounds.dequeue();
+							this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+						}
 					}
 				}
-			}
-			// Play the next final clip of the complete solution.
-			else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
-			{
-				qDebug() << "Play next final clip";
-				// next time play the following clip
-				this->m_completeSolutionIndex++;
-				this->playFinalClip(this->m_completeSolutionIndex);
-			}
-			/*
-			 * Stop playing the complete solution.
-			 */
-			else if (this->m_playCompleteSolution)
-			{
-				qDebug() << "Finished final clips";
-				this->m_playCompleteSolution = false;
-				this->m_completeSolutionIndex = 0;
+				// Play the next final clip of the complete solution.
+				else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+				{
+					qDebug() << "Play next final clip";
+					// next time play the following clip
+					this->m_completeSolutionIndex++;
+					this->playFinalClip(this->m_completeSolutionIndex);
+				}
+				/*
+				* Stop playing the complete solution.
+				*/
+				else if (this->m_playCompleteSolution)
+				{
+					qDebug() << "Finished final clips";
+					this->m_playCompleteSolution = false;
+					this->m_completeSolutionIndex = 0;
 
-				// The dialog has to disappear, after the player watched all final clips.
-				this->m_player->hide();
-				this->customFairytaleDialog()->hide();
-				this->cleanupAfterOneGame();
+					// The dialog has to disappear, after the player watched all final clips.
+					this->m_player->hide();
+					this->customFairytaleDialog()->hide();
+					this->cleanupAfterOneGame();
+				}
 			}
+			else
+			{
+				this->m_playingBonusClip = false;
+				this->m_player->hide();
+			}
+
+			break;
 		}
-		else
+
+		case QMediaPlayer::PausedState:
 		{
-			this->m_playingBonusClip = false;
-			this->m_player->hide();
+			this->m_pausedMediaPlayer = true;
+
+			break;
+		}
+
+		case QMediaPlayer::PlayingState:
+		{
+			this->m_isPlayingMediaPlayer = true;
+			this->m_pausedMediaPlayer = false;
+
+			break;
 		}
 	}
 }
@@ -742,22 +867,22 @@ QString fairytale::description(int turn, Clip *clip, bool markBold)
 		{
 			if (markBold)
 			{
-				description = tr("und <b>%1</b>").arg(clip->description());
+				description = tr("and <b>%1</b>").arg(clip->description());
 			}
 			else
 			{
-				description = tr("und %1").arg(clip->description());
+				description = tr("and %1").arg(clip->description());
 			}
 		}
 		else
 		{
 			if (markBold)
 			{
-				description = tr("%1 und <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
+				description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
 			}
 			else
 			{
-				description = tr("%1 und %2").arg(this->m_startPerson->description()).arg(clip->description());
+				description = tr("%1 and %2").arg(this->m_startPerson->description()).arg(clip->description());
 			}
 		}
 	}
@@ -802,6 +927,32 @@ void fairytale::queuePlayerSound(const PlayerSoundData &data)
 	{
 		this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
 	}
+}
+
+void fairytale::changeEvent(QEvent* event)
+{
+	switch(event->type())
+	{
+		// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+		{
+			this->retranslateUi(this);
+
+			break;
+		}
+
+		// this event is send, if the system, language changes
+		case QEvent::LocaleChange:
+		{
+			QString locale = QLocale::system().name();
+			locale.truncate(locale.lastIndexOf('_'));
+			loadLanguage(locale);
+
+			break;
+		}
+	}
+
+	QMainWindow::changeEvent(event);
 }
 
 void fairytale::cleanupGame()

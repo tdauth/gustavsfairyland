@@ -57,7 +57,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 {
 	if (!m_clips.empty())
 	{
-		QString text = tr("Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:<br/>").arg(m_clips[0]->description());
+		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(m_clips[0]->description());
 		int i = 0;
 
 		foreach (Clip *clip, m_clips)
@@ -77,7 +77,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 			++i;
 		}
 
-		text += tr("Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.<br/>Ende").arg(m_clips[0]->description());
+		text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(m_clips[0]->description());
 
 		textBrowser->setText(text);
 

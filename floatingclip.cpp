@@ -92,14 +92,16 @@ void FloatingClip::resume()
 
 void FloatingClip::updatePosition(qint64 elapsedTime)
 {
-	int x = this->x();
-	int y = this->y();
-	const int height = this->m_scaledImagePaper.height();
-	const int width = this->m_scaledImagePaper.width();
 	const int distance = (elapsedTime * this->speed()) / 1000; // distance per MS
 
+	// Only update the position if the elapsed time is long enough, otherwise the clip won't move for this time.
 	if (distance > 0)
 	{
+		int x = this->x();
+		int y = this->y();
+		const int height = this->m_scaledImagePaper.height();
+		const int width = this->m_scaledImagePaper.width();
+
 		// check the wind first and calculate direction
 		/*
 		if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
@@ -158,8 +160,11 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 			}
 		}
 
+		const int roomWidth = this->m_roomWidget->size().width();
+		const int roomHeight = this->m_roomWidget->size().height();
+
 		// Check for collisions with the boundary.
-		if (this->x() + width == this->m_roomWidget->size().width())
+		if (this->x() + width == roomWidth)
 		{
 			setDirX(-1);
 		}
@@ -168,7 +173,7 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 			setDirX(1);
 		}
 
-		if (this->y() + height == this->m_roomWidget->size().height())
+		if (this->y() + height == roomHeight)
 		{
 			setDirY(-1);
 		}
@@ -177,30 +182,31 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 			setDirY(1);
 		}
 
+		// Move the floating clip in the specified direction.
 		x += this->dirX() * distance;
 		y += this->dirY() * distance;
 
-		// Make sure boundaries are not violated
-		if (x + width > this->m_roomWidget->size().width())
+		// Make sure boundaries of the room are not violated.
+		if (x + width > roomWidth)
 		{
-			x = this->m_roomWidget->size().width() - width;
+			x = roomWidth - width;
 		}
 		else if (x < 0)
 		{
 			x = 0;
 		}
 
-		if (y + height > this->m_roomWidget->size().height())
+		if (y + height > roomHeight)
 		{
-			y = this->m_roomWidget->size().height() - height;
+			y = roomHeight - height;
 		}
 		else if (y < 0)
 		{
 			y = 0;
 		}
-	}
 
-	this->move(x, y);
+		this->move(x, y);
+	}
 }
 
 void FloatingClip::updateScaledClipImage()

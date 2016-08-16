@@ -33,6 +33,7 @@ find_package(Qt5Xml)
 find_package(Qt5MultimediaWidgets)
 find_package(Qt5Xml)
 find_package(Qt5Svg)
+find_package(Qt5LinguistTools)
 
 set(fairyland_SRCS
 	aboutdialog.cpp
@@ -78,17 +79,28 @@ set(fairyland_UI
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
 
+set(fairyland_TRANSLATIONS
+	translations/en.ts
+	translations/de.ts
+)
+
+find_program(LUPDATE_PATH lupdate REQUIRED)
+
+file(GLOB_RECURSE fairytale_TRANSLATION_SRCS GLOB_RECURSE "${CMAKE_BINARY_DIR}/src" "*.cpp" "*.h")
+message(STATUS "Got translatable srcs: ${fairytale_TRANSLATION_SRCS}")
+QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyland_TRANSLATIONS})
+
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 
 add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC})
+	add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES})
 	set_property(TARGET fairyland PROPERTY VERSION "1")
 	install(TARGETS fairyland LIBRARY DESTINATION lib)
 else ()
-	add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC})
+	add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES})
 	install(TARGETS fairyland RUNTIME DESTINATION bin)
 endif()
 
@@ -96,6 +108,7 @@ target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multime
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)
 
+install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
 install(FILES fairyland.desktop DESTINATION share/applications)
 
 if (USE_COMPRESSED_VIDEOS)
@@ -108,7 +121,7 @@ endif ()
 
 # the default fairyland package gustav
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
-install(FILES clips/gustav.xml DESTINATION clips)
+install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
 message(STATUS "Compressed files: ${COMPRESSED_VIDEO_FILES}")
 file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
 file(GLOB_RECURSE IMAGE_FILES_PNG "${CMAKE_SOURCE_DIR}/clips/*/*.png")
@@ -137,7 +150,7 @@ foreach (f ${INSTALL_FILES})
 	string(SUBSTRING "${f_dir}" ${subStringPos} ${subStringLength} dirName)
 	set(INSTALL_PATH "${dirName}/${fileName}")
 	message(STATUS "Install path: ${INSTALL_PATH}")
-	install(FILES "${f}" DESTINATION clips/${INSTALL_PATH})
+	install(FILES "${f}" DESTINATION share/gustavsfairyland/clips/${INSTALL_PATH})
 
 	# Copy files into assets folder for Android.
 	if (ANDROID)
