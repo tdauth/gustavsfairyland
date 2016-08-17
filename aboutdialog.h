@@ -11,6 +11,9 @@ class AboutDialog : public QDialog, protected Ui::AboutDialog
 	public:
 		AboutDialog(fairytale *app, QWidget *parent);
 
+	protected:
+		virtual void changeEvent(QEvent *event) override;
+
 	private:
 		fairytale *m_app;
 };

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<clips name="Gustav's Fairytale">
+<clips>
+	<name>
+		<en>Gustav's Fairytale</en>
+		<de>Gustavs Märchenwelt</de>
+	</name>
 	<!-- persons -->
 	<persons>
 		<clip>
@@ -9,7 +13,7 @@
 				<de>./crazy/crazy.wav</de>
 			</narrator>
 			<description>
-				<en>the pedophile</en>
+				<en>the Pedophile</en>
 				<de>der Runterholer</de>
 			</description>
 		</clip>
@@ -20,6 +24,7 @@
 				<de>./opajott/opajott.wav</de>
 			</narrator>
 			<description>
+				<en>Grandpa Jott</en>
 				<de>Opa Jott</de>
 			</description>
 		</clip>
@@ -30,6 +35,7 @@
 				<de>./vampir/vampir.wav</de>
 			</narrator>
 			<description>
+				<en>the Vampire</en>
 				<de>der Vampir</de>
 			</description>
 		</clip>
@@ -40,6 +46,7 @@
 				<de>/werwolf/werwolf.wav</de>
 			</narrator>
 			<description>
+				<en>the Werewolf</en>
 				<de>der Werwolf</de>
 			</description>
 		</clip>
@@ -50,6 +57,7 @@
 				<de>./steampunk/steampunk.wav</de>
 			</narrator>
 			<description>
+				<en>the Plague Doctor</en>
 				<de>der Pestdoktor</de>
 			</description>
 		</clip>

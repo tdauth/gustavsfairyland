@@ -69,7 +69,7 @@ void ClipEditor::chooseNarratorVideo()
 	}
 }
 
-ClipEditor::ClipEditor(QWidget* parent) : QDialog(parent), m_clip(new Clip(this))
+ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this))
 {
 	setupUi(this);
 
@@ -105,9 +105,9 @@ void ClipEditor::fill(Clip* clip)
 	this->m_clip->assign(*clip);
 }
 
-void ClipEditor::assignToClip(Clip* clip)
+void ClipEditor::assignToClip(Clip *clip)
 {
-	clip->assign(this->m_clip);
+	clip->assign(*this->m_clip);
 }
 
 Clip* ClipEditor::clip(QObject *parent)

@@ -53,14 +53,14 @@ void ClipTest::cleanup()
 
 void ClipTest::testLoadXml()
 {
-	ClipPackage pkg;
+	ClipPackage pkg(nullptr);
 	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
 	QCOMPARE(pkg.clips().size(), 9);
 }
 
 void ClipTest::testSaveLoadXml()
 {
-	ClipPackage pkg;
+	ClipPackage pkg(nullptr);
 	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
 	QCOMPARE(pkg.clips().size(), 9);
 	QVERIFY(pkg.saveClipsToFile("clips2.xml"));
@@ -71,8 +71,8 @@ void ClipTest::testSaveLoadXml()
 
 void ClipTest::testSaveLoadArchive()
 {
-	ClipPackage pkg;
-	Clip *clip = new Clip();
+	ClipPackage pkg(nullptr);
+	Clip *clip = new Clip(nullptr);
 	pkg.addClip(clip);
 
 	QVERIFY(pkg.saveClipsToArchive("clips.pkg"));
@@ -81,19 +81,19 @@ void ClipTest::testSaveLoadArchive()
 
 	QVERIFY(QFile::exists("clips.pkg"));
 
-	ClipPackage loaded;
+	ClipPackage loaded(nullptr);
 	QVERIFY(loaded.loadClipsFromArchive("clips.pkg", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 }
 
 void ClipTest::testSaveLoadArchiveWithFiles()
 {
-	ClipPackage pkg;
+	ClipPackage pkg(nullptr);
 	Clip::Urls narratorUrls;
 	narratorUrls.insert("en", QUrl::fromLocalFile("narrator.mp4"));
 	Clip::Descriptions descriptions;
 	descriptions.insert("en", "test");
-	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), narratorUrls, descriptions, false);
+	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), narratorUrls, descriptions, false, nullptr);
 	pkg.addClip(clip);
 
 	// it is not possible to save an archive without the corresponding referenced files of the clip
@@ -130,7 +130,7 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	QVERIFY(videoFile.remove());
 	QVERIFY(narratorFile.remove());
 
-	ClipPackage loaded;
+	ClipPackage loaded(nullptr);
 	QVERIFY(loaded.loadClipsFromArchive("clips.pkg", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 	clip = loaded.clips().at(0);
@@ -165,14 +165,14 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 
 void ClipTest::testSaveLoadCompressedArchive()
 {
-	ClipPackage pkg;
-	Clip *clip = new Clip();
+	ClipPackage pkg(nullptr);
+	Clip *clip = new Clip(nullptr);
 	pkg.addClip(clip);
 
 	QVERIFY(pkg.saveClipsToCompressedArchive("clips.pkgc"));
 	QVERIFY(QFile::exists("clips.pkgc"));
 
-	ClipPackage loaded;
+	ClipPackage loaded(nullptr);
 	QVERIFY(loaded.loadClipsFromCompressedArchive("clips.pkgc", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
 }

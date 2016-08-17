@@ -67,6 +67,7 @@ class HighScores : public QDialog, protected Ui::HighScores
 		const HighScoreMap& highScores() const;
 
 	protected:
+		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
 
 	private:

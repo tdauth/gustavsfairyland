@@ -231,7 +231,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_wonDialog(nullptr)
 , m_highScores(new HighScores(this))
 , m_playingBonusClip(false)
-, m_installedTranslator(false)
 {
 	this->m_player->hide();
 
@@ -252,6 +251,16 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 
+	const QDir dir(translationsDir());
+
+	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
+	{
+		QAction *action = new QAction(languageFile.baseName(), this);
+		connect(action, SIGNAL(triggered()), this, SLOT(changeLanguage()));
+		menuLanguage->addAction(action);
+		m_translationFileNames.insert(action, languageFile.baseName());
+	}
+
 	m_audioPlayer->setVolume(100);
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishAudio(QMediaPlayer::State)));
@@ -262,7 +271,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	const QDir currentDir(QDir::currentPath());
 	defaultClipsDir = QDir(currentDir.filePath("../share/gustavsfairyland/clips"));
 #else
-	defaultClipsDir = QDir("/usr/share/gustavsfairyland/clips");
+	defaultClipsDir = QDir("/usr/share/gustavsfairyland");
 #endif
 
 #ifndef Q_OS_ANDROID
@@ -349,6 +358,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.push_back(new GameModeMoving(this));
 	m_gameModes.push_back(new GameModeOneOutOfFour(this));
 
+	qApp->installTranslator(&m_translator);
+
 	// Try to load the current locale. If no translation file exists it will remain English.
 	QString locale = QLocale::system().name();
 	locale.truncate(locale.lastIndexOf('_'));
@@ -391,11 +402,7 @@ fairytale::~fairytale()
 
 	settings.endArray();
 
-	// remove the old translator
-	if (m_installedTranslator)
-	{
-		qApp->removeTranslator(&m_translator);
-	}
+	qApp->removeTranslator(&m_translator);
 }
 
 void fairytale::playFinalClip(int index)
@@ -427,41 +434,40 @@ void fairytale::about()
 	this->aboutDialog()->exec();
 }
 
-void fairytale::loadLanguage(const QString &language)
+QDir fairytale::translationsDir() const
 {
 #ifdef Q_OS_WIN
 	const QDir currentDir(QDir::currentPath());
 	const QDir translationsDir = QDir(currentDir.filePath("../share/gustavsfairyland/translations"));
 #else
+#ifdef DEBUG
+	const QDir translationsDir = QDir(QDir::currentPath());
+#else
 	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
 #endif
-	bool loaded = false;
-	std::cerr << "Translation directory: " << translationsDir.path().toStdString() << std::endl;
+#endif
+
+	return translationsDir;
+}
+
+void fairytale::loadLanguage(const QString &language)
+{
+	std::cerr << "Translation directory: " << translationsDir().path().toStdString() << std::endl;
 	std::cerr << "Translation: " << language.toStdString() << std::endl;
 
-	if (m_translator.load(language, translationsDir.path()))
+	if (m_translator.load(language, translationsDir().path()))
 	{
 		std::cerr << "Loaded file!" << std::endl;
-		qDebug() << "File loaded:" << language;
-		loaded = true;
-
-		// The event is not fired the first time.
-		if (!m_installedTranslator)
-		{
-			this->retranslateUi(this);
-		}
+		std::cerr << "File loaded:" << language.toStdString() << std::endl;
 	}
 	else
 	{
-		std::cerr << "Did not laod file!" << std::endl;
+		std::cerr << "Did not load file: " << language.toStdString() << std::endl;
 		qWarning() << "File not loaded";
 	}
 
-	if (!m_installedTranslator && loaded)
-	{
-		m_installedTranslator = true;
-		qApp->installTranslator(&m_translator);
-	}
+	// Update to this language even if the translation file is invalid.
+	m_currentTranslation = language;
 }
 
 void fairytale::gameOver()
@@ -949,8 +955,9 @@ void fairytale::changeEvent(QEvent* event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI";
+			std::cerr << "Retranslate UI" << std::endl;
 			this->retranslateUi(this);
+			//this->aboutDialog()->retranslateUi(this->aboutDialog());
 
 			break;
 		}
@@ -1079,6 +1086,20 @@ void fairytale::playBonusClip()
 	{
 		this->m_playingBonusClip = true;
 		this->m_player->playBonusVideo(this, iterator.value()->videoUrl(), iterator.value()->description());
+	}
+}
+
+void fairytale::changeLanguage()
+{
+	QAction *action = dynamic_cast<QAction*>(sender());
+
+	std::cerr << "Change language to: " << action->text().toStdString() << std::endl;
+
+	TranslationFileNames::const_iterator iterator = m_translationFileNames.find(action);
+
+	if (iterator != m_translationFileNames.end())
+	{
+		loadLanguage(iterator.value());
 	}
 }
 

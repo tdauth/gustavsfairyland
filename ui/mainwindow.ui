@@ -110,13 +110,19 @@
    </widget>
    <widget class="QMenu" name="menuAchievements">
     <property name="title">
-     <string>Achie&amp;vements</string>
+     <string>&amp;Achievements</string>
     </property>
     <addaction name="actionHighScores"/>
+   </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Lan&amp;guage</string>
+    </property>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSettings"/>
    <addaction name="menuAchievements"/>
+   <addaction name="menuLanguage"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

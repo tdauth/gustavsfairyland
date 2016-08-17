@@ -6,10 +6,12 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QFile>
+#include <QtCore/QMap>
 
 class Clip;
 class BonusClip;
 struct Block;
+class fairytale;
 
 /**
  * \brief Clip packages contain one or several clips and can be packaged into an archive file or simply stored as XML file.
@@ -24,13 +26,14 @@ class ClipPackage : public QObject
 	Q_OBJECT
 
 	public:
+		typedef QMap<QString,QString> Names;
 		/**
 		 * \brief A list of clips which every package stores.
 		 */
 		typedef QList<Clip*> Clips;
 		typedef QList<BonusClip*> BonusClips;
 
-		ClipPackage(QObject *parent = nullptr);
+		ClipPackage(fairytale *app, QObject *parent = nullptr);
 		virtual ~ClipPackage();
 
 		bool loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir);
@@ -50,8 +53,9 @@ class ClipPackage : public QObject
 		void addClip(Clip *clip);
 
 		const QString& filePath() const;
-		void setName(const QString &name);
-		const QString& name() const;
+		void setNames(const Names &names);
+		const Names& names() const;
+		QString name() const;
 		Clips& clips();
 		const Clips& clips() const;
 		const BonusClips& bonusClips() const;
@@ -89,11 +93,12 @@ class ClipPackage : public QObject
 
 		bool removeDir();
 
+		fairytale *m_app;
 		/// Directory with all extracted clip files
 		QString m_dir;
 		/// File path to the clips.xml file
 		QString m_filePath;
-		QString m_name;
+		Names m_names;
 		Clips m_clips;
 		/// Additional clips which can be unlocked.
 		BonusClips m_bonusClips;
@@ -116,14 +121,14 @@ inline const QString& ClipPackage::filePath() const
 	return this->m_filePath;
 }
 
-inline void ClipPackage::setName(const QString& name)
+inline void ClipPackage::setNames(const Names &names)
 {
-	this->m_name = name;
+	this->m_names = names;
 }
 
-inline const QString& ClipPackage::name() const
+inline const ClipPackage::Names& ClipPackage::names() const
 {
-	return this->m_name;
+	return this->m_names;
 }
 
 inline ClipPackage::Clips& ClipPackage::clips()

@@ -6,6 +6,7 @@
 #include "ui_clipeditor.h"
 
 class Clip;
+class fairytale;
 
 /**
  * \brief This editor dialog allows you to create a single clip.
@@ -24,7 +25,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void chooseNarratorVideo();
 
 	public:
-		ClipEditor(QWidget *parent);
+		ClipEditor(fairytale *app, QWidget *parent);
 		~ClipEditor();
 
 		void fill(Clip *clip);
@@ -45,6 +46,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 */
 		bool checkForValidFields();
 
+		fairytale *m_app;
 		Clip *m_clip;
 		QString m_dir;
 };

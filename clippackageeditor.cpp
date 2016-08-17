@@ -130,7 +130,7 @@ void ClipPackageEditor::changedCurrentItem(QTreeWidgetItem *current, QTreeWidget
 	removeClipPushButton->setEnabled(hasSelectedClip);
 }
 
-ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app), m_clipEditor(nullptr), m_clipPackage(new ClipPackage(this))
+ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app), m_clipEditor(nullptr), m_clipPackage(new ClipPackage(app, this))
 {
 	setupUi(this);
 
@@ -151,7 +151,7 @@ ClipEditor* ClipPackageEditor::clipEditor()
 {
 	if (this->m_clipEditor == nullptr)
 	{
-		this->m_clipEditor = new ClipEditor(this);
+		this->m_clipEditor = new ClipEditor(m_app, this);
 	}
 
 	return this->m_clipEditor;

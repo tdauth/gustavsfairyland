@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QtGui>
 
 #include "customfairytaledialog.h"
@@ -51,6 +53,28 @@ void CustomFairytaleDialog::clear()
 	this->playFinalVideoPushButton->setEnabled(false);
 
 	qDebug() << "After the rest";
+}
+
+void CustomFairytaleDialog::changeEvent(QEvent* event)
+{
+	switch(event->type())
+	{
+		// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+		{
+			std::cerr << "Retranslate UI of custom fairytale dialog" << std::endl;
+			this->retranslateUi(this);
+
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+
+	QDialog::changeEvent(event);
 }
 
 void CustomFairytaleDialog::showEvent(QShowEvent *event)

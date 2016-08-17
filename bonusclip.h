@@ -69,7 +69,7 @@ inline QString BonusClip::description() const
 	}
 	else if (!this->m_descriptions.empty())
 	{
-		this->m_descriptions.first();
+		return this->m_descriptions.first();
 	}
 
 	return "";

@@ -14,10 +14,11 @@
 #include "clippackage.h"
 #include "clip.h"
 #include "bonusclip.h"
+#include "fairytale.h"
 
 #include "clippackage.moc"
 
-ClipPackage::ClipPackage(QObject *parent) : QObject(parent)
+ClipPackage::ClipPackage(fairytale *app, QObject *parent) : QObject(parent), m_app(app)
 {
 }
 
@@ -529,7 +530,27 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		return false;
 	}
 
-	this->m_name = root.attribute("name");
+	Names names;
+	const QDomNodeList nodes = root.elementsByTagName("name");
+
+	if (nodes.isEmpty())
+	{
+		std::cerr << "Missing <name>" << std::endl;
+
+		return false;
+	}
+
+	const QDomNodeList nameNodes = nodes.at(0).childNodes();
+
+	for (int i = 0; i < nameNodes.size(); ++i)
+	{
+		const QDomNode node = nameNodes.at(i);
+		const QDomElement element = node.toElement();
+
+		names.insert(node.nodeName(), element.text());
+	}
+
+	this->m_names = names;
 
 	const QDomNodeList childs = root.childNodes();
 
@@ -538,7 +559,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		const QDomNode parentNode = childs.at(j);
 		const QDomElement parentElement = parentNode.toElement();
 
-		if (parentElement.nodeName() == "bonusClip")
+		if (parentElement.nodeName() != "persons" && parentElement.nodeName() != "acts")
 		{
 			continue;
 		}
@@ -573,7 +594,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 					descriptions.insert(node.nodeName(), node.toElement().text());
 				}
 
-				m_clips.push_back(new Clip(image, video, narratorUrls, descriptions, isPerson, this));
+				m_clips.push_back(new Clip(image, video, narratorUrls, descriptions, isPerson, m_app, this));
 			}
 			else
 			{
@@ -582,11 +603,11 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		}
 	}
 
-	const QDomNodeList nodes = root.elementsByTagName("bonusClip");
+	const QDomNodeList bonusClipNodes = root.elementsByTagName("bonusClip");
 
-	for (int i = 0; i < nodes.size(); ++i)
+	for (int i = 0; i < bonusClipNodes.size(); ++i)
 	{
-		QDomNode node = nodes.at(i);
+		QDomNode node = bonusClipNodes.at(i);
 
 		if (node.nodeName() == "bonusClip")
 		{
@@ -620,8 +641,23 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 {
 	QDomDocument document;
 	QDomElement root = document.createElement("clips");
-	root.setAttribute("name", this->name());
 	document.appendChild(root);
+
+	QDomElement name = document.createElement("name");
+	root.appendChild(name);
+
+	Names::const_iterator i = names().constBegin();
+
+	while (i != names().constEnd())
+	{
+		QDomElement localeElement = document.createElement(i.key());
+		name.appendChild(localeElement);
+
+		QDomText textNode = document.createTextNode(i.value());
+		localeElement.appendChild(textNode);
+
+		++i;
+	}
 
 	QDomElement persons = document.createElement("persons");
 	root.appendChild(persons);
@@ -829,4 +865,25 @@ bool ClipPackage::removeDir()
 	}
 
 	return true;
+}
+
+QString ClipPackage::name() const
+{
+	if (m_app != nullptr)
+	{
+		std::cerr << "Getting current translation:" << m_app->currentTranslation().toStdString() << std::endl;
+		const Names::const_iterator iterator = this->m_names.find(m_app->currentTranslation());
+
+		if (iterator != this->m_names.end())
+		{
+			return iterator.value();
+		}
+	}
+
+	if (!this->m_names.empty())
+	{
+		return this->m_names.first();
+	}
+
+	return "";
 }

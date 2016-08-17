@@ -31,6 +31,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 	protected:
 		virtual void showEvent(QShowEvent *event) override;
+		virtual void changeEvent(QEvent *event) override;
 
 	private:
 		typedef QList<Clip*> Clips;

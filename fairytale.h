@@ -10,6 +10,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtCore/QTranslator>
+#include <QtCore/QDir>
 
 #include "ui_mainwindow.h"
 
@@ -164,6 +165,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Plays the sound immediately if the queue is empty. Otherwise it queues the sound.
 		 */
 		void queuePlayerSound(const PlayerSoundData &soundData);
+		QDir translationsDir() const;
+		QString currentTranslation() const;
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;
@@ -173,6 +176,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
 		void playBonusClip();
+		void changeLanguage();
 
 	private:
 		void updateTimeLabel();
@@ -274,7 +278,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool m_playingBonusClip;
 
 		QTranslator m_translator;
-		bool m_installedTranslator;
+		typedef QMap<QAction*,QString> TranslationFileNames;
+		TranslationFileNames m_translationFileNames;
+		QString m_currentTranslation;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const
@@ -355,6 +361,11 @@ inline QGridLayout* fairytale::gameAreaLayout() const
 inline HighScores* fairytale::highScores() const
 {
 	return this->m_highScores;
+}
+
+inline QString fairytale::currentTranslation() const
+{
+	return this->m_currentTranslation;
 }
 
 #endif // fairytale_H

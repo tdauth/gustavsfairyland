@@ -10,6 +10,10 @@ enable_testing()
 
 add_compile_options(-std=c++11 -Wall)
 
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	add_definitions(-DDEBUG=1)
+endif ()
+
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_VIDEOS "Enable this option to install much smaller videos." FALSE)
