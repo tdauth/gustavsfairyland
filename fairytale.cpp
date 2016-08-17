@@ -36,40 +36,24 @@ void fairytale::newGame()
 		this->cleanupGame();
 	}
 
-	this->m_timer.stop();
+	if (this->isTimerRunning())
+	{
+		this->m_timer.stop();
+	}
 
 	clearSolution();
-
-	this->m_paused = false;
-	this->actionPauseGame->setText(tr("Pause Game"));
-	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
-
-	// requires person in the first step always
-	this->m_requiresPerson = true;
-	this->m_turns = 0;
-	this->m_totalElapsedTime = 0;
 
 	ClipPackage *clipPackage = this->selectClipPackage();
 
 	if (clipPackage != nullptr)
 	{
-		this->m_clipPackage = clipPackage;
-
-		this->m_gameMode = this->selectGameMode();
+		GameMode *gameMode = this->selectGameMode();
 
 		if (m_gameMode != nullptr)
 		{
-			this->gameMode()->start();
-
-			qDebug() << "start";
-
-			nextTurn();
-
-			setGameButtonsEnabled(true);
+			startNewGame(clipPackage, gameMode);
 		}
 	}
-
-	this->m_isRunning = true;
 }
 
 void fairytale::pauseGameAction()
@@ -202,6 +186,44 @@ bool fairytale::hasTouchDevice()
 	return false;
 }
 
+void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
+{
+	if (this->gameMode() != nullptr && this->isGameRunning())
+	{
+		this->cleanupGame();
+	}
+
+	if (this->isTimerRunning())
+	{
+		this->m_timer.stop();
+	}
+
+	clearSolution();
+
+	this->m_paused = false;
+	this->actionPauseGame->setText(tr("Pause Game"));
+	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
+
+	// requires person in the first step always
+	this->m_requiresPerson = true;
+	this->m_turns = 0;
+	this->m_totalElapsedTime = 0;
+	this->quickGamePushButton->hide();
+	this->quitPushButton->hide();
+	this->gameAreaWidget->show();
+	this->descriptionLabel->show();
+	this->timeLabel->show();
+
+	this->m_clipPackage = clipPackage;
+	this->m_gameMode = gameMode;
+	this->gameMode()->start();
+	qDebug() << "start";
+	this->m_isRunning = true;
+	nextTurn();
+
+	setGameButtonsEnabled(true);
+}
+
 fairytale::fairytale(Qt::WindowFlags flags)
 : QMainWindow(0, flags)
 , m_turns(0)
@@ -248,6 +270,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+
+	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
+	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 
@@ -364,6 +389,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	QString locale = QLocale::system().name();
 	locale.truncate(locale.lastIndexOf('_'));
 	loadLanguage(locale);
+
+	// Initial cleanup.
+	cleanupGame();
 }
 
 fairytale::~fairytale()
@@ -434,17 +462,31 @@ void fairytale::about()
 	this->aboutDialog()->exec();
 }
 
+void fairytale::quickGame()
+{
+	if (this->isGameRunning() || this->m_clipPackages.isEmpty() || this->m_gameModes.isEmpty())
+	{
+		return;
+	}
+
+	// Start with the first available stuff.
+	ClipPackage *clipPackage = this->m_clipPackages.first();
+	GameMode *gameMode = this->m_gameModes.first();
+
+	startNewGame(clipPackage, gameMode);
+}
+
 QDir fairytale::translationsDir() const
 {
 #ifdef Q_OS_WIN
 	const QDir currentDir(QDir::currentPath());
 	const QDir translationsDir = QDir(currentDir.filePath("../share/gustavsfairyland/translations"));
-#else
-#ifdef DEBUG
+#elif defined(Q_OS_ANDROID)
+	const QDir translationsDir = QDir("assets:/translations");
+#elif defined(DEBUG)
 	const QDir translationsDir = QDir(QDir::currentPath());
 #else
 	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
-#endif
 #endif
 
 	return translationsDir;
@@ -452,17 +494,17 @@ QDir fairytale::translationsDir() const
 
 void fairytale::loadLanguage(const QString &language)
 {
-	std::cerr << "Translation directory: " << translationsDir().path().toStdString() << std::endl;
-	std::cerr << "Translation: " << language.toStdString() << std::endl;
+	qDebug() << "Translation directory: " << translationsDir().path();
+	qDebug() << "Translation: " << language;
 
 	if (m_translator.load(language, translationsDir().path()))
 	{
-		std::cerr << "Loaded file!" << std::endl;
-		std::cerr << "File loaded:" << language.toStdString() << std::endl;
+		qDebug() << "Loaded file!";
+		qDebug() << "File loaded:" << language;
 	}
 	else
 	{
-		std::cerr << "Did not load file: " << language.toStdString() << std::endl;
+		qDebug() << "Did not load file: " << language;
 		qWarning() << "File not loaded";
 	}
 
@@ -764,6 +806,8 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 							this->gameMode()->afterNarrator();
 
 							// run every second
+							this->m_isRunningTimer = true;
+							this->m_pausedTimer = false;
 							this->m_timer.start(1000);
 						}
 						// played only the word "and" or the first person sound then we always expect another sound
@@ -984,12 +1028,16 @@ void fairytale::changeEvent(QEvent* event)
 void fairytale::cleanupGame()
 {
 	this->m_playerSounds.clear();
-	this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
+
+	// this method is also called in the beginning when there is no gamemode
+	if (this->gameMode() != nullptr)
+	{
+		this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
+	}
+
 	this->m_player->mediaPlayer()->stop();
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
-	this->timeLabel->setText("");
-	this->descriptionLabel->setText("");
 }
 
 void fairytale::cleanupAfterOneGame()
@@ -998,6 +1046,14 @@ void fairytale::cleanupAfterOneGame()
 	qDebug() << "Before disabling game buttons";
 	this->setGameButtonsEnabled(false);
 	qDebug() << "After disabling game buttons";
+
+	this->timeLabel->setText("");
+	this->timeLabel->hide();
+	this->descriptionLabel->setText("");
+	this->descriptionLabel->hide();
+	this->gameAreaWidget->hide();
+	this->quickGamePushButton->show();
+	this->quitPushButton->show();
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl &url) const

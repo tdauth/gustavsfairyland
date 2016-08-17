@@ -403,127 +403,140 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="174"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="170"/>
+        <location filename="../build/ui_mainwindow.h" line="197"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="197"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation>Gustavs Märchenwelt</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="175"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="171"/>
+        <location filename="../build/ui_mainwindow.h" line="198"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="198"/>
         <source>&amp;New Game</source>
         <translation>&amp;Neues Spiel</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="176"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="172"/>
+        <location filename="../build/ui_mainwindow.h" line="199"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="199"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="177"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="173"/>
+        <location filename="../build/ui_mainwindow.h" line="200"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="200"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="178"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="174"/>
+        <location filename="../build/ui_mainwindow.h" line="201"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="201"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="179"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="175"/>
+        <location filename="../build/ui_mainwindow.h" line="202"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="202"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="180"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="176"/>
+        <location filename="../build/ui_mainwindow.h" line="203"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="203"/>
         <source>&amp;Pause Game</source>
         <translation>&amp;Spiel anhalten</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="181"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="177"/>
+        <location filename="../build/ui_mainwindow.h" line="204"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="204"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="182"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="178"/>
+        <location filename="../build/ui_mainwindow.h" line="205"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="205"/>
         <source>&amp;Clips</source>
         <translation>&amp;Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="183"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="179"/>
+        <location filename="../build/ui_mainwindow.h" line="206"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="206"/>
         <source>&amp;Editor</source>
         <translation>&amp;Editor</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="184"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="180"/>
+        <location filename="../build/ui_mainwindow.h" line="207"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="207"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation>&amp;Zeige eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="185"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="181"/>
+        <location filename="../build/ui_mainwindow.h" line="208"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="208"/>
         <source>&amp;Cancel Game</source>
         <translation>Spiel &amp;abbrechen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="186"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="182"/>
+        <location filename="../build/ui_mainwindow.h" line="209"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="209"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="187"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="183"/>
+        <location filename="../build/ui_mainwindow.h" line="210"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="210"/>
         <source>&amp;Settings</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="188"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="184"/>
+        <location filename="../build/ui_mainwindow.h" line="211"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="211"/>
         <source>&amp;Highscores</source>
         <translation>&amp;Highscores</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="191"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="187"/>
+        <location filename="../build/ui_mainwindow.h" line="215"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="215"/>
+        <source>Let&apos;s Go!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="214"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="214"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="216"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="216"/>
         <source>Fi&amp;le</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="192"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="188"/>
+        <location filename="../build/ui_mainwindow.h" line="217"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="217"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="193"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="189"/>
+        <location filename="../build/ui_mainwindow.h" line="218"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="218"/>
         <source>Setti&amp;ngs</source>
         <translation>Einstellun&amp;gen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="194"/>
+        <location filename="../build/ui_mainwindow.h" line="219"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="219"/>
         <source>&amp;Achievements</source>
         <translation>Err&amp;ungenschaften</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="195"/>
+        <location filename="../build/ui_mainwindow.h" line="220"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="220"/>
         <source>Lan&amp;guage</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="190"/>
         <source>Achie&amp;vements</source>
-        <translation>Err&amp;ungenschaften</translation>
+        <translation type="vanished">Err&amp;ungenschaften</translation>
     </message>
 </context>
 <context>
@@ -574,12 +587,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../buildandroid/ui_settings.h" line="71"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../build/ui_settings.h" line="71"/>
+        <location filename="../buildandroid/ui_settings.h" line="71"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -621,86 +630,86 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="44"/>
-        <location filename="../fairytale.cpp" line="541"/>
+        <location filename="../fairytale.cpp" line="204"/>
+        <location filename="../fairytale.cpp" line="583"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="45"/>
-        <location filename="../fairytale.cpp" line="542"/>
+        <location filename="../fairytale.cpp" line="205"/>
+        <location filename="../fairytale.cpp" line="584"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="97"/>
+        <location filename="../fairytale.cpp" line="81"/>
         <source>Cancel Game?</source>
         <translation>Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="97"/>
+        <location filename="../fairytale.cpp" line="81"/>
         <source>Do you want to cancel the game?</source>
         <translation>Wollen Sie das Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="476"/>
+        <location filename="../fairytale.cpp" line="518"/>
         <source>Game over!</source>
         <translation>Spiel verloren!</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="476"/>
+        <location filename="../fairytale.cpp" line="518"/>
         <source>GAME OVER!</source>
         <translation>SPIEL VERLOREN!</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="517"/>
+        <location filename="../fairytale.cpp" line="559"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="518"/>
+        <location filename="../fairytale.cpp" line="560"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="656"/>
+        <location filename="../fairytale.cpp" line="698"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="857"/>
+        <location filename="../fairytale.cpp" line="901"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="878"/>
-        <location filename="../fairytale.cpp" line="912"/>
+        <location filename="../fairytale.cpp" line="922"/>
+        <location filename="../fairytale.cpp" line="956"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="882"/>
-        <location filename="../fairytale.cpp" line="916"/>
+        <location filename="../fairytale.cpp" line="926"/>
+        <location filename="../fairytale.cpp" line="960"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="889"/>
+        <location filename="../fairytale.cpp" line="933"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="893"/>
+        <location filename="../fairytale.cpp" line="937"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="900"/>
+        <location filename="../fairytale.cpp" line="944"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="904"/>
+        <location filename="../fairytale.cpp" line="948"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

@@ -119,7 +119,18 @@ target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multime
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)
 
-install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
+if (ANDROID)
+	# This custom target is referenced by all install commands for Android.
+	add_custom_target(CopyAssets ALL)
+
+	foreach (f ${fairytale_QM_FILES})
+		get_filename_component(fileName "${f}" NAME)
+		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/translations/${fileName})
+	endforeach ()
+else ()
+	install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
+endif ()
+
 install(FILES fairyland.desktop DESTINATION share/applications)
 
 if (USE_COMPRESSED_VIDEOS)
@@ -132,7 +143,11 @@ endif ()
 
 # the default fairyland package gustav
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
-install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
+if (ANDROID)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+else ()
+	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
+endif ()
 message(STATUS "Compressed files: ${COMPRESSED_VIDEO_FILES}")
 file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
 file(GLOB_RECURSE IMAGE_FILES_PNG "${CMAKE_SOURCE_DIR}/clips/*/*.png")
@@ -140,12 +155,7 @@ list(APPEND IMAGE_FILES ${IMAGE_FILES_JPG} ${IMAGE_FILES_PNG})
 message(STATUS "Image files: ${IMAGE_FILES}")
 file(GLOB_RECURSE SPEECH_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.wav")
 message(STATUS "Sound files: ${SPEECH_FILES}")
-list(APPEND INSTALL_FILES ${COMPRESSED_VIDEO_FILES} ${IMAGE_FILES} ${SPEECH_FILES})
-
-# This custom target is referenced by all install commands for Android.
-if (ANDROID)
-	add_custom_target(CopyAssets ALL)
-endif ()
+list(APPEND INSTALL_FILES ${COMPRESSED_VIDEO_FILES} ${IMAGE_FILES} ${SPEECH_FILES} ${PACKAGE_FILES})
 
 # Specify the install directory for every found file.
 foreach (f ${INSTALL_FILES})
