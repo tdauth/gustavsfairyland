@@ -243,6 +243,10 @@ void RoomWidget::mousePressEvent(QMouseEvent *event)
 			playSoundFromList(m_successSoundPaths);
 
 			this->m_won = true;
+
+			// dont move anything anymore
+			m_windTimer->stop();
+			m_paintTimer->stop();
 			// Pause immediately that the timer stops, otherwise there might still be time in which the player can lose. Don't pause the game mode, otherwise the release event is never triggered.
 			this->gameMode()->app()->pauseTimer();
 		}

@@ -11,11 +11,6 @@ void CustomFairytaleDialog::retry()
 {
 	this->m_retry = true;
 	this->close();
-	// Start with the first available stuff.
-	ClipPackage *clipPackage = m_app->clipPackage();
-	GameMode *gameMode = m_app->gameMode();
-
-	m_app->startNewGame(clipPackage, gameMode);
 }
 
 void CustomFairytaleDialog::addClip(Clip *clip)

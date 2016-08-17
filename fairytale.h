@@ -78,6 +78,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void about();
 		void quickGame();
 
+		void retry();
+
 		void loadLanguage(const QString &language);
 
 	public:

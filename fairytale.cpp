@@ -494,6 +494,15 @@ void fairytale::quickGame()
 	startNewGame(clipPackage, gameMode);
 }
 
+void fairytale::retry()
+{
+	// Start with the first available stuff.
+	ClipPackage *clipPackage = this->clipPackage();
+	GameMode *gameMode = this->gameMode();
+
+	this->startNewGame(clipPackage, gameMode);
+}
+
 QDir fairytale::translationsDir() const
 {
 #ifdef Q_OS_WIN
@@ -561,6 +570,11 @@ void fairytale::win()
 	if (!this->customFairytaleDialog()->clickedRetry())
 	{
 		this->cleanupAfterOneGame();
+	}
+	// prevents recursive calls in dialog
+	else
+	{
+		this->retry();
 	}
 }
 
