@@ -19,35 +19,17 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 {
 	if (m_clip != nullptr)
 	{
-		const int x1 = this->m_x;
-		const int y1 = this->m_y;
+		// TODO apparently painting is wrong, not coordinates, therefore it looks like the collision is too early and therefore some clicks miss.
+		const int x1 = this->x();
+		const int y1 = this->y();
 
 		const QImage &imagePaper = this->m_roomWidget->isEnabled() ? m_scaledImagePaper : m_scaledImagePaperDisabled;
+		const QRect paperRect(x1, y1, imagePaper.width(), imagePaper.height());
+		painter->drawImage(paperRect, imagePaper);
+
 		const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
-
-		// draw some background if the image does not fit
-		//painter->fillRect(x1, y1, m_width, m_width, Qt::black);
-		// scale the clip image but keep ratio
-		const int widthDifferencePaper = (m_width - imagePaper.width()) / 2;
-		const int heightDifferencePaper = (m_width - imagePaper.height()) / 2;
-		painter->drawImage(x1 + widthDifferencePaper, y1 + heightDifferencePaper, imagePaper);
-
-		// TODO scaling is bad for the performance?
-		const int widthDifference = (m_width - image.width()) / 2;
 		const int heightDifference = (m_width - image.height()) / 2;
-		painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
-
-		// paint a border to show differences between floating clips
-		/*
-		const QColor color = this->m_roomWidget->isEnabled() ? QColor(Qt::green) : QColor(Qt::darkGreen);
-		painter->setPen(QPen(color, 12));
-		painter->drawLine(this->x(), this->y(), this->x() + this->width(), this->y());
-		painter->drawLine(this->x(), this->y(), this->x(), this->y() + this->width());
-		painter->drawLine(this->x() + this->width(), this->y(), this->x() + this->width(), this->y() + this->width());
-		painter->drawLine(this->x(), this->y() + this->width(), this->x() + this->width(), this->y() + this->width());
-		*/
-
-		//qDebug() << "Paint clip: " << m_clip->imageUrl().toLocalFile();
+		painter->drawImage(x1, y1 + heightDifference, image);
 	}
 }
 
