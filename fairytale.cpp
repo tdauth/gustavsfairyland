@@ -186,6 +186,20 @@ bool fairytale::hasTouchDevice()
 	return false;
 }
 
+QString fairytale::localeToName(const QString &locale)
+{
+	if (locale == "de")
+	{
+		return "Deutsch";
+	}
+	else if (locale == "en")
+	{
+		return "English";
+	}
+
+	return locale;
+}
+
 void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -280,7 +294,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
 	{
-		QAction *action = new QAction(languageFile.baseName(), this);
+		QAction *action = new QAction(localeToName(languageFile.baseName()), this);
+		action->setCheckable(true);
 		connect(action, SIGNAL(triggered()), this, SLOT(changeLanguage()));
 		menuLanguage->addAction(action);
 		m_translationFileNames.insert(action, languageFile.baseName());
@@ -389,6 +404,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	QString locale = QLocale::system().name();
 	locale.truncate(locale.lastIndexOf('_'));
 	loadLanguage(locale);
+	// TODO check the action
 
 	// Initial cleanup.
 	cleanupGame();
@@ -1155,6 +1171,23 @@ void fairytale::changeLanguage()
 	if (iterator != m_translationFileNames.end())
 	{
 		loadLanguage(iterator.value());
+
+		// uncheck all other languages
+		TranslationFileNames::const_iterator i = m_translationFileNames.begin();
+
+		while (i != m_translationFileNames.end())
+		{
+			if (i.key() != action)
+			{
+				i.key()->setChecked(false);
+			}
+
+			++i;
+		}
+	}
+	else
+	{
+		action->setChecked(false);
 	}
 }
 

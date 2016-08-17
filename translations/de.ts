@@ -23,6 +23,28 @@
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="96"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../buildandroid/ui_aboutdialog.h" line="96"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -231,7 +253,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../clipsdialog.cpp" line="36"/>
         <source>Clips Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Clips-Verzeichnis</translation>
     </message>
     <message>
         <location filename="../clipsdialog.cpp" line="72"/>
@@ -262,52 +284,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipsWidget</name>
     <message>
-        <location filename="../build/ui_clips.h" line="95"/>
+        <location filename="../build/ui_clips.h" line="96"/>
         <location filename="../buildandroid/ui_clips.h" line="95"/>
         <source>Clips</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_clips.h" line="97"/>
-        <location filename="../buildandroid/ui_clips.h" line="97"/>
-        <source>Possible Rounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Clips</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="98"/>
-        <location filename="../buildandroid/ui_clips.h" line="98"/>
-        <source>Number of Clips</source>
-        <translation type="unfinished"></translation>
+        <location filename="../buildandroid/ui_clips.h" line="97"/>
+        <source>Possible Rounds</source>
+        <translation>Mögliche Runden</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="99"/>
-        <location filename="../buildandroid/ui_clips.h" line="99"/>
-        <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <location filename="../buildandroid/ui_clips.h" line="98"/>
+        <source>Number of Clips</source>
+        <translation>Anzahl der Clips</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="100"/>
-        <location filename="../buildandroid/ui_clips.h" line="100"/>
-        <source>Add File</source>
-        <translation type="unfinished"></translation>
+        <location filename="../buildandroid/ui_clips.h" line="99"/>
+        <source>Name</source>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="101"/>
-        <location filename="../buildandroid/ui_clips.h" line="101"/>
-        <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <location filename="../buildandroid/ui_clips.h" line="100"/>
+        <source>Add File</source>
+        <translation>Datei hinzufügen</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="102"/>
-        <location filename="../buildandroid/ui_clips.h" line="102"/>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <location filename="../buildandroid/ui_clips.h" line="101"/>
+        <source>Add Directory</source>
+        <translation>Verzeichnis hinzufügen</translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="103"/>
+        <location filename="../buildandroid/ui_clips.h" line="102"/>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clips.h" line="104"/>
         <location filename="../buildandroid/ui_clips.h" line="103"/>
         <source>Download New Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuen Inhalt herunterladen</translation>
     </message>
 </context>
 <context>
@@ -500,19 +522,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_mainwindow.h" line="255"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="255"/>
         <source>Let&apos;s Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>Los geht&apos;s!</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="256"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="256"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="257"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="257"/>
         <source>High Scores</source>
-        <translation type="unfinished">High Scores</translation>
+        <translation>High Scores</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="258"/>
@@ -555,7 +577,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_player.h" line="133"/>
         <location filename="../buildandroid/ui_player.h" line="133"/>
         <source>Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Abspielprogramm</translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="135"/>
@@ -607,10 +629,9 @@ p, li { white-space: pre-wrap; }
         <location filename="../buildandroid/ui_settings.h" line="72"/>
         <location filename="../settingsdialog.cpp" line="8"/>
         <source>Clips Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Clips-Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="73"/>
         <location filename="../buildandroid/ui_settings.h" line="73"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
@@ -619,7 +640,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_settings.h" line="74"/>
         <location filename="../buildandroid/ui_settings.h" line="74"/>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild</translation>
     </message>
 </context>
 <context>
@@ -640,14 +661,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="204"/>
-        <location filename="../fairytale.cpp" line="583"/>
+        <location filename="../fairytale.cpp" line="218"/>
+        <location filename="../fairytale.cpp" line="599"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="205"/>
-        <location filename="../fairytale.cpp" line="584"/>
+        <location filename="../fairytale.cpp" line="219"/>
+        <location filename="../fairytale.cpp" line="600"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
@@ -662,64 +683,64 @@ p, li { white-space: pre-wrap; }
         <translation>Wollen Sie das Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="518"/>
+        <location filename="../fairytale.cpp" line="534"/>
         <source>Game over!</source>
         <translation>Spiel verloren!</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="518"/>
+        <location filename="../fairytale.cpp" line="534"/>
         <source>GAME OVER!</source>
         <translation>SPIEL VERLOREN!</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="559"/>
+        <location filename="../fairytale.cpp" line="575"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="560"/>
+        <location filename="../fairytale.cpp" line="576"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="698"/>
+        <location filename="../fairytale.cpp" line="714"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="901"/>
+        <location filename="../fairytale.cpp" line="917"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="922"/>
-        <location filename="../fairytale.cpp" line="956"/>
+        <location filename="../fairytale.cpp" line="938"/>
+        <location filename="../fairytale.cpp" line="972"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="926"/>
-        <location filename="../fairytale.cpp" line="960"/>
+        <location filename="../fairytale.cpp" line="942"/>
+        <location filename="../fairytale.cpp" line="976"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="933"/>
+        <location filename="../fairytale.cpp" line="949"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="937"/>
+        <location filename="../fairytale.cpp" line="953"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="944"/>
+        <location filename="../fairytale.cpp" line="960"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="948"/>
+        <location filename="../fairytale.cpp" line="964"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

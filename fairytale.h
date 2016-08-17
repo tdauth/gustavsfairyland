@@ -88,6 +88,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		static bool hasTouchDevice();
 
+		static QString localeToName(const QString &locale);
+
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode);
 
 		fairytale(Qt::WindowFlags flags = 0);
