@@ -36,8 +36,8 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 void FloatingClip::start()
 {
 	// set initial position to random coordinates
-	this->m_x = qrand() % (this->m_roomWidget->size().height() - m_width);
-	this->m_y = qrand() % (this->m_roomWidget->size().width() - m_width);
+	this->m_x = qrand() % (this->m_roomWidget->size().height() - m_scaledImagePaper.width());
+	this->m_y = qrand() % (this->m_roomWidget->size().width() - m_scaledImagePaper.height());
 
 	// set random dir
 	const int randomDirX = qrand() % 1;
@@ -69,6 +69,7 @@ void FloatingClip::pause()
 
 void FloatingClip::resume()
 {
+	// reset position, otherwise it would be unfair to pause and then just know the clip's position
 	start();
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -23,6 +23,7 @@
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="96"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="96"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -38,28 +39,6 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../buildandroid/ui_aboutdialog.h" line="96"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: ???&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -285,49 +264,49 @@ p, li { white-space: pre-wrap; }
     <name>ClipsWidget</name>
     <message>
         <location filename="../build/ui_clips.h" line="96"/>
-        <location filename="../buildandroid/ui_clips.h" line="95"/>
+        <location filename="../buildandroid/ui_clips.h" line="96"/>
         <source>Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="98"/>
-        <location filename="../buildandroid/ui_clips.h" line="97"/>
+        <location filename="../buildandroid/ui_clips.h" line="98"/>
         <source>Possible Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="99"/>
-        <location filename="../buildandroid/ui_clips.h" line="98"/>
+        <location filename="../buildandroid/ui_clips.h" line="99"/>
         <source>Number of Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="100"/>
-        <location filename="../buildandroid/ui_clips.h" line="99"/>
+        <location filename="../buildandroid/ui_clips.h" line="100"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="101"/>
-        <location filename="../buildandroid/ui_clips.h" line="100"/>
+        <location filename="../buildandroid/ui_clips.h" line="101"/>
         <source>Add File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="102"/>
-        <location filename="../buildandroid/ui_clips.h" line="101"/>
+        <location filename="../buildandroid/ui_clips.h" line="102"/>
         <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="103"/>
-        <location filename="../buildandroid/ui_clips.h" line="102"/>
+        <location filename="../buildandroid/ui_clips.h" line="103"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="104"/>
-        <location filename="../buildandroid/ui_clips.h" line="103"/>
+        <location filename="../buildandroid/ui_clips.h" line="104"/>
         <source>Download New Content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -335,12 +314,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleDialog</name>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="84"/>
+        <location filename="../customfairytaledialog.cpp" line="98"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="104"/>
+        <location filename="../customfairytaledialog.cpp" line="118"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
         <translation type="unfinished"></translation>
     </message>
@@ -348,15 +327,25 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="99"/>
+        <location filename="../build/ui_customfairytale.h" line="103"/>
         <location filename="../buildandroid/ui_customfairytale.h" line="99"/>
         <source>Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="100"/>
+        <location filename="../build/ui_customfairytale.h" line="104"/>
         <location filename="../buildandroid/ui_customfairytale.h" line="100"/>
         <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="105"/>
+        <source>Retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="106"/>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -628,11 +617,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_settings.h" line="73"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../build/ui_settings.h" line="74"/>
         <location filename="../buildandroid/ui_settings.h" line="74"/>
         <source>Full Screen</source>
@@ -657,86 +641,76 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="218"/>
-        <location filename="../fairytale.cpp" line="599"/>
-        <source>Pause Game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="219"/>
-        <location filename="../fairytale.cpp" line="600"/>
-        <source>Pause Game (P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="81"/>
+        <location filename="../fairytale.cpp" line="82"/>
         <source>Cancel Game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="81"/>
+        <location filename="../fairytale.cpp" line="82"/>
         <source>Do you want to cancel the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="534"/>
-        <source>Game over!</source>
+        <location filename="../fairytale.cpp" line="219"/>
+        <location filename="../fairytale.cpp" line="605"/>
+        <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="534"/>
-        <source>GAME OVER!</source>
+        <location filename="../fairytale.cpp" line="220"/>
+        <location filename="../fairytale.cpp" line="606"/>
+        <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="575"/>
+        <location filename="../fairytale.cpp" line="581"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="576"/>
+        <location filename="../fairytale.cpp" line="582"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="714"/>
+        <location filename="../fairytale.cpp" line="720"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="917"/>
+        <location filename="../fairytale.cpp" line="923"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="938"/>
-        <location filename="../fairytale.cpp" line="972"/>
+        <location filename="../fairytale.cpp" line="944"/>
+        <location filename="../fairytale.cpp" line="978"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="942"/>
-        <location filename="../fairytale.cpp" line="976"/>
+        <location filename="../fairytale.cpp" line="948"/>
+        <location filename="../fairytale.cpp" line="982"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="949"/>
+        <location filename="../fairytale.cpp" line="955"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="953"/>
+        <location filename="../fairytale.cpp" line="959"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="960"/>
+        <location filename="../fairytale.cpp" line="966"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="964"/>
+        <location filename="../fairytale.cpp" line="970"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

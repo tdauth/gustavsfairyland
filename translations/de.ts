@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="92"/>
         <location filename="../buildandroid/ui_aboutdialog.h" line="92"/>
         <source>About Gustav&apos;s Faryland</source>
-        <translation>Über Gustavs Märchenwelt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="94"/>
         <location filename="../buildandroid/ui_aboutdialog.h" line="94"/>
         <source>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</source>
-        <translation>Dieses Spiel wurde von Tamino Dauth und Carsten Thomas erstellt. Es ist das beste Spiel, das Sie jemals spielen werden!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="95"/>
         <location filename="../buildandroid/ui_aboutdialog.h" line="95"/>
         <source>Gustav&apos;s Fairyland</source>
-        <translation>Gustavs Märchenwelt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_aboutdialog.h" line="96"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="96"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -38,28 +39,6 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../buildandroid/ui_aboutdialog.h" line="96"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: ???&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -253,7 +232,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../clipsdialog.cpp" line="36"/>
         <source>Clips Directory</source>
-        <translation type="unfinished">Clips-Verzeichnis</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../clipsdialog.cpp" line="72"/>
@@ -285,79 +264,89 @@ p, li { white-space: pre-wrap; }
     <name>ClipsWidget</name>
     <message>
         <location filename="../build/ui_clips.h" line="96"/>
-        <location filename="../buildandroid/ui_clips.h" line="95"/>
+        <location filename="../buildandroid/ui_clips.h" line="96"/>
         <source>Clips</source>
-        <translation>Clips</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="98"/>
-        <location filename="../buildandroid/ui_clips.h" line="97"/>
+        <location filename="../buildandroid/ui_clips.h" line="98"/>
         <source>Possible Rounds</source>
-        <translation>Mögliche Runden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="99"/>
-        <location filename="../buildandroid/ui_clips.h" line="98"/>
+        <location filename="../buildandroid/ui_clips.h" line="99"/>
         <source>Number of Clips</source>
-        <translation>Anzahl der Clips</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="100"/>
-        <location filename="../buildandroid/ui_clips.h" line="99"/>
+        <location filename="../buildandroid/ui_clips.h" line="100"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="101"/>
-        <location filename="../buildandroid/ui_clips.h" line="100"/>
+        <location filename="../buildandroid/ui_clips.h" line="101"/>
         <source>Add File</source>
-        <translation>Datei hinzufügen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="102"/>
-        <location filename="../buildandroid/ui_clips.h" line="101"/>
+        <location filename="../buildandroid/ui_clips.h" line="102"/>
         <source>Add Directory</source>
-        <translation>Verzeichnis hinzufügen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="103"/>
-        <location filename="../buildandroid/ui_clips.h" line="102"/>
+        <location filename="../buildandroid/ui_clips.h" line="103"/>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_clips.h" line="104"/>
-        <location filename="../buildandroid/ui_clips.h" line="103"/>
+        <location filename="../buildandroid/ui_clips.h" line="104"/>
         <source>Download New Content</source>
-        <translation>Neuen Inhalt herunterladen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CustomFairytaleDialog</name>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="84"/>
+        <location filename="../customfairytaledialog.cpp" line="98"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
-        <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="104"/>
+        <location filename="../customfairytaledialog.cpp" line="118"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
-        <translation>Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.&lt;br/&gt;Ende</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="99"/>
+        <location filename="../build/ui_customfairytale.h" line="103"/>
         <location filename="../buildandroid/ui_customfairytale.h" line="99"/>
         <source>Custom Fairytale</source>
-        <translation>Eigenes Märchen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="100"/>
+        <location filename="../build/ui_customfairytale.h" line="104"/>
         <location filename="../buildandroid/ui_customfairytale.h" line="100"/>
         <source>Play</source>
-        <translation>Abspielen</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="105"/>
+        <source>Retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="106"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -366,7 +355,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_gamemodedialog.h" line="59"/>
         <location filename="../buildandroid/ui_gamemodedialog.h" line="59"/>
         <source>Select Game Mode</source>
-        <translation>Spielmodus wählen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -374,7 +363,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gamemodemoving.h" line="49"/>
         <source>Pages On The Ground</source>
-        <translation>Seiten auf dem Fußboden</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -382,7 +371,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gamemodeoneoutoffour.h" line="70"/>
         <source>One Page Out Of Four</source>
-        <translation>Eine Seite von vier</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -393,37 +382,37 @@ p, li { white-space: pre-wrap; }
         <location filename="../buildandroid/ui_highscores.h" line="92"/>
         <location filename="../buildandroid/ui_highscores.h" line="93"/>
         <source>High Scores</source>
-        <translation>High Scores</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="95"/>
         <location filename="../buildandroid/ui_highscores.h" line="95"/>
         <source>Rounds</source>
-        <translation>Runden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="97"/>
         <location filename="../buildandroid/ui_highscores.h" line="97"/>
         <source>Time (ms)</source>
-        <translation>Zeit (ms)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="99"/>
         <location filename="../buildandroid/ui_highscores.h" line="99"/>
         <source>Game Mode</source>
-        <translation>Spielmodus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="101"/>
         <location filename="../buildandroid/ui_highscores.h" line="101"/>
         <source>Package</source>
-        <translation>Paket</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="103"/>
         <location filename="../buildandroid/ui_highscores.h" line="103"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -432,143 +421,139 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_mainwindow.h" line="238"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="238"/>
         <source>Gustav&apos;s Fairyland</source>
-        <translation>Gustavs Märchenwelt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="239"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="239"/>
         <source>&amp;New Game</source>
-        <translation>&amp;Neues Spiel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="240"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="240"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="241"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="241"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Beenden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="242"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="242"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="243"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="243"/>
         <source>&amp;About</source>
-        <translation>&amp;Über</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="244"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="244"/>
         <source>&amp;Pause Game</source>
-        <translation>&amp;Spiel anhalten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="245"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="245"/>
         <source>P</source>
-        <translation>P</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="246"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="246"/>
         <source>&amp;Clips</source>
-        <translation>&amp;Clips</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="247"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="247"/>
         <source>&amp;Editor</source>
-        <translation>&amp;Editor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="248"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="248"/>
         <source>&amp;Show Custom Fairytale</source>
-        <translation>&amp;Zeige eigenes Märchen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="249"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="249"/>
         <source>&amp;Cancel Game</source>
-        <translation>Spiel &amp;abbrechen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="250"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="250"/>
         <source>C</source>
-        <translation>C</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="251"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="251"/>
         <source>&amp;Settings</source>
-        <translation>&amp;Einstellungen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="252"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="252"/>
         <source>&amp;Highscores</source>
-        <translation>&amp;Highscores</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="255"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="255"/>
         <source>Let&apos;s Go!</source>
-        <translation>Los geht&apos;s!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="256"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="256"/>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="257"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="257"/>
         <source>High Scores</source>
-        <translation>High Scores</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="258"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="258"/>
         <source>Fi&amp;le</source>
-        <translation>&amp;Datei</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="259"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="259"/>
         <source>Help</source>
-        <translation>Hilfe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="260"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="260"/>
         <source>Setti&amp;ngs</source>
-        <translation>Einstellun&amp;gen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="261"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="261"/>
         <source>&amp;Achievements</source>
-        <translation>Err&amp;ungenschaften</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="262"/>
         <location filename="../buildandroid/ui_mainwindow.h" line="262"/>
         <source>Lan&amp;guage</source>
-        <translation>&amp;Sprache</translation>
-    </message>
-    <message>
-        <source>Achie&amp;vements</source>
-        <translation type="vanished">Err&amp;ungenschaften</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -577,43 +562,43 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_player.h" line="133"/>
         <location filename="../buildandroid/ui_player.h" line="133"/>
         <source>Player</source>
-        <translation>Abspielprogramm</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="135"/>
         <location filename="../buildandroid/ui_player.h" line="135"/>
         <source>Cancel Game (C)</source>
-        <translation>Spiel abbrechen (C)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="136"/>
         <location filename="../buildandroid/ui_player.h" line="136"/>
         <source>C</source>
-        <translation>C</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="137"/>
         <location filename="../buildandroid/ui_player.h" line="137"/>
         <source>Pause Game (P)</source>
-        <translation>Spiel anhalten (P)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="138"/>
         <location filename="../buildandroid/ui_player.h" line="138"/>
         <source>Ctrl+S</source>
-        <translation>Strg+S</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="139"/>
         <location filename="../buildandroid/ui_player.h" line="139"/>
         <source>Skip (Space)</source>
-        <translation>Überspringen (Leertaste)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_player.h" line="140"/>
         <location filename="../buildandroid/ui_player.h" line="140"/>
         <source>Space</source>
-        <translation>Leertaste</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -622,25 +607,20 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_settings.h" line="71"/>
         <location filename="../buildandroid/ui_settings.h" line="71"/>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="72"/>
         <location filename="../buildandroid/ui_settings.h" line="72"/>
         <location filename="../settingsdialog.cpp" line="8"/>
         <source>Clips Directory</source>
-        <translation>Clips-Verzeichnis</translation>
-    </message>
-    <message>
-        <location filename="../buildandroid/ui_settings.h" line="73"/>
-        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="74"/>
         <location filename="../buildandroid/ui_settings.h" line="74"/>
         <source>Full Screen</source>
-        <translation>Vollbild</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -649,100 +629,90 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_wondialog.h" line="71"/>
         <location filename="../buildandroid/ui_wondialog.h" line="71"/>
         <source>Won</source>
-        <translation>Gewonnen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_wondialog.h" line="72"/>
         <location filename="../buildandroid/ui_wondialog.h" line="72"/>
         <source>Won!!!</source>
-        <translation>Gewonnen!!!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="218"/>
-        <location filename="../fairytale.cpp" line="599"/>
-        <source>Pause Game</source>
-        <translation>Spiel anhalten</translation>
+        <location filename="../fairytale.cpp" line="82"/>
+        <source>Cancel Game?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fairytale.cpp" line="82"/>
+        <source>Do you want to cancel the game?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="219"/>
-        <location filename="../fairytale.cpp" line="600"/>
+        <location filename="../fairytale.cpp" line="605"/>
+        <source>Pause Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fairytale.cpp" line="220"/>
+        <location filename="../fairytale.cpp" line="606"/>
         <source>Pause Game (P)</source>
-        <translation>Spiel anhalten (P)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="81"/>
-        <source>Cancel Game?</source>
-        <translation>Spiel abbrechen?</translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="81"/>
-        <source>Do you want to cancel the game?</source>
-        <translation>Wollen Sie das Spiel abbrechen?</translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="534"/>
-        <source>Game over!</source>
-        <translation>Spiel verloren!</translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="534"/>
-        <source>GAME OVER!</source>
-        <translation>SPIEL VERLOREN!</translation>
-    </message>
-    <message>
-        <location filename="../fairytale.cpp" line="575"/>
+        <location filename="../fairytale.cpp" line="581"/>
         <source>Continue Game</source>
-        <translation>Spiel fortsetzen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="576"/>
+        <location filename="../fairytale.cpp" line="582"/>
         <source>Continue Game (P)</source>
-        <translation>Spiel fortsetzen (P)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="714"/>
+        <location filename="../fairytale.cpp" line="720"/>
         <source>and</source>
-        <translation>und</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="917"/>
+        <location filename="../fairytale.cpp" line="923"/>
         <source>%1 Seconds</source>
-        <translation>%1 Sekunden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="938"/>
-        <location filename="../fairytale.cpp" line="972"/>
+        <location filename="../fairytale.cpp" line="944"/>
+        <location filename="../fairytale.cpp" line="978"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="942"/>
-        <location filename="../fairytale.cpp" line="976"/>
+        <location filename="../fairytale.cpp" line="948"/>
+        <location filename="../fairytale.cpp" line="982"/>
         <source>%1</source>
-        <translation>%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="949"/>
+        <location filename="../fairytale.cpp" line="955"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="953"/>
+        <location filename="../fairytale.cpp" line="959"/>
         <source>and %1</source>
-        <translation>und %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="960"/>
+        <location filename="../fairytale.cpp" line="966"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="964"/>
+        <location filename="../fairytale.cpp" line="970"/>
         <source>%1 and %2</source>
-        <translation>%1 und %2</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

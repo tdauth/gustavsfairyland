@@ -7,6 +7,17 @@
 #include "iconlabel.h"
 #include "clip.h"
 
+void CustomFairytaleDialog::retry()
+{
+	this->m_retry = true;
+	this->close();
+	// Start with the first available stuff.
+	ClipPackage *clipPackage = m_app->clipPackage();
+	GameMode *gameMode = m_app->gameMode();
+
+	m_app->startNewGame(clipPackage, gameMode);
+}
+
 void CustomFairytaleDialog::addClip(Clip *clip)
 {
 	m_clips.push_back(clip);
@@ -26,13 +37,14 @@ void CustomFairytaleDialog::addClip(Clip *clip)
 	this->playFinalVideoPushButton->setEnabled(true);
 }
 
-CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
+CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false)
 {
 	setupUi(this);
 	this->setModal(true);
 
 	connect(this->playFinalVideoPushButton, &QPushButton::clicked, m_app, &fairytale::playFinalVideo);
-	connect(this->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &CustomFairytaleDialog::reject);
+	connect(this->okPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::accept);
+	connect(this->retryPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retry);
 }
 
 void CustomFairytaleDialog::clear()
@@ -79,6 +91,8 @@ void CustomFairytaleDialog::changeEvent(QEvent* event)
 
 void CustomFairytaleDialog::showEvent(QShowEvent *event)
 {
+	m_retry = false;
+
 	if (!m_clips.empty())
 	{
 		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(m_clips[0]->description());

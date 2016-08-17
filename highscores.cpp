@@ -59,7 +59,7 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	return true;
 }
 
-void HighScores::changeEvent(QEvent* event)
+void HighScores::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
@@ -97,16 +97,19 @@ void HighScores::showEvent(QShowEvent *event)
 		foreach (const HighScore &highScore, highScoreVector)
 		{
 			this->tableWidget->setRowCount(row + 1);
-			QTableWidgetItem *newItem = new QTableWidgetItem(highScore.name());
+			QTableWidgetItem *newItem = nullptr;
+
+			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
 			tableWidget->setItem(row, 0, newItem);
-			newItem = new QTableWidgetItem(highScore.package());
+			newItem = new QTableWidgetItem(QString::number(highScore.time()));
 			tableWidget->setItem(row, 1, newItem);
 			newItem = new QTableWidgetItem(highScore.gameMode());
 			tableWidget->setItem(row, 2, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
+			newItem = new QTableWidgetItem(highScore.package());
 			tableWidget->setItem(row, 3, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.time()));
+			newItem = new QTableWidgetItem(highScore.name());
 			tableWidget->setItem(row, 4, newItem);
+
 			++row;
 		}
 	}

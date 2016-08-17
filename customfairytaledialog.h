@@ -23,11 +23,13 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 	public slots:
 		void addClip(Clip *clip);
+		void retry();
 
 	public:
 		CustomFairytaleDialog(fairytale *app, QWidget *parent);
 
 		void clear();
+		bool clickedRetry() const;
 
 	protected:
 		virtual void showEvent(QShowEvent *event) override;
@@ -40,6 +42,12 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		fairytale *m_app;
 		Clips m_clips;
 		ClipLabels m_clipLabels;
+		bool m_retry;
 };
+
+inline bool CustomFairytaleDialog::clickedRetry() const
+{
+	return this->m_retry;
+}
 
 #endif // CUSTOMFAIRYTALEDIALOG_H

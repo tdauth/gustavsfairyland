@@ -74,6 +74,7 @@ set(fairyland_SRCS
 	iconlabel.cpp
 	highscores.cpp
 	bonusclip.cpp
+	gameoverdialog.cpp
 )
 
 set(fairyland_UI
@@ -89,6 +90,7 @@ set(fairyland_UI
 	ui/settings.ui
 	ui/wondialog.ui
 	ui/highscores.ui
+	ui/gameoverdialog.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
@@ -121,11 +123,11 @@ configure_file(doc/doxygen.conf doc/doxygen.conf)
 
 if (ANDROID)
 	# This custom target is referenced by all install commands for Android.
-	add_custom_target(CopyAssets ALL)
+	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES})
 
 	foreach (f ${fairytale_QM_FILES})
 		get_filename_component(fileName "${f}" NAME)
-		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/translations/${fileName})
+		add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/translations/${fileName} )
 	endforeach ()
 else ()
 	install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
@@ -144,7 +146,7 @@ endif ()
 # the default fairyland package gustav
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
 if (ANDROID)
-	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
 else ()
 	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
 endif ()
@@ -195,7 +197,7 @@ if (ANDROID)
 	# Use the following command to generate a signing key
 	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
-	add_qt_android_apk(my_app_apk fairyland KEYSTORE ${CMAKE_CURRENT_SOURCE_DIR}/mykey.keystore mykey KEYSTORE_PASSWORD walter)
+	add_qt_android_apk(my_app_apk fairyland KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter)
 endif ()
 
 add_subdirectory(test)

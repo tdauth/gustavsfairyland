@@ -43,7 +43,7 @@
 			<image>./werwolf/werwolf.png</image>
 			<video>./werwolf/werwolf.avi</video>
 			<narrator>.
-				<de>/werwolf/werwolf.wav</de>
+				<de>./werwolf/werwolf.wav</de>
 			</narrator>
 			<description>
 				<en>the Werewolf</en>

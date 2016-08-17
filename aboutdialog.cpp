@@ -2,7 +2,7 @@
 
 #include "aboutdialog.h"
 
-AboutDialog::AboutDialog(fairytale *app, QWidget *parent) : QDialog(parent)
+AboutDialog::AboutDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
 

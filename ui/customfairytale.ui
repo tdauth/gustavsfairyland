@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>213</width>
-    <height>132</height>
+    <width>309</width>
+    <height>204</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,9 +20,6 @@
    <string>Custom Fairytale</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" colspan="3">
-    <widget class="QTextBrowser" name="textBrowser"/>
-   </item>
    <item row="2" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -36,14 +33,7 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
+   <item row="2" column="3">
     <widget class="QPushButton" name="playFinalVideoPushButton">
      <property name="enabled">
       <bool>false</bool>
@@ -53,7 +43,24 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
+   <item row="2" column="1">
+    <widget class="QPushButton" name="retryPushButton">
+     <property name="text">
+      <string>Retry</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="okPushButton">
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="5">
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+   <item row="0" column="0" colspan="5">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -63,8 +70,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>197</width>
-        <height>34</height>
+        <width>293</width>
+        <height>70</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">

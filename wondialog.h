@@ -11,6 +11,9 @@ class WonDialog : public QDialog, protected Ui::WonDialog
 	public:
 		WonDialog(fairytale *app, QWidget *parent);
 
+	protected:
+		virtual void changeEvent(QEvent *event) override;
+
 	private:
 		fairytale *m_app;
 };

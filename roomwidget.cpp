@@ -163,6 +163,11 @@ void RoomWidget::pause()
 		clip->pause();
 	}
 
+	foreach (Door *door, m_doors)
+	{
+		door->close();
+	}
+
 	this->repaint(); // repaint once disable
 }
 

@@ -27,6 +27,7 @@
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
+#include "gameoverdialog.h"
 #include "highscores.h"
 
 void fairytale::newGame()
@@ -264,6 +265,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
+, m_gameOverDialog(nullptr)
 , m_highScores(new HighScores(this))
 , m_playingBonusClip(false)
 {
@@ -531,7 +533,7 @@ void fairytale::loadLanguage(const QString &language)
 void fairytale::gameOver()
 {
 	this->cleanupGame();
-	QMessageBox::information(this, tr("Game over!"), tr("GAME OVER!"));
+	this->gameOverDialog()->exec();
 }
 
 void fairytale::win()
@@ -552,10 +554,14 @@ void fairytale::win()
 	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
-	this->customFairytaleDialog()->exec(); // blocks until the dialog is closed
+	this->customFairytaleDialog()->exec();
 
+	// dont clean up on retry
 	// make sure everything is cleaned up
-	this->cleanupAfterOneGame();
+	if (!this->customFairytaleDialog()->clickedRetry())
+	{
+		this->cleanupAfterOneGame();
+	}
 }
 
 bool fairytale::isGamePaused() const
@@ -1128,6 +1134,16 @@ WonDialog* fairytale::wonDialog()
 	}
 
 	return this->m_wonDialog;
+}
+
+GameOverDialog* fairytale::gameOverDialog()
+{
+	if (this->m_gameOverDialog == nullptr)
+	{
+		this->m_gameOverDialog = new GameOverDialog(this, this);
+	}
+
+	return this->m_gameOverDialog;
 }
 
 void fairytale::addClipPackage(ClipPackage* package)

@@ -27,6 +27,7 @@ class CustomFairytaleDialog;
 class GameMode;
 class AboutDialog;
 class WonDialog;
+class GameOverDialog;
 class HighScores;
 
 /**
@@ -145,6 +146,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		AboutDialog* aboutDialog();
 		WonDialog* wonDialog();
+		GameOverDialog* gameOverDialog();
 		HighScores* highScores() const;
 
 		QString description(int turn, Clip *clip, bool markBold = true);
@@ -275,6 +277,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		AboutDialog *m_aboutDialog;
 		/// This dialog appears when a game is won.
 		WonDialog *m_wonDialog;
+		GameOverDialog *m_gameOverDialog;
 
 		HighScores *m_highScores;
 
