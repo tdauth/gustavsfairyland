@@ -73,6 +73,7 @@ class FloatingClip : public QObject
 		int m_y;
 		int m_dirX;
 		int m_dirY;
+		int m_collisionDistance; // The distance which has been moved due to a collision. Every update after the collision will increase this counter until it reaches a maximum, then it will be reset. Every collision sets this to 1 again.
 		Clip *m_clip;
 		/// Store the scaled version of the clip's image to improve performance.
 		QImage m_scaledImage;

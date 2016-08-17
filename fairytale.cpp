@@ -208,8 +208,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
 	this->m_requiresPerson = true;
 	this->m_turns = 0;
 	this->m_totalElapsedTime = 0;
-	this->quickGamePushButton->hide();
-	this->quitPushButton->hide();
+	this->menuButtonsWidget->hide();
 	this->gameAreaWidget->show();
 	this->descriptionLabel->show();
 	this->timeLabel->show();
@@ -272,6 +271,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
+	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
@@ -1052,8 +1052,7 @@ void fairytale::cleanupAfterOneGame()
 	this->descriptionLabel->setText("");
 	this->descriptionLabel->hide();
 	this->gameAreaWidget->hide();
-	this->quickGamePushButton->show();
-	this->quitPushButton->show();
+	this->menuButtonsWidget->show();
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl &url) const

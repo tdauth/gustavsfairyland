@@ -32,10 +32,14 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Opa Jott: Opa Jott&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: ???&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -403,134 +407,140 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="197"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="197"/>
+        <location filename="../build/ui_mainwindow.h" line="238"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="238"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="198"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="198"/>
+        <location filename="../build/ui_mainwindow.h" line="239"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="239"/>
         <source>&amp;New Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="199"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="199"/>
+        <location filename="../build/ui_mainwindow.h" line="240"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="240"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="200"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="200"/>
+        <location filename="../build/ui_mainwindow.h" line="241"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="241"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="201"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="201"/>
+        <location filename="../build/ui_mainwindow.h" line="242"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="242"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="202"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="202"/>
+        <location filename="../build/ui_mainwindow.h" line="243"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="243"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="203"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="203"/>
+        <location filename="../build/ui_mainwindow.h" line="244"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="244"/>
         <source>&amp;Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="204"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="204"/>
+        <location filename="../build/ui_mainwindow.h" line="245"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="245"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="205"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="205"/>
+        <location filename="../build/ui_mainwindow.h" line="246"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="246"/>
         <source>&amp;Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="206"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="206"/>
+        <location filename="../build/ui_mainwindow.h" line="247"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="247"/>
         <source>&amp;Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="207"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="207"/>
+        <location filename="../build/ui_mainwindow.h" line="248"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="248"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="208"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="208"/>
+        <location filename="../build/ui_mainwindow.h" line="249"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="249"/>
         <source>&amp;Cancel Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="209"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="209"/>
+        <location filename="../build/ui_mainwindow.h" line="250"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="250"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="210"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="210"/>
+        <location filename="../build/ui_mainwindow.h" line="251"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="251"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="211"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="211"/>
+        <location filename="../build/ui_mainwindow.h" line="252"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="252"/>
         <source>&amp;Highscores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="215"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="215"/>
+        <location filename="../build/ui_mainwindow.h" line="255"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="255"/>
         <source>Let&apos;s Go!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="214"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="214"/>
+        <location filename="../build/ui_mainwindow.h" line="256"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="256"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="216"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="216"/>
+        <location filename="../build/ui_mainwindow.h" line="257"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="257"/>
+        <source>High Scores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="258"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="258"/>
         <source>Fi&amp;le</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="217"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="217"/>
+        <location filename="../build/ui_mainwindow.h" line="259"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="259"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="218"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="218"/>
+        <location filename="../build/ui_mainwindow.h" line="260"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="260"/>
         <source>Setti&amp;ngs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="219"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="219"/>
+        <location filename="../build/ui_mainwindow.h" line="261"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="261"/>
         <source>&amp;Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="220"/>
-        <location filename="../buildandroid/ui_mainwindow.h" line="220"/>
+        <location filename="../build/ui_mainwindow.h" line="262"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="262"/>
         <source>Lan&amp;guage</source>
         <translation type="unfinished"></translation>
     </message>

@@ -78,6 +78,7 @@
 				<de>./popcorn/popcorn.wav</de>
 			</narrator>
 			<description>
+				<en>the Popcorn Saleswoman</en>
 				<de>die Popcornverkäuferin</de>
 			</description>
 		</clip>
@@ -86,9 +87,10 @@
 			<image>./fairy/fairy.jpg</image>
 			<video>./fairy/fairy.mkv</video>
 			<narrator>
-				<de>./popcorn/popcorn.wav</de>
+				<de>./fairy/fairy.wav</de>
 			</narrator>
 			<description>
+				<en>the Fairy</en>
 				<de>die Fee</de>
 			</description>
 		</clip>
@@ -103,6 +105,7 @@
 				<de>./boar/boar.wav</de>
 			</narrator>
 			<description>
+				<en>rode a boar</en>
 				<de>ritten auf einem Wildschwein</de>
 			</description>
 		</clip>
@@ -114,6 +117,7 @@
 				<de>./cave/cave.wav</de>
 			</narrator>
 			<description>
+				<en>found a cave</en>
 				<de>fanden eine Höhle</de>
 			</description>
 		</clip>
@@ -125,6 +129,7 @@
 				<de>./caveman/caveman.wav</de>
 			</narrator>
 			<description>
+				<en>met a caveman</en>
 				<de>trafen auf einen Höhlenmenschen</de>
 			</description>
 		</clip>
@@ -136,6 +141,7 @@
 				<de>./chess/chess.wav</de>
 			</narrator>
 			<description>
+				<en>played chess</en>
 				<de>spielten Schach</de>
 			</description>
 		</clip>
@@ -147,6 +153,7 @@
 				<de>./climbing/climbing.wav</de>
 			</narrator>
 			<description>
+				<en>climbed a mountain</en>
 				<de>erklommen einen Berg</de>
 			</description>
 		</clip>
@@ -158,6 +165,7 @@
 				<de>./gate/gate.wav</de>
 			</narrator>
 			<description>
+				<en>met a watchman</en>
 				<de>trafen auf einen Wächter</de>
 			</description>
 		</clip>
@@ -169,6 +177,7 @@
 				<de>./gate/gate2.wav</de>
 			</narrator>
 			<description>
+				<en>met on a gate</en>
 				<de>trafen auf ein Tor</de>
 			</description>
 		</clip>
@@ -180,6 +189,7 @@
 				<de>./maninthebox/maninthebox.wav</de>
 			</narrator>
 			<description>
+				<en>found a man in a box</en>
 				<de>fanden einen Mann in einer Kiste</de>
 			</description>
 		</clip>
@@ -191,6 +201,7 @@
 				<de>./prison/prison.wav</de>
 			</narrator>
 			<description>
+				<en>were imprisoned</en>
 				<de>wurden eingesperrt</de>
 			</description>
 		</clip>
@@ -202,6 +213,7 @@
 				<de>./robery/robery.wav</de>
 			</narrator>
 			<description>
+				<en>were robbed</en>
 				<de>wurden ausgeraubt</de>
 			</description>
 		</clip>
@@ -213,6 +225,7 @@
 				<de>./train/train.wav</de>
 			</narrator>
 			<description>
+				<en>took a train</en>
 				<de>fuhren mit einem Zug</de>
 			</description>
 		</clip>
@@ -224,6 +237,7 @@
 				<de>./trash/trash.wav</de>
 			</narrator>
 			<description>
+				<en>ransacked the rubbish</en>
 				<de>durchwühlten den Müll</de>
 			</description>
 		</clip>
@@ -235,6 +249,7 @@
 				<de>./treasure/treasure.wav</de>
 			</narrator>
 			<description>
+				<en>found a treasure</en>
 				<de>fanden einen Schatz</de>
 			</description>
 		</clip>
@@ -246,6 +261,7 @@
 				<de>./well/well.wav</de>
 			</narrator>
 			<description>
+				<en>soaked a fountain</en>
 				<de>tranken von einem Brunnen</de>
 			</description>
 		</clip>
@@ -257,6 +273,7 @@
 				<de>./castle/castle.wav</de>
 			</narrator>
 			<description>
+				<en>lived in a castle</en>
 				<de>lebten in einer Burg</de>
 			</description>
 		</clip>
@@ -268,6 +285,7 @@
 				<de>./tower/tower.wav</de>
 			</narrator>
 			<description>
+				<en>starved in the tower</en>
 				<de>hungerten im Turm</de>
 			</description>
 		</clip>
@@ -279,6 +297,7 @@
 				<de>./throne/throne.wav</de>
 			</narrator>
 			<description>
+				<en>ascended the throne</en>
 				<de>bestiegen den Thron</de>
 			</description>
 		</clip>
@@ -297,6 +316,14 @@
 		<video>./mahler/bonus/trauer.avi</video>
 		<description>
 			<de>Gustav Mahler trauert um Alma</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./mahler/mahler.jpg</image>
+		<video>./nazi/peter.mkv</video>
+		<description>
+			<de>der alte Nazi</de>
 		</description>
 	</bonusClip>
 </clips>

@@ -11,7 +11,7 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_clip(nullptr)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_clip(nullptr)
 {
 }
 
@@ -19,7 +19,6 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 {
 	if (m_clip != nullptr)
 	{
-		// TODO apparently painting is wrong, not coordinates, therefore it looks like the collision is too early and therefore some clicks miss.
 		const int x1 = this->x();
 		const int y1 = this->y();
 
@@ -28,8 +27,9 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 		painter->drawImage(paperRect, imagePaper);
 
 		const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
-		const int heightDifference = (m_width - image.height()) / 2;
-		painter->drawImage(x1, y1 + heightDifference, image);
+		const int heightDifference = (imagePaper.height() - image.height()) / 2;
+		const int widthDifference = (imagePaper.width() - image.width()) / 2;
+		painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
 	}
 }
 
@@ -83,29 +83,7 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 		int y = this->y();
 		const int height = this->m_scaledImagePaper.height();
 		const int width = this->m_scaledImagePaper.width();
-
-		// check the wind first and calculate direction
-		/*
-		if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
-		{
-			y += distance;
-		}
-
-		if (this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen())
-		{
-			y -= distance;
-		}
-
-		if (this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen())
-		{
-			x += distance;
-		}
-
-		if (this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen())
-		{
-			x -= distance;
-		}
-		*/
+		bool collided = false;
 
 		// Check for collisions with other clips.
 		foreach (FloatingClip *otherClip, this->m_roomWidget->floatingClips())
@@ -137,6 +115,8 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 
 					qDebug() << "Collide!";
 
+					collided = true;
+
 					break;
 				}
 			}
@@ -149,19 +129,63 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 		if (this->x() + width == roomWidth)
 		{
 			setDirX(-1);
+			collided = true;
 		}
 		else if (this->x() == 0)
 		{
 			setDirX(1);
+			collided = true;
 		}
 
 		if (this->y() + height == roomHeight)
 		{
 			setDirY(-1);
+			collided = true;
 		}
 		else if (this->y() == 0)
 		{
 			setDirY(1);
+			collided = true;
+		}
+
+		// check the wind first and calculate direction
+		if (!collided && m_collisionDistance == 0)
+		{
+			if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
+			{
+				setDirY(1);
+			}
+
+			if (this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen())
+			{
+				setDirY(-1);
+			}
+
+			if (this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen())
+			{
+				setDirX(1);
+			}
+
+			if (this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen())
+			{
+				setDirX(-1);
+			}
+		}
+		// restart collision counter
+		else if (collided)
+		{
+			m_collisionDistance = distance;
+		}
+		// move from collision a bit more
+		else
+		{
+			m_collisionDistance += distance;
+
+			// reset collision movement, wind gets priority
+			if (m_collisionDistance > 400)
+			{
+				m_collisionDistance = 0;
+			}
 		}
 
 		// Move the floating clip in the specified direction.

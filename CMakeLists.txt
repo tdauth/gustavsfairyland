@@ -192,8 +192,10 @@ endif ()
 if (ANDROID)
 	# Copy all clips and xml files into a subfolder in assets
 	#add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
+	# Use the following command to generate a signing key
+	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
-	add_qt_android_apk(my_app_apk fairyland)
+	add_qt_android_apk(my_app_apk fairyland KEYSTORE ${CMAKE_CURRENT_SOURCE_DIR}/mykey.keystore mykey KEYSTORE_PASSWORD walter)
 endif ()
 
 add_subdirectory(test)

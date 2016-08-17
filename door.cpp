@@ -12,14 +12,15 @@ Door::Door(RoomWidget *parent, Location location): QObject(parent), m_roomWidget
 
 void Door::paint(QPainter *painter, QWidget *area)
 {
-	const QColor color = m_roomWidget->isEnabled() ? (isOpen() ? Qt::green : Qt::black) : (isOpen() ? Qt::darkGreen : Qt::black);
+	const QColor color(Qt::black);
 	QPen pen(color);
-	const int penWidth = 24;
-	const int penWidthHalf = 12;
+	const int penWidth = 12;
+	const int penWidthHalf = 6;
 	pen.setWidth(penWidth);
 	pen.setStyle(Qt::SolidLine);
 	painter->setPen(pen);
 
+	// TODO use QLine and rotate them when opening the windows
 	if (!this->isOpen())
 	{
 		int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
@@ -71,61 +72,74 @@ void Door::paint(QPainter *painter, QWidget *area)
 	}
 	else
 	{
-		QPoint p0, p1;
-		QPoint p2, p3;
-		const int distance = 200;
+		int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+		int x3 = 0, y3 = 0, x4 = 0, y4 = 0;
+		const int distance = 10;
 
 		switch (m_location)
 		{
 			case Location::North:
 			{
-				p0 = QPoint(0.7 * area->size().width(), penWidthHalf);
-				p1 = QPoint(0.9 * area->size().width(), distance);
+				x1 = 0.7 * area->width();
+				y1 = penWidthHalf;
+				x2 = 0.8 * area->width();
+				y2 = area->width() / distance;
 
-				//std::cerr << "Point 0:" << p0.x() << "|" << p0.y() << std::endl;
-				//std::cerr << "Point 1:" << p1.x() << "|" << p1.y() << std::endl;
-
-				p2 = QPoint(0.3 * area->size().width(), penWidthHalf);
-				p3 = QPoint(0.1 * area->size().width(), distance);
+				x3 = 0.3 * area->width();
+				y3 = penWidthHalf;
+				x4 = 0.2 * area->width();
+				y4 = area->width() / distance;
 
 				break;
 			}
 
 			case Location::South:
 			{
-				p0 = QPoint(0.7 * area->size().width(), area->size().height() - penWidthHalf);
-				p1 = QPoint(0.9 * area->size().width(), area->size().height() - distance);
+				x1 = 0.7 * area->width();
+				y1 = area->height() - penWidthHalf;
+				x2 = 0.8 * area->width();
+				y2 = area->height() - (area->height() / distance);
 
-				p2 = QPoint(0.3 * area->size().width(), area->size().height() - penWidthHalf);
-				p3 = QPoint(0.1 * area->size().width(), area->size().height() - distance);
+				x3 = 0.3 * area->width();
+				y3 = area->height() - penWidthHalf;
+				x4 = 0.2 * area->width();
+				y4 = area->height() - (area->height() / distance);
 
 				break;
 			}
 
 			case Location::West:
 			{
-				p0 = QPoint(penWidthHalf, 0.7 * area->size().height());
-				p1 = QPoint(distance, 0.9 * area->size().height());
+				x1 = penWidthHalf;
+				y1 = 0.7 * area->height();
+				x2 = area->height() / distance;
+				y2 = 0.8 * area->height();
 
-				p2 = QPoint(penWidthHalf, 0.3 * area->size().height());
-				p3 = QPoint(distance, 0.1 * area->size().height());
+				x3 = penWidthHalf;
+				y3 = 0.3 * area->height();
+				x4 = area->height() / distance;
+				y4 = 0.2 * area->height();
 
 				break;
 			}
 
 			case Location::East:
 			{
-				p0 = QPoint(area->size().width() - penWidthHalf, 0.7 * area->size().height());
-				p1 = QPoint(area->size().width() - distance, 0.9 * area->size().height());
+				x1 = area->width() - penWidthHalf;
+				y1 = 0.7 * area->height();
+				x2 = area->width() - (area->width() / distance);
+				y2 = 0.8 * area->height();
 
-				p2 = QPoint(area->size().width() - penWidthHalf, 0.3 * area->size().height());
-				p3 = QPoint(area->size().width() - distance, 0.1 * area->size().height());
+				x3 = area->width() - penWidthHalf;
+				y3 = 0.3 * area->height();
+				x4 = area->width() - (area->width() / distance);
+				y4 = 0.2 * area->height();
 
 				break;
 			}
-
-			painter->drawLine(p0, p1);
-			painter->drawLine(p2, p3);
 		}
+
+		painter->drawLine(x1, y1, x2, y2);
+		painter->drawLine(x3, y3, x4, y4);
 	}
 }

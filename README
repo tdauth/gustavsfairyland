@@ -34,6 +34,12 @@ https://github.com/LaurentGomila/qt-android-cmake/
 There is a Bash script "buildandroid.sh" which does everything as long a virtual Android device is installed properly
 and the paths are correct.
 
+The program zipalign might not be found for signing the app.
+It is in /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign but expected in
+/home/tamino/Android/Sdk/build-tools/zipalign
+Just do:
+ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign
+
 Use the following command to get debugging output:
 /home/tamino/Android/Sdk/platform-tools/adb logcat
 
