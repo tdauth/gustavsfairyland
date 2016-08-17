@@ -49,6 +49,13 @@ find_package(Qt5Xml)
 find_package(Qt5Svg)
 find_package(Qt5LinguistTools)
 
+# Requires Qt Quick for playing videos
+if (ANDROID)
+	find_package(Qt5Quick REQUIRED)
+	find_package(Qt5Qml REQUIRED)
+	find_package(Qt5QuickWidgets REQUIRED)
+endif ()
+
 set(fairyland_SRCS
 	aboutdialog.cpp
 	fairytale.cpp
@@ -109,6 +116,10 @@ add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
+	target_link_libraries(fairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets)
+endif ()
+
+if (ANDROID)
 	add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES})
 	set_property(TARGET fairyland PROPERTY VERSION "1")
 	install(TARGETS fairyland LIBRARY DESTINATION lib)
@@ -119,11 +130,15 @@ endif()
 
 target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
+if (ANDROID)
+	target_link_libraries(fairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets)
+endif ()
+
 configure_file(doc/doxygen.conf doc/doxygen.conf)
 
 if (ANDROID)
 	# This custom target is referenced by all install commands for Android.
-	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES})
+	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_SOURCE_DIR}/videoplayer.qml)
 
 	foreach (f ${fairytale_QM_FILES})
 		get_filename_component(fileName "${f}" NAME)
@@ -147,6 +162,9 @@ endif ()
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
 if (ANDROID)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+
+	# QML script for playing videos on Android
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/videoplayer.qml ${CMAKE_BINARY_DIR}/assets/videoplayer.qml)
 else ()
 	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
 endif ()
@@ -197,7 +215,8 @@ if (ANDROID)
 	# Use the following command to generate a signing key
 	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
-	add_qt_android_apk(my_app_apk fairyland KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter)
+	add_qt_android_apk(my_app_apk fairyland)
+	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
 endif ()
 
 add_subdirectory(test)

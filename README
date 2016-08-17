@@ -43,4 +43,12 @@ ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/
 Use the following command to get debugging output:
 /home/tamino/Android/Sdk/platform-tools/adb logcat
 
+Android does not support multimedia widgets in C++ like QVideoWidget. Therefore QML has to be used
+to show videos:
+http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
+
 https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device
+
+Video compression:
+Run the Bash script compressvideos.sh and make sure it creates videos which can be played on Android as well.
+Set the option USE_COMPRESSED_VIDEOS in CMake and it will install the compressed videos instead.

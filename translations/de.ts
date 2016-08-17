@@ -328,23 +328,25 @@ p, li { white-space: pre-wrap; }
     <name>CustomFairytaleWidget</name>
     <message>
         <location filename="../build/ui_customfairytale.h" line="103"/>
-        <location filename="../buildandroid/ui_customfairytale.h" line="99"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="103"/>
         <source>Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="104"/>
-        <location filename="../buildandroid/ui_customfairytale.h" line="100"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="104"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="105"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="105"/>
         <source>Retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="106"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="106"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -371,6 +373,33 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gamemodeoneoutoffour.h" line="70"/>
         <source>One Page Out Of Four</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GameOverDialog</name>
+    <message>
+        <location filename="../build/ui_gameoverdialog.h" line="66"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="66"/>
+        <source>Game Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_gameoverdialog.h" line="67"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="67"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_gameoverdialog.h" line="68"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="68"/>
+        <source>Retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_gameoverdialog.h" line="69"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="69"/>
+        <source>Game Over!!!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -652,65 +681,65 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../fairytale.cpp" line="219"/>
-        <location filename="../fairytale.cpp" line="619"/>
+        <location filename="../fairytale.cpp" line="624"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="220"/>
-        <location filename="../fairytale.cpp" line="620"/>
+        <location filename="../fairytale.cpp" line="625"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="595"/>
+        <location filename="../fairytale.cpp" line="600"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="596"/>
+        <location filename="../fairytale.cpp" line="601"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="734"/>
+        <location filename="../fairytale.cpp" line="741"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="937"/>
+        <location filename="../fairytale.cpp" line="966"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="958"/>
-        <location filename="../fairytale.cpp" line="992"/>
+        <location filename="../fairytale.cpp" line="987"/>
+        <location filename="../fairytale.cpp" line="1021"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="962"/>
-        <location filename="../fairytale.cpp" line="996"/>
+        <location filename="../fairytale.cpp" line="991"/>
+        <location filename="../fairytale.cpp" line="1025"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="969"/>
+        <location filename="../fairytale.cpp" line="998"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="973"/>
+        <location filename="../fairytale.cpp" line="1002"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="980"/>
+        <location filename="../fairytale.cpp" line="1009"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="984"/>
+        <location filename="../fairytale.cpp" line="1013"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

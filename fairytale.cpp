@@ -290,7 +290,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
+#ifndef Q_OS_ANDROID
 	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
+#else
+	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
+	connect(this->m_player->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(finishNarratorAndroid()));
+#endif
 
 	const QDir dir(translationsDir());
 
@@ -598,7 +603,7 @@ void fairytale::pauseGame()
 
 	if (this->isMediaPlayerPlaying())
 	{
-		this->m_player->mediaPlayer()->pause();
+		this->m_player->pause();
 	}
 	else
 	{
@@ -622,7 +627,7 @@ void fairytale::resumeGame()
 
 	if (this->isMediaPlayerPaused())
 	{
-		this->m_player->mediaPlayer()->play();
+		this->m_player->play();
 	}
 	else
 	{
@@ -713,6 +718,8 @@ void fairytale::nextTurn()
 			this->m_remainingTime = this->gameMode()->time();
 			this->descriptionLabel->clear();
 			this->timeLabel->clear();
+
+			qDebug() << "Queue the sounds.";
 
 			// play the sound for the inital character again
 			if (solution->isPerson() && turns() > 1)
@@ -810,8 +817,30 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	}
 }
 
+#ifdef Q_OS_ANDROID
+void fairytale::finishNarratorAndroid()
+{
+	this->finishNarrator(this->m_player->state());
+
+}
+#endif
+
 void fairytale::finishNarrator(QMediaPlayer::State state)
 {
+	qDebug() << "Finish narrator with state:" << state;
+/*
+#ifdef Q_OS_ANDROID
+static bool initialCall = false;
+
+	if (state == QMediaPlayer::StoppedState && !initialCall)
+	{
+		initialCall = true;
+
+		return;
+	}
+#endif
+*/
+
 	switch (state)
 	{
 		case QMediaPlayer::StoppedState:
@@ -830,7 +859,7 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 						// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
 						if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
 						{
-							this->m_player->mediaPlayer()->stop();
+							this->m_player->stop();
 							this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
 							this->m_playerSounds.clear();
@@ -1018,7 +1047,7 @@ bool fairytale::playSound(const QUrl &url)
 void fairytale::queuePlayerSound(const PlayerSoundData &data)
 {
 	// TODO get all states when a media is still being played or loaded etc.
-	if (!m_playNewSound || this->m_player->mediaPlayer()->state() != QMediaPlayer::StoppedState)
+	if (!m_playNewSound || this->m_player->state() != QMediaPlayer::StoppedState)
 	{
 		this->m_playerSounds.push_back(data);
 	}
@@ -1071,7 +1100,7 @@ void fairytale::cleanupGame()
 		this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
 	}
 
-	this->m_player->mediaPlayer()->stop();
+	this->m_player->stop();
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
 }

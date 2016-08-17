@@ -181,6 +181,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		virtual void changeEvent(QEvent *event) override;
 
 	private slots:
+#ifdef Q_OS_ANDROID
+		void finishNarratorAndroid();
+#endif
 		void finishNarrator(QMediaPlayer::State state);
 		void finishAudio(QMediaPlayer::State state);
 		void timerTick();
