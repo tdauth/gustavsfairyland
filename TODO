@@ -9,7 +9,7 @@
 - Clips werden erst freigeschaltet, je nach spielerischer Leistung
 - DONE: Erzähler kleiner
 - FIXED: Wenn der Player geschlossen wird, ist die Maus woanders
-- Schwierigkeit steigern und mehrere Clips herumfliegen lassen, mit Kollision, Spieler muss den richtigen auswählen.
+- DONE: Schwierigkeit steigern und mehrere Clips herumfliegen lassen, mit Kollision, Spieler muss den richtigen auswählen.
 - DONE: Geschwindigkeit erhöhen?
 - DONE: Highscores
 - kleines Icon
@@ -18,13 +18,18 @@
 - Fenster öffnen, anders darstellen
 - Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
 - Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
-- Bei Pause RoomWidget ausgrauen
+- DONE: Bei Pause RoomWidget ausgrauen
 - Märchen während Spielanzeigen fixen (geht nur einmal)
 - Iconsymbol für Märchen: Frosch, Krone
 - Schriftzüge, Holzbode, GUI eher wie Märchen aussehen lassen, Vorhänge
 - Offenes Fenster, Licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
 - Sounds: Fenster auf, Windsound
 - GIF mit Vorhängen von oben die durch Wind bewegt werden
+- Videosupport für Android mit Hilfe von QML.
+- Intro kurz und knackig: Es war einmal ... Seiten fallen aus dem Buch VERDAMMTE SCHEISSE Nicht vergessen: Gustav Mahler improvisiert bei der Reihenfolge und gibt selbst einfach vor, welche Seite als Nächstes kommt
+- Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
+- Optional: Mit Hilfe von valgrind nach Speicherleaks suchen.
+- Mahlers Musik! https://archive.org/details/Mahler_Symphony_5
 
 DONE:
 - Hauptfigur am Anfang bestimmt

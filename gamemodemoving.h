@@ -15,6 +15,7 @@ class GameModeMoving : public GameMode
 	public:
 		GameModeMoving(fairytale *app);
 
+		virtual QString id() const override;
 		virtual QString name() const override;
 		virtual GameMode::State state() override;
 		virtual Clip* solution() override;
@@ -43,6 +44,11 @@ class GameModeMoving : public GameMode
 		Clip *m_currentSolution;
 		RoomWidget *m_roomWidget;
 };
+
+inline QString GameModeMoving::id() const
+{
+	return "pagesontheground";
+}
 
 inline QString GameModeMoving::name() const
 {

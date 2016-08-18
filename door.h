@@ -11,6 +11,8 @@ class RoomWidget;
  *
  * Every door has a specific location which is specified by the type \ref Door::Location.
  * Besides it has a state which can be checked via \ref isOpen().
+ *
+ * \note By now it is actually displayed as a window rather than a door but has the same effect.
  */
 class Door : public QObject
 {

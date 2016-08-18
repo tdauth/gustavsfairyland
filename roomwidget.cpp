@@ -110,7 +110,7 @@ void RoomWidget::updatePaint()
 	//qDebug() << "Repaint";
 	this->repaint();
 
-	qDebug() << "Repaint end:" << overrunTimer.elapsed();
+	//qDebug() << "Repaint end:" << overrunTimer.elapsed();
 	m_paintTime = overrunTimer.elapsed();
 }
 

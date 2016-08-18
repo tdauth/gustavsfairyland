@@ -52,7 +52,7 @@ void ClipsDialog::addDirectory()
 
 				if (clipPackage->loadClipsFromFile(fileInfo.absoluteFilePath()))
 				{
-					packages.push_back(clipPackage);
+					packages.insert(clipPackage->id(), clipPackage);
 				}
 				else
 				{

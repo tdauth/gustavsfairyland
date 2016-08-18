@@ -115,8 +115,6 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 						setDirY(1);
 					}
 
-					qDebug() << "Collide!";
-
 					collided = true;
 
 					break;

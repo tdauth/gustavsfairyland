@@ -6,7 +6,7 @@
 #include "fairytale.h"
 #include "iconlabel.h"
 
-Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconButton(new IconLabel(this)), m_skipped(false), m_isPrefix(false)
+Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_isPrefix(false)
 #ifdef Q_OS_ANDROID
 , m_view(nullptr), m_item(nullptr), m_mediaPlayer(nullptr), m_videoWidget(nullptr)
 #else
@@ -18,6 +18,7 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 
 #ifdef Q_OS_ANDROID
 	//QQuickWindow *quickWindow = new QQuickWindow(QApplication::desktop()->screen());
+	// On Android a QML script is used to create a media player and video output since QVideoWidget is not supported. The script is packed as resource.
 	m_view = new QQuickView(QUrl("qrc:/videoplayer.qml"));
 
 	m_videoWidget = QWidget::createWindowContainer(m_view, this);
@@ -43,8 +44,8 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 		}
 	}
 #else
-
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
+	this->m_mediaPlayer->setAudioRole(QAudio::GameRole);
 
 	// expanding makes sure that it uses the maximum possible size
 	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -56,10 +57,10 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 	this->setVolume(volumeSlider->value());
 
-	this->m_iconButton->setAlignment(Qt::AlignCenter);
-	this->m_iconButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	this->m_iconButton->setMinimumSize(QSize(240, 240));
-	videoPlayerLayout->addWidget(m_iconButton);
+	this->m_iconLabel->setAlignment(Qt::AlignCenter);
+	this->m_iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	this->m_iconLabel->setMinimumSize(QSize(240, 240));
+	videoPlayerLayout->addWidget(m_iconLabel);
 
 	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
 	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGameAction()));
@@ -68,11 +69,11 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 
 	// Global shortcuts in the widget are required since the push buttons would have to be in focus to work with shortcuts.
 	QShortcut *shortcut = new QShortcut(QKeySequence("SPACE"), this);
-	connect(shortcut, &QShortcut::activated, this->skipPushButton, &QPushButton::click);
+	connect(shortcut, &QShortcut::activated, this, &Player::skip);
 	shortcut = new QShortcut(QKeySequence("P"), this);
-	connect(shortcut, &QShortcut::activated, this->pausePushButton, &QPushButton::click);
+	connect(shortcut, &QShortcut::activated, app, &fairytale::pauseGameAction);
 	shortcut = new QShortcut(QKeySequence("C"), this);
-	connect(shortcut, &QShortcut::activated, this->cancelPushButton, &QPushButton::click);
+	connect(shortcut, &QShortcut::activated, app, &fairytale::cancelGame);
 }
 
 Player::~Player()
@@ -140,8 +141,8 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 {
 	this->m_isPrefix = false;
 	this->m_skipped = false;
-	this->m_iconButton->hide();
-	this->m_iconButton->setFile("");
+	this->m_iconLabel->hide();
+	this->m_iconLabel->setFile("");
 	this->m_videoWidget->show();
 
 	if (app->isFullScreen())
@@ -159,16 +160,16 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	this->pausePushButton->show();
 
 	this->descriptionLabel->setText(description);
-	const QUrl reolvedUrl = app->resolveClipUrl(url);
+	const QUrl resolvedUrl = app->resolveClipUrl(url);
 
 #ifdef Q_OS_ANDROID
 	m_view->show();
 
 	if (m_mediaPlayer)
 	{
-		qDebug() << "There is a player and we set its source to:" << reolvedUrl;
-		m_mediaPlayer->setProperty("source", reolvedUrl);
-		QQmlProperty::write(m_mediaPlayer, "source", reolvedUrl);
+		qDebug() << "There is a player and we set its source to:" << resolvedUrl;
+		m_mediaPlayer->setProperty("source", resolvedUrl);
+		QQmlProperty::write(m_mediaPlayer, "source", resolvedUrl);
 	}
 	else
 	{
@@ -178,7 +179,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	/*
 	 * Play the narrator clip for the current solution as hint.
 	 */
-	this->m_mediaPlayer->setMedia(reolvedUrl);
+	this->m_mediaPlayer->setMedia(resolvedUrl);
 #endif
 
 	this->play();
@@ -186,48 +187,10 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 
 void Player::playBonusVideo(fairytale *app, const QUrl &url, const QString &description)
 {
-	this->m_isPrefix = false;
-	this->m_skipped = false;
-	this->m_iconButton->hide();
-	this->m_iconButton->setFile("");
-	this->m_videoWidget->show();
-
-	if (app->isFullScreen())
-	{
-		this->showFullScreen();
-	}
-	else
-	{
-		this->show();
-	}
-
-	this->skipPushButton->setEnabled(true);
-	this->skipPushButton->setFocus();
+	this->playVideo(app, url, description);
+	// Bonus videos are not played during a game.
 	this->cancelPushButton->hide();
 	this->pausePushButton->hide();
-
-	this->descriptionLabel->setText(description);
-
-	const QUrl reolvedUrl = app->resolveClipUrl(url);
-
-#ifdef Q_OS_ANDROID
-	if (m_mediaPlayer)
-	{
-		qDebug() << "There is a player and we set its source to:" << reolvedUrl;
-		m_mediaPlayer->setProperty("source", reolvedUrl);
-		QQmlProperty::write(m_mediaPlayer, "source", reolvedUrl);
-	}
-	else
-	{
-		qDebug() << "No player!";
-	}
-#else
-	/*
-	 * Play the narrator clip for the current solution as hint.
-	 */
-	this->m_mediaPlayer->setMedia(reolvedUrl);
-	this->m_mediaPlayer->play();
-#endif
 }
 
 void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix)
@@ -244,8 +207,8 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_isPrefix = prefix;
 	this->m_skipped = false;
 	this->m_videoWidget->hide();
-	this->m_iconButton->show();
-	this->m_iconButton->setFile(imageFile);
+	this->m_iconLabel->show();
+	this->m_iconLabel->setFile(imageFile);
 
 	if (app->isFullScreen())
 	{

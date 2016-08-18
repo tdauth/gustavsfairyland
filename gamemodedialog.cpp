@@ -14,9 +14,10 @@ void GameModeDialog::fill(const fairytale::GameModes &gameModes)
 
 	this->comboBox->clear();
 
-	foreach (fairytale::GameModes::const_reference ref, gameModes)
+	for (fairytale::GameModes::const_iterator iterator = gameModes.begin(); iterator != gameModes.end(); ++iterator)
 	{
-		this->comboBox->addItem(ref->name());
+		const GameMode *gameMode = iterator.value();
+		this->comboBox->addItem(gameMode->name(), gameMode->id());
 	}
 
 	if (gameModes.isEmpty())
@@ -38,5 +39,5 @@ GameMode* GameModeDialog::gameMode() const
 		return nullptr;
 	}
 
-	return this->m_gameModes[this->comboBox->currentIndex()];
+	return this->m_gameModes[this->comboBox->currentData().toString()];
 }

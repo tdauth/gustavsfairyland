@@ -2,13 +2,14 @@
 #define PLAYER_H
 
 #include <QtWidgets/QDialog>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtMultimediaWidgets/QVideoWidget>
 // On Android videos can be only played in QML.
 #ifdef Q_OS_ANDROID
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlProperty>
+#else
+#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimediaWidgets/QVideoWidget>
 #endif
 
 #include "ui_player.h"
@@ -28,11 +29,27 @@ class Player : public QDialog, protected Ui::Player
 		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
 		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
 
+		/**
+		 * Starts playing the current video or sound.
+		 */
 		void play();
+		/**
+		 * Pauses the current video or sound.
+		 */
 		void pause();
+		/**
+		 * Stops the current video or sound completely.
+		 */
 		void stop();
+		/**
+		 * Sets the volume of the sound output.
+		 * \param volume A value between 0 and 100.
+		 */
 		void setVolume(int volume);
 
+		/**
+		 * Skips the currently played video or sound.
+		 */
 		void skip();
 	public:
 		Player(QWidget *parent, fairytale *app);
@@ -48,14 +65,23 @@ class Player : public QDialog, protected Ui::Player
 #endif
 		mediaPlayer() const;
 
+		/**
+		 * \return Returns true if the video or sound has been skipped. This value is reset whenever a new media is played.
+		 */
 		bool skipped() const;
+		/**
+		 * \return Returns true if the currently played media is only the prefix for another media. This means after ending the current media the game mode does not continue yet.
+		 */
 		bool isPrefix() const;
 
 		QPushButton* pauseButton() const;
 
 	private:
 		fairytale *m_app;
-		IconLabel *m_iconButton;
+		/**
+		 * The icon label is used for showing a clip picture when playing a sound only.
+		 */
+		IconLabel *m_iconLabel;
 		bool m_skipped;
 		bool m_isPrefix;
 

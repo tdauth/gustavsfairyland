@@ -34,6 +34,16 @@ class GameMode : public QObject
 		 */
 		fairytale* app() const;
 
+		/**
+		 * Every game mode can be identified by a unique ID. This is useful for storing unique information corresponding to a game mode like highscores
+		 * and not depending on the game mode's name which might change when change the locale settings.
+		 * \return Returns a unique ID.
+		 */
+		virtual QString id() const = 0;
+		/**
+		 * Every game mode has a name which is shown to the player when he/she chooses a game mode.
+		 * \return Returns the readable name of the game mode.
+		 */
 		virtual QString name() const = 0;
 		virtual void start() = 0;
 		virtual void end() = 0;

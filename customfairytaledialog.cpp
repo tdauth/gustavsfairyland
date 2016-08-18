@@ -9,6 +9,7 @@
 
 void CustomFairytaleDialog::retry()
 {
+	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
 	this->m_retry = true;
 	this->close();
 }

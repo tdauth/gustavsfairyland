@@ -530,6 +530,15 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		return false;
 	}
 
+	if (!root.hasAttribute("id"))
+	{
+		std::cerr << "id attribute is missing" << std::endl;
+
+		return false;
+	}
+
+	this->setId(root.attribute("id"));
+
 	Names names;
 	const QDomNodeList nodes = root.elementsByTagName("name");
 
@@ -641,6 +650,9 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 {
 	QDomDocument document;
 	QDomElement root = document.createElement("clips");
+
+	root.setAttribute("id", this->id());
+
 	document.appendChild(root);
 
 	QDomElement name = document.createElement("name");

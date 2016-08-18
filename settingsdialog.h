@@ -16,6 +16,7 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 	Q_OBJECT
 
 	public slots:
+		void restoreDefaults();
 		void changeClipsDirectory();
 		void apply();
 		void update();

@@ -1,6 +1,6 @@
-import QtQuick 2.3
+import QtQuick 2.0
 import QtQuick.Controls 1.2
-import QtMultimedia 5.0
+import QtMultimedia 5.6
 
 Rectangle {
     width: 800
@@ -10,6 +10,7 @@ Rectangle {
     MediaPlayer {
         id: player
         objectName: "player"
+        audioRole: GameRole
         source: "assets:/vampir/vampir.avi"
         //autoPlay: true
     }

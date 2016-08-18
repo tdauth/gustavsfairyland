@@ -53,6 +53,8 @@ class ClipPackage : public QObject
 		void addClip(Clip *clip);
 
 		const QString& filePath() const;
+		void setId(const QString &id);
+		QString id() const;
 		void setNames(const Names &names);
 		const Names& names() const;
 		QString name() const;
@@ -98,6 +100,7 @@ class ClipPackage : public QObject
 		QString m_dir;
 		/// File path to the clips.xml file
 		QString m_filePath;
+		QString m_id;
 		Names m_names;
 		Clips m_clips;
 		/// Additional clips which can be unlocked.
@@ -119,6 +122,16 @@ inline void ClipPackage::addClip(Clip* clip)
 inline const QString& ClipPackage::filePath() const
 {
 	return this->m_filePath;
+}
+
+inline void ClipPackage::setId(const QString &id)
+{
+	this->m_id = id;
+}
+
+inline QString ClipPackage::id() const
+{
+	return this->m_id;
 }
 
 inline void ClipPackage::setNames(const Names &names)

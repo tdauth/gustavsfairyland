@@ -236,6 +236,8 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
 	nextTurn();
 
 	setGameButtonsEnabled(true);
+
+	startMusic();
 }
 
 fairytale::fairytale(Qt::WindowFlags flags)
@@ -261,12 +263,13 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_isPlayingMediaPlayer(false)
 , m_isRunning(false)
 , m_audioPlayer(new QMediaPlayer(this))
+, m_musicPlayer(new QMediaPlayer(this))
 , m_playNewSound(true)
 , m_gameMode(nullptr)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
 , m_gameOverDialog(nullptr)
-, m_highScores(new HighScores(this))
+, m_highScores(new HighScores(this, this))
 , m_playingBonusClip(false)
 {
 	this->m_player->hide();
@@ -312,14 +315,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishAudio(QMediaPlayer::State)));
 
-	QSettings settings("fairytale");
-	QDir defaultClipsDir;
-#ifdef Q_OS_WIN
-	const QDir currentDir(QDir::currentPath());
-	defaultClipsDir = QDir(currentDir.filePath("../share/gustavsfairyland/clips"));
-#else
-	defaultClipsDir = QDir("/usr/share/gustavsfairyland");
-#endif
+	m_musicPlayer->setVolume(100);
+	m_audioPlayer->setAudioRole(QAudio::GameRole);
+	connect(this->m_musicPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishMusic(QMediaPlayer::State)));
+
+	QSettings settings("TaCaProduction", "gustavsfairyland");
+	QDir defaultClipsDir(this->defaultClipsDirectory());
 
 #ifndef Q_OS_ANDROID
 	// the default path is the "clips" sub directory
@@ -343,6 +344,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 			else
 			{
 				delete package;
+				package = nullptr;
 			}
 		}
 	}
@@ -363,6 +365,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 			else
 			{
 				delete package;
+				package = nullptr;
 			}
 		}
 		else
@@ -387,6 +390,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	else
 	{
 		delete package;
+		package = nullptr;
 	}
 #endif
 
@@ -402,8 +406,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	settings.endArray();
 
-	m_gameModes.push_back(new GameModeMoving(this));
-	m_gameModes.push_back(new GameModeOneOutOfFour(this));
+	GameModeMoving *gameModeMoving = new GameModeMoving(this);
+	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
+	GameModeOneOutOfFour *gameModeOneOutOfFour = new GameModeOneOutOfFour(this);
+	m_gameModes.insert(gameModeOneOutOfFour->id(), new GameModeOneOutOfFour(this));
 
 	qApp->installTranslator(&m_translator);
 
@@ -419,24 +425,27 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 fairytale::~fairytale()
 {
-	QSettings settings("fairytale");
+	QSettings settings("TaCaProduction", "gustavsfairyland");
 	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
 	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
+	int i = 0;
 
-	for (int i = 0; i < this->m_clipPackages.size(); ++i)
+	for (ClipPackages::const_iterator iterator = this->clipPackages().begin(); iterator != this->clipPackages().end(); ++iterator)
 	{
 		settings.setArrayIndex(i);
-		settings.setValue("filePath", this->clipPackages()[i]->filePath());
+		settings.setValue("filePath", (*iterator)->filePath());
+
+		++i;
 	}
 
 	settings.endArray();
 
 	settings.beginWriteArray("highscores");
-	int i = 0;
+	i = 0;
 
-	foreach (const HighScores::HighScoreVector &highScoreVector, this->highScores()->highScores().values())
+	foreach (const HighScores::HighScoreList &highScoreList, this->highScores()->highScores().values())
 	{
-		foreach (const HighScore &highScore, highScoreVector)
+		foreach (const HighScore &highScore, highScoreList)
 		{
 			settings.setArrayIndex(i);
 			settings.setValue("name", highScore.name());
@@ -454,6 +463,16 @@ fairytale::~fairytale()
 	settings.endArray();
 
 	qApp->removeTranslator(&m_translator);
+}
+
+QString fairytale::defaultClipsDirectory() const
+{
+#ifdef Q_OS_WIN
+	const QDir currentDir(QDir::currentPath());
+	return currentDir.filePath("../share/gustavsfairyland/clips");
+#else
+	return QString("/usr/share/gustavsfairyland");
+#endif
 }
 
 void fairytale::playFinalClip(int index)
@@ -487,20 +506,28 @@ void fairytale::about()
 
 void fairytale::quickGame()
 {
-	if (this->isGameRunning() || this->m_clipPackages.isEmpty() || this->m_gameModes.isEmpty())
+	if (this->isGameRunning() || this->clipPackages().isEmpty() || this->gameModes().isEmpty())
 	{
+		qDebug() << "Cant start a quick game!";
+		qDebug() << "Is running:" << this->isGameRunning();
+
 		return;
 	}
 
 	// Start with the first available stuff.
-	ClipPackage *clipPackage = this->m_clipPackages.first();
-	GameMode *gameMode = this->m_gameModes.first();
+	ClipPackage *clipPackage = this->defaultClipPackage();
+	GameMode *gameMode = this->defaultGameMode();
 
 	startNewGame(clipPackage, gameMode);
 }
 
 void fairytale::retry()
 {
+	if (this->clipPackages().isEmpty() || this->gameModes().isEmpty())
+	{
+		return;
+	}
+
 	// Start with the first available stuff.
 	ClipPackage *clipPackage = this->clipPackage();
 	GameMode *gameMode = this->gameMode();
@@ -510,13 +537,13 @@ void fairytale::retry()
 
 QDir fairytale::translationsDir() const
 {
-#ifdef Q_OS_WIN
+#ifdef DEBUG
+	const QDir translationsDir = QDir(QDir::currentPath());
+#elif defined(Q_OS_WIN)
 	const QDir currentDir(QDir::currentPath());
 	const QDir translationsDir = QDir(currentDir.filePath("../share/gustavsfairyland/translations"));
 #elif defined(Q_OS_ANDROID)
 	const QDir translationsDir = QDir("assets:/translations");
-#elif defined(DEBUG)
-	const QDir translationsDir = QDir(QDir::currentPath());
 #else
 	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
 #endif
@@ -554,6 +581,7 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
+	m_musicPlayer->stop();
 
 	this->wonDialog()->exec();
 
@@ -564,7 +592,7 @@ void fairytale::win()
 		name = qgetenv("USERNAME");
 	}
 
-	HighScore highScore(name, this->clipPackage()->name(), this->gameMode()->name(), this->m_turns, this->m_totalElapsedTime);
+	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->m_turns, this->m_totalElapsedTime);
 	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
@@ -946,6 +974,27 @@ void fairytale::finishAudio(QMediaPlayer::State state)
 	}
 }
 
+void fairytale::startMusic()
+{
+	// TODO add to package XML file, each package can have its own background music
+	// TODO use random track from all tracks
+	const QUrl musicUrl = this->resolveClipUrl(QUrl("./music/04.PSO020103-Mahler-5-IV.mp3"));
+	m_musicPlayer->setMedia(musicUrl);
+	m_musicPlayer->play();
+}
+
+void fairytale::finishMusic(QMediaPlayer::State state)
+{
+	if (state == QMediaPlayer::StoppedState)
+	{
+		// restart another music during the game
+		if (this->isGameRunning())
+		{
+			startMusic();
+		}
+	}
+}
+
 void fairytale::timerTick()
 {
 	const QTimer *sender = dynamic_cast<QTimer*>(QObject::sender());
@@ -1092,6 +1141,7 @@ void fairytale::changeEvent(QEvent* event)
 
 void fairytale::cleanupGame()
 {
+	this->m_musicPlayer->stop();
 	this->m_playerSounds.clear();
 
 	// this method is also called in the beginning when there is no gamemode
@@ -1103,6 +1153,7 @@ void fairytale::cleanupGame()
 	this->m_player->stop();
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
+	this->m_isRunning = false;
 }
 
 void fairytale::cleanupAfterOneGame()
@@ -1118,6 +1169,8 @@ void fairytale::cleanupAfterOneGame()
 	this->descriptionLabel->hide();
 	this->gameAreaWidget->hide();
 	this->menuButtonsWidget->show();
+	// Make sure all paint stuff from the game mode disappears.
+	this->repaint();
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl &url) const
@@ -1191,7 +1244,7 @@ GameOverDialog* fairytale::gameOverDialog()
 
 void fairytale::addClipPackage(ClipPackage* package)
 {
-	this->m_clipPackages.push_back(package);
+	this->m_clipPackages.insert(package->id(), package);
 
 	foreach (BonusClip *bonusClip, package->bonusClips())
 	{
@@ -1203,7 +1256,7 @@ void fairytale::addClipPackage(ClipPackage* package)
 
 void fairytale::playBonusClip()
 {
-	if (m_playingBonusClip || this->m_isRunning)
+	if (m_playingBonusClip || this->isGameRunning())
 	{
 		return;
 	}
@@ -1248,6 +1301,37 @@ void fairytale::changeLanguage()
 	{
 		action->setChecked(false);
 	}
+}
+
+void fairytale::removeClipPackage(ClipPackage* package)
+{
+	this->m_clipPackages.remove(package->id());
+}
+
+GameMode* fairytale::defaultGameMode() const
+{
+	// prefer floating clips in a room
+	GameModes::const_iterator iterator = this->gameModes().find("pagesontheground");
+
+	if (iterator != this->gameModes().end())
+	{
+		return iterator.value();
+	}
+
+	return this->gameModes().first();
+}
+
+ClipPackage* fairytale::defaultClipPackage() const
+{
+	// prefer the package of Gustav's Fairyland
+	ClipPackages::const_iterator iterator = this->clipPackages().find("gustav");
+
+	if (iterator != this->clipPackages().end())
+	{
+		return iterator.value();
+	}
+
+	return this->clipPackages().first();
 }
 
 #include "fairytale.moc"

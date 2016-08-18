@@ -76,15 +76,28 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		GameMode* selectGameMode();
 		void showHighScores();
 		void about();
+
+		/**
+		 * Starts the game with the first available package and game mode.
+		 */
 		void quickGame();
 
+		/**
+		 * Restarts the game with the same package and the same game mode.
+		 */
 		void retry();
 
 		void loadLanguage(const QString &language);
 
 	public:
-		typedef QList<GameMode*> GameModes;
-		typedef QList<ClipPackage*> ClipPackages;
+		/**
+		 * Stores all game modes by their unique IDs.
+		 */
+		typedef QMap<QString, GameMode*> GameModes;
+		/**
+		 * Stores all clip packages by their unique IDs.
+		 */
+		typedef QMap<QString, ClipPackage*> ClipPackages;
 
 		/**
 		 * \return Returns true if the user has a touch device to press at the floating clips.
@@ -97,6 +110,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
+
+		QString defaultClipsDirectory() const;
 
 		/**
 		 * Event handler which is called by the current game mode.
@@ -126,7 +141,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void setClipPackages(const ClipPackages &packages);
 		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
+		GameMode* defaultGameMode() const;
 		const ClipPackages& clipPackages() const;
+		ClipPackage* defaultClipPackage() const;
 
 		QUrl resolveClipUrl(const QUrl &url) const;
 
@@ -177,6 +194,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QDir translationsDir() const;
 		QString currentTranslation() const;
 
+		/**
+		 * Starts some random music composed by the greatest composer of all time: Gustav Mahler.
+		 * The player should win every game in seconds since this music gives him the greatest joy of all time.
+		 */
+		void startMusic();
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 
@@ -186,6 +209,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 #endif
 		void finishNarrator(QMediaPlayer::State state);
 		void finishAudio(QMediaPlayer::State state);
+		void finishMusic(QMediaPlayer::State state);
 		void timerTick();
 		void playBonusClip();
 		void changeLanguage();
@@ -196,7 +220,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void cleanupGame();
 		void cleanupAfterOneGame();
 
-
+		/// The directory which is used to resolve relative paths of files for clips from clip packages.
 		QUrl m_clipsDir;
 
 		/**
@@ -272,6 +296,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool m_playNewSound;
 		/// A queue with sounds waiting for the player to become available.
 		QQueue<PlayerSoundData> m_playerSounds;
+		/// Player for background music.
+		QMediaPlayer *m_musicPlayer;
 
 		/**
 		 * The currently played game mode.
@@ -308,12 +334,12 @@ inline bool fairytale::isMediaPlayerPlaying() const
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
-	this->m_clipPackages = packages;
-}
+	this->m_clipPackages.clear();
 
-inline void fairytale::removeClipPackage(ClipPackage* package)
-{
-    this->m_clipPackages.removeAll(package);
+	for (ClipPackages::const_iterator iterator = packages.constBegin(); iterator != packages.constEnd(); ++iterator)
+	{
+		addClipPackage(iterator.value());
+	}
 }
 
 inline const fairytale::GameModes& fairytale::gameModes() const

@@ -1,7 +1,20 @@
 #include <QtWidgets>
+#include <QDir>
 
 #include "settingsdialog.h"
 #include "fairytale.h"
+
+void SettingsDialog::restoreDefaults()
+{
+	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
+	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
+
+#ifndef Q_OS_ANDROID
+	fullScreenCheckBox->setChecked(true);
+#else
+	fullScreenCheckBox->setChecked(false);
+#endif
+}
 
 void SettingsDialog::changeClipsDirectory()
 {
@@ -39,6 +52,7 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 {
 	setupUi(this);
 
+	connect(this->buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, this, &SettingsDialog::restoreDefaults);
 	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SettingsDialog::accept);
 	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SettingsDialog::apply);
 	connect(this->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &SettingsDialog::apply);

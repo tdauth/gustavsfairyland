@@ -6,11 +6,8 @@
 void GameOverDialog::retry()
 {
 	this->close();
-	// Start with the first available stuff.
-	ClipPackage *clipPackage = m_app->clipPackage();
-	GameMode *gameMode = m_app->gameMode();
 
-	m_app->startNewGame(clipPackage, gameMode);
+	m_app->retry();
 }
 
 GameOverDialog::GameOverDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)

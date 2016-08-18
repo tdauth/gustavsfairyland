@@ -8,15 +8,16 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 	this->setupUi(this);
 }
 
-void ClipPackageDialog::fill(const fairytale::ClipPackages& packages)
+void ClipPackageDialog::fill(const fairytale::ClipPackages &packages)
 {
 	this->m_packages = packages;
 
 	this->comboBox->clear();
 
-	foreach (fairytale::ClipPackages::const_reference ref, packages)
+	for (fairytale::ClipPackages::const_iterator iterator = packages.begin(); iterator != packages.end(); ++iterator)
 	{
-		this->comboBox->addItem(ref->name());
+		const ClipPackage *clipPackage = iterator.value();
+		this->comboBox->addItem(clipPackage->name(), clipPackage->id());
 	}
 
 	if (packages.isEmpty())
@@ -38,5 +39,5 @@ ClipPackage* ClipPackageDialog::clipPackage() const
 		return nullptr;
 	}
 
-	return this->m_packages[this->comboBox->currentIndex()];
+	return this->m_packages[this->comboBox->currentData().toString()];
 }

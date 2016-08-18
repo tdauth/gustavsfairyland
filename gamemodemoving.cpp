@@ -117,7 +117,7 @@ void GameModeMoving::end()
 {
 	// Make sure the timers stop
 	this->m_roomWidget->pause();
-	// dont delete the room widget, which leads to segmentation fault, since the end() method is called from the slot of the signal gotIt()
+	// Dont delete the room widget, which leads to segmentation fault, since the end() method is called from the slot of the signal gotIt().
 	this->m_roomWidget->hide();
 
 	this->m_currentSolution = nullptr;
