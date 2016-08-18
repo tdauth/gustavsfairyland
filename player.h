@@ -2,13 +2,13 @@
 #define PLAYER_H
 
 #include <QtWidgets/QDialog>
+#include <QtMultimedia/QMediaPlayer>
 // On Android videos can be only played in QML.
 #ifdef Q_OS_ANDROID
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlProperty>
 #else
-#include <QtMultimedia/QMediaPlayer>
 #include <QtMultimediaWidgets/QVideoWidget>
 #endif
 

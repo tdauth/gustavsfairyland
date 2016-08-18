@@ -232,6 +232,8 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 		qDebug() << "There is a player and we set its source to:" << soundUrl;
 		m_mediaPlayer->setProperty("source", soundUrl);
 		QQmlProperty::write(m_mediaPlayer, "source", soundUrl);
+
+		qDebug() << "Current source after setting it in QML:" << QQmlProperty::read(m_mediaPlayer, "source").toString();
 	}
 	else
 	{
@@ -242,8 +244,10 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	 * Play the narrator clip for the current solution as hint.
 	 */
 	this->m_mediaPlayer->setMedia(soundUrl);
-	this->m_mediaPlayer->play();
+	//qDebug() << "Current source after setting it in QML:" << QQmlProperty::read(m_mediaPlayer, "playbackState").toInt();
 #endif
+
+	this->play();
 }
 
 void Player::play()

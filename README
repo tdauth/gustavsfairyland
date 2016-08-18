@@ -49,6 +49,9 @@ http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
 
 https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device
 
+Make sure the codec is supported on Android:
+https://developer.android.com/guide/appendix/media-formats.html
+
 Video compression:
 Run the Bash script compressvideos.sh and make sure it creates videos which can be played on Android as well.
 Set the option USE_COMPRESSED_VIDEOS in CMake and it will install the compressed videos instead.
