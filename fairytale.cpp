@@ -489,7 +489,13 @@ fairytale::~fairytale()
 QString fairytale::defaultClipsDirectory() const
 {
 #ifdef Q_OS_WIN
-	return QDir::currentPath() + "/../share/gustavsfairyland/clips";
+	/*
+	 * The player usually starts the binary via a Desktop link which runs it in the directory:
+	 * "C:\Program Files (x86)\gustavsfairyland"
+	 * But the player can also directly start the .exe file in the bin folder.
+	 * Therefore one must get the file path to the binary file and not use QDir::currentPath().
+	 */
+	return QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips";
 #else
 	return QString("/usr/share/gustavsfairyland");
 #endif
@@ -577,8 +583,13 @@ QDir fairytale::translationsDir() const
 #ifdef DEBUG
 	const QDir translationsDir = QDir(QDir::currentPath());
 #elif defined(Q_OS_WIN)
-	const QDir currentDir(QDir::currentPath());
-	const QDir translationsDir = currentDir.absolutePath() + "/../share/gustavsfairyland/translations";
+	/*
+	 * The player usually starts the binary via a Desktop link which runs it in the directory:
+	 * "C:\Program Files (x86)\gustavsfairyland"
+	 * But the player can also directly start the .exe file in the bin folder.
+	 * Therefore one must get the file path to the binary file and not use QDir::currentPath().
+	 */
+	const QDir translationsDir = QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/translations";
 	qDebug() << "Windows translation dir:" << translationsDir;
 #elif defined(Q_OS_ANDROID)
 	const QDir translationsDir = QDir("assets:/translations");
@@ -619,8 +630,6 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
-	// stop after changing the flag!
-	this->m_musicPlayer->stop();
 
 	this->wonDialog()->exec();
 
@@ -1043,11 +1052,8 @@ void fairytale::finishMusic(QMediaPlayer::State state)
 {
 	if (state == QMediaPlayer::StoppedState)
 	{
-		// restart another music during the game
-		if (this->isGameRunning())
-		{
-			startMusic();
-		}
+		// restart another music
+		startMusic();
 	}
 }
 
@@ -1209,8 +1215,6 @@ void fairytale::cleanupGame()
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
 	this->m_isRunning = false;
-	// stop music after changing the flag!
-	this->m_musicPlayer->stop();
 }
 
 void fairytale::cleanupAfterOneGame()
