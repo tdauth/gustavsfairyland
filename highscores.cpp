@@ -37,20 +37,21 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	HighScoreList &existing = this->m_highScores[key];
 	HighScoreList::iterator pos = existing.begin();
 
-	// find a highscore which is lower an insert it afterwards, otherwise if none is found it will be inserted at the front (position 0)
+	// find a highscore which is worse an insert it before, otherwise if none is found it will be inserted at the front (position 0)
 	for (HighScoreList::iterator i = existing.begin(); i != existing.end(); ++i)
 	{
 		const HighScore &existingHighScore = *i;
 
-		if ((existingHighScore.time() < highScore.time() && existingHighScore.rounds() == highScore.rounds()) || existingHighScore.rounds() > highScore.rounds())
+		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds()) || existingHighScore.rounds() < highScore.rounds())
 		{
-			// Use +1 since it is inserted before the index.
-			pos = i + 1;
+			// It is inserted before this one since it has a better score.
+			pos = i;
 
 			break;
 		}
 	}
 
+	// Insert it before the pos.
 	existing.insert(pos, highScore);
 
 	// Drop all highscores at the end. There is a limit per key (Package and Game Mode).
