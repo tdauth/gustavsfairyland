@@ -206,7 +206,13 @@ if (WIN32)
     # Make sure the output directory is cleaned everytime a clean is done since there might be different DLLs when distributing the relase version.
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/qtdeployment")
     find_program(WINDEPLOYQT_PROGRAM windeployqt)
-    add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairyland> --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairyland)
+
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+        set(WINDEPLOYQT_ARGS "--debug")
+    else ()
+        set(WINDEPLOYQT_ARGS "--release")
+    endif ()
+    add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairyland> ${WINDEPLOYQT_ARGS} --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairyland)
     install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
 endif ()
 
