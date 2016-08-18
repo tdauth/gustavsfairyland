@@ -79,9 +79,6 @@
            <property name="text">
             <string>Cancel Game (C)</string>
            </property>
-           <property name="shortcut">
-            <string>C</string>
-           </property>
           </widget>
          </item>
          <item>
@@ -95,9 +92,6 @@
            <property name="text">
             <string>Pause Game (P)</string>
            </property>
-           <property name="shortcut">
-            <string>Ctrl+S</string>
-           </property>
           </widget>
          </item>
          <item>
@@ -110,9 +104,6 @@
            </property>
            <property name="text">
             <string>Skip (Space)</string>
-           </property>
-           <property name="shortcut">
-            <string>Space</string>
            </property>
           </widget>
          </item>
