@@ -94,6 +94,18 @@
 				<de>die Fee</de>
 			</description>
 		</clip>
+
+		<clip>
+			<image>./princess/princess.jpg</image>
+			<video>./princess/princess.mkv</video>
+			<narrator>
+				<de>./fairy/fairy.wav</de>
+			</narrator>
+			<description>
+				<en>the Princess</en>
+				<de>die Prinzessin</de>
+			</description>
+		</clip>
 	</persons>
 
 	<!-- new acts -->

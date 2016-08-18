@@ -3,8 +3,8 @@ import QtQuick.Controls 1.2
 import QtMultimedia 5.6
 
 Rectangle {
-    width: 800
-    height: 600
+    width: 200
+    height: 200
     color: "black"
 
     MediaPlayer {

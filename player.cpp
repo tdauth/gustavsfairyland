@@ -19,13 +19,17 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 #ifdef Q_OS_ANDROID
 	//QQuickWindow *quickWindow = new QQuickWindow(QApplication::desktop()->screen());
 	// On Android a QML script is used to create a media player and video output since QVideoWidget is not supported. The script is packed as resource.
-	m_view = new QQuickView(QUrl("qrc:/videoplayer.qml"));
+	m_view = new QQuickView();
 
 	m_videoWidget = QWidget::createWindowContainer(m_view, this);
-	m_videoWidget->setMinimumSize(200, 200);
-	m_videoWidget->setMaximumSize(200, 200);
 	m_videoWidget->setFocusPolicy(Qt::TabFocus);
-	videoPlayerLayout->addWidget(m_videoWidget);
+
+	// TEST to check if the widget appears at all
+	QPalette pal;
+	pal.setColor(QPalette::Background, Qt::green);
+	m_videoWidget->setPalette(pal);
+
+	m_view->setSource(QUrl("qrc:/videoplayer.qml"));
 
 	qDebug() << "QML Errors:";
 	foreach (QQmlError error, m_view->errors())
@@ -46,13 +50,14 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 #else
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
 	this->m_mediaPlayer->setAudioRole(QAudio::GameRole);
+#endif
 
 	// expanding makes sure that it uses the maximum possible size
 	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->m_videoWidget->setMinimumSize(QSize(240, 240));
 	videoPlayerLayout->addWidget(m_videoWidget);
-	m_videoWidget->show();
-#endif
+	this->m_videoWidget->show();
+
 	volumeSlider->setValue(100);
 	connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 	this->setVolume(volumeSlider->value());
@@ -95,7 +100,7 @@ QMediaPlayer::State Player::state() const
 	 QMediaPlayer::PlayingState	1	The media player is currently playing content.
 	 QMediaPlayer::PausedState	2
 
-	 Note that QML has a different order of states:
+	 Note that QML has a different order of states but still uses the same integer values.
 	 PlayingState - the media is currently playing.
 	 PausedState - playback of the media has been suspended.
 	 StoppedState - playback of the media is yet to begin.
@@ -104,23 +109,6 @@ QMediaPlayer::State Player::state() const
 	qDebug() << "Has state:" << state;
 
 	return QMediaPlayer::State(state);
-	/*
-	switch (state)
-	{
-		case 0:
-			return QMediaPlayer::PlayingState;
-
-		case 1:
-			return QMediaPlayer::PausedState;
-
-		case 2:
-			return QMediaPlayer::StoppedState;
-	}
-
-	qDebug() << "Unknown state:" << state;
-
-	throw state;
-	*/
 #else
 	return this->mediaPlayer()->state();
 #endif
@@ -163,8 +151,6 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	const QUrl resolvedUrl = app->resolveClipUrl(url);
 
 #ifdef Q_OS_ANDROID
-	m_view->show();
-
 	if (m_mediaPlayer)
 	{
 		qDebug() << "There is a player and we set its source to:" << resolvedUrl;
