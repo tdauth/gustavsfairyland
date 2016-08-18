@@ -210,6 +210,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishNarratorAndroid();
 #endif
 		void finishNarrator(QMediaPlayer::State state);
+		void onFinishVideoAndSounds();
 		void finishAudio(QMediaPlayer::State state);
 		void finishMusic(QMediaPlayer::State state);
 		void timerTick();

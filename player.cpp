@@ -6,7 +6,7 @@
 #include "fairytale.h"
 #include "iconlabel.h"
 
-Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_isPrefix(false)
+Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
 #ifdef Q_OS_ANDROID
 , m_view(nullptr), m_item(nullptr), m_mediaPlayer(nullptr), m_videoWidget(nullptr)
 #else
@@ -62,6 +62,16 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 	this->setVolume(volumeSlider->value());
 
+	this->m_parallelSoundsMediaPlayer->setAudioRole(QAudio::GameRole);
+	connect(this->m_parallelSoundsMediaPlayer, &QMediaPlayer::stateChanged, this, &Player::onChangeStateParallelSoundPlayer);
+
+#ifndef Q_OS_ANDROID
+	connect(this->mediaPlayer(), &QMediaPlayer::stateChanged, this, &Player::onChangeState);
+#else
+	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
+	connect(this->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(onChangeStateAndroid()));
+#endif
+
 	this->m_iconLabel->setAlignment(Qt::AlignCenter);
 	this->m_iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->m_iconLabel->setMinimumSize(QSize(240, 240));
@@ -73,11 +83,15 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 
 	// Global shortcuts in the widget are required since the push buttons would have to be in focus to work with shortcuts.
-	QShortcut *shortcut = new QShortcut(QKeySequence("SPACE"), this);
+	QShortcut *shortcut = new QShortcut(QKeySequence(tr("SPACE")), this);
+	// They should always work when the player widget or any subwidget of the player widget has the focus.
+	shortcut->setContext(Qt::WidgetWithChildrenShortcut);
 	connect(shortcut, &QShortcut::activated, this, &Player::skip);
-	shortcut = new QShortcut(QKeySequence("P"), this);
+	shortcut = new QShortcut(QKeySequence(tr("P")), this);
+	shortcut->setContext(Qt::WidgetWithChildrenShortcut);
 	connect(shortcut, &QShortcut::activated, app, &fairytale::pauseGameAction);
-	shortcut = new QShortcut(QKeySequence("C"), this);
+	shortcut = new QShortcut(QKeySequence(tr("C")), this);
+	shortcut->setContext(Qt::WidgetWithChildrenShortcut);
 	connect(shortcut, &QShortcut::activated, app, &fairytale::cancelGame);
 }
 
@@ -123,6 +137,82 @@ int Player::volume() const
 #else
 	return this->mediaPlayer()->volume();
 #endif
+}
+
+void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
+{
+	switch (state)
+	{
+		case QMediaPlayer::StoppedState:
+		{
+			if (!this->m_parallelSounds.isEmpty())
+			{
+				const QUrl soundUrl = this->m_parallelSounds.dequeue();
+				this->m_parallelSoundsMediaPlayer->setMedia(soundUrl);
+				this->m_parallelSoundsMediaPlayer->play();
+			}
+			else
+			{
+				this->checkForFinish();
+			}
+
+			break;
+		}
+
+		case QMediaPlayer::PlayingState:
+		{
+			break;
+		}
+
+		case QMediaPlayer::PausedState:
+		{
+			break;
+		}
+	}
+}
+
+void Player::onChangeState(QMediaPlayer::State state)
+{
+	switch (state)
+	{
+		case QMediaPlayer::StoppedState:
+		{
+			this->checkForFinish();
+
+			break;
+		}
+
+		case QMediaPlayer::PlayingState:
+		{
+			break;
+		}
+
+		case QMediaPlayer::PausedState:
+		{
+			break;
+		}
+	}
+}
+
+#ifdef Q_OS_ANDROID
+void Player::onChangeStateAndroid()
+{
+	this->onChangeState(this->state());
+
+}
+#endif
+
+void Player::checkForFinish()
+{
+	qDebug() << "Check for finish:\nthis state:" << this->state();
+
+	// Check if parallel sounds and the current media playing are finished and then emit a signal finishVideoAndSounds
+	if (this->m_parallelSounds.isEmpty() && this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::StoppedState && this->state() == QMediaPlayer::StoppedState)
+	{
+		qDebug() << "Emitting signal";
+
+		emit finishVideoAndSounds();
+	}
 }
 
 void Player::playVideo(fairytale *app, const QUrl &url, const QString &description)
@@ -236,6 +326,21 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->play();
 }
 
+void Player::playParallelSound(fairytale *app, const QUrl &url)
+{
+	const QUrl soundUrl = app->resolveClipUrl(url);
+
+	if (this->m_parallelSoundsMediaPlayer->state() != QMediaPlayer::StoppedState)
+	{
+		this->m_parallelSounds.enqueue(soundUrl);
+	}
+	else
+	{
+		this->m_parallelSoundsMediaPlayer->setMedia(soundUrl);
+		this->m_parallelSoundsMediaPlayer->play();
+	}
+}
+
 void Player::play()
 {
 #ifdef Q_OS_ANDROID
@@ -276,6 +381,8 @@ void Player::setVolume(int volume)
 #else
 	this->mediaPlayer()->setVolume(volume);
 #endif
+
+	this->m_parallelSoundsMediaPlayer->setVolume(volume);
 }
 
 void Player::skip()

@@ -71,6 +71,13 @@ void fairytale::pauseGameAction()
 
 void fairytale::cancelGame()
 {
+	if (!this->isGameRunning())
+	{
+		qDebug() << "Invalid call of cancelGame()";
+
+		return;
+	}
+
 	// hold the game while asking to cancel
 	const bool pause = !this->isGamePaused();
 
@@ -312,6 +319,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
 	connect(this->m_player->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(finishNarratorAndroid()));
 #endif
+	connect(this->m_player, &Player::finishVideoAndSounds, this, &fairytale::onFinishVideoAndSounds);
 
 	const QDir dir(translationsDir());
 
@@ -333,6 +341,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 	QDir defaultClipsDir(this->defaultClipsDirectory());
+	qDebug() << "Default clips dir:" << this->defaultClipsDirectory();
 
 #ifndef Q_OS_ANDROID
 	// the default path is the "clips" sub directory
@@ -480,8 +489,7 @@ fairytale::~fairytale()
 QString fairytale::defaultClipsDirectory() const
 {
 #ifdef Q_OS_WIN
-	const QDir currentDir(QDir::currentPath());
-	return currentDir.filePath("../share/gustavsfairyland/clips");
+	return QDir::currentPath() + "/../share/gustavsfairyland/clips";
 #else
 	return QString("/usr/share/gustavsfairyland");
 #endif
@@ -490,9 +498,26 @@ QString fairytale::defaultClipsDirectory() const
 void fairytale::playFinalClip(int index)
 {
 	this->m_completeSolutionIndex = index;
+	Clip *solution = this->m_completeSolution[index];
 
-	this->playSound(this->resolveClipUrl(this->m_completeSolution[index]->narratorUrl()));
-	this->m_player->playVideo(this, this->m_completeSolution[index]->videoUrl(), this->description(index, this->m_completeSolution[index]));
+	// play all sounds parallel to the clip
+
+	// play the sound for the inital character again
+	if (solution->isPerson() && index > 1)
+	{
+		this->m_player->playParallelSound(this, this->resolveClipUrl(this->m_startPerson->narratorUrl()));
+	}
+
+	// play the sound "and"
+	if (solution->isPerson() && index > 0)
+	{
+		const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
+
+		this->m_player->playParallelSound(this, narratorSoundUrl);
+	}
+
+	this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
+	this->m_player->playVideo(this, solution->videoUrl(), this->description(index, solution));
 }
 
 void fairytale::playFinalVideo()
@@ -553,7 +578,8 @@ QDir fairytale::translationsDir() const
 	const QDir translationsDir = QDir(QDir::currentPath());
 #elif defined(Q_OS_WIN)
 	const QDir currentDir(QDir::currentPath());
-	const QDir translationsDir = QDir(currentDir.filePath("../share/gustavsfairyland/translations"));
+	const QDir translationsDir = currentDir.absolutePath() + "/../share/gustavsfairyland/translations";
+	qDebug() << "Windows translation dir:" << translationsDir;
 #elif defined(Q_OS_ANDROID)
 	const QDir translationsDir = QDir("assets:/translations");
 #else
@@ -593,7 +619,8 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
-	m_musicPlayer->stop();
+	// stop after changing the flag!
+	this->m_musicPlayer->stop();
 
 	this->wonDialog()->exec();
 
@@ -884,74 +911,8 @@ static bool initialCall = false;
 	switch (state)
 	{
 		case QMediaPlayer::StoppedState:
-		{
-			this->m_isPlayingMediaPlayer = false;
-			this->m_pausedMediaPlayer = false;
-
-			if (!this->m_playingBonusClip)
-			{
-				// played narrator stuff
-				if (!this->m_playCompleteSolution)
-				{
-					// Only react if the game mode has not been canceled
-					if (this->gameMode()->state() == GameMode::State::Running)
-					{
-						// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
-						if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
-						{
-							this->m_player->stop();
-							this->m_player->hide(); // hide the player, otherwise one cannot play the game
-
-							this->m_playerSounds.clear();
-
-							this->updateTimeLabel();
-							// the description label helps to remember
-							this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
-
-							this->gameMode()->afterNarrator();
-
-							// run every second
-							this->m_isRunningTimer = true;
-							this->m_pausedTimer = false;
-							this->m_timer.start(1000);
-						}
-						// played only the word "and" or the first person sound then we always expect another sound
-						else
-						{
-							const PlayerSoundData data = m_playerSounds.dequeue();
-							this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
-						}
-					}
-				}
-				// Play the next final clip of the complete solution.
-				else if (this->m_playCompleteSolution && this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
-				{
-					qDebug() << "Play next final clip";
-					// next time play the following clip
-					this->m_completeSolutionIndex++;
-					this->playFinalClip(this->m_completeSolutionIndex);
-				}
-				/*
-				* Stop playing the complete solution.
-				*/
-				else if (this->m_playCompleteSolution)
-				{
-					qDebug() << "Finished final clips";
-					this->m_playCompleteSolution = false;
-					this->m_completeSolutionIndex = 0;
-
-					// The dialog has to disappear, after the player watched all final clips.
-					this->m_player->hide();
-					this->customFairytaleDialog()->hide();
-					this->cleanupAfterOneGame();
-				}
-			}
-			else
-			{
-				this->m_playingBonusClip = false;
-				this->m_player->hide();
-			}
-
+		{	
+			// is handled in onFinishVideoAndSounds()
 			break;
 		}
 
@@ -969,6 +930,80 @@ static bool initialCall = false;
 
 			break;
 		}
+	}
+}
+
+void fairytale::onFinishVideoAndSounds()
+{
+	qDebug() << "Finish video and sounds";
+
+	if (!this->m_playingBonusClip)
+	{
+		this->m_isPlayingMediaPlayer = false;
+		this->m_pausedMediaPlayer = false;
+
+		// played narrator stuff
+		if (!this->m_playCompleteSolution)
+		{
+			// Only react if the game mode has not been canceled
+			if (this->gameMode()->state() == GameMode::State::Running)
+			{
+				// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+				if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+				{
+					this->m_player->stop();
+					this->m_player->hide(); // hide the player, otherwise one cannot play the game
+
+					this->m_playerSounds.clear();
+
+					this->updateTimeLabel();
+					// the description label helps to remember
+					this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
+
+					this->gameMode()->afterNarrator();
+
+					// run every second
+					this->m_isRunningTimer = true;
+					this->m_pausedTimer = false;
+					this->m_timer.start(1000);
+				}
+				// played only the word "and" or the first person sound then we always expect another sound
+				else
+				{
+					const PlayerSoundData data = m_playerSounds.dequeue();
+					this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+				}
+			}
+		}
+		// Play the next final clip of the complete solution.
+		else
+		{
+			if (this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+			{
+				qDebug() << "Play next final clip";
+				// next time play the following clip
+				this->m_completeSolutionIndex++;
+				this->playFinalClip(this->m_completeSolutionIndex);
+			}
+			/*
+			* Stop playing the complete solution.
+			*/
+			else
+			{
+				qDebug() << "Finished final clips";
+				this->m_playCompleteSolution = false;
+				this->m_completeSolutionIndex = 0;
+
+				// The dialog has to disappear, after the player watched all final clips.
+				this->m_player->hide();
+				// Dont hide the custom fairytale. The player should have the change to save or rewatch it.
+			}
+		}
+	}
+	else
+	{
+		this->m_playingBonusClip = false;
+		this->m_player->hide();
 	}
 }
 
@@ -1162,7 +1197,6 @@ void fairytale::changeEvent(QEvent* event)
 
 void fairytale::cleanupGame()
 {
-	this->m_musicPlayer->stop();
 	this->m_playerSounds.clear();
 
 	// this method is also called in the beginning when there is no gamemode
@@ -1175,6 +1209,8 @@ void fairytale::cleanupGame()
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
 	this->m_isRunning = false;
+	// stop music after changing the flag!
+	this->m_musicPlayer->stop();
 }
 
 void fairytale::cleanupAfterOneGame()

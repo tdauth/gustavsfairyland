@@ -99,13 +99,25 @@
 			<image>./princess/princess.jpg</image>
 			<video>./princess/princess.mkv</video>
 			<narrator>
-				<de>./fairy/fairy.wav</de>
+                                <de>./princess/princess.wav</de>
 			</narrator>
 			<description>
 				<en>the Princess</en>
 				<de>die Prinzessin</de>
 			</description>
 		</clip>
+
+                <clip>
+                        <image>./hello/hello.jpg</image>
+                        <video>./hello/hello.mkv</video>
+                        <narrator>
+                                <de>./hello/hello.wav</de>
+                        </narrator>
+                        <description>
+                                <en>the Hello Saying</en>
+                                <de>der Hallo-Sager</de>
+                        </description>
+                </clip>
 	</persons>
 
 	<!-- new acts -->

@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QDialog>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtCore/QQueue>
 // On Android videos can be only played in QML.
 #ifdef Q_OS_ANDROID
 #include <QQuickView>
@@ -24,10 +25,22 @@ class Player : public QDialog, protected Ui::Player
 {
 	Q_OBJECT
 
+	signals:
+		/**
+		 * This signal is emitted when the video/sound and the parallel sounds have finished both.
+		 */
+		void finishVideoAndSounds();
+
 	public slots:
 		void playVideo(fairytale *app, const QUrl &url, const QString &description);
 		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
 		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
+
+		/**
+		  * Plays a parallel sound which is mixed with the current output and which is waited for as well.
+		  * If there is already played a parallel sound this one is queued.
+		  */
+		void playParallelSound(fairytale *app, const QUrl &url);
 
 		/**
 		 * Starts playing the current video or sound.
@@ -51,6 +64,7 @@ class Player : public QDialog, protected Ui::Player
 		 * Skips the currently played video or sound.
 		 */
 		void skip();
+
 	public:
 		Player(QWidget *parent, fairytale *app);
 		virtual ~Player();
@@ -76,7 +90,16 @@ class Player : public QDialog, protected Ui::Player
 
 		QPushButton* pauseButton() const;
 
+	private slots:
+		void onChangeStateParallelSoundPlayer(QMediaPlayer::State state);
+		void onChangeState(QMediaPlayer::State state);
+#ifdef Q_OS_ANDROID
+		void onChangeStateAndroid();
+#endif
+
 	private:
+		void checkForFinish();
+
 		fairytale *m_app;
 		/**
 		 * The icon label is used for showing a clip picture when playing a sound only.
@@ -84,6 +107,12 @@ class Player : public QDialog, protected Ui::Player
 		IconLabel *m_iconLabel;
 		bool m_skipped;
 		bool m_isPrefix;
+
+		/// A queue with sounds waiting for the parallel sound player to become available.
+		typedef QQueue<QUrl> SoundQueue;
+		SoundQueue m_parallelSounds;
+		/// Player for background music.
+		QMediaPlayer *m_parallelSoundsMediaPlayer;
 
 #ifdef Q_OS_ANDROID
 		QQuickView *m_view;

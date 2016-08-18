@@ -4,42 +4,42 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="92"/>
+        <location filename="../build/ui_aboutdialog.h" line="98"/>
         <source>About Gustav&apos;s Faryland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="94"/>
+        <location filename="../build/ui_aboutdialog.h" line="100"/>
         <source>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="95"/>
+        <location filename="../build/ui_aboutdialog.h" line="101"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="96"/>
+        <location filename="../build/ui_aboutdialog.h" line="102"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Programming: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Vampire: Anne&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Werewolf: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Plague Doctor: Jannis&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Wood texture: &lt;/span&gt;&lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -543,6 +543,21 @@ p, li { white-space: pre-wrap; }
         <source>Skip (Space)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../player.cpp" line="86"/>
+        <source>SPACE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="90"/>
+        <source>P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="93"/>
+        <source>C</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -593,76 +608,76 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="82"/>
+        <location filename="../fairytale.cpp" line="89"/>
         <source>Cancel Game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="82"/>
+        <location filename="../fairytale.cpp" line="89"/>
         <source>Do you want to cancel the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="232"/>
-        <location filename="../fairytale.cpp" line="666"/>
+        <location filename="../fairytale.cpp" line="239"/>
+        <location filename="../fairytale.cpp" line="691"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="233"/>
-        <location filename="../fairytale.cpp" line="667"/>
+        <location filename="../fairytale.cpp" line="240"/>
+        <location filename="../fairytale.cpp" line="692"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="642"/>
+        <location filename="../fairytale.cpp" line="667"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="643"/>
+        <location filename="../fairytale.cpp" line="668"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="783"/>
+        <location filename="../fairytale.cpp" line="808"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1038"/>
+        <location filename="../fairytale.cpp" line="1071"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1059"/>
-        <location filename="../fairytale.cpp" line="1093"/>
+        <location filename="../fairytale.cpp" line="1092"/>
+        <location filename="../fairytale.cpp" line="1126"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1063"/>
-        <location filename="../fairytale.cpp" line="1097"/>
+        <location filename="../fairytale.cpp" line="1096"/>
+        <location filename="../fairytale.cpp" line="1130"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1070"/>
+        <location filename="../fairytale.cpp" line="1103"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1074"/>
+        <location filename="../fairytale.cpp" line="1107"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1081"/>
+        <location filename="../fairytale.cpp" line="1114"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1085"/>
+        <location filename="../fairytale.cpp" line="1118"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>
