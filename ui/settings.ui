@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
+    <width>444</width>
     <height>107</height>
    </rect>
   </property>
@@ -35,17 +35,24 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
+   <item row="3" column="0" colspan="3">
     <widget class="QCheckBox" name="fullScreenCheckBox">
      <property name="text">
       <string>Full Screen</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="3">
+   <item row="4" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="musicCheckBox">
+     <property name="text">
+      <string>Music</string>
      </property>
     </widget>
    </item>

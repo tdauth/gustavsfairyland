@@ -199,6 +199,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The player should win every game in seconds since this music gives him the greatest joy of all time.
 		 */
 		void startMusic();
+		void setMusicMuted(bool muted);
+		bool isMusicMuted() const;
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;
@@ -405,6 +407,16 @@ inline HighScores* fairytale::highScores() const
 inline QString fairytale::currentTranslation() const
 {
 	return this->m_currentTranslation;
+}
+
+inline void fairytale::setMusicMuted(bool muted)
+{
+	this->m_musicPlayer->setMuted(muted);
+}
+
+inline bool fairytale::isMusicMuted() const
+{
+	return this->m_musicPlayer->isMuted();
 }
 
 #endif // fairytale_H

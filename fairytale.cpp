@@ -92,7 +92,7 @@ void fairytale::cancelGame()
 
 void fairytale::showCustomFairytale()
 {
-	const bool pausedGame = !this->isGamePaused();
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
 
 	if (pausedGame)
 	{
@@ -115,8 +115,21 @@ void fairytale::settings()
 		m_settingsDialog = new SettingsDialog(this, this);
 	}
 
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	m_settingsDialog->update();
 	m_settingsDialog->exec();
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 void fairytale::openClipsDialog()
@@ -311,11 +324,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 		m_translationFileNames.insert(action, languageFile.baseName());
 	}
 
-	m_audioPlayer->setVolume(100);
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
+	m_audioPlayer->setVolume(100);
 	connect(this->m_audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishAudio(QMediaPlayer::State)));
 
-	m_musicPlayer->setVolume(100);
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_musicPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishMusic(QMediaPlayer::State)));
 
@@ -988,6 +1000,8 @@ void fairytale::startMusic()
 	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
+	// Music should not be annoyingly loud.
+	m_musicPlayer->setVolume(50);
 }
 
 void fairytale::finishMusic(QMediaPlayer::State state)

@@ -9,6 +9,8 @@ void SettingsDialog::restoreDefaults()
 	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
+	musicCheckBox->setChecked(true);
+
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
 #else
@@ -31,6 +33,8 @@ void SettingsDialog::apply()
 {
 	this->m_app->setClipsDir(m_clipsDir);
 
+	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
+
 	if (this->fullScreenCheckBox->isChecked())
 	{
 		this->m_app->showFullScreen();
@@ -45,6 +49,7 @@ void SettingsDialog::update()
 {
 	this->m_clipsDir = this->m_app->clipsDir();
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
+	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
 	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
 }
 
