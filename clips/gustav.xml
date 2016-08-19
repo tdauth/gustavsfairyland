@@ -118,6 +118,30 @@
                                 <de>der Hallo-Sager</de>
                         </description>
                 </clip>
+
+		<clip>
+			<image>./jedi/jedi.jpg</image>
+			<video>./jedi/jedi.mkv</video>
+			<narrator>
+				<de>./jedi/jedi.wav</de>
+			</narrator>
+			<description>
+				<en>the Jedi</en>
+				<de>der Jedi</de>
+			</description>
+		</clip>
+
+		<clip>
+			<image>./bank/bank.jpg</image>
+			<video>./bank/bank.mkv</video>
+			<narrator>
+				<de>./bank/bank.wav</de>
+			</narrator>
+			<description>
+				<en>the guy on the bench</en>
+				<de>der Typ auf der Bank</de>
+			</description>
+		</clip>
 	</persons>
 
 	<!-- new acts -->
@@ -323,6 +347,18 @@
 			<description>
 				<en>ascended the throne</en>
 				<de>bestiegen den Thron</de>
+			</description>
+		</clip>
+
+		<clip>
+			<image>./kill/kill.jpg</image>
+			<video>./kill/kill.mkv</video>
+			<narrator>
+				<de>./kill/kill.wav</de>
+			</narrator>
+			<description>
+				<en>killed a stranger</en>
+				<de>töteten einen Fremden</de>
 			</description>
 		</clip>
 	</acts>
