@@ -56,6 +56,34 @@ if (ANDROID)
 	find_package(Qt5QuickWidgets REQUIRED)
 endif ()
 
+set(fairyland_HEADERS
+	aboutdialog.h
+	fairytale.h
+	floatingclip.h
+	clip.h
+	door.h
+	player.h
+	iconbutton.h
+	clipsdialog.h
+	clippackage.h
+	clippackagedialog.h
+	clippackageeditor.h
+	clipeditor.h
+	customfairytaledialog.h
+	gamemode.h
+	gamemodedialog.h
+	gamemodemoving.h
+	gamemodeoneoutoffour.h
+	iconbutton.h
+	roomwidget.h
+	settingsdialog.h
+	wondialog.h
+	iconlabel.h
+	highscores.h
+	bonusclip.h
+	gameoverdialog.h
+)
+
 set(fairyland_SRCS
 	aboutdialog.cpp
 	fairytale.cpp
@@ -107,7 +135,7 @@ set(fairyland_TRANSLATIONS
 	translations/de.ts
 )
 
-file(GLOB_RECURSE fairytale_TRANSLATION_SRCS GLOB_RECURSE "${CMAKE_BINARY_DIR}" "*.cpp" "*.h")
+set(fairytale_TRANSLATION_SRCS ${fairyland_SRCS} ${fairyland_HEADERS} ${fairyland_UI_HEADERS})
 QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyland_TRANSLATIONS})
 
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
