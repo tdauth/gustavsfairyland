@@ -256,8 +256,6 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
 	nextTurn();
 
 	setGameButtonsEnabled(true);
-
-	startMusic();
 }
 
 fairytale::fairytale(Qt::WindowFlags flags)
@@ -442,6 +440,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	// Initial cleanup.
 	cleanupGame();
+
+	// start the background music from Mahler
+	startMusic();
 }
 
 fairytale::~fairytale()

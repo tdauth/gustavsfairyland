@@ -31,7 +31,7 @@ void GameModeMoving::afterNarrator()
 	this->m_roomWidget->floatingClips().at(0)->setClip(m_currentSolution);
 
 	// add more floating clips every round to make it a bit harder
-	if (this->app()->turns() > 1)
+	if (this->app()->turns() > 0)
 	{
 		const int index = qrand() % this->app()->completeSolution().size();
 
@@ -40,7 +40,7 @@ void GameModeMoving::afterNarrator()
 		qDebug() << "Speed: " << speed;
 
 		// Don't add too many floating clips, otherwise it becomes too easy.
-		if (this->m_roomWidget->floatingClips().size() < 4)
+		if (this->m_roomWidget->floatingClips().size() < 6)
 		{
 			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), speed);
 		}
