@@ -339,10 +339,14 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(this->m_musicPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishMusic(QMediaPlayer::State)));
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
-	QDir defaultClipsDir(this->defaultClipsDirectory());
+	const QDir defaultClipsDir(this->defaultClipsDirectory());
 	qDebug() << "Default clips dir:" << this->defaultClipsDirectory();
 	// the default path is the "clips" sub directory
+#ifndef Q_OS_ANDROID
 	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
+#else
+	m_clipsDir = QUrl(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
+#endif
 
 	const int size = settings.beginReadArray("clipPackages");
 
@@ -422,7 +426,11 @@ fairytale::fairytale(Qt::WindowFlags flags)
 fairytale::~fairytale()
 {
 	QSettings settings("TaCaProduction", "gustavsfairyland");
+#ifndef Q_OS_ANDROID
 	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
+#else
+	settings.setValue("clipsDir", m_clipsDir.toString());
+#endif
 	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
 	int i = 0;
 
@@ -1337,7 +1345,8 @@ QUrl fairytale::resolveClipUrl(const QUrl &url) const
 		relativePath = relativePath.mid(2);
 	}
 
-	QUrl result(this->m_clipsDir + "/" + relativePath);
+	qDebug() << "Clips dir:" << this->m_clipsDir.toString();
+	QUrl result(this->m_clipsDir.toString() + "/" + relativePath);
 #endif
 
 	qDebug() << "Resolved: " << result;
