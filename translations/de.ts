@@ -107,7 +107,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="59"/>
         <source>Select Clip Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip-Paket auswählen</translation>
     </message>
 </context>
 <context>
@@ -120,7 +120,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="120"/>
         <source>Add Clip</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Clip hinzufügen</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="121"/>
@@ -212,32 +212,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../customfairytaledialog.cpp" line="17"/>
         <source>Name of custom fairytale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des eigenen Märchens:</translation>
     </message>
     <message>
         <location filename="../customfairytaledialog.cpp" line="17"/>
         <source>Custom Fairytale Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des eigenen Märchens</translation>
     </message>
     <message>
         <location filename="../customfairytaledialog.cpp" line="24"/>
         <source>Overwrite existing custom fairytale?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../customfairytaledialog.cpp" line="24"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../customfairytaledialog.cpp" line="134"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../customfairytaledialog.cpp" line="154"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
-        <translation type="unfinished"></translation>
+        <translation>Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.&lt;br/&gt;Ende</translation>
     </message>
 </context>
 <context>
@@ -245,27 +245,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_customfairytale.h" line="109"/>
         <source>Custom Fairytale</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Märchen</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="111"/>
         <source>Play Custom Fairytale</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Märchen abspielen</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="112"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="113"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="110"/>
         <source>Retry</source>
-        <translation type="unfinished">Nochmal versuchen</translation>
+        <translation>Nochmal versuchen</translation>
     </message>
     <message>
         <source>OK</source>
@@ -366,22 +366,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="243"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="244"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="245"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="246"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Über</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="247"/>
@@ -620,17 +620,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../settingsdialog.cpp" line="189"/>
         <source>Add Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip hinzufügen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="189"/>
         <source>Clip Files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip-Dateien (*.xml)</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="244"/>
         <source>Missing Clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende Clips</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="244"/>
@@ -640,22 +640,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../settingsdialog.cpp" line="313"/>
         <source>Custom Fairytale Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Name des eigenen Märchens</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="313"/>
         <source>Name of custom fairytale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Name des eigenen Märchens:</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="320"/>
         <source>Overwrite existing custom fairytale?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="320"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="425"/>

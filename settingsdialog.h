@@ -53,6 +53,9 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 		void load(QSettings &settings);
 		void save(QSettings &settings);
 
+	protected:
+		virtual void changeEvent(QEvent *event) override;
+
 	private:
 		fairytale *m_app;
 		QUrl m_clipsDir;
