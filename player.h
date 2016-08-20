@@ -65,6 +65,11 @@ class Player : public QDialog, protected Ui::Player
 		 */
 		void skip();
 
+		/**
+		 * Skips the currently played video or sound and indicates to the game that everything should be skipped.
+		 */
+		void skipAll();
+
 	public:
 		Player(QWidget *parent, fairytale *app);
 		virtual ~Player();
@@ -83,6 +88,10 @@ class Player : public QDialog, protected Ui::Player
 		 * \return Returns true if the video or sound has been skipped. This value is reset whenever a new media is played.
 		 */
 		bool skipped() const;
+		/**
+		 * \return Returns true if the video or sound has been skipped and everything following should be skipped as well.
+		 */
+		bool skippedAll() const;
 		/**
 		 * \return Returns true if the currently played media is only the prefix for another media. This means after ending the current media the game mode does not continue yet.
 		 */
@@ -106,6 +115,7 @@ class Player : public QDialog, protected Ui::Player
 		 */
 		IconLabel *m_iconLabel;
 		bool m_skipped;
+		bool m_skippedAll;
 		bool m_isPrefix;
 
 		/// A queue with sounds waiting for the parallel sound player to become available.
@@ -140,6 +150,11 @@ Player::mediaPlayer() const
 inline bool Player::skipped() const
 {
 	return this->m_skipped;
+}
+
+inline bool Player::skippedAll() const
+{
+	return this->m_skippedAll;
 }
 
 inline bool Player::isPrefix() const

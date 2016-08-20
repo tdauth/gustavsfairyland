@@ -488,6 +488,8 @@ void SettingsDialog::load(QSettings &settings)
 #endif
 	this->fullScreenCheckBox->setChecked(settings.value("fullscreen", defaultShowFullScreen).toBool());
 
+	qDebug() << "Set clips dir to" << m_clipsDir;
+
 	const int size = settings.beginReadArray("clipPackages");
 
 	if (size > 0)
@@ -513,12 +515,6 @@ void SettingsDialog::load(QSettings &settings)
 
 	settings.endArray();
 
-	// default package
-	if (m_app->clipPackages().isEmpty())
-	{
-		m_app->loadDefaultClipPackage();
-	}
-
 	// Apply before loading custom fairytales since they are not stored in the settings additionally and otherwise they would all be deleted.
 	apply();
 
@@ -535,6 +531,12 @@ void SettingsDialog::load(QSettings &settings)
 	settings.endArray();
 
 	settings.endGroup();
+
+	// default package
+	if (m_app->clipPackages().isEmpty())
+	{
+		m_app->loadDefaultClipPackage();
+	}
 }
 
 void SettingsDialog::save(QSettings &settings)

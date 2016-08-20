@@ -42,7 +42,7 @@ void GameModeMoving::afterNarrator()
 		// Don't add too many floating clips, otherwise it becomes too easy.
 		if (this->m_roomWidget->floatingClips().size() < 6)
 		{
-			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClips().at(0)->width(), speed);
+			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClipWidth(), speed);
 		}
 
 		foreach (FloatingClip *clip, this->m_roomWidget->floatingClips())

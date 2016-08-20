@@ -6,7 +6,7 @@
 #include "fairytale.h"
 #include "iconlabel.h"
 
-Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
+Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_skippedAll(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
 #ifdef Q_OS_ANDROID
 , m_view(nullptr), m_item(nullptr), m_mediaPlayer(nullptr), m_videoWidget(nullptr)
 #else
@@ -78,6 +78,7 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	videoPlayerLayout->addWidget(m_iconLabel);
 
 	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
+	connect(this->skipAllPushButton, &QPushButton::clicked, this, &Player::skipAll);
 	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGameAction()));
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
@@ -219,6 +220,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 {
 	this->m_isPrefix = false;
 	this->m_skipped = false;
+	this->m_skippedAll = false;
 	this->m_iconLabel->hide();
 	this->m_iconLabel->setFile("");
 	this->m_videoWidget->show();
@@ -282,6 +284,7 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 
 	this->m_isPrefix = prefix;
 	this->m_skipped = false;
+	this->m_skippedAll = false;
 	this->m_videoWidget->hide();
 	this->m_iconLabel->show();
 	this->m_iconLabel->setFile(imageFile);
@@ -395,6 +398,23 @@ void Player::skip()
 	}
 
 	this->m_skipped = true;
+	this->hide();
+
+	// stop after hiding since stopping might lead to showing it again
+	this->stop();
+}
+
+void Player::skipAll()
+{
+	if (this->m_skipped)
+	{
+		qDebug() << "Invalid skip all call";
+
+		return;
+	}
+
+	this->m_skipped = true;
+	this->m_skippedAll = true;
 	this->hide();
 
 	// stop after hiding since stopping might lead to showing it again

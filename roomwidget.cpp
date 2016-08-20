@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 #include "roomwidget.h"
 #include "door.h"
@@ -114,6 +115,15 @@ void RoomWidget::updatePaint()
 	m_paintTime = overrunTimer.elapsed();
 }
 
+int RoomWidget::floatingClipWidth() const
+{
+	QDesktopWidget widget;
+	QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen()); // or screenGeometry(), depending on your needs
+	const int availableWidth = qMax(mainScreenSize.height(), mainScreenSize.width());
+
+	return availableWidth / 8;
+}
+
 RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidget(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -123,7 +133,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidge
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
-	m_floatingClips.push_back(new FloatingClip(this, 200, gameMode->startSpeed()));
+	m_floatingClips.push_back(new FloatingClip(this, floatingClipWidth(), gameMode->startSpeed()));
 
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");

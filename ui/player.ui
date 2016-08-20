@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
+    <width>476</width>
     <height>185</height>
    </rect>
   </property>
@@ -104,6 +104,13 @@
            </property>
            <property name="text">
             <string>Skip (Space)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="skipAllPushButton">
+           <property name="text">
+            <string>Skip All</string>
            </property>
           </widget>
          </item>

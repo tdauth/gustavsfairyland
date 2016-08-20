@@ -503,8 +503,11 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 		return;
 	}
 
-	this->m_playingCustomFairytale = customFairytale;
-	this->playCustomFairytaleClip(0);
+	if (!customFairytale->clipIds().isEmpty())
+	{
+		this->m_playingCustomFairytale = customFairytale;
+		this->playCustomFairytaleClip(0);
+	}
 }
 
 void fairytale::showHighScores()
@@ -550,7 +553,7 @@ void fairytale::retry()
 
 QDir fairytale::translationsDir() const
 {
-#ifdef DEBUG
+#if defined(DEBUG) && not defined(Q_OS_ANDROID)
 	const QDir translationsDir = QDir(QDir::currentPath());
 #elif defined(Q_OS_WIN)
 	/*
@@ -962,7 +965,7 @@ void fairytale::onFinishVideoAndSounds()
 		// Play the next final clip of the complete solution.
 		else if (this->m_playCompleteSolution)
 		{
-			if (this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
+			if (this->m_completeSolutionIndex + 1 < this->m_completeSolution.size() && !this->m_player->skippedAll())
 			{
 				qDebug() << "Play next final clip";
 				// next time play the following clip
@@ -970,8 +973,8 @@ void fairytale::onFinishVideoAndSounds()
 				this->playFinalClip(this->m_completeSolutionIndex);
 			}
 			/*
-			* Stop playing the complete solution.
-			*/
+			 * Stop playing the complete solution.
+			 */
 			else
 			{
 				qDebug() << "Finished final clips";
@@ -986,7 +989,7 @@ void fairytale::onFinishVideoAndSounds()
 		// Play the next clip of a custom fairytale
 		else if (m_playingCustomFairytale != nullptr)
 		{
-			if (this->m_customFairytaleIndex + 1 < this->m_playingCustomFairytale->clipIds().size())
+			if (this->m_customFairytaleIndex + 1 < this->m_playingCustomFairytale->clipIds().size() && !this->m_player->skippedAll())
 			{
 				qDebug() << "Play next custom fairytale clip";
 				// next time play the following clip
@@ -1444,10 +1447,13 @@ bool fairytale::loadDefaultClipPackage()
 	{
 		this->addClipPackage(package);
 
+		qDebug() << "Successfully loaded";
+
 		return true;
 	}
 	else
 	{
+		qDebug() << "Error on opening";
 		delete package;
 		package = nullptr;
 	}

@@ -37,6 +37,13 @@ class RoomWidget : public QOpenGLWidget
 		typedef QVector<Door*> Doors;
 		typedef QVector<FloatingClip*> FloatingClips;
 
+		/**
+		 * The width of a floating clip depends on the display size.
+		 * A bigger display leads to bigger floating clips to keep the fairness.
+		 * Otherwise small displays with big floating clips would give you an advantage of clicking the floating clip.
+		 */
+		int floatingClipWidth() const;
+
 		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
 
 		GameModeMoving* gameMode() const;

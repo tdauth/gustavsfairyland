@@ -10,7 +10,7 @@ Rectangle {
     MediaPlayer {
         id: player
         objectName: "player"
-        audioRole: GameRole
+        audioRole: MediaPlayer.GameRole
         source: "assets:/vampir/vampir.avi"
         //autoPlay: true
     }
