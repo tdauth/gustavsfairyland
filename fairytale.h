@@ -324,7 +324,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool m_playingBonusClip;
 
 		QTranslator m_translator;
-		typedef QMap<QAction*,QString> TranslationFileNames;
+		typedef QMap<QAction*, QString> TranslationFileNames;
 		TranslationFileNames m_translationFileNames;
 		QString m_currentTranslation;
 };

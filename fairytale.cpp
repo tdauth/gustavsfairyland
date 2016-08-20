@@ -308,6 +308,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	const QDir dir(translationsDir());
 
+	// Try to load the current locale. If no translation file exists it will remain English.
+	QString locale = QLocale::system().name();
+	locale.truncate(locale.lastIndexOf('_'));
+
+	QAction *currentLocaleAction = nullptr;
+
 	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
 	{
 		QAction *action = new QAction(localeToName(languageFile.baseName()), this);
@@ -315,6 +321,11 @@ fairytale::fairytale(Qt::WindowFlags flags)
 		connect(action, SIGNAL(triggered()), this, SLOT(changeLanguage()));
 		menuLanguage->addAction(action);
 		m_translationFileNames.insert(action, languageFile.baseName());
+
+		if (languageFile.baseName() == locale)
+		{
+			currentLocaleAction = action;
+		}
 	}
 
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
@@ -379,11 +390,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	qApp->installTranslator(&m_translator);
 
-	// Try to load the current locale. If no translation file exists it will remain English.
-	QString locale = QLocale::system().name();
-	locale.truncate(locale.lastIndexOf('_'));
 	loadLanguage(locale);
-	// TODO check the action
+
+	if (currentLocaleAction != nullptr)
+	{
+		currentLocaleAction->setChecked(true);
+	}
 
 	// Initial cleanup.
 	cleanupGame();
