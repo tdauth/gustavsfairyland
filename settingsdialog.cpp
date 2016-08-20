@@ -84,6 +84,8 @@ void SettingsDialog::update()
 	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
 	this->m_clipsDir = this->m_app->clipsDir();
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
+
+	this->fill(m_app->clipPackages());
 }
 
 void SettingsDialog::addFile()

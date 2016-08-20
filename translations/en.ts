@@ -532,42 +532,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="56"/>
-        <location filename="../settingsdialog.cpp" line="112"/>
+        <location filename="../settingsdialog.cpp" line="114"/>
         <source>Clips Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="91"/>
+        <location filename="../settingsdialog.cpp" line="93"/>
         <source>Add Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="91"/>
+        <location filename="../settingsdialog.cpp" line="93"/>
         <source>Clip Files (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="148"/>
+        <location filename="../settingsdialog.cpp" line="150"/>
         <source>Missing Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="148"/>
+        <location filename="../settingsdialog.cpp" line="150"/>
         <source>Missing clips in the directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="248"/>
+        <location filename="../settingsdialog.cpp" line="250"/>
         <source>Persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="250"/>
+        <location filename="../settingsdialog.cpp" line="252"/>
         <source>Acts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="252"/>
+        <location filename="../settingsdialog.cpp" line="254"/>
         <source>Bonuses</source>
         <translation type="unfinished"></translation>
     </message>
