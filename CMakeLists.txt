@@ -16,7 +16,7 @@ endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
-option(USE_COMPRESSED_VIDEOS "Enable this option to install much smaller videos." FALSE)
+option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos." FALSE)
 
 # Validate XML files if possible
 find_program(XMLLINT_PATH xmllint)
@@ -177,12 +177,15 @@ endif ()
 
 install(FILES fairyland.desktop DESTINATION share/applications)
 
-if (USE_COMPRESSED_VIDEOS)
-	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES "${CMAKE_SOURCE_DIR}/clips/*/*_compressed*")
+if (USE_COMPRESSED_FILES)
+	file(GLOB_RECURSE COMPRESSED_FILES "${CMAKE_SOURCE_DIR}/clips/*/*_compressed*")
 else ()
-	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES_AVI "${CMAKE_SOURCE_DIR}/clips/*/*.avi")
-	file(GLOB_RECURSE COMPRESSED_VIDEO_FILES_MKV "${CMAKE_SOURCE_DIR}/clips/*/*.mkv")
-	list(APPEND COMPRESSED_VIDEO_FILES ${COMPRESSED_VIDEO_FILES_AVI} ${COMPRESSED_VIDEO_FILES_MKV})
+	file(GLOB_RECURSE COMPRESSED_FILES_AVI "${CMAKE_SOURCE_DIR}/clips/*/*.avi")
+	file(GLOB_RECURSE COMPRESSED_FILES_MKV "${CMAKE_SOURCE_DIR}/clips/*/*.mkv")
+	file(GLOB_RECURSE COMPRESSED_SPEECH_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.wav")
+	file(GLOB_RECURSE COMPRESSED_MUSIC_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.mp3")
+
+	list(APPEND COMPRESSED_FILES ${COMPRESSED_VIDEO_FILES_AVI} ${COMPRESSED_VIDEO_FILES_MKV} ${COMPRESSED_SPEECH_FILES} ${COMPRESSED_MUSIC_FILES})
 endif ()
 
 # the default fairyland package gustav
@@ -196,16 +199,12 @@ else ()
 	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
 	install(DIRECTORY clips/music DESTINATION share/gustavsfairyland/clips)
 endif ()
-message(STATUS "Compressed files: ${COMPRESSED_VIDEO_FILES}")
+message(STATUS "Compressed files: ${COMPRESSED_FILES}")
 file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
 file(GLOB_RECURSE IMAGE_FILES_PNG "${CMAKE_SOURCE_DIR}/clips/*/*.png")
 list(APPEND IMAGE_FILES ${IMAGE_FILES_JPG} ${IMAGE_FILES_PNG})
 message(STATUS "Image files: ${IMAGE_FILES}")
-file(GLOB_RECURSE SPEECH_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.wav")
-message(STATUS "Sound files: ${SPEECH_FILES}")
-file(GLOB_RECURSE MUSIC_FILES "${CMAKE_SOURCE_DIR}/clips/*/*.mp3")
-message(STATUS "Music files: ${MUSIC_FILES}")
-list(APPEND INSTALL_FILES ${COMPRESSED_VIDEO_FILES} ${IMAGE_FILES} ${SPEECH_FILES} ${MUSIC_FILES} ${PACKAGE_FILES})
+list(APPEND INSTALL_FILES ${COMPRESSED_FILES} ${IMAGE_FILES} ${SPEECH_FILES} ${MUSIC_FILES} ${PACKAGE_FILES})
 
 # Specify the install directory for every found file.
 foreach (f ${INSTALL_FILES})
