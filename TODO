@@ -1,6 +1,6 @@
 - DONE: Pause-Funktion
 - DONE: Endvideo überspringbar machen
-- Musik während Auswahl
+- DONE: Musik während Auswahl
 - DEPRECATED: untere Anzeigen fixen
 - Oberfläche mittelalterlich
 - Schwierigkeitsgrade: mit Vertauschungen oder Springen links rechts
@@ -15,7 +15,7 @@
 - kleines Icon
 - Titelschriftzug, Logo
 - Holzboden
-- Fenster öffnen, anders darstellen
+- DONE: Fenster öffnen, anders darstellen
 - Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
 - Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
 - DONE: Bei Pause RoomWidget ausgrauen
@@ -25,18 +25,24 @@
 - Offenes Fenster, Licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
 - Sounds: Fenster auf, Windsound
 - GIF mit Vorhängen von oben die durch Wind bewegt werden
-- Videosupport für Android mit Hilfe von QML.
+- Videosupport für Android mit Hilfe von QML:
+https://forum.qt.io/topic/70420/playing-videos-from-c-using-qml-on-android-does-not-work-either
+http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
+
 - Intro kurz und knackig: Es war einmal ... Seiten fallen aus dem Buch VERDAMMTE SCHEISSE Nicht vergessen: Gustav Mahler improvisiert bei der Reihenfolge und gibt selbst einfach vor, welche Seite als Nächstes kommt
 - Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
 - Optional: Mit Hilfe von valgrind nach Speicherleaks suchen.
-- Mahlers Musik! https://archive.org/details/Mahler_Symphony_5
+- DONE: Mahlers Musik! https://archive.org/details/Mahler_Symphony_5
 - Mahlers Musik komprimieren, zumindest wenn Option aktiv ist.
 - Erzählersounds müssen am Ende parallel zu den Videos kommen.
 - Wenn Clips Kollision haben, zittern sie? Unklar welche Richtung?
-- Gameover Dialog: Auch Bild einfügen.
+- DONE: Gameover Dialog: Auch Bild einfügen.
 - FIXED (context geändert): Shortcuts in Player gehen nicht immer.
 - Skip während man ein eigenes Märchen abspielt kann zum Absturz führen. Keinen Spielstart erlauben während eigenes Märchen abgespielt wird.
 - Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
+
+Finale TODOS:
+- Valgrind memoryleaks and Profiling
 
 DONE:
 - Hauptfigur am Anfang bestimmt
