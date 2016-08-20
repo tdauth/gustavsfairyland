@@ -1,11 +1,37 @@
 #include <iostream>
 
 #include <QtGui>
+#include <QInputDialog>
 
 #include "customfairytaledialog.h"
 #include "fairytale.h"
 #include "iconlabel.h"
 #include "clip.h"
+#include "customfairytale.h"
+#include "clippackage.h"
+
+void CustomFairytaleDialog::save()
+{
+	bool ok = false;
+	const QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Name of custom fairytale:"), QLineEdit::Normal, "", &ok);
+
+	if (ok && !text.isEmpty())
+	{
+		CustomFairytale *customFairytale = new CustomFairytale(m_app);
+		customFairytale->setPackageId(this->m_app->clipPackage()->id());
+		customFairytale->setName(text);
+		CustomFairytale::ClipIds clipIds;
+
+		for (int i = 0; i < m_clips.size(); ++i)
+		{
+			Clip *clip = m_clips.at(i);
+			clipIds.push_back(clip->id());
+		}
+
+		customFairytale->setClipIds(clipIds);
+		m_app->addCustomFairytale(customFairytale);
+	}
+}
 
 void CustomFairytaleDialog::retry()
 {
@@ -39,6 +65,7 @@ CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : 
 	this->setModal(true);
 
 	connect(this->playFinalVideoPushButton, &QPushButton::clicked, m_app, &fairytale::playFinalVideo);
+	connect(this->savePushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::save);
 	connect(this->okPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::accept);
 	connect(this->retryPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retry);
 }

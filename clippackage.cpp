@@ -273,9 +273,9 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	uint64_t blocks = 0;
 
-	for (int i = 0; i < this->clips().size(); ++i)
+	for (Clips::const_iterator clipIterator = clips().begin(); clipIterator != clips().end(); ++clipIterator)
 	{
-		const Clip *clip = this->clips().at(i);
+		const Clip *clip = clipIterator.value();
 
 		// write image file
 		Block imageBlock;
@@ -582,6 +582,16 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 
 			if (node.nodeName() == "clip")
 			{
+				const QDomElement element = node.toElement();
+
+				if (!element.hasAttribute("id"))
+				{
+					std::cerr << "Missing unique ID for clip" << std::endl;
+
+					return false;
+				}
+
+				const QString id = element.attribute("id");
 				const QUrl image = QUrl(node.firstChildElement("image").text());
 				const QUrl video = QUrl(node.firstChildElement("video").text());
 				const QDomNodeList narratorNodes = node.firstChildElement("narrator").childNodes();
@@ -603,7 +613,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 					descriptions.insert(node.nodeName(), node.toElement().text());
 				}
 
-				m_clips.push_back(new Clip(image, video, narratorUrls, descriptions, isPerson, m_app, this));
+				m_clips.insert(id, new Clip(id, image, video, narratorUrls, descriptions, isPerson, m_app, this));
 			}
 			else
 			{
@@ -676,10 +686,11 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 	QDomElement acts = document.createElement("acts");
 	root.appendChild(acts);
 
-	for (int i = 0; i < this->clips().size(); ++i)
+	for (Clips::const_iterator iterator = this->clips().begin(); iterator != this->clips().end(); ++iterator)
 	{
-		const Clip *clip = this->clips().at(i);
+		const Clip *clip = iterator.value();
 		QDomElement clipElement = document.createElement("clip");
+		clipElement.setAttribute("id", clip->id());
 
 		if (!clip->imageUrl().isEmpty())
 		{
@@ -898,4 +909,9 @@ QString ClipPackage::name() const
 	}
 
 	return "";
+}
+
+void ClipPackage::addClip(Clip* clip)
+{
+	this->m_clips.insert(clip->id(), clip);
 }

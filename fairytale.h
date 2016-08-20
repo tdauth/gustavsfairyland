@@ -29,6 +29,7 @@ class AboutDialog;
 class WonDialog;
 class GameOverDialog;
 class HighScores;
+class CustomFairytale;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -206,6 +207,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		bool loadDefaultClipPackage();
 
+		void addCustomFairytale(CustomFairytale *customFairytale);
+		void removeCustomFairytale(CustomFairytale *customFairytale);
+
+		void playCustomFairytaleClip(int index);
+		void playCustomFairytale(CustomFairytale *customFairytale);
+
+		typedef QMap<QString, CustomFairytale*> CustomFairytales;
+		const CustomFairytales& customFairytales() const;
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 
@@ -220,6 +230,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void timerTick();
 		void playBonusClip();
 		void changeLanguage();
+
+		void playCustomFairytaleSlot();
 
 	private:
 		void updateTimeLabel();
@@ -327,6 +339,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QMap<QAction*, QString> TranslationFileNames;
 		TranslationFileNames m_translationFileNames;
 		QString m_currentTranslation;
+
+		CustomFairytales m_customFairytales;
+		typedef QMap<QAction*, CustomFairytale*> CustomFairytaleActions;
+		CustomFairytaleActions m_customFairytaleActions;
+
+		CustomFairytale *m_playingCustomFairytale;
+		int m_customFairytaleIndex;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const
@@ -422,6 +441,11 @@ inline void fairytale::setMusicMuted(bool muted)
 inline bool fairytale::isMusicMuted() const
 {
 	return this->m_musicPlayer->isMuted();
+}
+
+inline const fairytale::CustomFairytales& fairytale::customFairytales() const
+{
+	return this->m_customFairytales;
 }
 
 #endif // fairytale_H

@@ -28,6 +28,7 @@
 #include "wondialog.h"
 #include "gameoverdialog.h"
 #include "highscores.h"
+#include "customfairytale.h"
 
 void fairytale::newGame()
 {
@@ -277,6 +278,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_gameOverDialog(nullptr)
 , m_highScores(new HighScores(this, this))
 , m_playingBonusClip(false)
+, m_playingCustomFairytale(nullptr)
+, m_customFairytaleIndex(0)
 {
 	this->m_player->hide();
 
@@ -376,9 +379,21 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	for (int i = 0; i < highScoresSize; ++i)
 	{
-			settings.setArrayIndex(i);
-			HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
-			this->highScores()->addHighScore(highScore);
+		settings.setArrayIndex(i);
+		HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
+		this->highScores()->addHighScore(highScore);
+	}
+
+	settings.endArray();
+
+	const int customFairytalesSize = settings.beginReadArray("customfairytales");
+
+	for (int i = 0; i < customFairytalesSize; ++i)
+	{
+		settings.setArrayIndex(i);
+		CustomFairytale *customFairytale = new CustomFairytale(this);
+		customFairytale->load(settings);
+		addCustomFairytale(customFairytale);
 	}
 
 	settings.endArray();
@@ -443,6 +458,19 @@ fairytale::~fairytale()
 
 	settings.endArray();
 
+	settings.beginWriteArray("customfairytales");
+	i= 0;
+
+	for (CustomFairytales::iterator iterator = m_customFairytales.begin(); iterator != m_customFairytales.end(); ++iterator)
+	{
+		settings.setArrayIndex(i);
+		iterator.value()->save(settings);
+
+		++i;
+	}
+
+	settings.endArray();
+
 	qApp->removeTranslator(&m_translator);
 }
 
@@ -497,6 +525,58 @@ void fairytale::playFinalVideo()
 
 	this->m_playCompleteSolution = true;
 	this->playFinalClip(0);
+}
+
+void fairytale::playCustomFairytaleClip(int index)
+{
+	this->m_customFairytaleIndex = index;
+	const QString packageId = this->m_playingCustomFairytale->packageId();
+
+	ClipPackages::iterator iterator = this->m_clipPackages.find(packageId);
+
+	if (iterator != this->m_clipPackages.end())
+	{
+		ClipPackage *clipPackage = iterator.value();
+		const QString clipId = this->m_playingCustomFairytale->clipIds()[index];
+		ClipPackage::Clips::iterator clipIterator = clipPackage->clips().find(clipId);
+
+		if (clipIterator != clipPackage->clips().end())
+		{
+			Clip *solution = clipIterator.value();
+
+			// play all sounds parallel to the clip
+
+			// play the sound for the inital character again
+			if (solution->isPerson() && index > 1)
+			{
+				this->m_player->playParallelSound(this, this->resolveClipUrl(this->m_startPerson->narratorUrl()));
+			}
+
+			// play the sound "and"
+			if (solution->isPerson() && index > 0)
+			{
+				const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
+
+				this->m_player->playParallelSound(this, narratorSoundUrl);
+			}
+
+			this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
+			this->m_player->playVideo(this, solution->videoUrl(), this->description(index, solution));
+		}
+	}
+}
+
+void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
+{
+	if (m_playingCustomFairytale != nullptr || this->isGameRunning() || this->m_playCompleteSolution)
+	{
+		qDebug() << "Invalid playCustomFairytale() call";
+
+		return;
+	}
+
+	this->m_playingCustomFairytale = customFairytale;
+	this->playCustomFairytaleClip(0);
 }
 
 void fairytale::showHighScores()
@@ -584,8 +664,25 @@ void fairytale::loadLanguage(const QString &language)
 
 void fairytale::gameOver()
 {
-	this->cleanupGame();
+	this->gameMode()->end();
+	this->m_isRunning = false;
+
 	this->gameOverDialog()->exec();
+
+	// Show the custom fairytale dialog which allows the loser to watch his created fairytale.
+	this->customFairytaleDialog()->exec();
+
+	// dont clean up on retry
+	// make sure everything is cleaned up
+	if (!this->customFairytaleDialog()->clickedRetry())
+	{
+		this->cleanupAfterOneGame();
+	}
+	// prevents recursive calls in dialog
+	else
+	{
+		this->retry();
+	}
 }
 
 void fairytale::win()
@@ -914,7 +1011,7 @@ void fairytale::onFinishVideoAndSounds()
 		this->m_pausedMediaPlayer = false;
 
 		// played narrator stuff
-		if (!this->m_playCompleteSolution)
+		if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
 		{
 			// Only react if the game mode has not been canceled
 			if (this->gameMode()->state() == GameMode::State::Running)
@@ -947,7 +1044,7 @@ void fairytale::onFinishVideoAndSounds()
 			}
 		}
 		// Play the next final clip of the complete solution.
-		else
+		else if (this->m_playCompleteSolution)
 		{
 			if (this->m_completeSolutionIndex + 1 < this->m_completeSolution.size())
 			{
@@ -968,6 +1065,29 @@ void fairytale::onFinishVideoAndSounds()
 				// The dialog has to disappear, after the player watched all final clips.
 				this->m_player->hide();
 				// Dont hide the custom fairytale. The player should have the change to save or rewatch it.
+			}
+		}
+		// Play the next clip of a custom fairytale
+		else if (m_playingCustomFairytale != nullptr)
+		{
+			if (this->m_customFairytaleIndex + 1 < this->m_playingCustomFairytale->clipIds().size())
+			{
+				qDebug() << "Play next custom fairytale clip";
+				// next time play the following clip
+				this->m_customFairytaleIndex++;
+				this->playCustomFairytaleClip(this->m_customFairytaleIndex);
+			}
+			/*
+			* Stop playing the custom fairytale.
+			*/
+			else
+			{
+				qDebug() << "Finished custom fairytale clips";
+				this->m_playingCustomFairytale = nullptr;
+				this->m_customFairytaleIndex = 0;
+
+				// The dialog has to disappear, after the player watched all final clips.
+				this->m_player->hide();
 			}
 		}
 	}
@@ -1408,5 +1528,54 @@ bool fairytale::loadDefaultClipPackage()
 
 	return false;
 }
+
+void fairytale::playCustomFairytaleSlot()
+{
+	QAction *action = dynamic_cast<QAction*>(sender());
+
+	CustomFairytaleActions::iterator iterator = this->m_customFairytaleActions.find(action);
+
+	if (iterator != this->m_customFairytaleActions.end())
+	{
+		this->playCustomFairytale(iterator.value());
+	}
+}
+
+void fairytale::addCustomFairytale(CustomFairytale *customFairytale)
+{
+	this->m_customFairytales.insert(customFairytale->name(), customFairytale);
+
+	QAction *action = new QAction(customFairytale->name(), menuCustomFairytales);
+	connect(action, &QAction::triggered, this, &fairytale::playCustomFairytaleSlot);
+	menuCustomFairytales->addAction(action);
+
+	m_customFairytaleActions.insert(action, customFairytale);
+}
+
+void fairytale::removeCustomFairytale(CustomFairytale *customFairytale)
+{
+	CustomFairytales::iterator iterator = this->m_customFairytales.find(customFairytale->name());
+
+	if (iterator != this->m_customFairytales.end())
+	{
+		this->m_customFairytales.erase(iterator);
+
+		// TODO linear time
+		for (CustomFairytaleActions::iterator actionIterator = m_customFairytaleActions.begin(); actionIterator != m_customFairytaleActions.end(); ++actionIterator)
+		{
+			if (actionIterator.value() == customFairytale)
+			{
+				QAction *action = actionIterator.key();
+				m_customFairytaleActions.erase(actionIterator);
+				delete action;
+
+				break;
+			}
+		}
+
+		delete customFairytale;
+	}
+}
+
 
 #include "fairytale.moc"

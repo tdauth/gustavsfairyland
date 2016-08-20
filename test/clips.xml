@@ -4,7 +4,7 @@
 		<en>Fairytale</en>
 	</name>
 	<persons>
-		<clip>
+		<clip id="frog">
 			<image>./fairytale/clips/Frosch.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -14,7 +14,7 @@
 				<en>the frog</en>
 			</description>
 		</clip>
-		<clip>
+		<clip id="witch">
 			<image>./fairytale/clips/hexe.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -24,7 +24,7 @@
 				<en>the witch</en>
 			</description>
 		</clip>
-		<clip>
+		<clip id="knight">
 			<image>./fairytale/clips/ritter_kuniberg_reitet_2.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -34,7 +34,7 @@
 				<en>the knight</en>
 			</description>
 		</clip>
-		<clip>
+		<clip id="giant">
 			<image>./fairytale/clips/riese.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -44,7 +44,7 @@
 				<en>the giant</en>
 			</description>
 		</clip>
-		<clip>
+		<clip id="princess">
 			<image>./fairytale/clips/Alexa,-Prinzessin-von-Wales.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -57,7 +57,7 @@
 	</persons>
 
 	<acts>
-		<clip>
+		<clip id="siege">
 			<image>./fairytale/clips/1. belagerung von lissabon.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -68,7 +68,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="marriage">
 			<image>./fairytale/clips/Hochzeit_08.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -79,7 +79,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="execution">
 			<image>./fairytale/clips/Radern_(Variante_mit_Eisenstange).png</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>
@@ -90,7 +90,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="burn">
 			<image>./fairytale/clips/scheiterhaufen.jpg</image>
 			<video>./Film (TaCaMo)/output.mp4</video>
 			<narrator>

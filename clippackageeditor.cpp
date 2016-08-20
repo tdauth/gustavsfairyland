@@ -31,6 +31,8 @@ void ClipPackageEditor::editClip()
 	if (!treeWidget->selectedItems().isEmpty())
 	{
 		QTreeWidgetItem *item = treeWidget->selectedItems().first();
+		/*
+		 * TODO use clip ID
 		const int index = treeWidget->indexOfTopLevelItem(item);
 		Clip *clip = this->m_clipPackage->clips().at(index);
 
@@ -40,6 +42,7 @@ void ClipPackageEditor::editClip()
 		{
 			this->clipEditor()->assignToClip(clip);
 		}
+		*/
 	}
 }
 
@@ -48,6 +51,9 @@ void ClipPackageEditor::removeClip()
 	if (!treeWidget->selectedItems().isEmpty())
 	{
 		QTreeWidgetItem *item = treeWidget->selectedItems().first();
+
+		/*
+		 * TODO support for clip IDS
 		const int index = treeWidget->indexOfTopLevelItem(item);
 		Clip *clip = this->m_clipPackage->clips().at(index);
 		this->m_clipPackage->clips().removeAt(index);
@@ -57,6 +63,7 @@ void ClipPackageEditor::removeClip()
 
 		delete item;
 		item = nullptr;
+		*/
 	}
 }
 
@@ -92,10 +99,11 @@ void ClipPackageEditor::loadPackage()
 			}
 		}
 
-		for (int i = 0; i < this->m_clipPackage->clips().size(); ++i)
+		for (ClipPackage::Clips::const_iterator iterator = this->m_clipPackage->clips().begin(); iterator != this->m_clipPackage->clips().end(); ++iterator)
 		{
 			QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-			item->setText(0, this->m_clipPackage->clips().at(i)->description());
+			item->setText(0, iterator.value()->description());
+			item->setData(0, Qt::UserRole, iterator.value()->id());
 			treeWidget->addTopLevelItem(item);
 		}
 	}

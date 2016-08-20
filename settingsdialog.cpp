@@ -5,6 +5,7 @@
 #include "clippackage.h"
 #include "clip.h"
 #include "bonusclip.h"
+#include "customfairytale.h"
 
 void SettingsDialog::restoreDefaults()
 {
@@ -76,6 +77,35 @@ void SettingsDialog::apply()
 	}
 
 	this->m_app->setClipsDir(m_clipsDir);
+
+	QSet<QString> customFairytaleNames;
+
+	for (int i = 0; i < this->customFairytalesListWidget->count(); ++i)
+	{
+		customFairytaleNames << this->customFairytalesListWidget->item(i)->data(Qt::UserRole).toString();
+	}
+
+	// Remove all custom fairy tales which are not in the list anymore
+	QSet<QString> customFairytaleNamesToRemove;
+
+	// dont remove already, since the iterator becomes invalid after removal
+	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().constBegin(); iterator != m_app->customFairytales().constEnd(); ++iterator)
+	{
+		if (!customFairytaleNames.contains(iterator.key()))
+		{
+			customFairytaleNamesToRemove << iterator.key();
+		}
+	}
+
+	foreach (QString id, customFairytaleNamesToRemove)
+	{
+		fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().find(id);
+
+		if (iterator != m_app->customFairytales().constEnd())
+		{
+			m_app->removeCustomFairytale(iterator.value());
+		}
+	}
 }
 
 void SettingsDialog::update()
@@ -86,6 +116,15 @@ void SettingsDialog::update()
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
 	this->fill(m_app->clipPackages());
+
+	customFairytalesListWidget->clear();
+
+	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().constBegin(); iterator != m_app->customFairytales().constEnd(); ++iterator)
+	{
+		QListWidgetItem *item = new QListWidgetItem(iterator.value()->name());
+		item->setData(Qt::UserRole, iterator.value()->name());
+		customFairytalesListWidget->addItem(item);
+	}
 }
 
 void SettingsDialog::addFile()
@@ -183,6 +222,14 @@ void SettingsDialog::removeSelected()
     }
 }
 
+void SettingsDialog::removeCustomFairytale()
+{
+	foreach (QListWidgetItem *item, this->customFairytalesListWidget->selectedItems())
+	{
+		delete item;
+	}
+}
+
 void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
 	Clips::iterator iterator = m_clips.find(item);
@@ -224,6 +271,8 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
 	connect(this->removePushButton, &QPushButton::clicked, this, &SettingsDialog::removeSelected);
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &SettingsDialog::itemDoubleClicked);
+
+	connect(this->removeCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::removeCustomFairytale);
 }
 
 void SettingsDialog::fill(const fairytale::ClipPackages &packages)

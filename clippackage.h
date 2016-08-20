@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include <QtCore/QObject>
+#include <QtCore/QMap>
 #include <QtCore/QList>
 #include <QtCore/QFile>
 #include <QtCore/QMap>
@@ -28,9 +29,9 @@ class ClipPackage : public QObject
 	public:
 		typedef QMap<QString,QString> Names;
 		/**
-		 * \brief A list of clips which every package stores.
+		 * \brief A map of clips which every package stores. They key is the unique ID of a clip.
 		 */
-		typedef QList<Clip*> Clips;
+		typedef QMap<QString, Clip*> Clips;
 		typedef QList<BonusClip*> BonusClips;
 
 		ClipPackage(fairytale *app, QObject *parent = nullptr);
@@ -112,11 +113,6 @@ inline void ClipPackage::clear()
 	this->m_clips.clear();
 	this->m_bonusClips.clear();
 	this->removeDir();
-}
-
-inline void ClipPackage::addClip(Clip* clip)
-{
-	this->m_clips.push_back(clip);
 }
 
 inline const QString& ClipPackage::filePath() const

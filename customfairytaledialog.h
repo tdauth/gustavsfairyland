@@ -23,6 +23,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 
 	public slots:
 		void addClip(Clip *clip);
+		void save();
 		void retry();
 
 	public:

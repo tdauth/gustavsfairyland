@@ -68,6 +68,7 @@ set(fairyland_HEADERS
 	clippackagedialog.h
 	clippackageeditor.h
 	clipeditor.h
+	customfairytale.h
 	customfairytaledialog.h
 	gamemode.h
 	gamemodedialog.h
@@ -95,6 +96,7 @@ set(fairyland_SRCS
 	clippackagedialog.cpp
 	clippackageeditor.cpp
 	clipeditor.cpp
+	customfairytale.cpp
 	customfairytaledialog.cpp
 	gamemode.cpp
 	gamemodedialog.cpp

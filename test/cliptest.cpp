@@ -93,7 +93,7 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	narratorUrls.insert("en", QUrl::fromLocalFile("narrator.mp4"));
 	Clip::Descriptions descriptions;
 	descriptions.insert("en", "test");
-	Clip *clip = new Clip(QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), narratorUrls, descriptions, false, nullptr);
+	Clip *clip = new Clip("test", QUrl::fromLocalFile("image.jpg"), QUrl::fromLocalFile("video.mp4"), narratorUrls, descriptions, false, nullptr);
 	pkg.addClip(clip);
 
 	// it is not possible to save an archive without the corresponding referenced files of the clip
@@ -133,7 +133,7 @@ void ClipTest::testSaveLoadArchiveWithFiles()
 	ClipPackage loaded(nullptr);
 	QVERIFY(loaded.loadClipsFromArchive("clips.pkg", QDir::currentPath()));
 	QCOMPARE(loaded.clips().size(), 1);
-	clip = loaded.clips().at(0);
+	clip = loaded.clips().first();
 
 	// check if the loading extracted the corresponding files
 	// since they all have the size 0 they wont exist

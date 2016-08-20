@@ -20,10 +20,12 @@ class Clip : public QObject
 
 		Clip(fairytale *app, QObject *parent = nullptr);
 		Clip(const Clip &clip, QObject *parent = nullptr);
-		Clip(const QUrl &imageUrl, const QUrl &videoUrl, const Urls &narratorUrls, const Descriptions &descriptions, bool isPerson, fairytale *app, QObject *parent = nullptr);
+		Clip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Urls &narratorUrls, const Descriptions &descriptions, bool isPerson, fairytale *app, QObject *parent = nullptr);
 
 		void assign(const Clip &clip);
 
+		void setId(const QString &id);
+		QString id() const;
 		void setImageUrl(const QUrl &url);
 		QUrl imageUrl() const;
 		void setVideoUrl(const QUrl &url);
@@ -42,12 +44,23 @@ class Clip : public QObject
 
 	private:
 		fairytale *m_app;
+		QString m_id;
 		QUrl m_imageUrl;
 		QUrl m_videoUrl;
 		Urls m_narratorUrls;
 		Descriptions m_descriptions;
 		bool m_isPerson;
 };
+
+inline void Clip::setId(const QString &id)
+{
+	this->m_id = id;
+}
+
+inline QString Clip::id() const
+{
+	return this->m_id;
+}
 
 inline void Clip::setImageUrl(const QUrl &url)
 {

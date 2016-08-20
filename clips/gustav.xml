@@ -6,7 +6,7 @@
 	</name>
 	<!-- persons -->
 	<persons>
-		<clip>
+		<clip id="crazy">
 			<image>./crazy/runterholer.jpg</image>
 			<video>./crazy/runterholer.mkv</video>
 			<narrator>
@@ -17,7 +17,7 @@
 				<de>der Runterholer</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="opajott">
 			<image>./opajott/opajott1.jpg</image>
 			<video>./opajott/opajott1.mkv</video>
 			<narrator>
@@ -28,7 +28,7 @@
 				<de>Opa Jott</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="vampir">
 			<image>./vampir/vampir.png</image>
 			<video>./vampir/vampir.avi</video>
 			<narrator>
@@ -39,7 +39,7 @@
 				<de>der Vampir</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="werwolf">
 			<image>./werwolf/werwolf.png</image>
 			<video>./werwolf/werwolf.avi</video>
 			<narrator>.
@@ -50,7 +50,7 @@
 				<de>der Werwolf</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="steampunk">
 			<image>./steampunk/steampunk.jpg</image>
 			<video>./steampunk/steampunk.avi</video>
 			<narrator>
@@ -61,7 +61,7 @@
 				<de>der Pestdoktor</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="mahler">
 			<image>./mahler/mahler.jpg</image>
 			<video>./mahler/mahler.avi</video>
 			<narrator>
@@ -71,7 +71,7 @@
 				<de>Gustav Mahler</de>
 			</description>
 		</clip>
-		<clip>
+		<clip id="popcorn">
 			<image>./popcorn/popcorn.jpg</image>
 			<video>./popcorn/popcorn.avi</video>
 			<narrator>
@@ -83,7 +83,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="fairy">
 			<image>./fairy/fairy.jpg</image>
 			<video>./fairy/fairy.mkv</video>
 			<narrator>
@@ -95,7 +95,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="princess">
 			<image>./princess/princess.jpg</image>
 			<video>./princess/princess.mkv</video>
 			<narrator>
@@ -107,7 +107,7 @@
 			</description>
 		</clip>
 
-                <clip>
+                <clip id="hello">
                         <image>./hello/hello.jpg</image>
                         <video>./hello/hello.mkv</video>
                         <narrator>
@@ -119,7 +119,7 @@
                         </description>
                 </clip>
 
-		<clip>
+		<clip id="jedi">
 			<image>./jedi/jedi.jpg</image>
 			<video>./jedi/jedi.mkv</video>
 			<narrator>
@@ -131,7 +131,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="bank">
 			<image>./bank/bank.jpg</image>
 			<video>./bank/bank.mkv</video>
 			<narrator>
@@ -146,7 +146,7 @@
 
 	<!-- new acts -->
 	<acts>
-		<clip>
+		<clip id="boar">
 			<image>./boar/boar.jpg</image>
 			<video>./boar/boar.mkv</video>
 			<narrator>
@@ -158,7 +158,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="cave">
 			<image>./cave/cave.jpg</image>
 			<video>./cave/cave.mkv</video>
 			<narrator>
@@ -170,7 +170,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="caveman">
 			<image>./caveman/caveman.jpg</image>
 			<video>./caveman/caveman.mkv</video>
 			<narrator>
@@ -182,7 +182,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="chess">
 			<image>./chess/chess.jpg</image>
 			<video>./chess/chess.mkv</video>
 			<narrator>
@@ -194,7 +194,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="climbing">
 			<image>./climbing/climbing.jpg</image>
 			<video>./climbing/climbing.mkv</video>
 			<narrator>
@@ -206,7 +206,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="gate">
 			<image>./gate/gate.jpg</image>
 			<video>./gate/gate.mkv</video>
 			<narrator>
@@ -218,7 +218,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="gate2">
 			<image>./gate/gate2.jpg</image>
 			<video>./gate/gate2.mkv</video>
 			<narrator>
@@ -230,7 +230,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="maninthebox">
 			<image>./maninthebox/maninthebox.jpg</image>
 			<video>./maninthebox/maninthebox.mkv</video>
 			<narrator>
@@ -242,7 +242,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="prison">
 			<image>./prison/prison.jpg</image>
 			<video>./prison/prison.mkv</video>
 			<narrator>
@@ -254,7 +254,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="robbery">
 			<image>./robery/robery.jpg</image>
 			<video>./robery/robery.mkv</video>
 			<narrator>
@@ -266,7 +266,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="train">
 			<image>./train/train.jpg</image>
 			<video>./train/train.mkv</video>
 			<narrator>
@@ -278,7 +278,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="trash">
 			<image>./trash/trash.jpg</image>
 			<video>./trash/trash.mkv</video>
 			<narrator>
@@ -290,7 +290,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="treasure">
 			<image>./treasure/treasure.jpg</image>
 			<video>./treasure/treasure.mkv</video>
 			<narrator>
@@ -302,7 +302,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="well">
 			<image>./well/well.jpg</image>
 			<video>./well/well.mkv</video>
 			<narrator>
@@ -314,7 +314,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="castle">
 			<image>./castle/castle.jpg</image>
 			<video>./castle/castle.mkv</video>
 			<narrator>
@@ -326,7 +326,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="tower">
 			<image>./tower/tower.jpg</image>
 			<video>./tower/tower.mkv</video>
 			<narrator>
@@ -338,7 +338,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="throne">
 			<image>./throne/throne.jpg</image>
 			<video>./throne/throne.mkv</video>
 			<narrator>
@@ -350,7 +350,7 @@
 			</description>
 		</clip>
 
-		<clip>
+		<clip id="kill">
 			<image>./kill/kill.jpg</image>
 			<video>./kill/kill.mkv</video>
 			<narrator>

@@ -15,7 +15,7 @@ GameOverDialog::GameOverDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	setupUi(this);
 
 	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
-	connect(retryPushButton, &QPushButton::clicked, this, &GameOverDialog::retry);
+	//connect(retryPushButton, &QPushButton::clicked, this, &GameOverDialog::retry);
 }
 
 void GameOverDialog::changeEvent(QEvent* event)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
+    <width>607</width>
     <height>304</height>
    </rect>
   </property>
@@ -193,7 +193,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>468</width>
+     <width>607</width>
      <height>27</height>
     </rect>
    </property>
@@ -231,10 +231,16 @@
      <string>Lan&amp;guage</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuCustomFairytales">
+    <property name="title">
+     <string>&amp;Custom Fairytales</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuSettings"/>
+   <addaction name="menuCustomFairytales"/>
    <addaction name="menuAchievements"/>
    <addaction name="menuLanguage"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -35,6 +35,7 @@
 - Wenn Clips Kollision haben, zittern sie? Unklar welche Richtung?
 - Gameover Dialog: Auch Bild einfügen.
 - FIXED (context geändert): Shortcuts in Player gehen nicht immer.
+- Skip während man ein eigenes Märchen abspielt kann zum Absturz führen. Keinen Spielstart erlauben während eigenes Märchen abgespielt wird.
 
 DONE:
 - Hauptfigur am Anfang bestimmt

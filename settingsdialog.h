@@ -35,6 +35,8 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 		 */
 		void removeSelected();
 
+		void removeCustomFairytale();
+
 	private slots:
 		void itemDoubleClicked(QTreeWidgetItem *item, int column);
 
