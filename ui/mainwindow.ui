@@ -218,7 +218,6 @@
      <string>Setti&amp;ngs</string>
     </property>
     <addaction name="actionSettings"/>
-    <addaction name="actionClips"/>
     <addaction name="actionEditor"/>
    </widget>
    <widget class="QMenu" name="menuAchievements">

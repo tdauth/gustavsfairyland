@@ -64,7 +64,6 @@ set(fairyland_HEADERS
 	door.h
 	player.h
 	iconbutton.h
-	clipsdialog.h
 	clippackage.h
 	clippackagedialog.h
 	clippackageeditor.h
@@ -92,7 +91,6 @@ set(fairyland_SRCS
 	door.cpp
 	player.cpp
 	iconbutton.cpp
-	clipsdialog.cpp
 	clippackage.cpp
 	clippackagedialog.cpp
 	clippackageeditor.cpp
@@ -116,7 +114,6 @@ set(fairyland_UI
 	ui/aboutdialog.ui
 	ui/mainwindow.ui
 	ui/player.ui
-	ui/clips.ui
 	ui/clippackagedialog.ui
 	ui/clippackageeditor.ui
 	ui/clipeditor.ui

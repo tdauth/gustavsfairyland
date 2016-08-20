@@ -70,7 +70,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void cancelGame();
 		void showCustomFairytale();
 		void settings();
-		void openClipsDialog();
 		void openEditor();
 		ClipPackage* selectClipPackage();
 		GameMode* selectGameMode();
@@ -201,6 +200,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void startMusic();
 		void setMusicMuted(bool muted);
 		bool isMusicMuted() const;
+
+		/**
+		 * Loads the default clip package and returns true if it exists and has successfully been loaded.
+		 */
+		bool loadDefaultClipPackage();
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;

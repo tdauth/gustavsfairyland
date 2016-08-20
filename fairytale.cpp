@@ -16,7 +16,6 @@
 #include "bonusclip.h"
 #include "player.h"
 #include "iconbutton.h"
-#include "clipsdialog.h"
 #include "clippackagedialog.h"
 #include "gamemodedialog.h"
 #include "clippackage.h"
@@ -137,17 +136,6 @@ void fairytale::settings()
 	{
 		resumeGame();
 	}
-}
-
-void fairytale::openClipsDialog()
-{
-	if (this->m_clipsDialog == nullptr)
-	{
-		this->m_clipsDialog = new ClipsDialog(this, this);
-	}
-
-	this->m_clipsDialog->fill(this->clipPackages());
-	this->m_clipsDialog->show();
 }
 
 void fairytale::openEditor()
@@ -302,7 +290,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
-	connect(actionClips, SIGNAL(triggered()), this, SLOT(openClipsDialog()));
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
@@ -340,8 +327,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 	QDir defaultClipsDir(this->defaultClipsDirectory());
 	qDebug() << "Default clips dir:" << this->defaultClipsDirectory();
-
-#ifndef Q_OS_ANDROID
 	// the default path is the "clips" sub directory
 	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
 
@@ -370,48 +355,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	// default package
 	else
 	{
-		const QString filePath = defaultClipsDir.filePath("gustav.xml");
-		const QFileInfo fileInfo(filePath);
-
-		if (fileInfo.exists() && fileInfo.isReadable())
-		{
-			ClipPackage *package = new ClipPackage(this);
-
-			if (package->loadClipsFromFile(filePath))
-			{
-				this->addClipPackage(package);
-			}
-			else
-			{
-				delete package;
-				package = nullptr;
-			}
-		}
-		else
-		{
-			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
-		}
+		loadDefaultClipPackage();
 	}
 
 	settings.endArray();
-// Android uses a different protocol for assets only
-#else
-	ClipPackage *package = new ClipPackage(this);
-
-	const QString fileName("assets:/clips/gustav.xml");
-
-	qDebug() << "Opening package:" << fileName;
-
-	if (package->loadClipsFromFile(fileName))
-	{
-		this->addClipPackage(package);
-	}
-	else
-	{
-		delete package;
-		package = nullptr;
-	}
-#endif
 
 	const int highScoresSize = settings.beginReadArray("highscores");
 	qDebug() << "Read high scores:" << highScoresSize;
@@ -497,8 +444,10 @@ QString fairytale::defaultClipsDirectory() const
 	 * Therefore one must get the file path to the binary file and not use QDir::currentPath().
 	 */
 	return QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips";
+#elif defined(Q_OS_ANDROID)
+	return QString("assets:/clips");
 #else
-	return QString("/usr/share/gustavsfairyland");
+	return QString("/usr/share/gustavsfairyland/clips");
 #endif
 }
 
@@ -921,7 +870,7 @@ static bool initialCall = false;
 	switch (state)
 	{
 		case QMediaPlayer::StoppedState:
-		{	
+		{
 			// is handled in onFinishVideoAndSounds()
 			break;
 		}
@@ -1256,7 +1205,7 @@ QUrl fairytale::resolveClipUrl(const QUrl &url) const
 		relativePath = relativePath.mid(2);
 	}
 
-	QUrl result("assets:/clips/" + relativePath);
+	QUrl result(this->m_clipsDir + "/" + relativePath);
 #endif
 
 	qDebug() << "Resolved: " << result;
@@ -1394,6 +1343,58 @@ ClipPackage* fairytale::defaultClipPackage() const
 	}
 
 	return this->clipPackages().first();
+}
+
+bool fairytale::loadDefaultClipPackage()
+{
+#ifndef Q_OS_ANDROID
+	const QDir defaultClipsDir(this->defaultClipsDirectory());
+	const QString filePath = defaultClipsDir.filePath("gustav.xml");
+	const QFileInfo fileInfo(filePath);
+
+	std::cerr << "Loading default clip package from: " << filePath.toStdString() << std::endl;
+
+	if (fileInfo.exists() && fileInfo.isReadable())
+	{
+		ClipPackage *package = new ClipPackage(this);
+
+		if (package->loadClipsFromFile(filePath))
+		{
+			this->addClipPackage(package);
+
+			return true;
+		}
+		else
+		{
+			delete package;
+			package = nullptr;
+		}
+	}
+	else
+	{
+		qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
+	}
+#else
+	ClipPackage *package = new ClipPackage(this);
+
+	const QString fileName("assets:/clips/gustav.xml");
+
+	qDebug() << "Opening package:" << fileName;
+
+	if (package->loadClipsFromFile(fileName))
+	{
+		this->addClipPackage(package);
+
+		return true;
+	}
+	else
+	{
+		delete package;
+		package = nullptr;
+	}
+#endif
+
+	return false;
 }
 
 #include "fairytale.moc"
