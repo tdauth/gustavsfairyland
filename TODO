@@ -41,6 +41,8 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 - Skip während man ein eigenes Märchen abspielt kann zum Absturz führen. Keinen Spielstart erlauben während eigenes Märchen abgespielt wird.
 - Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
 
+Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg
+
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
 

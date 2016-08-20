@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 2.8.11)
 project(fairyland)
 
 if (ANDROID)
+	add_definitions(-DANDROID_ICON="@drawable/logo")
+	set(ANDROID_ICON "@drawable/logo")
 	include("cmake/AddQtAndroidApk.cmake" REQUIRED)
-	include_directories("/home/tamino/android-ndk-r12b/sources/android/native_app_glue/")
+	include_directories("${ANDROID_NDK}/sources/android/native_app_glue/")
 endif ()
 
 enable_testing()
@@ -192,6 +194,12 @@ endif ()
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
 if (ANDROID)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/res/drawable/logo.jpg)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/bin/res/drawable/logo.jpg)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values/fairylandstrings.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values/fairylandstrings.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values-de/fairylandstrings-de.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values-de/fairylandstrings-de.xml)
 
 	# QML script for playing videos on Android
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/videoplayer.qml ${CMAKE_BINARY_DIR}/assets/videoplayer.qml)
@@ -250,7 +258,9 @@ if (ANDROID)
 	# Use the following command to generate a signing key
 	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
-	add_qt_android_apk(my_app_apk fairyland)
+	# PACKAGE_NAME "org.tacaproductions.gustavsfairyland"
+	add_qt_android_apk(my_app_apk fairyland NAME "@string/ApplicationName")
+	add_dependencies(my_app_apk CopyAssets)
 	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
 endif ()
 

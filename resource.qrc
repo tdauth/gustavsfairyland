@@ -13,6 +13,7 @@
         <file>resources/paper.eps</file>
         <file>resources/paper.jpg</file>
         <file>resources/splashscreen.jpg</file>
+	<file>resources/logo.jpg</file>
 	<file>videoplayer.qml</file>
     </qresource>
 </RCC>

@@ -402,6 +402,7 @@ void Player::skip()
 
 	// stop after hiding since stopping might lead to showing it again
 	this->stop();
+	this->m_parallelSoundsMediaPlayer->stop();
 }
 
 void Player::skipAll()
@@ -419,4 +420,5 @@ void Player::skipAll()
 
 	// stop after hiding since stopping might lead to showing it again
 	this->stop();
+	this->m_parallelSoundsMediaPlayer->stop();
 }

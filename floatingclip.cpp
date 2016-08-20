@@ -26,6 +26,7 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 		const QRect paperRect(x1, y1, imagePaper.width(), imagePaper.height());
 		painter->drawImage(paperRect, imagePaper);
 
+		// paint the image in the center of the paper
 		const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
 		const int heightDifference = (imagePaper.height() - image.height()) / 2;
 		const int widthDifference = (imagePaper.width() - image.width()) / 2;
@@ -40,7 +41,7 @@ void FloatingClip::start()
 	this->m_x = qrand() % (this->m_roomWidget->size().height() - m_scaledImagePaper.height());
 	this->m_y = qrand() % (this->m_roomWidget->size().width() - m_scaledImagePaper.width());
 
-	// set random dir
+	// set random start dir
 	const int randomDirX = qrand() % 1;
 
 	if (randomDirX == 0)
