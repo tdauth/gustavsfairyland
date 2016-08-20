@@ -13,10 +13,12 @@
 void CustomFairytaleDialog::save()
 {
 	bool ok = false;
-	const QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"), tr("Name of custom fairytale:"), QLineEdit::Normal, "", &ok);
+	const QString text = QInputDialog::getText(this, tr("Custom Fairytale Name"), tr("Name of custom fairytale:"), QLineEdit::Normal, "", &ok);
 
 	if (ok && !text.isEmpty())
 	{
+		// TODO check if name is already used. It must be unique?
+
 		CustomFairytale *customFairytale = new CustomFairytale(m_app);
 		customFairytale->setPackageId(this->m_app->clipPackage()->id());
 		customFairytale->setName(text);

@@ -38,20 +38,20 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	HighScoreList::iterator pos = existing.begin();
 
 	// find a highscore which is worse an insert it before, otherwise if none is found it will be inserted at the front (position 0)
-	for (HighScoreList::iterator i = existing.begin(); i != existing.end(); ++i)
+	for ( ; pos != existing.end(); ++pos)
 	{
-		const HighScore &existingHighScore = *i;
+		const HighScore &existingHighScore = *pos;
 
 		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds()) || existingHighScore.rounds() < highScore.rounds())
 		{
-			// It is inserted before this one since it has a better score.
-			pos = i;
+			std::cerr << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << std::endl;
+			std::cerr << "This highscore with time: " << highScore.time() << " and rounds " << highScore.rounds() << std::endl;
 
 			break;
 		}
 	}
 
-	// Insert it before the pos.
+	// Insert it before the pos. If no highscore was worse, it is existing.end() and will be appended to the end.
 	existing.insert(pos, highScore);
 
 	// Drop all highscores at the end. There is a limit per key (Package and Game Mode).
@@ -59,7 +59,7 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	{
 		qDebug() << "Resize it is too big";
 
-		for (int i = existing.size(); i > maxHighScores; ++i)
+		for (int i = existing.size(); i > maxHighScores; --i)
 		{
 			existing.pop_back();
 		}

@@ -6,10 +6,13 @@
 #include "clip.h"
 #include "bonusclip.h"
 #include "customfairytale.h"
+#include "gamemode.h"
+#include "gamemodemoving.h"
 
 void SettingsDialog::restoreDefaults()
 {
 	musicCheckBox->setChecked(true);
+	clickSoundsCheckBox->setChecked(true);
 
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
@@ -67,6 +70,26 @@ void SettingsDialog::apply()
 {
 	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
 
+	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
+
+	if (iterator != this->m_app->gameModes().end())
+	{
+		GameModeMoving *gameModeMoving = dynamic_cast<GameModeMoving*>(iterator.value());
+
+		if (gameModeMoving != nullptr)
+		{
+			gameModeMoving->setPlayClickSounds(clickSoundsCheckBox->isChecked());
+		}
+		else
+		{
+			QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
+		}
+	}
+	else
+	{
+		QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
+	}
+
 	if (this->fullScreenCheckBox->isChecked())
 	{
 		this->m_app->showFullScreen();
@@ -78,6 +101,17 @@ void SettingsDialog::apply()
 
 	this->m_app->setClipsDir(m_clipsDir);
 
+	// Set all specified clip packages for the application.
+	fairytale::ClipPackages clipPackages;
+
+	foreach (ClipPackage *clipPackage, m_clipPackages.values())
+	{
+		clipPackages.insert(clipPackage->id(), clipPackage);
+	}
+
+	this->m_app->setClipPackages(clipPackages);
+
+	// Get all custom fairytales which are still in use.
 	QSet<QString> customFairytaleNames;
 
 	for (int i = 0; i < this->customFairytalesListWidget->count(); ++i)
@@ -111,6 +145,27 @@ void SettingsDialog::apply()
 void SettingsDialog::update()
 {
 	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
+
+	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
+
+	if (iterator != this->m_app->gameModes().end())
+	{
+		GameModeMoving *gameModeMoving = dynamic_cast<GameModeMoving*>(iterator.value());
+
+		if (gameModeMoving != nullptr)
+		{
+			clickSoundsCheckBox->setChecked(gameModeMoving->playClickSounds());
+		}
+		else
+		{
+			QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
+		}
+	}
+	else
+	{
+		QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
+	}
+
 	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
 	this->m_clipsDir = this->m_app->clipsDir();
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
@@ -137,7 +192,6 @@ void SettingsDialog::addFile()
 
 		if (clipPackage->loadClipsFromFile(filePath))
 		{
-			this->m_app->addClipPackage(clipPackage);
 			this->fill(clipPackage);
 		}
 		else
@@ -181,7 +235,6 @@ void SettingsDialog::addDirectory()
 
 		if (!packages.isEmpty())
 		{
-			this->m_app->setClipPackages(packages);
 			this->fill(packages);
 		}
 		else
@@ -338,4 +391,115 @@ void SettingsDialog::fill(ClipPackage *package)
 	personsItem->setText(1, QString::number(persons));
 	actsItem->setText(1, QString::number(acts));
 	bonusesItem->setText(1, QString::number(bonuses));
+}
+
+void SettingsDialog::load(QSettings &settings)
+{
+	settings.beginGroup("settings");
+
+	const QDir defaultClipsDir(m_app->defaultClipsDirectory());
+	qDebug() << "Default clips dir:" << m_app->defaultClipsDirectory();
+	// the default path is the "clips" sub directory
+#ifndef Q_OS_ANDROID
+	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
+#else
+	m_clipsDir = QUrl(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
+#endif
+	this->musicCheckBox->setChecked(settings.value("music", true).toBool());
+	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
+// showing maximized or fullscren leads to menu actions disappearing on a smartphone
+#ifndef Q_OS_ANDROID
+	const bool defaultShowFullScreen = false;
+#else
+	const bool defaultShowFullScreen = true;
+#endif
+	this->fullScreenCheckBox->setChecked(settings.value("fullscreen", defaultShowFullScreen).toBool());
+
+	const int size = settings.beginReadArray("clipPackages");
+
+	if (size > 0)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			settings.setArrayIndex(i);
+			const QString filePath = settings.value("filePath").toString();
+
+			ClipPackage *package = new ClipPackage(m_app);
+
+			if (package->loadClipsFromFile(filePath))
+			{
+				this->fill(package);
+			}
+			else
+			{
+				delete package;
+				package = nullptr;
+			}
+		}
+	}
+
+	settings.endArray();
+
+	// default package
+	if (m_app->clipPackages().isEmpty())
+	{
+		m_app->loadDefaultClipPackage();
+	}
+
+	const int customFairytalesSize = settings.beginReadArray("customfairytales");
+
+	for (int i = 0; i < customFairytalesSize; ++i)
+	{
+		settings.setArrayIndex(i);
+		CustomFairytale *customFairytale = new CustomFairytale(m_app);
+		customFairytale->load(settings);
+		m_app->addCustomFairytale(customFairytale);
+	}
+
+	settings.endArray();
+
+	settings.endGroup();
+
+	apply();
+}
+
+void SettingsDialog::save(QSettings &settings)
+{
+	settings.beginGroup("settings");
+#ifndef Q_OS_ANDROID
+	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
+#else
+	settings.setValue("clipsDir", m_clipsDir.toString());
+#endif
+	settings.setValue("music", this->musicCheckBox->isChecked());
+	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
+	settings.setValue("fullscreen", this->fullScreenCheckBox->isChecked());
+
+	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
+	int i = 0;
+
+	for (ClipPackages::const_iterator iterator = this->m_clipPackages.begin(); iterator != this->m_clipPackages.end(); ++iterator)
+	{
+		settings.setArrayIndex(i);
+		settings.setValue("filePath", (*iterator)->filePath());
+
+		++i;
+	}
+
+	settings.endArray();
+
+	settings.beginWriteArray("customfairytales");
+	i= 0;
+
+	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().constBegin(); iterator != m_app->customFairytales().constEnd(); ++iterator)
+	{
+		settings.setArrayIndex(i);
+		iterator.value()->save(settings);
+
+		++i;
+	}
+
+	settings.endArray();
+
+	settings.endGroup();
 }

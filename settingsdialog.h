@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QUrl>
+#include <QSettings>
 
 #include "fairytale.h"
 #include "ui_settings.h"
@@ -45,6 +46,9 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 
 		void fill(const fairytale::ClipPackages &packages);
 		void fill(ClipPackage *package);
+
+		void load(QSettings &settings);
+		void save(QSettings &settings);
 
 	private:
 		fairytale *m_app;

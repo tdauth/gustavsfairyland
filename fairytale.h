@@ -152,6 +152,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		int turns() const;
 
+		SettingsDialog* settingsDialog();
 		CustomFairytaleDialog* customFairytaleDialog();
 
 		bool requiresPerson() const;

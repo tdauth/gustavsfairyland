@@ -117,11 +117,6 @@ void fairytale::showCustomFairytale()
 
 void fairytale::settings()
 {
-	if (m_settingsDialog == nullptr)
-	{
-		m_settingsDialog = new SettingsDialog(this, this);
-	}
-
 	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
 
 	if (pausedGame)
@@ -129,8 +124,8 @@ void fairytale::settings()
 		pauseGame();
 	}
 
-	m_settingsDialog->update();
-	m_settingsDialog->exec();
+	settingsDialog()->update();
+	settingsDialog()->exec();
 
 	// continue game
 	if (pausedGame)
@@ -173,7 +168,7 @@ GameMode* fairytale::selectGameMode()
 		this->m_gameModeDialog = new GameModeDialog(this);
 	}
 
-	this->m_gameModeDialog->fill(this->gameModes());
+	this->m_gameModeDialog->fill(this->gameModes(), this);
 
 	if (this->m_gameModeDialog->exec() == QDialog::Accepted)
 	{
@@ -338,45 +333,15 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_musicPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishMusic(QMediaPlayer::State)));
 
+	GameModeMoving *gameModeMoving = new GameModeMoving(this);
+	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
+	GameModeOneOutOfFour *gameModeOneOutOfFour = new GameModeOneOutOfFour(this);
+	m_gameModes.insert(gameModeOneOutOfFour->id(), new GameModeOneOutOfFour(this));
+
 	QSettings settings("TaCaProduction", "gustavsfairyland");
-	const QDir defaultClipsDir(this->defaultClipsDirectory());
-	qDebug() << "Default clips dir:" << this->defaultClipsDirectory();
-	// the default path is the "clips" sub directory
-#ifndef Q_OS_ANDROID
-	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
-#else
-	m_clipsDir = QUrl(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
-#endif
 
-	const int size = settings.beginReadArray("clipPackages");
-
-	if (size > 0)
-	{
-		for (int i = 0; i < size; ++i)
-		{
-			settings.setArrayIndex(i);
-			const QString filePath = settings.value("filePath").toString();
-
-			ClipPackage *package = new ClipPackage(this);
-
-			if (package->loadClipsFromFile(filePath))
-			{
-				this->addClipPackage(package);
-			}
-			else
-			{
-				delete package;
-				package = nullptr;
-			}
-		}
-	}
-	// default package
-	else
-	{
-		loadDefaultClipPackage();
-	}
-
-	settings.endArray();
+	// Loads the clips directory and applies it. Besides loads the clip packages and sets the default clip package if none is found.
+	settingsDialog()->load(settings);
 
 	const int highScoresSize = settings.beginReadArray("highscores");
 	qDebug() << "Read high scores:" << highScoresSize;
@@ -389,23 +354,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	}
 
 	settings.endArray();
-
-	const int customFairytalesSize = settings.beginReadArray("customfairytales");
-
-	for (int i = 0; i < customFairytalesSize; ++i)
-	{
-		settings.setArrayIndex(i);
-		CustomFairytale *customFairytale = new CustomFairytale(this);
-		customFairytale->load(settings);
-		addCustomFairytale(customFairytale);
-	}
-
-	settings.endArray();
-
-	GameModeMoving *gameModeMoving = new GameModeMoving(this);
-	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
-	GameModeOneOutOfFour *gameModeOneOutOfFour = new GameModeOneOutOfFour(this);
-	m_gameModes.insert(gameModeOneOutOfFour->id(), new GameModeOneOutOfFour(this));
 
 	qApp->installTranslator(&m_translator);
 
@@ -426,26 +374,11 @@ fairytale::fairytale(Qt::WindowFlags flags)
 fairytale::~fairytale()
 {
 	QSettings settings("TaCaProduction", "gustavsfairyland");
-#ifndef Q_OS_ANDROID
-	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
-#else
-	settings.setValue("clipsDir", m_clipsDir.toString());
-#endif
-	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
-	int i = 0;
 
-	for (ClipPackages::const_iterator iterator = this->clipPackages().begin(); iterator != this->clipPackages().end(); ++iterator)
-	{
-		settings.setArrayIndex(i);
-		settings.setValue("filePath", (*iterator)->filePath());
-
-		++i;
-	}
-
-	settings.endArray();
+	settingsDialog()->save(settings);
 
 	settings.beginWriteArray("highscores");
-	i = 0;
+	int i = 0;
 
 	foreach (const HighScores::HighScoreList &highScoreList, this->highScores()->highScores().values())
 	{
@@ -463,19 +396,6 @@ fairytale::~fairytale()
 	}
 
 	qDebug() << "Wrote high scores:" << i;
-
-	settings.endArray();
-
-	settings.beginWriteArray("customfairytales");
-	i= 0;
-
-	for (CustomFairytales::iterator iterator = m_customFairytales.begin(); iterator != m_customFairytales.end(); ++iterator)
-	{
-		settings.setArrayIndex(i);
-		iterator.value()->save(settings);
-
-		++i;
-	}
 
 	settings.endArray();
 
@@ -971,18 +891,6 @@ void fairytale::finishNarratorAndroid()
 void fairytale::finishNarrator(QMediaPlayer::State state)
 {
 	qDebug() << "Finish narrator with state:" << state;
-/*
-#ifdef Q_OS_ANDROID
-static bool initialCall = false;
-
-	if (state == QMediaPlayer::StoppedState && !initialCall)
-	{
-		initialCall = true;
-
-		return;
-	}
-#endif
-*/
 
 	switch (state)
 	{
@@ -1352,6 +1260,16 @@ QUrl fairytale::resolveClipUrl(const QUrl &url) const
 	qDebug() << "Resolved: " << result;
 
 	return result;
+}
+
+SettingsDialog* fairytale::settingsDialog()
+{
+	if (m_settingsDialog == nullptr)
+	{
+		m_settingsDialog = new SettingsDialog(this, this);
+	}
+
+	return m_settingsDialog;
 }
 
 CustomFairytaleDialog* fairytale::customFairytaleDialog()

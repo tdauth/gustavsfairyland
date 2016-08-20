@@ -289,12 +289,14 @@ void RoomWidget::resizeEvent(QResizeEvent* event)
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
-	std::mt19937 eng(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
-	const int value = distr(eng);
-	qDebug() << "Play sound:" << soundEffects[value];
-	gameMode()->app()->playSound(QUrl(soundEffects[value]));
+	if (this->gameMode()->playClickSounds())
+	{
+		std::mt19937 eng(rd()); // seed the generator
+		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
+		const int value = distr(eng);
+		qDebug() << "Play sound:" << soundEffects[value];
+		gameMode()->app()->playSound(QUrl(soundEffects[value]));
+	}
 }
-
 
 #include "roomwidget.moc"

@@ -11,6 +11,9 @@
 
 int main(int argc, char** argv)
 {
+	// Support better scaling on Android.
+	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
 	QApplication app(argc, argv);
 
 	// Create seed for the random

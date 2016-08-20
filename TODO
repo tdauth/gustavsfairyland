@@ -36,6 +36,7 @@
 - Gameover Dialog: Auch Bild einfügen.
 - FIXED (context geändert): Shortcuts in Player gehen nicht immer.
 - Skip während man ein eigenes Märchen abspielt kann zum Absturz führen. Keinen Spielstart erlauben während eigenes Märchen abgespielt wird.
+- Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
 
 DONE:
 - Hauptfigur am Anfang bestimmt

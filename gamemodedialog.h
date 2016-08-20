@@ -20,7 +20,7 @@ class GameModeDialog : public QDialog, protected Ui::GameModeDialog
 		/**
 		 * Fills the combo box with \p packages for selection.
 		 */
-		void fill(const fairytale::GameModes &gameModes);
+		void fill(const fairytale::GameModes &gameModes, fairytale *app);
 
 		/**
 		 * \return Returns the selected clip package. Returns nullptr if the package list is empty.
