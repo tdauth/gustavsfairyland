@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QtWidgets>
 #include <QDir>
 
@@ -275,6 +277,75 @@ void SettingsDialog::removeSelected()
     }
 }
 
+void SettingsDialog::copyCustomFairytale()
+{
+	if (!this->customFairytalesListWidget->selectedItems().isEmpty())
+	{
+		QListWidgetItem *item = this->customFairytalesListWidget->selectedItems().front();
+
+		fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().find(item->data(Qt::UserRole).toString());
+
+		if (iterator != m_app->customFairytales().end())
+		{
+			CustomFairytale *customFairytale = iterator.value();
+			QClipboard *clipboard = QApplication::clipboard();
+			clipboard->setText(customFairytale->toString());
+		}
+	}
+}
+
+void SettingsDialog::importCustomFairytale()
+{
+	QClipboard *clipboard = QApplication::clipboard();
+	const QString importText = clipboard->text();
+
+	std::cerr << "Importing: " << importText.toStdString() << std::endl;
+
+	if (!importText.isEmpty())
+	{
+		importCustomFairytaleEx(importText);
+	}
+}
+
+void SettingsDialog::importCustomFairytaleEx(const QString &importText)
+{
+	bool ok = false;
+	const QString text = QInputDialog::getText(this, tr("Custom Fairytale Name"), tr("Name of custom fairytale:"), QLineEdit::Normal, "", &ok);
+
+	if (ok && !text.isEmpty())
+	{
+		// Check if name is already used. It must be unique since it is used as key.
+		if (m_app->customFairytales().find(text) != m_app->customFairytales().end())
+		{
+			if (QMessageBox::question(this, tr("Overwrite existing custom fairytale?"), tr("Do you want to overwrite the existing custom fairytale?")) == QMessageBox::No)
+			{
+				// Select another name. TODO clipboard might have changed?!
+				importCustomFairytaleEx(importText);
+
+				return;
+			}
+		}
+
+		CustomFairytale *customFairytale = CustomFairytale::fromString(importText, text, m_app);
+
+		if (customFairytale != nullptr)
+		{
+			std::cerr << "Is not null, adding it!" << std::endl;
+
+			m_app->addCustomFairytale(customFairytale);
+
+			fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().find(text);
+
+			if (iterator != m_app->customFairytales().constEnd())
+			{
+				QListWidgetItem *item = new QListWidgetItem(iterator.value()->name());
+				item->setData(Qt::UserRole, iterator.value()->name());
+				customFairytalesListWidget->addItem(item);
+			}
+		}
+	}
+}
+
 void SettingsDialog::removeCustomFairytale()
 {
 	foreach (QListWidgetItem *item, this->customFairytalesListWidget->selectedItems())
@@ -325,6 +396,8 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	connect(this->removePushButton, &QPushButton::clicked, this, &SettingsDialog::removeSelected);
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &SettingsDialog::itemDoubleClicked);
 
+	connect(this->copyCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::copyCustomFairytale);
+	connect(this->importCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::importCustomFairytale);
 	connect(this->removeCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::removeCustomFairytale);
 }
 
@@ -446,6 +519,9 @@ void SettingsDialog::load(QSettings &settings)
 		m_app->loadDefaultClipPackage();
 	}
 
+	// Apply before loading custom fairytales since they are not stored in the settings additionally and otherwise they would all be deleted.
+	apply();
+
 	const int customFairytalesSize = settings.beginReadArray("customfairytales");
 
 	for (int i = 0; i < customFairytalesSize; ++i)
@@ -459,8 +535,6 @@ void SettingsDialog::load(QSettings &settings)
 	settings.endArray();
 
 	settings.endGroup();
-
-	apply();
 }
 
 void SettingsDialog::save(QSettings &settings)

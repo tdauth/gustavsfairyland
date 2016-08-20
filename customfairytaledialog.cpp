@@ -2,6 +2,7 @@
 
 #include <QtGui>
 #include <QInputDialog>
+#include <QMessageBox>
 
 #include "customfairytaledialog.h"
 #include "fairytale.h"
@@ -17,7 +18,17 @@ void CustomFairytaleDialog::save()
 
 	if (ok && !text.isEmpty())
 	{
-		// TODO check if name is already used. It must be unique?
+		// Check if name is already used. It must be unique since it is used as key.
+		if (m_app->customFairytales().find(text) != m_app->customFairytales().end())
+		{
+			if (QMessageBox::question(this, tr("Overwrite existing custom fairytale?"), tr("Do you want to overwrite the existing custom fairytale?")) == QMessageBox::No)
+			{
+				// Select another name.
+				save();
+
+				return;
+			}
+		}
 
 		CustomFairytale *customFairytale = new CustomFairytale(m_app);
 		customFairytale->setPackageId(this->m_app->clipPackage()->id());

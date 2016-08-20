@@ -208,6 +208,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		bool loadDefaultClipPackage();
 
+		/**
+		 * \note If the name is already used the current custom fairytale will be overwritten. The name must be a unique key.
+		 */
 		void addCustomFairytale(CustomFairytale *customFairytale);
 		void removeCustomFairytale(CustomFairytale *customFairytale);
 
@@ -361,6 +364,12 @@ inline bool fairytale::isMediaPlayerPlaying() const
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
+	foreach (QAction *action, this->m_bonusClipActions.keys())
+	{
+		delete action;
+	}
+
+	this->m_bonusClipActions.clear();
 	this->m_clipPackages.clear();
 
 	for (ClipPackages::const_iterator iterator = packages.constBegin(); iterator != packages.constEnd(); ++iterator)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>673</width>
-    <height>392</height>
+    <width>675</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -135,6 +135,20 @@
    </item>
    <item row="9" column="2">
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="copyCustomFairytalePushButton">
+       <property name="text">
+        <string>Copy to Clipboard</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="importCustomFairytalePushButton">
+       <property name="text">
+        <string>Import from clipboard</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QPushButton" name="removeCustomFairytalePushButton">
        <property name="text">

@@ -1470,12 +1470,22 @@ void fairytale::playCustomFairytaleSlot()
 
 void fairytale::addCustomFairytale(CustomFairytale *customFairytale)
 {
+	CustomFairytale *alreadyExisting = nullptr;
+
+	CustomFairytales::iterator iterator = m_customFairytales.find(customFairytale->name());
+
+	if (iterator != m_customFairytales.end())
+	{
+		alreadyExisting = iterator.value();
+
+		removeCustomFairytale(alreadyExisting);
+	}
+
 	this->m_customFairytales.insert(customFairytale->name(), customFairytale);
 
 	QAction *action = new QAction(customFairytale->name(), menuCustomFairytales);
 	connect(action, &QAction::triggered, this, &fairytale::playCustomFairytaleSlot);
 	menuCustomFairytales->addAction(action);
-
 	m_customFairytaleActions.insert(action, customFairytale);
 }
 

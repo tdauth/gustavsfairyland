@@ -18,6 +18,9 @@ class CustomFairytale : public QObject
 		void load(const QSettings &settings);
 		void save(QSettings &settings);
 
+		static CustomFairytale* fromString(const QString &value, const QString &name, QObject *parent);
+		QString toString();
+
 		void setName(const QString &name);
 		QString name() const;
 		void setPackageId(const QString &packageId);
