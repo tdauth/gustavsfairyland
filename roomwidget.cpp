@@ -124,7 +124,13 @@ int RoomWidget::floatingClipWidth() const
 	return availableWidth / 8;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidget(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) :
+#ifndef Q_OS_ANDROID // some emulators paint it just black with OpenGL
+QOpenGLWidget(parent)
+#else
+QWidget(parent)
+#endif
+, m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
