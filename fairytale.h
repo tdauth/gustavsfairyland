@@ -179,6 +179,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QList<Clip*> CompleteSolution;
 		const CompleteSolution& completeSolution() const;
 
+		QWidget* gameAreaWidget() const;
 		QGridLayout* gameAreaLayout() const;
 
 		AboutDialog* aboutDialog();
@@ -461,9 +462,14 @@ inline const fairytale::CompleteSolution& fairytale::completeSolution() const
 	return this->m_completeSolution;
 }
 
+inline QWidget* fairytale::gameAreaWidget() const
+{
+	return Ui::MainWindow::gameAreaWidget;
+}
+
 inline QGridLayout* fairytale::gameAreaLayout() const
 {
-	return centralLayout;
+	return Ui::MainWindow::gameAreaLayout;
 }
 
 inline HighScores* fairytale::highScores() const

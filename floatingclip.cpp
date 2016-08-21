@@ -34,6 +34,12 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 	}
 }
 
+void FloatingClip::setWidth(int width)
+{
+	this->m_width = width;
+	updateScaledClipImage();
+}
+
 void FloatingClip::start()
 {
 	this->updateScaledClipImage();
@@ -77,7 +83,13 @@ void FloatingClip::resume()
 
 void FloatingClip::updatePosition(qint64 elapsedTime)
 {
-	const int distance = (elapsedTime * this->speed()) / 1000; // distance per MS
+	if (elapsedTime <= 0)
+	{
+		return;
+	}
+
+	// make sure the clip does not stop even if it leads to fast clips when the screen is too small
+	const int distance = qMax<qint64>(1, elapsedTime * this->speed() / 1000); // distance per S
 
 	// Only update the position if the elapsed time is long enough, otherwise the clip won't move for this time.
 	if (distance > 0)
@@ -223,15 +235,18 @@ void FloatingClip::updateScaledClipImage()
 
 	m_scaledImagePaperDisabled = QImage(":/resources/paper.jpg").convertToFormat(QImage::Format_Grayscale8).scaled(m_width, m_width, Qt::KeepAspectRatio);
 
-	const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
+	if (m_clip != nullptr)
+	{
+		const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
 #ifndef Q_OS_ANDROID
-	const QString filePath = clipUrl.toLocalFile();
+		const QString filePath = clipUrl.toLocalFile();
 #else
-	const QString filePath = clipUrl.url();
+		const QString filePath = clipUrl.url();
 #endif
-	this->m_scaledImage = QImage(filePath).scaled(width, width, Qt::KeepAspectRatio);
-	Q_ASSERT(!this->m_scaledImage.isNull());
-	this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
+		this->m_scaledImage = QImage(filePath).scaled(width, width, Qt::KeepAspectRatio);
+		Q_ASSERT(!this->m_scaledImage.isNull());
+		this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
+	}
 }
 
 #include "floatingclip.moc"

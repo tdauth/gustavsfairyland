@@ -201,7 +201,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool 
 	this->m_turns = 0;
 	this->m_totalElapsedTime = 0;
 	this->menuButtonsWidget->hide();
-	this->gameAreaWidget->show();
+	this->gameAreaWidget()->show();
 	this->descriptionLabel->show();
 	this->timeLabel->show();
 
@@ -1227,7 +1227,7 @@ void fairytale::cleanupAfterOneGame()
 	this->timeLabel->hide();
 	this->descriptionLabel->setText("");
 	this->descriptionLabel->hide();
-	this->gameAreaWidget->hide();
+	this->gameAreaWidget()->hide();
 	this->menuButtonsWidget->show();
 	// Make sure all paint stuff from the game mode disappears.
 	this->repaint();

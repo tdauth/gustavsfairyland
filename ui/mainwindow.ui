@@ -31,10 +31,10 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout_4">
-    <item row="7" column="0">
+    <item row="7" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
      <widget class="QLabel" name="timeLabel">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -52,10 +52,10 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="0">
+    <item row="8" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
      <widget class="QLabel" name="descriptionLabel">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -75,21 +75,24 @@
     </item>
     <item row="9" column="0">
      <widget class="QWidget" name="gameAreaWidget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-         </item>
-         <item>
-          <layout class="QGridLayout" name="centralLayout"/>
-         </item>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gameAreaLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
         </layout>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QWidget" name="menuButtonsWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -204,7 +207,7 @@
      <x>0</x>
      <y>0</y>
      <width>607</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -253,7 +256,6 @@
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNewGame">
    <property name="text">
     <string>&amp;New Game</string>

@@ -34,7 +34,11 @@ class FloatingClip : public QObject
 		 */
 		void setClip(Clip *clip);
 		void setSpeed(int speed);
+		/**
+		 * \return Returns the pixels per S the floating clip is moved.
+		 */
 		int speed() const;
+		void setWidth(int width);
 		int width() const;
 		int x() const;
 		int y() const;
@@ -66,7 +70,7 @@ class FloatingClip : public QObject
 		void updateScaledClipImage();
 
 		RoomWidget *m_roomWidget;
-		int m_speed; /// Pixels per S
+		int m_speed; /// Pixels per MS
 		/// Width and height since it is a square.p
 		int m_width;
 		int m_x;

@@ -14,6 +14,9 @@ class Door;
 class FloatingClip;
 class Clip;
 
+// QOpenGLWidget
+typedef QWidget RoomWidgetParent;
+
 /**
  * \brief A widget which displays a room with four windows from the top.
  *
@@ -22,7 +25,7 @@ class Clip;
  *
  * \note Inherits QOpenGLWidget therefore painting should be faster on platforms where OpenGL is available.
  */
-class RoomWidget : public QOpenGLWidget
+class RoomWidget : public RoomWidgetParent
 {
 	Q_OBJECT
 
@@ -38,11 +41,16 @@ class RoomWidget : public QOpenGLWidget
 		typedef QVector<FloatingClip*> FloatingClips;
 
 		/**
-		 * The width of a floating clip depends on the display size.
-		 * A bigger display leads to bigger floating clips to keep the fairness.
-		 * Otherwise small displays with big floating clips would give you an advantage of clicking the floating clip.
+		 * The size of a floating clip depends on the room widget's size.
+		 * A bigger room widget leads to bigger floating clips to keep the fairness.
+		 * Otherwise small room widgets with big floating clips would give you an advantage of clicking the floating clip.
 		 */
 		int floatingClipWidth() const;
+		/**
+		 * The speed depends on the size as well.
+		 * \return Returns the pixels per S which the floating clip is moved.
+		 */
+		int floatingClipSpeed() const;
 
 		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
 
@@ -67,6 +75,9 @@ class RoomWidget : public QOpenGLWidget
 		 * Use a release event to emit the signal, otherwise the mouse position is corrupted after showing the player in the slot.
 		 */
 		virtual void mouseReleaseEvent(QMouseEvent *event) override;
+		/**
+		 * The resize event updates the room widget background image and updates the size of all floating clips to \ref floatingClipWidth().
+		 */
 		virtual void resizeEvent(QResizeEvent *event) override;
 
 	private:

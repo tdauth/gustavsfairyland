@@ -93,7 +93,7 @@ void RoomWidget::changeWind()
 
 void RoomWidget::updatePaint()
 {
-	const qint64 interval = m_paintTime > this->m_paintTimer->interval() ? m_paintTime : this->m_paintTimer->interval();
+	const qint64 interval = qMax<qint64>(m_paintTime, this->m_paintTimer->interval());
 
 	// The elapsed time in this timer tick slot has to be measured if it is longer than the actual interval. This additional time as to be considered when updating the distance.
 	m_paintTime = 0;
@@ -109,23 +109,42 @@ void RoomWidget::updatePaint()
 	}
 
 	//qDebug() << "Repaint";
+
+	// This should trigger an immediate paintEvent() call for RoomWidget. There have been some problems with this on Windows 7, Qt 5.7.0 mingw32 build.
 	this->repaint();
 
+	// Only indicate that it should be repainted. This does not have to trigger paintEvent() but if some paint events are skipped it doesn't matter.
+	//this->update();
+
 	//qDebug() << "Repaint end:" << overrunTimer.elapsed();
+
+	// Now get the duration it took to repaint the whole widget which might be longer than the timer interval.
 	m_paintTime = overrunTimer.elapsed();
 }
 
 int RoomWidget::floatingClipWidth() const
 {
-	QDesktopWidget widget;
-	QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen()); // or screenGeometry(), depending on your needs
-	const int availableWidth = qMax(mainScreenSize.height(), mainScreenSize.width());
+	const int availableWidth = qMax(rect().height(), rect().width());
 
 	return availableWidth / 8;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidget(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
+int RoomWidget::floatingClipSpeed() const
 {
+	const int availableWidth = qMax(rect().height(), rect().width());
+	const int result = availableWidth / 2;
+
+	qDebug() << "Result:" << result;
+
+	// make sure it does not stop
+	return result;
+}
+
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
+{
+	// The room widget is painted all the time directly.
+	//this->setAttribute(Qt::WA_OpaquePaintEvent);
+	//this->setAttribute(Qt::WA_PaintUnclipped);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	for (int i = 0; i < Door::MaxLocations; ++i)
@@ -133,7 +152,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : QOpenGLWidge
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
 
-	m_floatingClips.push_back(new FloatingClip(this, floatingClipWidth(), gameMode->startSpeed()));
+	m_floatingClips.push_back(new FloatingClip(this, this->floatingClipWidth(), this->floatingClipSpeed()));
 
 	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
 	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
@@ -178,6 +197,7 @@ void RoomWidget::pause()
 		door->close();
 	}
 
+	this->gameMode()->app()->repaint(); // repaint the whole main window
 	this->repaint(); // repaint once disable
 }
 
@@ -211,15 +231,17 @@ void RoomWidget::clearFloatingClipsExceptFirst()
 
 void RoomWidget::paintEvent(QPaintEvent *event)
 {
-	QWidget::paintEvent(event);
 	//qDebug() << "Paint event";
 
 	QPainter painter;
 	painter.begin(this);
 
+	//qDebug() << "Image size: " << m_woodImage.size();
+	//qDebug() << "Size in paint event: " << this->size();
+
 	if (this->isEnabled())
 	{
-		painter.drawImage(0, 0, m_woodImage);
+		painter.drawImage(rect(), m_woodImage);
 	}
 	else
 	{
@@ -240,6 +262,8 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	painter.end();
 
 	//qDebug() << "Paint event end";
+
+	QWidget::paintEvent(event);
 }
 
 void RoomWidget::mousePressEvent(QMouseEvent *event)
@@ -281,20 +305,50 @@ void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 	}
 }
 
-void RoomWidget::resizeEvent(QResizeEvent* event)
+void RoomWidget::resizeEvent(QResizeEvent *event)
 {
 	// When resizeEvent() is called, the widget already has its new geometry.
-	QWidget::resizeEvent(event);
 
-	qDebug() << "Resize SVG";
+	//qDebug() << "New size: " << this->size() << " and size of parent widget " << this->parentWidget()->size() << " and main window " << this->gameMode()->app()->size();
+	//qDebug() << "New size again here: " << this->width() << "|" << this->height();
+	//qDebug() << "New size event: " << event->size();
+	//qDebug() << "Resize SVG";
 	// Render SVG image whenever it is necessary
-	m_woodImage = QImage(this->width(), this->height(), QImage::Format_ARGB32);
+	const QSize newSize = event->size();
+	m_woodImage = QImage(newSize, QImage::Format_ARGB32);
 	QPainter painter(&m_woodImage);
 	m_woodSvg.render(&painter);
-	m_woodImageDisabled = QImage(this->width(), this->height(), QImage::Format_Grayscale8);
+	m_woodImageDisabled = QImage(newSize, QImage::Format_Grayscale8);
 	m_woodImageDisabled.fill(Qt::transparent);
 	QPainter painter2(&m_woodImageDisabled);
 	m_woodSvg.render(&painter2);
+
+	/*
+	 * Whenever the room widget is resized the clips must become bigger or smaller to keep the fairness.
+	 */
+	foreach (FloatingClip *floatingClip, m_floatingClips)
+	{
+		floatingClip->setWidth(floatingClipWidth());
+		floatingClip->setSpeed(floatingClipSpeed());
+
+		// check new borders of room widget
+		int x = floatingClip->x();
+		int y = floatingClip->y();
+
+		if (floatingClip->x() + floatingClip->width() > newSize.width())
+		{
+			x = newSize.width() -  floatingClip->width();
+		}
+
+		if (floatingClip->y() + floatingClip->width() > newSize.height())
+		{
+			y = newSize.height() -  floatingClip->width();
+		}
+
+		floatingClip->move(x, y);
+	}
+
+	QWidget::resizeEvent(event);
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)

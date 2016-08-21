@@ -39,16 +39,19 @@ void GameModeMoving::afterNarrator()
 		const int speed = this->startSpeed() + this->app()->turns() * (this->app()->hasTouchDevice() ? 60 : 10);
 		qDebug() << "Speed: " << speed;
 
-		// Don't add too many floating clips, otherwise it becomes too easy.
+		// Don't add too many floating clips, otherwise it becomes too easy since they're blocking each other all the time.
 		if (this->m_roomWidget->floatingClips().size() < 6)
 		{
 			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClipWidth(), speed);
 		}
 
+		/*
+		 * TODO set speed depending on RoomWidget::floatingClipSpeed()
 		foreach (FloatingClip *clip, this->m_roomWidget->floatingClips())
 		{
 			clip->setSpeed(speed);
 		}
+		*/
 	}
 
 	this->m_roomWidget->start();
@@ -135,7 +138,7 @@ void GameModeMoving::start()
 	// the room widget is cached
 	if (this->m_roomWidget == nullptr)
 	{
-		this->m_roomWidget = new RoomWidget(this, this->app()->centralWidget());
+		this->m_roomWidget = new RoomWidget(this, this->app()->gameAreaWidget());
 		connect(this->m_roomWidget, SIGNAL(gotIt()), this, SLOT(gotIt()));
 		this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
 	}
