@@ -274,12 +274,14 @@ set(CPACK_PACKAGE_INSTALL_DIRECTORY "gustavsfairyland")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_PACKAGE_EXECUTABLES "fairyland" "Gustav's Fairland")
 set(CPACK_CREATE_DESKTOP_LINKS "fairyland")
+set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
 
 # NSIS Windows
 set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_NSIS_URL_INFO_ABOUT "http://wc3lib.org")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
+#set(CPACK_NSIS_INSTALLED_ICON_NAME "$<TARGET_FILE:fairytale>")
 
 # Fedora package
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
