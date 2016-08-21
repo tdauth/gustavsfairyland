@@ -40,7 +40,7 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 - FIXED (context geändert): Shortcuts in Player gehen nicht immer.
 - Skip während man ein eigenes Märchen abspielt kann zum Absturz führen. Keinen Spielstart erlauben während eigenes Märchen abgespielt wird.
 - Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
-
+- Das Layout auf Android im Emulator stimmt immer nach dem zweiten Start der Anwendung. Werden irgendwelche GUI-Einstellungen gespeichert?
 Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg
 
 Finale TODOS:
