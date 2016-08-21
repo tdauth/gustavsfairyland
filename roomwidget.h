@@ -22,12 +22,7 @@ class Clip;
  *
  * \note Inherits QOpenGLWidget therefore painting should be faster on platforms where OpenGL is available.
  */
-class RoomWidget :
-#ifndef Q_OS_ANDROID // some emulators paint it just black with OpenGL
-public QOpenGLWidget
-#else
-public QWidget
-#endif
+class RoomWidget : public QOpenGLWidget
 {
 	Q_OBJECT
 

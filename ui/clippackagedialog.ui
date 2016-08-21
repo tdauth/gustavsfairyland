@@ -6,23 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>74</height>
+    <width>249</width>
+    <height>171</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Select Clip Package</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
+   <item row="4" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="useMaxRoundsCheckBox">
+     <property name="text">
+      <string>Use Max Rounds</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QComboBox" name="gameModesComboBox"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="maxRoundsSpinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="2">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="packagesComboBox"/>
    </item>
   </layout>
  </widget>
@@ -35,8 +55,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>59</y>
+     <x>239</x>
+     <y>149</y>
     </hint>
     <hint type="destinationlabel">
      <x>200</x>
@@ -51,12 +71,28 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>51</y>
+     <x>239</x>
+     <y>149</y>
     </hint>
     <hint type="destinationlabel">
-     <x>348</x>
+     <x>248</x>
      <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>useMaxRoundsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>maxRoundsSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>202</x>
+     <y>104</y>
     </hint>
    </hints>
   </connection>

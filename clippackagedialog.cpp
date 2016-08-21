@@ -1,4 +1,5 @@
 #include "clippackagedialog.h"
+#include "gamemode.h"
 #include "clippackage.h"
 
 #include "clippackagedialog.moc"
@@ -8,26 +9,52 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 	this->setupUi(this);
 }
 
-void ClipPackageDialog::fill(const fairytale::ClipPackages &packages)
+void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)
 {
 	this->m_packages = packages;
 
-	this->comboBox->clear();
+	this->packagesComboBox->clear();
 
 	for (fairytale::ClipPackages::const_iterator iterator = packages.begin(); iterator != packages.end(); ++iterator)
 	{
 		const ClipPackage *clipPackage = iterator.value();
-		this->comboBox->addItem(clipPackage->name(), clipPackage->id());
+		this->packagesComboBox->addItem(clipPackage->name(), clipPackage->id());
 	}
 
 	if (packages.isEmpty())
 	{
-		this->comboBox->setEnabled(false);
+		this->packagesComboBox->setEnabled(false);
+	}
+	else
+	{
+		this->packagesComboBox->setEnabled(true);
+	}
+
+	this->m_gameModes = gameModes;
+
+	this->gameModesComboBox->clear();
+	int i = 0;
+
+	for (fairytale::GameModes::const_iterator iterator = gameModes.begin(); iterator != gameModes.end(); ++iterator)
+	{
+		const GameMode *gameMode = iterator.value();
+		this->gameModesComboBox->addItem(gameMode->name(), gameMode->id());
+
+		// Make sure that the default game mode is chosen by default in the combo box.
+		if (app->defaultGameMode() == gameMode)
+		{
+			this->gameModesComboBox->setCurrentIndex(i);
+		}
+
+		++i;
+	}
+
+	if (gameModes.isEmpty() || packages.isEmpty())
+	{
 		this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 	}
 	else
 	{
-		this->comboBox->setEnabled(true);
 		this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 	}
 }
@@ -39,5 +66,25 @@ ClipPackage* ClipPackageDialog::clipPackage() const
 		return nullptr;
 	}
 
-	return this->m_packages[this->comboBox->currentData().toString()];
+	return this->m_packages[this->packagesComboBox->currentData().toString()];
+}
+
+GameMode* ClipPackageDialog::gameMode() const
+{
+	if (this->m_gameModes.isEmpty())
+	{
+		return nullptr;
+	}
+
+	return this->m_gameModes[this->gameModesComboBox->currentData().toString()];
+}
+
+int ClipPackageDialog::maxRounds() const
+{
+	return this->maxRoundsSpinBox->value();
+}
+
+bool ClipPackageDialog::useMaxRounds() const
+{
+	return this->useMaxRoundsCheckBox->isChecked();
 }

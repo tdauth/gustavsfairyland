@@ -61,6 +61,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \param enabled If this value is true the buttons and actions will be enabled. Otherwise they will be disabled.
 		 */
 		void setGameButtonsEnabled(bool enabled);
+		/**
+		 * Enables or disables menu actions and buttons which are only enabled or disabled during playing a custom fairytale.
+		 * This prevents the player from starting a new game before skipping the custom fairytale.
+		 * \param enabled If this value is true the buttons and actions for a custom fairytale will be enabled and others will be disabled. Otherwise it is the other way around.
+		 */
+		void setCustomFairytaleButtonsEnabled(bool enabled);
 
 		void playFinalVideo();
 
@@ -72,8 +78,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void showCustomFairytale();
 		void settings();
 		void openEditor();
-		ClipPackage* selectClipPackage();
-		GameMode* selectGameMode();
 		void showHighScores();
 		void about();
 
@@ -106,7 +110,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		static QString localeToName(const QString &locale);
 
-		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode);
+		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool useMaxRounds, int maxRounds);
 
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
@@ -142,6 +146,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
 		GameMode* defaultGameMode() const;
+		bool defaultUseMaxRounds() const;
+		int defaultMaxRounds() const;
+
 		const ClipPackages& clipPackages() const;
 		ClipPackage* defaultClipPackage() const;
 
@@ -150,7 +157,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void setClipsDir(const QUrl &url);
 		QUrl clipsDir() const;
 
+		/**
+		 * \return Returns the current number of turns.
+		 */
 		int turns() const;
+		/**
+		 * \return Returns the current number of rounds.
+		 */
+		int rounds() const;
 
 		SettingsDialog* settingsDialog();
 		CustomFairytaleDialog* customFairytaleDialog();
@@ -158,6 +172,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool requiresPerson() const;
 		ClipPackage* clipPackage() const;
 		GameMode* gameMode() const;
+		bool useMaxRounds() const;
+		int maxRounds() const;
+
 
 		typedef QList<Clip*> CompleteSolution;
 		const CompleteSolution& completeSolution() const;
@@ -264,7 +281,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		SettingsDialog *m_settingsDialog;
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
-		GameModeDialog *m_gameModeDialog;
 
 		ClipPackageEditor *m_editor;
 
@@ -326,6 +342,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The currently played game mode.
 		 */
 		GameMode *m_gameMode;
+		bool m_useMaxRounds;
+		int m_maxRounds;
 
 		/// This dialog appears when the "About" action is triggered.
 		AboutDialog *m_aboutDialog;
@@ -403,6 +421,11 @@ inline int fairytale::turns() const
 	return this->m_turns;
 }
 
+inline int fairytale::rounds() const
+{
+	return (this->m_turns - 1) / 2;
+}
+
 inline bool fairytale::requiresPerson() const
 {
 	return this->m_requiresPerson;
@@ -421,6 +444,16 @@ inline bool fairytale::isGameRunning() const
 inline GameMode* fairytale::gameMode() const
 {
 	return this->m_gameMode;
+}
+
+inline bool fairytale::useMaxRounds() const
+{
+	return this->m_useMaxRounds;
+}
+
+inline int fairytale::maxRounds() const
+{
+	return this->m_maxRounds;
 }
 
 inline const fairytale::CompleteSolution& fairytale::completeSolution() const

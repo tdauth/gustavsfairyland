@@ -58,7 +58,7 @@ void GameModeMoving::nextTurn()
 {
 	this->m_currentSolution = nullptr;
 
-	if (!this->m_remainingClips.empty())
+	if (!this->m_remainingClips.empty() && (!app()->useMaxRounds() || app()->rounds() < app()->maxRounds()))
 	{
 		QList<Clip*> copy = this->m_remainingClips;
 

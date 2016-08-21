@@ -73,7 +73,6 @@ set(fairyland_HEADERS
 	customfairytale.h
 	customfairytaledialog.h
 	gamemode.h
-	gamemodedialog.h
 	gamemodemoving.h
 	gamemodeoneoutoffour.h
 	iconbutton.h
@@ -101,7 +100,6 @@ set(fairyland_SRCS
 	customfairytale.cpp
 	customfairytaledialog.cpp
 	gamemode.cpp
-	gamemodedialog.cpp
 	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
 	iconbutton.cpp
@@ -122,7 +120,6 @@ set(fairyland_UI
 	ui/clippackageeditor.ui
 	ui/clipeditor.ui
 	ui/customfairytale.ui
-	ui/gamemodedialog.ui
 	ui/settings.ui
 	ui/wondialog.ui
 	ui/highscores.ui

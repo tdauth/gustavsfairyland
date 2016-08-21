@@ -17,7 +17,6 @@
 #include "player.h"
 #include "iconbutton.h"
 #include "clippackagedialog.h"
-#include "gamemodedialog.h"
 #include "clippackage.h"
 #include "clippackageeditor.h"
 #include "customfairytaledialog.h"
@@ -44,16 +43,24 @@ void fairytale::newGame()
 
 	clearSolution();
 
-	ClipPackage *clipPackage = this->selectClipPackage();
-
-	if (clipPackage != nullptr)
+	if (this->m_clipPackageDialog == nullptr)
 	{
-		GameMode *gameMode = this->selectGameMode();
+		this->m_clipPackageDialog = new ClipPackageDialog(this);
+	}
 
-		if (gameMode != nullptr)
-		{
-			startNewGame(clipPackage, gameMode);
-		}
+	this->m_clipPackageDialog->fill(this->clipPackages(), this->gameModes(), this);
+	ClipPackage *clipPackage = nullptr;
+	GameMode *gameMode = nullptr;
+
+	if (this->m_clipPackageDialog->exec() == QDialog::Accepted)
+	{
+		clipPackage = this->m_clipPackageDialog->clipPackage();
+		gameMode = this->m_clipPackageDialog->gameMode();
+	}
+
+	if (clipPackage != nullptr && gameMode != nullptr)
+	{
+		startNewGame(clipPackage, gameMode, this->m_clipPackageDialog->useMaxRounds(), this->m_clipPackageDialog->maxRounds());
 	}
 }
 
@@ -144,40 +151,6 @@ void fairytale::openEditor()
 	this->m_editor->show();
 }
 
-ClipPackage* fairytale::selectClipPackage()
-{
-	if (this->m_clipPackageDialog == nullptr)
-	{
-		this->m_clipPackageDialog = new ClipPackageDialog(this);
-	}
-
-	this->m_clipPackageDialog->fill(this->clipPackages());
-
-	if (this->m_clipPackageDialog->exec() == QDialog::Accepted)
-	{
-		return this->m_clipPackageDialog->clipPackage();
-	}
-
-	return nullptr;
-}
-
-GameMode* fairytale::selectGameMode()
-{
-	if (this->m_gameModeDialog == nullptr)
-	{
-		this->m_gameModeDialog = new GameModeDialog(this);
-	}
-
-	this->m_gameModeDialog->fill(this->gameModes(), this);
-
-	if (this->m_gameModeDialog->exec() == QDialog::Accepted)
-	{
-		return this->m_gameModeDialog->gameMode();
-	}
-
-	return nullptr;
-}
-
 bool fairytale::hasTouchDevice()
 {
 	foreach (const QTouchDevice *device, QTouchDevice::devices())
@@ -205,7 +178,7 @@ QString fairytale::localeToName(const QString &locale)
 	return locale;
 }
 
-void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
+void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
 	{
@@ -234,6 +207,8 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode)
 
 	this->m_clipPackage = clipPackage;
 	this->m_gameMode = gameMode;
+	this->m_useMaxRounds = useMaxRounds;
+	this->m_maxRounds = maxRounds;
 	this->gameMode()->start();
 	qDebug() << "start";
 	this->m_isRunning = true;
@@ -250,7 +225,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_settingsDialog(nullptr)
 , m_clipsDialog(nullptr)
 , m_clipPackageDialog(nullptr)
-, m_gameModeDialog(nullptr)
 , m_editor(nullptr)
 , m_customFairytaleDialog(nullptr)
 , m_remainingTime(0)
@@ -268,6 +242,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playNewSound(true)
 , m_musicPlayer(new QMediaPlayer(this))
 , m_gameMode(nullptr)
+, m_useMaxRounds(false)
+, m_maxRounds(0)
 , m_aboutDialog(nullptr)
 , m_wonDialog(nullptr)
 , m_gameOverDialog(nullptr)
@@ -506,6 +482,7 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 	if (!customFairytale->clipIds().isEmpty())
 	{
 		this->m_playingCustomFairytale = customFairytale;
+		setCustomFairytaleButtonsEnabled(true);
 		this->playCustomFairytaleClip(0);
 	}
 }
@@ -533,8 +510,10 @@ void fairytale::quickGame()
 	// Start with the first available stuff.
 	ClipPackage *clipPackage = this->defaultClipPackage();
 	GameMode *gameMode = this->defaultGameMode();
+	const bool useMaxRounds = this->defaultUseMaxRounds();
+	const int maxRounds = this->defaultMaxRounds();
 
-	startNewGame(clipPackage, gameMode);
+	startNewGame(clipPackage, gameMode, useMaxRounds, maxRounds);
 }
 
 void fairytale::retry()
@@ -547,8 +526,10 @@ void fairytale::retry()
 	// Start with the first available stuff.
 	ClipPackage *clipPackage = this->clipPackage();
 	GameMode *gameMode = this->gameMode();
+	const bool useMaxRounds = this->useMaxRounds();
+	const int maxRounds = this->maxRounds();
 
-	this->startNewGame(clipPackage, gameMode);
+	this->startNewGame(clipPackage, gameMode, useMaxRounds, maxRounds);
 }
 
 QDir fairytale::translationsDir() const
@@ -630,7 +611,7 @@ void fairytale::win()
 		name = qgetenv("USERNAME");
 	}
 
-	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->m_turns, this->m_totalElapsedTime);
+	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->rounds(), this->m_totalElapsedTime);
 	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
@@ -883,6 +864,22 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	}
 }
 
+void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
+{
+	actionNewGame->setEnabled(!enabled);
+	quickGamePushButton->setEnabled(!enabled);
+
+	foreach (QAction *action, this->m_customFairytaleActions.keys())
+	{
+		action->setEnabled(!enabled);
+	}
+
+	foreach (QAction *action, this->m_bonusClipActions.keys())
+	{
+		action->setEnabled(!enabled);
+	}
+}
+
 #ifdef Q_OS_ANDROID
 void fairytale::finishNarratorAndroid()
 {
@@ -997,8 +994,8 @@ void fairytale::onFinishVideoAndSounds()
 				this->playCustomFairytaleClip(this->m_customFairytaleIndex);
 			}
 			/*
-			* Stop playing the custom fairytale.
-			*/
+			 * Stop playing the custom fairytale.
+			 */
 			else
 			{
 				qDebug() << "Finished custom fairytale clips";
@@ -1007,6 +1004,7 @@ void fairytale::onFinishVideoAndSounds()
 
 				// The dialog has to disappear, after the player watched all final clips.
 				this->m_player->hide();
+				setCustomFairytaleButtonsEnabled(false);
 			}
 		}
 	}
@@ -1392,6 +1390,16 @@ GameMode* fairytale::defaultGameMode() const
 	}
 
 	return this->gameModes().first();
+}
+
+bool fairytale::defaultUseMaxRounds() const
+{
+	return true;
+}
+
+int fairytale::defaultMaxRounds() const
+{
+	return 6;
 }
 
 ClipPackage* fairytale::defaultClipPackage() const

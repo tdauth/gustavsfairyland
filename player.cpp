@@ -54,7 +54,13 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 
 	// expanding makes sure that it uses the maximum possible size
 	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+#ifndef Q_OS_ANDROID
 	this->m_videoWidget->setMinimumSize(QSize(240, 240));
+#else
+	this->m_videoWidget->setMinimumSize(QSize(100, 100));
+#endif
+
 	videoPlayerLayout->addWidget(m_videoWidget);
 	this->m_videoWidget->show();
 
