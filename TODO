@@ -42,6 +42,8 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 - Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
 - Das Layout auf Android im Emulator stimmt immer nach dem zweiten Start der Anwendung. Werden irgendwelche GUI-Einstellungen gespeichert?
 Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg
+- Wenn man im Nichtvollbildmodus das Spielfenster vergrößert wächst das Room-Widget zu groß, also über die Grenzen hinaus!
+- Im Vollbildmodus triggern die paintEvents() unter Windows nicht.
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
