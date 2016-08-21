@@ -33,7 +33,6 @@ void GameModeOneOutOfFour::clickCard()
 
 void GameModeOneOutOfFour::start()
 {
-
 	for (int i = 0; i < this->m_buttons.size(); ++i)
 	{
 		delete this->m_buttons[i];

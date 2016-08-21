@@ -50,7 +50,7 @@ void fairytale::newGame()
 	{
 		GameMode *gameMode = this->selectGameMode();
 
-		if (m_gameMode != nullptr)
+		if (gameMode != nullptr)
 		{
 			startNewGame(clipPackage, gameMode);
 		}
@@ -336,7 +336,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	GameModeMoving *gameModeMoving = new GameModeMoving(this);
 	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
 	GameModeOneOutOfFour *gameModeOneOutOfFour = new GameModeOneOutOfFour(this);
-	m_gameModes.insert(gameModeOneOutOfFour->id(), new GameModeOneOutOfFour(this));
+	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
