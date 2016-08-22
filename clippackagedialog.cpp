@@ -49,6 +49,10 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fair
 		++i;
 	}
 
+	this->difficultyComboBox->setCurrentIndex((int)app->defaultDifficulty());
+	this->useMaxRoundsCheckBox->setChecked(app->defaultUseMaxRounds());
+	this->maxRoundsSpinBox->setValue(app->defaultMaxRounds());
+
 	if (gameModes.isEmpty() || packages.isEmpty())
 	{
 		this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
@@ -77,6 +81,11 @@ GameMode* ClipPackageDialog::gameMode() const
 	}
 
 	return this->m_gameModes[this->gameModesComboBox->currentData().toString()];
+}
+
+fairytale::Difficulty ClipPackageDialog::difficulty() const
+{
+	return (fairytale::Difficulty)this->difficultyComboBox->currentIndex();
 }
 
 int ClipPackageDialog::maxRounds() const

@@ -145,6 +145,8 @@ void GameModeMoving::start()
 	else
 	{
 		this->m_roomWidget->clearFloatingClipsExceptFirst();
+		// update speed due to difficulty
+		this->m_roomWidget->floatingClips().front()->setSpeed(m_roomWidget->floatingClipSpeed());
 		this->m_roomWidget->show();
 	}
 

@@ -131,13 +131,54 @@ int RoomWidget::floatingClipWidth() const
 
 int RoomWidget::floatingClipSpeed() const
 {
+	double factor = 1.0;
+
+	switch (this->gameMode()->app()->difficulty())
+	{
+		case fairytale::Difficulty::Easy:
+		{
+			factor = 0.5;
+
+			break;
+		}
+
+		case fairytale::Difficulty::Normal:
+		{
+			factor = 1.0;
+
+			break;
+		}
+
+		case fairytale::Difficulty::Hard:
+		{
+			factor = 1.5;
+
+			break;
+		}
+
+		// This should not be able to win at all.
+		case fairytale::Difficulty::Mahlerisch:
+		{
+			factor = 4.0;
+
+			break;
+		}
+	}
+
 	const int availableWidth = qMax(rect().height(), rect().width());
-	const int result = availableWidth;
+	const int result = (double)availableWidth * factor;
 
 	qDebug() << "Result:" << result;
 
 	// make sure it does not stop
 	return result;
+}
+
+int RoomWidget::maxCollisionDistance() const
+{
+	const int availableWidth = qMax(rect().height(), rect().width());
+
+	return availableWidth / 5;
 }
 
 RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))

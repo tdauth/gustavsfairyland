@@ -105,13 +105,33 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="82"/>
+        <location filename="../build/ui_clippackagedialog.h" line="88"/>
         <source>Select Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="83"/>
+        <location filename="../build/ui_clippackagedialog.h" line="89"/>
         <source>Use Max Rounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackagedialog.h" line="92"/>
+        <source>Easy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackagedialog.h" line="93"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackagedialog.h" line="94"/>
+        <source>Hard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackagedialog.h" line="95"/>
+        <source>Mahlerisch</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -298,34 +318,59 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HighScores</name>
     <message>
-        <location filename="../build/ui_highscores.h" line="92"/>
-        <location filename="../build/ui_highscores.h" line="93"/>
+        <location filename="../build/ui_highscores.h" line="94"/>
+        <location filename="../build/ui_highscores.h" line="95"/>
         <source>High Scores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="95"/>
-        <source>Rounds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../build/ui_highscores.h" line="97"/>
-        <source>Time (ms)</source>
+        <source>Difficulty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="99"/>
-        <source>Game Mode</source>
+        <source>Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="101"/>
-        <source>Package</source>
+        <source>Time (ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="103"/>
+        <source>Game Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_highscores.h" line="105"/>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_highscores.h" line="107"/>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highscores.cpp" line="140"/>
+        <source>Easy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highscores.cpp" line="143"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highscores.cpp" line="146"/>
+        <source>Hard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highscores.cpp" line="149"/>
+        <source>Mahlerisch</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -688,65 +733,65 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../fairytale.cpp" line="196"/>
-        <location filename="../fairytale.cpp" line="679"/>
+        <location filename="../fairytale.cpp" line="684"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="197"/>
-        <location filename="../fairytale.cpp" line="680"/>
+        <location filename="../fairytale.cpp" line="685"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="655"/>
+        <location filename="../fairytale.cpp" line="660"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="656"/>
+        <location filename="../fairytale.cpp" line="661"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="796"/>
+        <location filename="../fairytale.cpp" line="801"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1081"/>
+        <location filename="../fairytale.cpp" line="1086"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1102"/>
-        <location filename="../fairytale.cpp" line="1136"/>
+        <location filename="../fairytale.cpp" line="1107"/>
+        <location filename="../fairytale.cpp" line="1141"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1106"/>
-        <location filename="../fairytale.cpp" line="1140"/>
+        <location filename="../fairytale.cpp" line="1111"/>
+        <location filename="../fairytale.cpp" line="1145"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1113"/>
+        <location filename="../fairytale.cpp" line="1118"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1117"/>
+        <location filename="../fairytale.cpp" line="1122"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1124"/>
+        <location filename="../fairytale.cpp" line="1129"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1128"/>
+        <location filename="../fairytale.cpp" line="1133"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

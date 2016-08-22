@@ -95,6 +95,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 	public:
 		/**
+		 * Depending on the game mode the difficulty has influence on the gameplay and makes it harder or easier.
+		 */
+		enum class Difficulty
+		{
+			Easy,
+			Normal,
+			Hard,
+			Mahlerisch /// Impossible difficulty since Mahler himself was a genius.
+		};
+
+		/**
 		 * Stores all game modes by their unique IDs.
 		 */
 		typedef QMap<QString, GameMode*> GameModes;
@@ -110,7 +121,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		static QString localeToName(const QString &locale);
 
-		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool useMaxRounds, int maxRounds);
+		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
 
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
@@ -146,6 +157,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
 		GameMode* defaultGameMode() const;
+		Difficulty defaultDifficulty() const;
 		bool defaultUseMaxRounds() const;
 		int defaultMaxRounds() const;
 
@@ -172,6 +184,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool requiresPerson() const;
 		ClipPackage* clipPackage() const;
 		GameMode* gameMode() const;
+		Difficulty difficulty() const;
 		bool useMaxRounds() const;
 		int maxRounds() const;
 
@@ -344,6 +357,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The currently played game mode.
 		 */
 		GameMode *m_gameMode;
+		Difficulty m_difficulty;
 		bool m_useMaxRounds;
 		int m_maxRounds;
 
@@ -446,6 +460,11 @@ inline bool fairytale::isGameRunning() const
 inline GameMode* fairytale::gameMode() const
 {
 	return this->m_gameMode;
+}
+
+inline fairytale::Difficulty fairytale::difficulty() const
+{
+	return this->m_difficulty;
 }
 
 inline bool fairytale::useMaxRounds() const

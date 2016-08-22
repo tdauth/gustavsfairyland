@@ -12,7 +12,7 @@ HighScore::HighScore() : m_rounds(0), m_time(0)
 {
 }
 
-HighScore::HighScore(const QString &name, const QString &package, const QString &gameMode, int rounds, int time) : m_name(name), m_package(package), m_gameMode(gameMode), m_rounds(rounds), m_time(time)
+HighScore::HighScore(const QString &name, const QString &package, const QString &gameMode, fairytale::Difficulty difficulty, int rounds, int time) : m_name(name), m_package(package), m_gameMode(gameMode), m_difficulty(difficulty), m_rounds(rounds), m_time(time)
 {
 }
 
@@ -42,10 +42,10 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	{
 		const HighScore &existingHighScore = *pos;
 
-		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds()) || existingHighScore.rounds() < highScore.rounds())
+		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || (existingHighScore.rounds() < highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || ((int)existingHighScore.difficulty() < (int)highScore.difficulty()))
 		{
-			std::cerr << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << std::endl;
-			std::cerr << "This highscore with time: " << highScore.time() << " and rounds " << highScore.rounds() << std::endl;
+			std::cerr << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << " and difficulty " << (int)existingHighScore.difficulty() << std::endl;
+			std::cerr << "This highscore with time: " << highScore.time() << " and rounds " << highScore.rounds() << " and difficulty " << (int)highScore.difficulty() << std::endl;
 
 			break;
 		}
@@ -114,18 +114,40 @@ void HighScores::showEvent(QShowEvent *event)
 			const fairytale::ClipPackages::const_iterator packageIterator = app()->clipPackages().find(highScore.package());
 			const QString packageName = packageIterator != app()->clipPackages().end() ? packageIterator.value()->name() : highScore.package();
 
-			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
+			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
 			tableWidget->setItem(row, 0, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.time()));
+			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
 			tableWidget->setItem(row, 1, newItem);
-			newItem = new QTableWidgetItem(gameModeName);
+			newItem = new QTableWidgetItem(QString::number(highScore.time()));
 			tableWidget->setItem(row, 2, newItem);
-			newItem = new QTableWidgetItem(packageName);
+			newItem = new QTableWidgetItem(gameModeName);
 			tableWidget->setItem(row, 3, newItem);
-			newItem = new QTableWidgetItem(highScore.name());
+			newItem = new QTableWidgetItem(packageName);
 			tableWidget->setItem(row, 4, newItem);
+			newItem = new QTableWidgetItem(highScore.name());
+			tableWidget->setItem(row, 5, newItem);
 
 			++row;
 		}
 	}
+}
+
+QString HighScores::difficultyToString(fairytale::Difficulty difficulty)
+{
+	switch (difficulty)
+	{
+		case fairytale::Difficulty::Easy:
+			return tr("Easy");
+
+		case fairytale::Difficulty::Normal:
+			return tr("Normal");
+
+		case fairytale::Difficulty::Hard:
+			return tr("Hard");
+
+		case fairytale::Difficulty::Mahlerisch:
+			return tr("Mahlerisch");
+	}
+
+	return QString();
 }

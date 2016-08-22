@@ -60,7 +60,7 @@ void fairytale::newGame()
 
 	if (clipPackage != nullptr && gameMode != nullptr)
 	{
-		startNewGame(clipPackage, gameMode, this->m_clipPackageDialog->useMaxRounds(), this->m_clipPackageDialog->maxRounds());
+		startNewGame(clipPackage, gameMode, this->m_clipPackageDialog->difficulty(), this->m_clipPackageDialog->useMaxRounds(), this->m_clipPackageDialog->maxRounds());
 	}
 }
 
@@ -178,7 +178,7 @@ QString fairytale::localeToName(const QString &locale)
 	return locale;
 }
 
-void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool useMaxRounds, int maxRounds)
+void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
 	{
@@ -207,6 +207,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, bool 
 
 	this->m_clipPackage = clipPackage;
 	this->m_gameMode = gameMode;
+	this->m_difficulty = difficulty;
 	this->m_useMaxRounds = useMaxRounds;
 	this->m_maxRounds = maxRounds;
 	this->gameMode()->start();
@@ -242,6 +243,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playNewSound(true)
 , m_musicPlayer(new QMediaPlayer(this))
 , m_gameMode(nullptr)
+, m_difficulty(Difficulty::Normal)
 , m_useMaxRounds(false)
 , m_maxRounds(0)
 , m_aboutDialog(nullptr)
@@ -325,7 +327,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	for (int i = 0; i < highScoresSize; ++i)
 	{
 		settings.setArrayIndex(i);
-		HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), settings.value("rounds").toInt(), settings.value("time").toInt());
+		HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), (fairytale::Difficulty)settings.value("difficulty").toInt(), settings.value("rounds").toInt(), settings.value("time").toInt());
 		this->highScores()->addHighScore(highScore);
 	}
 
@@ -364,6 +366,7 @@ fairytale::~fairytale()
 			settings.setValue("name", highScore.name());
 			settings.setValue("package", highScore.package());
 			settings.setValue("gameMode", highScore.gameMode());
+			settings.setValue("difficulty", (int)highScore.difficulty());
 			settings.setValue("rounds", highScore.rounds());
 			settings.setValue("time", highScore.time());
 
@@ -518,10 +521,11 @@ void fairytale::quickGame()
 	// Start with the first available stuff.
 	ClipPackage *clipPackage = this->defaultClipPackage();
 	GameMode *gameMode = this->defaultGameMode();
+	const Difficulty difficulty = this->defaultDifficulty();
 	const bool useMaxRounds = this->defaultUseMaxRounds();
 	const int maxRounds = this->defaultMaxRounds();
 
-	startNewGame(clipPackage, gameMode, useMaxRounds, maxRounds);
+	startNewGame(clipPackage, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
 void fairytale::retry()
@@ -534,10 +538,11 @@ void fairytale::retry()
 	// Start with the first available stuff.
 	ClipPackage *clipPackage = this->clipPackage();
 	GameMode *gameMode = this->gameMode();
+	const Difficulty difficulty = this->difficulty();
 	const bool useMaxRounds = this->useMaxRounds();
 	const int maxRounds = this->maxRounds();
 
-	this->startNewGame(clipPackage, gameMode, useMaxRounds, maxRounds);
+	this->startNewGame(clipPackage, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
 QDir fairytale::translationsDir() const
@@ -619,7 +624,7 @@ void fairytale::win()
 		name = qgetenv("USERNAME");
 	}
 
-	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->rounds(), this->m_totalElapsedTime);
+	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->difficulty(), this->rounds(), this->m_totalElapsedTime);
 	this->highScores()->addHighScore(highScore);
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
@@ -1403,6 +1408,11 @@ GameMode* fairytale::defaultGameMode() const
 	}
 
 	return this->gameModes().first();
+}
+
+fairytale::Difficulty fairytale::defaultDifficulty() const
+{
+	return Difficulty::Normal;
 }
 
 bool fairytale::defaultUseMaxRounds() const

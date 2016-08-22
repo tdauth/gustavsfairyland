@@ -195,7 +195,7 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 			m_collisionDistance += distance;
 
 			// reset collision movement, wind gets priority
-			if (m_collisionDistance > 400)
+			if (m_collisionDistance > this->m_roomWidget->maxCollisionDistance())
 			{
 				m_collisionDistance = 0;
 			}

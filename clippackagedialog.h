@@ -30,6 +30,7 @@ class ClipPackageDialog : public QDialog, protected Ui::ClipPackageDialog
 		 * \return Returns the selected clip package. Returns nullptr if the package list is empty.
 		 */
 		GameMode* gameMode() const;
+		fairytale::Difficulty difficulty() const;
 		int maxRounds() const;
 		bool useMaxRounds() const;
 

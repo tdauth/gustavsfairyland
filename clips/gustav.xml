@@ -379,6 +379,14 @@
 		</description>
 	</bonusClip>
 
+        <bonusClip>
+                <image>./mahler/mahler.jpg</image>
+                <video>./mahler/bonus/tochter.avi</video>
+                <description>
+                        <de>Gustav Mahler über seine Tochter</de>
+                </description>
+        </bonusClip>
+
 	<bonusClip>
 		<image>./mahler/mahler.jpg</image>
 		<video>./nazi/peter.mkv</video>

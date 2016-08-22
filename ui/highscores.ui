@@ -57,6 +57,11 @@
      </attribute>
      <column>
       <property name="text">
+       <string>Difficulty</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Rounds</string>
       </property>
      </column>

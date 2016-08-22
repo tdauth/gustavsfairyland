@@ -47,10 +47,16 @@ class RoomWidget : public RoomWidgetParent
 		 */
 		int floatingClipWidth() const;
 		/**
-		 * The speed depends on the size as well.
+		 * The speed depends on the size as well. It does also depend on the difficulty of the game (\ref fairytale::difficulty()).
+		 * The more difficult the game is the faster the clips move.
 		 * \return Returns the pixels per S which the floating clip is moved.
 		 */
 		int floatingClipSpeed() const;
+
+		/**
+		 * \return Returns the maximum distance in pixels which the floating clip moves from a collision. This distance is smaller if the room widget is smaller.
+		 */
+		int maxCollisionDistance() const;
 
 		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
 
