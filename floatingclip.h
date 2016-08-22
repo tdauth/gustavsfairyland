@@ -70,7 +70,7 @@ class FloatingClip : public QObject
 		void updateScaledClipImage();
 
 		RoomWidget *m_roomWidget;
-		int m_speed; /// Pixels per MS
+		int m_speed; /// Pixels per S
 		/// Width and height since it is a square.p
 		int m_width;
 		int m_x;

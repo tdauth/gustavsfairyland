@@ -260,6 +260,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void addCurrentSolution();
 		void cleanupGame();
 		void cleanupAfterOneGame();
+		void finishPlayingCustomFairytale();
 
 		/// The directory which is used to resolve relative paths of files for clips from clip packages.
 		QUrl m_clipsDir;

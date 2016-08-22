@@ -42,8 +42,18 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 - Wenn man skippt wenn man die richtige Seite angeklickt hat und alles ausgegraut ist, geht das Spiel danach weiter!
 - Das Layout auf Android im Emulator stimmt immer nach dem zweiten Start der Anwendung. Werden irgendwelche GUI-Einstellungen gespeichert?
 Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg
-- Wenn man im Nichtvollbildmodus das Spielfenster vergrößert wächst das Room-Widget zu groß, also über die Grenzen hinaus!
+- Wenn man im Nichtvollbildmodus das Spielfenster vergrößert wächst das Room-Widget zu groß, also über die Grenzen hinaus! Passiert nur mit QOpenGLWidget!
 - Im Vollbildmodus triggern die paintEvents() unter Windows nicht.
+- Erhöhte Geschwindigkeit mit neuer API der relativen Geschwindigkeit von fliegenden Clips einbauen.
+- CustomFairytale -> Als Avidemux-Projekt exportieren. Bei Angabe des Pfads von Avidemux auch als solches Rendern. Besseres Programm? Besser vielleicht: QMediaRecorder und direkt irgendwie in Datei rendern.
+QMediaRecorder nimmt einen QMediaPlayer entgegen der alles zusammen abspielt?
+
+https://wiki.qt.io/Qt_5.7_Multimedia_Backends
+NDK Android API to play videos:
+https://github.com/googlesamples/android-ndk/tree/master/native-codec
+https://developer.android.com/guide/topics/media/index.html
+https://developer.android.com/samples/index.html
+https://developer.android.com/ndk/guides/stable_apis.html
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling

@@ -35,15 +35,15 @@ void GameModeMoving::afterNarrator()
 	{
 		const int index = qrand() % this->app()->completeSolution().size();
 
-		// make them faster than the  first clip
-		const int speed = this->startSpeed() + this->app()->turns() * (this->app()->hasTouchDevice() ? 60 : 10);
-		qDebug() << "Speed: " << speed;
-
 		// Don't add too many floating clips, otherwise it becomes too easy since they're blocking each other all the time.
 		if (this->m_roomWidget->floatingClips().size() < 6)
 		{
-			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClipWidth(), speed);
+			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClipWidth(), this->m_roomWidget->floatingClipSpeed());
 		}
+
+		// make them faster than the  first clip
+		//const int speed = this->startSpeed() + this->app()->turns() * (this->app()->hasTouchDevice() ? 60 : 10);
+		//qDebug() << "Speed: " << speed;
 
 		/*
 		 * TODO set speed depending on RoomWidget::floatingClipSpeed()

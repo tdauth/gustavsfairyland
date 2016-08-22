@@ -14,7 +14,7 @@ class Door;
 class FloatingClip;
 class Clip;
 
-// QOpenGLWidget
+// Use QOpenGLWidget for better performance but there is a bug when resizing the widget with OpenGL. It is painted over the sizes.
 typedef QWidget RoomWidgetParent;
 
 /**

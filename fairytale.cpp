@@ -436,6 +436,7 @@ void fairytale::playCustomFairytaleClip(int index)
 	this->m_customFairytaleIndex = index;
 	const QString packageId = this->m_playingCustomFairytale->packageId();
 
+	bool played = false;
 	ClipPackages::iterator iterator = this->m_clipPackages.find(packageId);
 
 	if (iterator != this->m_clipPackages.end())
@@ -447,6 +448,8 @@ void fairytale::playCustomFairytaleClip(int index)
 		if (clipIterator != clipPackage->clips().end())
 		{
 			Clip *solution = clipIterator.value();
+
+			played = true;
 
 			// play all sounds parallel to the clip
 
@@ -468,6 +471,11 @@ void fairytale::playCustomFairytaleClip(int index)
 			this->m_player->playVideo(this, solution->videoUrl(), this->description(index, solution));
 		}
 	}
+
+	if (!played)
+	{
+		finishPlayingCustomFairytale();
+	}
 }
 
 void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
@@ -482,7 +490,7 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 	if (!customFairytale->clipIds().isEmpty())
 	{
 		this->m_playingCustomFairytale = customFairytale;
-		setCustomFairytaleButtonsEnabled(true);
+		this->setCustomFairytaleButtonsEnabled(true);
 		this->playCustomFairytaleClip(0);
 	}
 }
@@ -998,13 +1006,10 @@ void fairytale::onFinishVideoAndSounds()
 			 */
 			else
 			{
-				qDebug() << "Finished custom fairytale clips";
-				this->m_playingCustomFairytale = nullptr;
-				this->m_customFairytaleIndex = 0;
-
 				// The dialog has to disappear, after the player watched all final clips.
 				this->m_player->hide();
-				setCustomFairytaleButtonsEnabled(false);
+
+				this->finishPlayingCustomFairytale();
 			}
 		}
 	}
@@ -1231,6 +1236,14 @@ void fairytale::cleanupAfterOneGame()
 	this->menuButtonsWidget->show();
 	// Make sure all paint stuff from the game mode disappears.
 	this->repaint();
+}
+
+void fairytale::finishPlayingCustomFairytale()
+{
+	qDebug() << "Finished custom fairytale clips";
+	this->m_playingCustomFairytale = nullptr;
+	this->m_customFairytaleIndex = 0;
+	setCustomFairytaleButtonsEnabled(false);
 }
 
 QUrl fairytale::resolveClipUrl(const QUrl &url) const
