@@ -99,6 +99,9 @@ class Player : public QDialog, protected Ui::Player
 
 		QPushButton* pauseButton() const;
 
+	protected:
+		virtual void changeEvent(QEvent *event) override;
+
 	private slots:
 		void onChangeStateParallelSoundPlayer(QMediaPlayer::State state);
 		void onChangeState(QMediaPlayer::State state);

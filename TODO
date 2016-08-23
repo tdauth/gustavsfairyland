@@ -12,14 +12,14 @@
 - DONE: Schwierigkeit steigern und mehrere Clips herumfliegen lassen, mit Kollision, Spieler muss den richtigen auswählen.
 - DONE: Geschwindigkeit erhöhen?
 - DONE: Highscores
-- kleines Icon
+- DONE: kleines Icon
 - Titelschriftzug, Logo
-- Holzboden
+- DONE: Holzboden
 - DONE: Fenster öffnen, anders darstellen
 - Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
 - Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
 - DONE: Bei Pause RoomWidget ausgrauen
-- Märchen während Spielanzeigen fixen (geht nur einmal)
+- DONE: Märchen während Spielanzeigen fixen (geht nur einmal)
 - Iconsymbol für Märchen: Frosch, Krone
 - Schriftzüge, Holzbode, GUI eher wie Märchen aussehen lassen, Vorhänge
 - Offenes Fenster, Licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern

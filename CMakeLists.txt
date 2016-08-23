@@ -14,6 +14,9 @@ add_compile_options(-std=c++11 -Wall)
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DDEBUG=1)
+else ()
+    # Don't show a console in release mode on Windows.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
 endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
@@ -145,12 +148,21 @@ if (ANDROID)
 	target_link_libraries(fairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets)
 endif ()
 
+set(RES_FILES "")
+# Add a resource file containing the icon. This adds an icon to the executable.
+if (WIN32)
+    set(RES_FILES "${CMAKE_SOURCE_DIR}/win32/client.rc")
+    set(CMAKE_RC_COMPILER_INIT windres)
+    ENABLE_LANGUAGE(RC)
+    SET(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+endif ()
+
 if (ANDROID)
-	add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES})
+        add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	set_property(TARGET fairyland PROPERTY VERSION "1")
 	install(TARGETS fairyland LIBRARY DESTINATION lib)
 else ()
-	add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES})
+        add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	install(TARGETS fairyland RUNTIME DESTINATION bin)
 endif()
 
@@ -174,7 +186,17 @@ else ()
 	install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
 endif ()
 
-install(FILES fairyland.desktop DESTINATION share/applications)
+if (UNIX)
+    find_program(DESKTOP_FILE_VALIDATE_PATH desktop-file-validate)
+
+    if (DESKTOP_FILE_VALIDATE_PATH)
+        message(STATUS "Validating .desktop files.")
+        add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} fairyland.desktop SOURCES fairyland.desktop)
+    endif ()
+
+    install(FILES fairyland.desktop DESTINATION share/applications)
+    install(FILES resources/logo.jpg DESTINATION share/applications RENAME fairyland.jpg)
+endif ()
 
 if (USE_COMPRESSED_FILES)
 	file(GLOB_RECURSE COMPRESSED_FILES "${CMAKE_SOURCE_DIR}/clips/*/*_compressed*")
@@ -261,11 +283,14 @@ if (ANDROID)
 	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
 endif ()
 
-add_subdirectory(test)
+# Only create Unit Tests in debug mode. Otherwise the test lib is linked and might cause creating a console on Windows.
+if (DEBUG)
+    add_subdirectory(test)
+endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairylands narrated by Gustav Mahler himself.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
@@ -281,7 +306,10 @@ set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_NSIS_URL_INFO_ABOUT "http://wc3lib.org")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
-#set(CPACK_NSIS_INSTALLED_ICON_NAME "$<TARGET_FILE:fairytale>")
+string(REPLACE "/" "\\\\" WINDOWS_EXE_PATH "$<TARGET_FILE:fairytale>")
+set(CPACK_NSIS_INSTALLED_ICON_NAME "${WINDOWS_EXE_PATH}")
+set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
+set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
 
 # Fedora package
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")

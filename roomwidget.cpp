@@ -126,7 +126,7 @@ int RoomWidget::floatingClipWidth() const
 {
 	const int availableWidth = qMax(rect().height(), rect().width());
 
-	return availableWidth / 10;
+	return availableWidth / 15;
 }
 
 int RoomWidget::floatingClipSpeed() const

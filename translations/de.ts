@@ -39,6 +39,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;All Acts: Tamino Dauth and Carsten Thomas&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Wood texture: &lt;/span&gt;&lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Icon: &lt;/span&gt;&lt;a href=&quot; https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -112,27 +113,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="89"/>
         <source>Use Max Rounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwende maximale Rundenanzahl</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="92"/>
         <source>Easy</source>
-        <translation type="unfinished"></translation>
+        <translation>Leicht</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="93"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="94"/>
         <source>Hard</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwer</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="95"/>
         <source>Mahlerisch</source>
-        <translation type="unfinished"></translation>
+        <translation>Mahlerisch</translation>
     </message>
 </context>
 <context>
@@ -352,7 +353,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_highscores.h" line="97"/>
         <source>Difficulty</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwierigkeitsgrad</translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="99"/>
@@ -382,22 +383,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../highscores.cpp" line="140"/>
         <source>Easy</source>
-        <translation type="unfinished"></translation>
+        <translation>Leicht</translation>
     </message>
     <message>
         <location filename="../highscores.cpp" line="143"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../highscores.cpp" line="146"/>
         <source>Hard</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwer</translation>
     </message>
     <message>
         <location filename="../highscores.cpp" line="149"/>
         <source>Mahlerisch</source>
-        <translation type="unfinished"></translation>
+        <translation>Mahlerisch</translation>
     </message>
 </context>
 <context>
@@ -548,7 +549,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_player.h" line="146"/>
         <source>Skip All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle überspringen</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="93"/>
@@ -669,7 +670,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../settingsdialog.cpp" line="163"/>
         <location filename="../settingsdialog.cpp" line="168"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Eine Option hat keine Auswirkungen.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="189"/>
@@ -689,27 +690,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../settingsdialog.cpp" line="244"/>
         <source>Missing clips in the directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clips im Verzeichnis fehlen.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="313"/>
         <source>Custom Fairytale Name</source>
-        <translation type="unfinished">Name des eigenen Märchens</translation>
+        <translation>Name des eigenen Märchens</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="313"/>
         <source>Name of custom fairytale:</source>
-        <translation type="unfinished">Name des eigenen Märchens:</translation>
+        <translation>Name des eigenen Märchens:</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="320"/>
         <source>Overwrite existing custom fairytale?</source>
-        <translation type="unfinished">Bestehendes eigenes Märchen überschreiben?</translation>
+        <translation>Bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="320"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
-        <translation type="unfinished">Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
+        <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="425"/>
