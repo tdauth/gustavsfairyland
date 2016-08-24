@@ -21,9 +21,43 @@ Clip* GameModeMoving::solution()
 
 long int GameModeMoving::time()
 {
-	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+	int startValue = 8000;
 
-	return 2000 * factor + 6000;
+	switch (app()->difficulty())
+	{
+		case fairytale::Difficulty::Easy:
+		{
+			startValue = 10000;
+
+			break;
+		}
+
+		case fairytale::Difficulty::Normal:
+		{
+			startValue = 8000;
+
+			break;
+		}
+
+		case fairytale::Difficulty::Hard:
+		{
+			startValue = 6000;
+
+			break;
+		}
+
+		case fairytale::Difficulty::Mahlerisch:
+		{
+			startValue = 4000;
+
+			break;
+		}
+	}
+
+	const int rounds = !app()->useMaxRounds() ?  this->app()->clipPackage()->rounds() : qMin(this->app()->clipPackage()->rounds(), app()->maxRounds());
+	const int factor = rounds * 2 - this->app()->turns();
+
+	return 1000 * factor + startValue;
 }
 
 void GameModeMoving::afterNarrator()

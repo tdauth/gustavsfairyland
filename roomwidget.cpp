@@ -166,7 +166,7 @@ int RoomWidget::floatingClipSpeed() const
 	}
 
 	const int availableWidth = qMax(rect().height(), rect().width());
-	const int result = (double)availableWidth * factor;
+	const int result = (double)availableWidth / 2 * factor;
 
 	qDebug() << "Result:" << result;
 

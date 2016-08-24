@@ -271,6 +271,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
+	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
@@ -414,9 +415,7 @@ void fairytale::playFinalClip(int index)
 	// play the sound "and"
 	if (solution->isPerson() && index > 0)
 	{
-		const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
-
-		this->m_player->playParallelSound(this, narratorSoundUrl);
+		this->m_player->playParallelSound(this, this->narratorSoundUrl());
 	}
 
 	this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
@@ -465,9 +464,7 @@ void fairytale::playCustomFairytaleClip(int index)
 			// play the sound "and"
 			if (solution->isPerson() && index > 0)
 			{
-				const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
-
-				this->m_player->playParallelSound(this, narratorSoundUrl);
+				this->m_player->playParallelSound(this, this->narratorSoundUrl());
 			}
 
 			this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
@@ -795,9 +792,8 @@ void fairytale::nextTurn()
 			// play the sound "and"
 			if (solution->isPerson() && turns() > 0)
 			{
-				const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
 				PlayerSoundData data;
-				data.narratorSoundUrl = narratorSoundUrl;
+				data.narratorSoundUrl = this->narratorSoundUrl();
 				data.description = tr("and");
 				data.imageUrl = solution->imageUrl();
 				data.prefix = true;
@@ -1251,6 +1247,14 @@ void fairytale::finishPlayingCustomFairytale()
 	setCustomFairytaleButtonsEnabled(false);
 }
 
+QUrl fairytale::narratorSoundUrl() const
+{
+	// TODO use locale "and".
+	const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
+
+	return narratorSoundUrl;
+}
+
 QUrl fairytale::resolveClipUrl(const QUrl &url) const
 {
 	if (!url.isRelative())
@@ -1422,7 +1426,7 @@ bool fairytale::defaultUseMaxRounds() const
 
 int fairytale::defaultMaxRounds() const
 {
-	return 6;
+	return 4;
 }
 
 ClipPackage* fairytale::defaultClipPackage() const

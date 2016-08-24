@@ -274,6 +274,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void cleanupGame();
 		void cleanupAfterOneGame();
 		void finishPlayingCustomFairytale();
+		/**
+		  * \return Returns the URL to the "and" sound in the current language.
+		  */
+		QUrl narratorSoundUrl() const;
 
 		/// The directory which is used to resolve relative paths of files for clips from clip packages.
 		QUrl m_clipsDir;

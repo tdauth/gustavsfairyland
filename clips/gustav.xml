@@ -375,6 +375,7 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/trauer.avi</video>
 		<description>
+                        <en>Gustav Mahler mourns for Alma</en>
 			<de>Gustav Mahler trauert um Alma</de>
 		</description>
 	</bonusClip>
@@ -383,6 +384,7 @@
                 <image>./mahler/mahler.jpg</image>
                 <video>./mahler/bonus/tochter.avi</video>
                 <description>
+                        <en>Gustav Mahler about his daughter</en>
                         <de>Gustav Mahler über seine Tochter</de>
                 </description>
         </bonusClip>
@@ -391,6 +393,7 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./nazi/peter.mkv</video>
 		<description>
+                        <en>the old Nazi</en>
 			<de>der alte Nazi</de>
 		</description>
 	</bonusClip>

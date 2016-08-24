@@ -115,7 +115,7 @@ void GameModeOneOutOfFour::nextTurn()
 	this->m_currentClips.clear();
 	this->m_currentSolution = nullptr;
 
-	if (!this->m_remainingClips.empty())
+	if (!this->m_remainingClips.empty() && (!app()->useMaxRounds() || app()->rounds() < app()->maxRounds()))
 	{
 		for (int i = 0; i < this->m_currentClips.size(); ++i)
 		{
@@ -175,7 +175,8 @@ void GameModeOneOutOfFour::afterNarrator()
 
 long int GameModeOneOutOfFour::time()
 {
-	const int factor = this->app()->clipPackage()->rounds() * 2 - this->app()->turns();
+	const int rounds = !app()->useMaxRounds() ?  this->app()->clipPackage()->rounds() : qMin(this->app()->clipPackage()->rounds(), app()->maxRounds());
+	const int factor = rounds * 2 - this->app()->turns();
 
 	return 2000 * factor + 2000;
 }
