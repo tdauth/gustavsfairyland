@@ -190,8 +190,8 @@ if (UNIX)
     find_program(DESKTOP_FILE_VALIDATE_PATH desktop-file-validate)
 
     if (DESKTOP_FILE_VALIDATE_PATH)
-        message(STATUS "Validating .desktop files.")
-        add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} fairyland.desktop SOURCES fairyland.desktop)
+        message(STATUS "Validating .desktop files with program ${DESKTOP_FILE_VALIDATE_PATH}.")
+        add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/fairyland.desktop SOURCES fairyland.desktop)
     endif ()
 
     install(FILES fairyland.desktop DESTINATION share/applications)
