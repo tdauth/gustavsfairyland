@@ -6,6 +6,7 @@
 	</name>
 	<!-- persons -->
 	<persons>
+		<!--
 		<clip id="crazy">
 			<image>./crazy/runterholer.jpg</image>
 			<video>./crazy/runterholer.mkv</video>
@@ -17,6 +18,8 @@
 				<de>der Runterholer</de>
 			</description>
 		</clip>
+		-->
+		
 		<clip id="opajott">
 			<image>./opajott/opajott1.jpg</image>
 			<video>./opajott/opajott1.mkv</video>

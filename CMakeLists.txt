@@ -14,7 +14,7 @@ add_compile_options(-std=c++11 -Wall)
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DDEBUG=1)
-else ()
+elseif (WIN32)
     # Don't show a console in release mode on Windows.
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
 endif ()
