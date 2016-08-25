@@ -52,7 +52,7 @@
 		</clip>
 		<clip id="steampunk">
 			<image>./steampunk/steampunk.jpg</image>
-			<video>./steampunk/steampunk.avi</video>
+			<video>./steampunk/steampunk.mkv</video>
 			<narrator>
 				<de>./steampunk/steampunk.wav</de>
 			</narrator>
@@ -61,19 +61,10 @@
 				<de>der Pestdoktor</de>
 			</description>
 		</clip>
-		<clip id="mahler">
-			<image>./mahler/mahler.jpg</image>
-			<video>./mahler/mahler.avi</video>
-			<narrator>
-				<de>./mahler/mahler.wav</de>
-			</narrator>
-			<description>
-				<de>Gustav Mahler</de>
-			</description>
-		</clip>
+
 		<clip id="popcorn">
 			<image>./popcorn/popcorn.jpg</image>
-			<video>./popcorn/popcorn.avi</video>
+			<video>./popcorn/popcorn.mkv</video>
 			<narrator>
 				<de>./popcorn/popcorn.wav</de>
 			</narrator>
@@ -107,6 +98,7 @@
 			</description>
 		</clip>
 
+		<!--
                 <clip id="hello">
                         <image>./hello/hello.jpg</image>
                         <video>./hello/hello.mkv</video>
@@ -118,6 +110,7 @@
                                 <de>der Hallo-Sager</de>
                         </description>
                 </clip>
+		-->
 
 		<clip id="jedi">
 			<image>./jedi/jedi.jpg</image>
@@ -206,6 +199,7 @@
 			</description>
 		</clip>
 
+		<!-- zu blöd, beide
 		<clip id="gate">
 			<image>./gate/gate.jpg</image>
 			<video>./gate/gate.mkv</video>
@@ -229,6 +223,7 @@
 				<de>trafen auf ein Tor</de>
 			</description>
 		</clip>
+		-->
 
 		<clip id="maninthebox">
 			<image>./maninthebox/maninthebox.jpg</image>
@@ -266,6 +261,8 @@
 			</description>
 		</clip>
 
+		<!--
+		des isch Scheiße
 		<clip id="train">
 			<image>./train/train.jpg</image>
 			<video>./train/train.mkv</video>
@@ -277,6 +274,7 @@
 				<de>fuhren mit einem Zug</de>
 			</description>
 		</clip>
+		-->
 
 		<clip id="trash">
 			<image>./trash/trash.jpg</image>
@@ -365,6 +363,14 @@
 
 	<bonusClip>
 		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/mahler.avi</video>
+		<description>
+			<de>Gustav Mahler über sich selbst</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/ueberalma.avi</video>
 		<description>
 			<de>Gustav Mahler über Alma</de>
@@ -389,12 +395,59 @@
                 </description>
         </bonusClip>
 
+	<!-- zu heftig
 	<bonusClip>
 		<image>./mahler/mahler.jpg</image>
 		<video>./nazi/peter.mkv</video>
 		<description>
                         <en>the old Nazi</en>
 			<de>der alte Nazi</de>
+		</description>
+	</bonusClip>
+	-->
+
+	<bonusClip>
+		<image>./jedi/jedi.jpg</image>
+		<video>./jedi/bonus/jedi.mkv</video>
+		<description>
+                        <en>fighting Jedi</en>
+			<de>kämpfender Jedi</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./kill/kill.jpg</image>
+		<video>./kill/bonus/kill.mkv</video>
+		<description>
+                        <en>the painful dead</en>
+			<de>der qualvolle Tod</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./opajott/opajott.jpg</image>
+		<video>./opajott/bonus/opajott.mkv</video>
+		<description>
+                        <en>Grandpa Jott rides to his house</en>
+			<de>Opa Jott fährt zu seinem Haus</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./popcorn/popcorn.jpg</image>
+		<video>./popcorn/bonus/popcorn.mkv</video>
+		<description>
+                        <en>the popcornsaleswoman throws Popcorn</en>
+			<de>die Popcornverkäuferin wirft Popcorn</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip>
+		<image>./steampunk/steampunk.jpg</image>
+		<video>./steampunk/bonus/steampunk.mkv</video>
+		<description>
+                        <en>the popcornsaleswoman throws Popcorn</en>
+			<de>die Popcornverkäuferin wirft Popcorn</de>
 		</description>
 	</bonusClip>
 </clips>
