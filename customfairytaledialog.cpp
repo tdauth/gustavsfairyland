@@ -142,7 +142,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 				text += " ";
 			}
 
-			text += m_app->description(i, clip, false);
+			text += m_app->description(m_app->startPerson(), i, clip, false);
 
 			if (i > 0 && i % 2 == 0)
 			{

@@ -421,7 +421,7 @@ void fairytale::playFinalClip(int index)
 	}
 
 	this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-	this->m_player->playVideo(this, solution->videoUrl(), this->description(index, solution));
+	this->m_player->playVideo(this, solution->videoUrl(), this->description(this->m_startPerson, index, solution));
 }
 
 void fairytale::playFinalVideo()
@@ -452,6 +452,16 @@ void fairytale::playCustomFairytaleClip(int index)
 		if (clipIterator != clipPackage->clips().end())
 		{
 			Clip *solution = clipIterator.value();
+			Clip *startPersonClip = solution;
+
+			const QString startPersonClipId = this->m_playingCustomFairytale->clipIds()[0];
+			ClipPackage::Clips::iterator startPersonClipIterator = clipPackage->clips().find(startPersonClipId);
+
+			if (startPersonClipIterator != clipPackage->clips().end())
+			{
+				startPersonClip = startPersonClipIterator.value();
+			}
+
 
 			played = true;
 
@@ -460,7 +470,7 @@ void fairytale::playCustomFairytaleClip(int index)
 			// play the sound for the inital character again
 			if (solution->isPerson() && index > 1)
 			{
-				this->m_player->playParallelSound(this, this->resolveClipUrl(this->m_startPerson->narratorUrl()));
+				this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
 			}
 
 			// play the sound "and"
@@ -470,7 +480,7 @@ void fairytale::playCustomFairytaleClip(int index)
 			}
 
 			this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-			this->m_player->playVideo(this, solution->videoUrl(), this->description(index, solution));
+			this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution));
 		}
 	}
 
@@ -772,7 +782,7 @@ void fairytale::nextTurn()
 				this->m_startPerson = solution;
 			}
 
-			const QString description = this->description(this->m_turns, solution);
+			const QString description = this->description(this->m_startPerson, this->m_turns, solution);
 
 			this->m_remainingTime = this->gameMode()->time();
 			this->descriptionLabel->clear();
@@ -785,7 +795,7 @@ void fairytale::nextTurn()
 			{
 				PlayerSoundData data;
 				data.narratorSoundUrl = this->m_startPerson->narratorUrl();
-				data.description = this->description(0, this->m_startPerson);
+				data.description = this->description(this->m_startPerson, 0, this->m_startPerson);
 				data.imageUrl = this->m_startPerson->imageUrl();
 				data.prefix = true;
 				this->queuePlayerSound(data);
@@ -808,7 +818,7 @@ void fairytale::nextTurn()
 			// Make sure that the current click sound ends before playing the narrator sound.
 			PlayerSoundData data;
 			data.narratorSoundUrl = solution->narratorUrl();
-			data.description = this->description(0, solution); // use always the stand alone description
+			data.description = this->description(this->m_startPerson, 0, solution); // use always the stand alone description
 			data.imageUrl = solution->imageUrl();
 			data.prefix = false;
 			this->queuePlayerSound(data);
@@ -953,7 +963,7 @@ void fairytale::onFinishVideoAndSounds()
 
 					this->updateTimeLabel();
 					// the description label helps to remember
-					this->descriptionLabel->setText(this->description(this->m_turns, this->gameMode()->solution()));
+					this->descriptionLabel->setText(this->description(this->m_startPerson, this->m_turns, this->gameMode()->solution()));
 
 					this->gameMode()->afterNarrator();
 
@@ -1092,7 +1102,7 @@ void fairytale::addCurrentSolution()
 	this->m_completeSolution.push_back(this->gameMode()->solution());
 }
 
-QString fairytale::description(int turn, Clip *clip, bool markBold)
+QString fairytale::description(Clip *startPersonClip, int turn, Clip *clip, bool markBold)
 {
 	QString description;
 
@@ -1124,11 +1134,11 @@ QString fairytale::description(int turn, Clip *clip, bool markBold)
 		{
 			if (markBold)
 			{
-				description = tr("%1 and <b>%2</b>").arg(this->m_startPerson->description()).arg(clip->description());
+				description = tr("%1 and <b>%2</b>").arg(startPersonClip->description()).arg(clip->description());
 			}
 			else
 			{
-				description = tr("%1 and %2").arg(this->m_startPerson->description()).arg(clip->description());
+				description = tr("%1 and %2").arg(startPersonClip->description()).arg(clip->description());
 			}
 		}
 	}

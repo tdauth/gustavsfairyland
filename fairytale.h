@@ -200,7 +200,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		GameOverDialog* gameOverDialog();
 		HighScores* highScores() const;
 
-		QString description(int turn, Clip *clip, bool markBold = true);
+		/**
+		 * \note Is only set during a game.
+		 */
+		Clip* startPerson() const;
+		QString description(Clip *startPersonClip, int turn, Clip *clip, bool markBold = true);
 
 		/**
 		 * Plays a sound if no sound is already played. Otherwise it doesn't play the sound at all.
@@ -499,6 +503,11 @@ inline QGridLayout* fairytale::gameAreaLayout() const
 inline HighScores* fairytale::highScores() const
 {
 	return this->m_highScores;
+}
+
+inline Clip* fairytale::startPerson() const
+{
+	return this->m_startPerson;
 }
 
 inline QString fairytale::currentTranslation() const
