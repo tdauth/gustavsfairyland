@@ -19,7 +19,7 @@
 			</description>
 		</clip>
 		-->
-		
+
 		<clip id="opajott">
 			<image>./opajott/opajott1.jpg</image>
 			<video>./opajott/opajott1.mkv</video>
@@ -127,6 +127,7 @@
 			</description>
 		</clip>
 
+		<!--
 		<clip id="bank">
 			<image>./bank/bank.jpg</image>
 			<video>./bank/bank.mkv</video>
@@ -138,6 +139,7 @@
 				<de>der Typ auf der Bank</de>
 			</description>
 		</clip>
+		-->
 	</persons>
 
 	<!-- new acts -->
@@ -449,8 +451,8 @@
 		<image>./steampunk/steampunk.jpg</image>
 		<video>./steampunk/bonus/steampunk.mkv</video>
 		<description>
-                        <en>the popcornsaleswoman throws Popcorn</en>
-			<de>die Popcornverkäuferin wirft Popcorn</de>
+                        <en>the dancing plague doctor</en>
+			<de>der tanzende Pestarzt</de>
 		</description>
 	</bonusClip>
 </clips>

@@ -55,6 +55,9 @@ https://developer.android.com/guide/topics/media/index.html
 https://developer.android.com/samples/index.html
 https://developer.android.com/ndk/guides/stable_apis.html
 
+- zufälligen Bonusclip am Ende jedes Sieges abspielen
+- unfertige Märchen richtig als Text ausgeben
+
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
 

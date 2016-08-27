@@ -229,33 +229,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleDialog</name>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="17"/>
+        <location filename="../customfairytaledialog.cpp" line="18"/>
         <source>Name of custom fairytale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="17"/>
+        <location filename="../customfairytaledialog.cpp" line="18"/>
         <source>Custom Fairytale Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="24"/>
+        <location filename="../customfairytaledialog.cpp" line="25"/>
         <source>Overwrite existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="24"/>
+        <location filename="../customfairytaledialog.cpp" line="25"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="134"/>
+        <location filename="../customfairytaledialog.cpp" line="135"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="154"/>
+        <location filename="../customfairytaledialog.cpp" line="157"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../customfairytaledialog.cpp" line="166"/>
+        <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -728,76 +733,76 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../fairytale.cpp" line="96"/>
+        <location filename="../fairytale.cpp" line="98"/>
         <source>Cancel Game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="96"/>
+        <location filename="../fairytale.cpp" line="98"/>
         <source>Do you want to cancel the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="196"/>
-        <location filename="../fairytale.cpp" line="681"/>
+        <location filename="../fairytale.cpp" line="198"/>
+        <location filename="../fairytale.cpp" line="683"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="197"/>
-        <location filename="../fairytale.cpp" line="682"/>
+        <location filename="../fairytale.cpp" line="199"/>
+        <location filename="../fairytale.cpp" line="684"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="657"/>
+        <location filename="../fairytale.cpp" line="659"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="658"/>
+        <location filename="../fairytale.cpp" line="660"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="797"/>
+        <location filename="../fairytale.cpp" line="799"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1082"/>
+        <location filename="../fairytale.cpp" line="1084"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1103"/>
-        <location filename="../fairytale.cpp" line="1137"/>
+        <location filename="../fairytale.cpp" line="1105"/>
+        <location filename="../fairytale.cpp" line="1139"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1107"/>
-        <location filename="../fairytale.cpp" line="1141"/>
+        <location filename="../fairytale.cpp" line="1109"/>
+        <location filename="../fairytale.cpp" line="1143"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1114"/>
+        <location filename="../fairytale.cpp" line="1116"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1118"/>
+        <location filename="../fairytale.cpp" line="1120"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1125"/>
+        <location filename="../fairytale.cpp" line="1127"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1129"/>
+        <location filename="../fairytale.cpp" line="1131"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

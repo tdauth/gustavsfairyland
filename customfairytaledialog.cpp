@@ -10,6 +10,7 @@
 #include "clip.h"
 #include "customfairytale.h"
 #include "clippackage.h"
+#include "gamemode.h"
 
 void CustomFairytaleDialog::save()
 {
@@ -145,13 +146,25 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 			if (i > 0 && i % 2 == 0)
 			{
-				text += "<br>";
+				text += "<br/>";
 			}
 
 			++i;
 		}
 
-		text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(m_clips[0]->description());
+		if (this->m_app->gameMode()->state() == GameMode::State::Won)
+		{
+			text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(m_clips[0]->description());
+		}
+		else
+		{
+			if (!text.endsWith("<br/>"))
+			{
+				text.append("<br/>");
+			}
+
+			text += tr("But nobody knows what happened next.<br/>End");
+		}
 
 		textBrowser->setText(text);
 

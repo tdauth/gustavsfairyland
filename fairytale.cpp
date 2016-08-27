@@ -8,6 +8,8 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QFileDialog>
 #include <QTouchDevice>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 #include <QtMultimedia/QMultimedia>
 
@@ -1345,6 +1347,39 @@ void fairytale::addClipPackage(ClipPackage* package)
 		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
 		this->m_bonusClipActions.insert(action, bonusClip);
 	}
+
+	/*
+	if (!package->clips().isEmpty())
+	{
+		Clip *firstClip = package->clips().first();
+		const QUrl url = this->resolveClipUrl(firstClip->videoUrl());
+#ifndef Q_OS_ANDROID
+		const QString videoFile = url.toLocalFile();
+#else
+		const QString videoFile = url.url();
+#endif
+
+		const QFileInfo fileInfo(videoFile);
+
+		if (fileInfo.isReadable())
+		{
+			QMimeDatabase db;
+			// Actually it is always mp4 for compressed videos
+			QMimeType mime = db.mimeTypeForFile(videoFile);
+			std::cerr << "Mime type: " << mime.name().toStdString() << std::endl;
+			QStringList codecs;
+			codecs << "h264";
+
+			if (QMediaPlayer::hasSupport(mime.name(), codecs) == QMultimedia::ProbablySupported)
+			{
+				QMessageBox::information(this, tr("Supported"), tr("The video codec is supported."));
+			}
+			else
+			{
+			}
+		}
+	}
+	*/
 }
 
 void fairytale::playBonusClip()
