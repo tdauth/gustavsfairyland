@@ -29,6 +29,11 @@
 https://forum.qt.io/topic/70420/playing-videos-from-c-using-qml-on-android-does-not-work-either
 http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 
+- Windows 10 Videos gehen mit entsprechendem Qt Backend nicht:
+"-wmf-backend" Use wmf as backend for QMultimedia. Otherwise MP4 videos won't be supported when DirectShow is used: https://bugreports.qt.io/browse/QTBUG-51692
+Da Qt aber nicht manuell gebaut wird, eventuell einfach ein anderes Videoformat benutzen.
+Für Windows-Release ".wmv" verwenden.
+
 - Intro kurz und knackig: Es war einmal ... Seiten fallen aus dem Buch VERDAMMTE SCHEISSE Nicht vergessen: Gustav Mahler improvisiert bei der Reihenfolge und gibt selbst einfach vor, welche Seite als Nächstes kommt
 - Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
 - Optional: Mit Hilfe von valgrind nach Speicherleaks suchen.

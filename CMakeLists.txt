@@ -16,8 +16,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DDEBUG=1)
 elseif (WIN32)
     # Don't show a console in release mode on Windows: -mwindows
-    # Use wmf as backend for QMultimedia. Otherwise MP4 videos won't be supported when DirectShow is used: https://bugreports.qt.io/browse/QTBUG-51692
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows -wmf-backend")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
 endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")

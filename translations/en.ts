@@ -636,78 +636,78 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="62"/>
-        <location filename="../settingsdialog.cpp" line="209"/>
+        <location filename="../settingsdialog.cpp" line="212"/>
         <source>Clips Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="87"/>
         <location filename="../settingsdialog.cpp" line="92"/>
-        <location filename="../settingsdialog.cpp" line="163"/>
-        <location filename="../settingsdialog.cpp" line="168"/>
+        <location filename="../settingsdialog.cpp" line="166"/>
+        <location filename="../settingsdialog.cpp" line="171"/>
         <source>Game mode is missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="87"/>
         <location filename="../settingsdialog.cpp" line="92"/>
-        <location filename="../settingsdialog.cpp" line="163"/>
-        <location filename="../settingsdialog.cpp" line="168"/>
+        <location filename="../settingsdialog.cpp" line="166"/>
+        <location filename="../settingsdialog.cpp" line="171"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="189"/>
+        <location filename="../settingsdialog.cpp" line="192"/>
         <source>Add Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="189"/>
+        <location filename="../settingsdialog.cpp" line="192"/>
         <source>Clip Files (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="244"/>
+        <location filename="../settingsdialog.cpp" line="247"/>
         <source>Missing Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="244"/>
+        <location filename="../settingsdialog.cpp" line="247"/>
         <source>Missing clips in the directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="313"/>
+        <location filename="../settingsdialog.cpp" line="316"/>
         <source>Custom Fairytale Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="313"/>
+        <location filename="../settingsdialog.cpp" line="316"/>
         <source>Name of custom fairytale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="320"/>
+        <location filename="../settingsdialog.cpp" line="323"/>
         <source>Overwrite existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="320"/>
+        <location filename="../settingsdialog.cpp" line="323"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="425"/>
+        <location filename="../settingsdialog.cpp" line="428"/>
         <source>Persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="427"/>
+        <location filename="../settingsdialog.cpp" line="430"/>
         <source>Acts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="429"/>
+        <location filename="../settingsdialog.cpp" line="432"/>
         <source>Bonuses</source>
         <translation type="unfinished"></translation>
     </message>

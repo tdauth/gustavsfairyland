@@ -94,6 +94,9 @@ void SettingsDialog::apply()
 
 	if (this->fullScreenCheckBox->isChecked())
 	{
+		// TODO Workaround: in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
+		this->m_app->show();
+
 		this->m_app->showFullScreen();
 	}
 	else

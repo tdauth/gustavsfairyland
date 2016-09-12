@@ -29,9 +29,8 @@ int main(int argc, char** argv)
 	app.processEvents();
 #endif
 
+	// Loads the settings and therefore is shown.
 	fairytale fairytale;
-	// TODO in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
-	//fairytale.show();
 
 // showing maximized or fullscren leads to menu actions disappearing on a smartphone
 #ifndef Q_OS_ANDROID
