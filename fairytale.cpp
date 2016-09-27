@@ -271,6 +271,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
 	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+	connect(actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
 	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);

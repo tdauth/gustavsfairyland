@@ -1,1 +1,4 @@
 *.dll binary
+*.avi binary
+*.mkv binary
+*.wav binary

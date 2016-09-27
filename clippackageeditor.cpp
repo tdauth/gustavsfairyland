@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
+#include <QSettings>
 
 #include "clippackageeditor.h"
 #include "clipeditor.h"
@@ -13,12 +14,12 @@
 
 void ClipPackageEditor::addClip()
 {
-
 	if (this->clipEditor()->exec() == QDialog::Accepted)
 	{
 		Clip *clip = this->clipEditor()->clip(m_clipPackage);
 		m_clipPackage->addClip(clip);
 		QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+		item->setData(0, Qt::UserRole, clip->id());
 		item->setText(0, clip->description());
 		treeWidget->addTopLevelItem(item);
 
@@ -31,10 +32,8 @@ void ClipPackageEditor::editClip()
 	if (!treeWidget->selectedItems().isEmpty())
 	{
 		QTreeWidgetItem *item = treeWidget->selectedItems().first();
-		/*
-		 * TODO use clip ID
-		const int index = treeWidget->indexOfTopLevelItem(item);
-		Clip *clip = this->m_clipPackage->clips().at(index);
+		const QString id = item->data(0, Qt::UserRole).toString();
+		Clip *clip = this->m_clipPackage->clips()[id];
 
 		this->clipEditor()->fill(clip);
 
@@ -42,7 +41,6 @@ void ClipPackageEditor::editClip()
 		{
 			this->clipEditor()->assignToClip(clip);
 		}
-		*/
 	}
 }
 
@@ -51,25 +49,30 @@ void ClipPackageEditor::removeClip()
 	if (!treeWidget->selectedItems().isEmpty())
 	{
 		QTreeWidgetItem *item = treeWidget->selectedItems().first();
-
-		/*
-		 * TODO support for clip IDS
-		const int index = treeWidget->indexOfTopLevelItem(item);
-		Clip *clip = this->m_clipPackage->clips().at(index);
-		this->m_clipPackage->clips().removeAt(index);
+		const QString id = item->data(0, Qt::UserRole).toString();
+		Clip *clip = this->m_clipPackage->clips()[id];
+		this->m_clipPackage->clips().remove(id);
 
 		delete clip;
 		clip = nullptr;
 
 		delete item;
 		item = nullptr;
-		*/
+	}
+}
+
+void ClipPackageEditor::newPackage()
+{
+	if (QMessageBox::question(this, tr("Clear all clips?"), tr("Do you really want to clear all clips?")) == QMessageBox::Yes)
+	{
+		this->m_clipPackage->clear();
+		treeWidget->clear();
 	}
 }
 
 void ClipPackageEditor::loadPackage()
 {
-	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), QString(), tr("All Files (*);;Clip Description (*.xml);;Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getOpenFileName(this, tr("Open Package"), this->m_dir, tr("All Files (*);;Clip Description (*.xml);;Compressed Clip Package (*.pkgc)"));
 
 	if (!fileName.isEmpty())
 	{
@@ -101,9 +104,13 @@ void ClipPackageEditor::loadPackage()
 
 		for (ClipPackage::Clips::const_iterator iterator = this->m_clipPackage->clips().begin(); iterator != this->m_clipPackage->clips().end(); ++iterator)
 		{
+			const Clip *clip = iterator.value();
+
 			QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-			item->setText(0, iterator.value()->description());
-			item->setData(0, Qt::UserRole, iterator.value()->id());
+			const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
+			item->setIcon(0, QIcon(imageUrl.toLocalFile()));
+			item->setText(0, clip->description());
+			item->setData(0, Qt::UserRole, clip->id());
 			treeWidget->addTopLevelItem(item);
 		}
 	}
@@ -111,7 +118,7 @@ void ClipPackageEditor::loadPackage()
 
 void ClipPackageEditor::saveAs()
 {
-	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), QString(), tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), this->m_dir, tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
 
 	if (!fileName.isEmpty())
 	{
@@ -145,6 +152,7 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
 	connect(this->editClipPushButton, SIGNAL(clicked()), this, SLOT(editClip()));
 	connect(this->removeClipPushButton, SIGNAL(clicked()), this, SLOT(removeClip()));
+	connect(this->newPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::newPackage);
 	connect(this->loadPackagePushButton, SIGNAL(clicked()), this, SLOT(loadPackage()));
 	connect(this->saveAsPushButton, SIGNAL(clicked()), this, SLOT(saveAs()));
 	connect(this->closePackagePushButton, SIGNAL(clicked()), this, SLOT(closePackage()));
@@ -153,6 +161,15 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	connect(this->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(changedCurrentItem(QTreeWidgetItem*,QTreeWidgetItem*)));
+
+	QSettings settings("fairytale");
+	m_dir = settings.value("clippackageeditordir").toString();
+}
+
+ClipPackageEditor::~ClipPackageEditor()
+{
+	QSettings settings("fairytale");
+	settings.setValue("clippackageeditordir", m_dir);
 }
 
 ClipEditor* ClipPackageEditor::clipEditor()

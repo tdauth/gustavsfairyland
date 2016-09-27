@@ -62,6 +62,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="newPackagePushButton">
+         <property name="text">
+          <string>New Package</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="loadPackagePushButton">
          <property name="text">
           <string>Load Package</string>

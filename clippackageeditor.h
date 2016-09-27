@@ -25,6 +25,7 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		void addClip();
 		void editClip();
 		void removeClip();
+		void newPackage();
 		void loadPackage();
 		void saveAs();
 		void closePackage();
@@ -34,6 +35,7 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 
 	public:
 		ClipPackageEditor(fairytale *app, QWidget *parent);
+		~ClipPackageEditor();
 
 		fairytale* app() const;
 
@@ -43,6 +45,7 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		fairytale *m_app;
 		ClipEditor *m_clipEditor;
 		ClipPackage *m_clipPackage;
+		QString m_dir;
 };
 
 inline fairytale* ClipPackageEditor::app() const

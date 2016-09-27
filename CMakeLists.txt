@@ -86,6 +86,7 @@ set(fairyland_HEADERS
 	highscores.h
 	bonusclip.h
 	gameoverdialog.h
+	languagedialog.h
 )
 
 set(fairyland_SRCS
@@ -113,6 +114,7 @@ set(fairyland_SRCS
 	highscores.cpp
 	bonusclip.cpp
 	gameoverdialog.cpp
+	languagedialog.cpp
 )
 
 set(fairyland_UI
@@ -127,6 +129,7 @@ set(fairyland_UI
 	ui/wondialog.ui
 	ui/highscores.ui
 	ui/gameoverdialog.ui
+	ui/languagedialog.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
@@ -262,7 +265,7 @@ if (WIN32)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/qtdeployment")
     find_program(WINDEPLOYQT_PROGRAM windeployqt)
 
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         set(WINDEPLOYQT_ARGS "--debug")
     else ()
         set(WINDEPLOYQT_ARGS "--release")

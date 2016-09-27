@@ -232,6 +232,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -332,6 +333,11 @@
   <action name="actionHighScores">
    <property name="text">
     <string>&amp;Highscores</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>

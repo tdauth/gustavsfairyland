@@ -15,8 +15,8 @@ class Clip : public QObject
 	Q_OBJECT
 
 	public:
-		typedef QMap<QString,QUrl> Urls;
-		typedef QMap<QString,QString> Descriptions;
+		typedef QMap<QString, QUrl> Urls;
+		typedef QMap<QString, QString> Descriptions;
 
 		Clip(fairytale *app, QObject *parent = nullptr);
 		Clip(const Clip &clip, QObject *parent = nullptr);
