@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>304</height>
+    <height>363</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -140,6 +140,11 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
@@ -164,6 +169,11 @@
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Quit</string>
@@ -191,6 +201,11 @@
            <height>0</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>High Scores</string>
          </property>
@@ -198,6 +213,11 @@
        </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="customGamePushButton">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Custom Game</string>
          </property>
@@ -214,7 +234,7 @@
      <x>0</x>
      <y>0</y>
      <width>607</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -337,10 +357,16 @@
   </action>
   <action name="actionAboutQt">
    <property name="text">
-    <string>About Qt</string>
+    <string>About &amp;Qt</string>
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>quickGamePushButton</tabstop>
+  <tabstop>customGamePushButton</tabstop>
+  <tabstop>highScoresPushButton</tabstop>
+  <tabstop>quitPushButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../resource.qrc"/>
  </resources>

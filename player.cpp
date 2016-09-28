@@ -20,7 +20,6 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	//QQuickWindow *quickWindow = new QQuickWindow(QApplication::desktop()->screen());
 	// On Android a QML script is used to create a media player and video output since QVideoWidget is not supported. The script is packed as resource.
 	m_view = new QQuickView();
-
 	m_videoWidget = QWidget::createWindowContainer(m_view, this);
 	m_videoWidget->setFocusPolicy(Qt::TabFocus);
 

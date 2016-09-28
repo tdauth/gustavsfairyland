@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>358</width>
+    <width>448</width>
     <height>204</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>342</width>
+        <width>432</width>
         <height>70</height>
        </rect>
       </property>
@@ -91,6 +91,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>playFinalVideoPushButton</tabstop>
+  <tabstop>savePushButton</tabstop>
+  <tabstop>okPushButton</tabstop>
+  <tabstop>retryPushButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>textBrowser</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

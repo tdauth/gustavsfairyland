@@ -136,6 +136,10 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>skipPushButton</tabstop>
+  <tabstop>skipAllPushButton</tabstop>
+  <tabstop>pausePushButton</tabstop>
+  <tabstop>cancelPushButton</tabstop>
   <tabstop>volumeSlider</tabstop>
  </tabstops>
  <resources/>

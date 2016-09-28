@@ -3,16 +3,15 @@ import QtQuick.Controls 1.2
 import QtMultimedia 5.6
 
 Rectangle {
-    width: 200
-    height: 200
+    width: 600
+    height: 600
     color: "black"
 
     MediaPlayer {
         id: player
         objectName: "player"
         audioRole: MediaPlayer.GameRole
-        source: "assets:/vampir/vampir.avi"
-        //autoPlay: true
+        source: "assets:/clips/vampir/vampir.avi"
     }
 
     VideoOutput {
