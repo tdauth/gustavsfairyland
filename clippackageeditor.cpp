@@ -12,6 +12,13 @@
 #include "clippackageeditor.moc"
 #include "fairytale.h"
 
+void ClipPackageEditor::idChanged(const QString &text)
+{
+	this->m_clipPackage->setId(text);
+
+	checkForValidFields();
+}
+
 void ClipPackageEditor::addClip()
 {
 	if (this->clipEditor()->exec() == QDialog::Accepted)
@@ -67,6 +74,8 @@ void ClipPackageEditor::newPackage()
 	{
 		this->m_clipPackage->clear();
 		treeWidget->clear();
+
+		checkForValidFields();
 	}
 }
 
@@ -78,6 +87,8 @@ void ClipPackageEditor::loadPackage()
 	{
 		this->m_clipPackage->clear();
 		treeWidget->clear();
+
+		checkForValidFields();
 
 		const QFileInfo fileInfo(fileName);
 		const bool isCompressedPackage = fileInfo.suffix().toLower() == "pkgc";
@@ -102,6 +113,8 @@ void ClipPackageEditor::loadPackage()
 			}
 		}
 
+		this->idLineEdit->setText(this->m_clipPackage->id());
+
 		for (ClipPackage::Clips::const_iterator iterator = this->m_clipPackage->clips().begin(); iterator != this->m_clipPackage->clips().end(); ++iterator)
 		{
 			const Clip *clip = iterator.value();
@@ -113,18 +126,29 @@ void ClipPackageEditor::loadPackage()
 			item->setData(0, Qt::UserRole, clip->id());
 			treeWidget->addTopLevelItem(item);
 		}
+
+		checkForValidFields();
 	}
 }
 
 void ClipPackageEditor::saveAs()
 {
-	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), this->m_dir, tr("All Files (*);;Compressed Clip Package (*.pkgc)"));
+	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), this->m_dir, tr("All Files (*);;Compressed Clip Package (*.pkgc);;Clip Package File (*.xml)"));
 
 	if (!fileName.isEmpty())
 	{
-		if (!this->m_clipPackage->saveClipsToCompressedArchive(fileName))
+		const QFileInfo fileInfo(fileName);
+
+		if (fileInfo.suffix().toLower() == "pkgc")
 		{
-			QMessageBox::critical(this, tr("Error"), tr("Error on saving compressed package."));
+			if (!this->m_clipPackage->saveClipsToCompressedArchive(fileName))
+			{
+				QMessageBox::critical(this, tr("Error"), tr("Error on saving compressed package."));
+			}
+		}
+		else if (!this->m_clipPackage->saveClipsToFile(fileName))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Error on saving clip package."));
 		}
 	}
 }
@@ -133,8 +157,11 @@ void ClipPackageEditor::closePackage()
 {
 	if (QMessageBox::question(this, tr("Closing Package"), tr("Are you sure?")) == QMessageBox::Yes)
 	{
+		this->idLineEdit->clear();
 		this->m_clipPackage->clear();
 		this->treeWidget->clear();
+
+		checkForValidFields();
 	}
 }
 
@@ -149,6 +176,7 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 {
 	setupUi(this);
 
+	connect(this->idLineEdit, &QLineEdit::textChanged, this, &ClipPackageEditor::idChanged);
 	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
 	connect(this->editClipPushButton, SIGNAL(clicked()), this, SLOT(editClip()));
 	connect(this->removeClipPushButton, SIGNAL(clicked()), this, SLOT(removeClip()));
@@ -164,6 +192,8 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clippackageeditordir").toString();
+
+	checkForValidFields();
 }
 
 ClipPackageEditor::~ClipPackageEditor()
@@ -180,4 +210,12 @@ ClipEditor* ClipPackageEditor::clipEditor()
 	}
 
 	return this->m_clipEditor;
+}
+
+bool ClipPackageEditor::checkForValidFields()
+{
+	bool result = !this->m_clipPackage->id().isEmpty();
+	this->saveAsPushButton->setEnabled(result);
+
+	return result;
 }

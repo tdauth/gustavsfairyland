@@ -19,6 +19,7 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
     Q_OBJECT
 
 	public slots:
+		void idChanged(const QString &text);
 		/**
 		 * Opens a \ref ClipEditor dialog to create a new clip.
 		 */
@@ -42,6 +43,8 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		ClipEditor* clipEditor();
 
 	private:
+		bool checkForValidFields();
+
 		fairytale *m_app;
 		ClipEditor *m_clipEditor;
 		ClipPackage *m_clipPackage;

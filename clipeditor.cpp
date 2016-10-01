@@ -32,6 +32,7 @@ void ClipEditor::chooseImage()
 		this->m_clip->setImageUrl(url);
 		QPixmap pixmap(filePath);
 		this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+		this->imageLabel->setText(this->m_clip->imageUrl().toString());
 
 		checkForValidFields();
 	}
@@ -46,6 +47,7 @@ void ClipEditor::chooseVideo()
 		const QUrl url = QUrl::fromLocalFile(filePath);
 		this->m_clip->setVideoUrl(url);
 		// TODO set frame from video into label
+		this->videoLabel->setText(this->m_clip->videoUrl().toString());
 
 		checkForValidFields();
 	}
@@ -72,6 +74,22 @@ void ClipEditor::addNarratingSound()
 	}
 }
 
+void ClipEditor::removeNarratingSound()
+{
+	if (!narratingSoundsListWidget->selectedItems().isEmpty())
+	{
+		QListWidgetItem *item = narratingSoundsListWidget->selectedItems().front();
+		const QString language = item->data(Qt::UserRole).toString();
+		narratingSoundsListWidget->removeItemWidget(item);
+
+		Clip::Urls narratorUrls = this->m_clip->narratorUrls();
+		narratorUrls.remove(language);
+		this->m_clip->setNarratorUrls(narratorUrls);
+
+		checkForValidFields();
+	}
+}
+
 void ClipEditor::addDescription()
 {
 	const QString description = QInputDialog::getText(this, tr("Description"), tr("Description:"));
@@ -89,6 +107,22 @@ void ClipEditor::addDescription()
 
 			checkForValidFields();
 		}
+	}
+}
+
+void ClipEditor::removeDescription()
+{
+	if (!descriptionsListWidget->selectedItems().isEmpty())
+	{
+		QListWidgetItem *item = descriptionsListWidget->selectedItems().front();
+		const QString language = item->data(Qt::UserRole).toString();
+		descriptionsListWidget->removeItemWidget(item);
+
+		Clip::Descriptions descriptions = this->m_clip->descriptions();
+		descriptions.remove(language);
+		this->m_clip->setDescriptions(descriptions);
+
+		checkForValidFields();
 	}
 }
 
@@ -119,7 +153,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->videoPushButton, &QPushButton::clicked, this, &ClipEditor::chooseVideo);
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
+	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
+	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
 
 	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -140,6 +176,8 @@ void ClipEditor::fill(Clip *clip)
 	this->isAPersonCheckBox->setChecked(clip->isPerson());
 	QPixmap pixmap(clip->imageUrl().toLocalFile());
 	this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+	this->imageLabel->setText(clip->imageUrl().toString());
+	this->videoLabel->setText(clip->videoUrl().toString());
 
 	this->narratingSoundsListWidget->clear();
 

@@ -24,7 +24,9 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void chooseImage();
 		void chooseVideo();
 		void addNarratingSound();
+		void removeNarratingSound();
 		void addDescription();
+		void removeDescription();
 
 		QString execLanguageDialog();
 

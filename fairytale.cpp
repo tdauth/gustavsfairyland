@@ -197,6 +197,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 
 	this->m_paused = false;
 	this->actionPauseGame->setText(tr("Pause Game"));
+	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 
 	// requires person in the first step always
@@ -674,6 +675,7 @@ void fairytale::pauseGame()
 	}
 
 	this->actionPauseGame->setText(tr("Continue Game"));
+	this->pauseGamePushButton->setText(tr("Continue Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
 	this->m_paused = true;
 
@@ -698,6 +700,7 @@ void fairytale::resumeGame()
 	}
 
 	this->actionPauseGame->setText(tr("Pause Game"));
+	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 	this->m_paused = false;
 
