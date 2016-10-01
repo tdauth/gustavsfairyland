@@ -460,132 +460,142 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="252"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="284"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="253"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="285"/>
         <source>&amp;New Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="254"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="286"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="255"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="287"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="256"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="288"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="257"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="289"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="258"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="290"/>
         <source>&amp;Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="259"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="291"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="260"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="292"/>
         <source>&amp;Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="261"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="293"/>
         <source>&amp;Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="262"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="294"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="263"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="295"/>
         <source>&amp;Cancel Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="264"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="296"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="265"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="297"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="266"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="298"/>
         <source>&amp;Highscores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="267"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="299"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="270"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="302"/>
         <source>Let&apos;s Go!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="271"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="303"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="272"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="304"/>
         <source>High Scores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="273"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="305"/>
         <source>Custom Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="274"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="306"/>
+        <source>Pause Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../buildandroid/ui_mainwindow.h" line="307"/>
+        <source>Cancel Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../buildandroid/ui_mainwindow.h" line="308"/>
         <source>Fi&amp;le</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="275"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="309"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="276"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="310"/>
         <source>Setti&amp;ngs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="277"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="311"/>
         <source>&amp;Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="278"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="312"/>
         <source>Lan&amp;guage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../buildandroid/ui_mainwindow.h" line="279"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="313"/>
         <source>&amp;Custom Fairytales</source>
         <translation type="unfinished"></translation>
     </message>
@@ -826,65 +836,65 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../fairytale.cpp" line="198"/>
-        <location filename="../fairytale.cpp" line="694"/>
+        <location filename="../fairytale.cpp" line="697"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="199"/>
-        <location filename="../fairytale.cpp" line="695"/>
+        <location filename="../fairytale.cpp" line="698"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="670"/>
+        <location filename="../fairytale.cpp" line="673"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="671"/>
+        <location filename="../fairytale.cpp" line="674"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="810"/>
+        <location filename="../fairytale.cpp" line="813"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1095"/>
+        <location filename="../fairytale.cpp" line="1100"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1116"/>
-        <location filename="../fairytale.cpp" line="1150"/>
+        <location filename="../fairytale.cpp" line="1121"/>
+        <location filename="../fairytale.cpp" line="1155"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1120"/>
-        <location filename="../fairytale.cpp" line="1154"/>
+        <location filename="../fairytale.cpp" line="1125"/>
+        <location filename="../fairytale.cpp" line="1159"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1127"/>
+        <location filename="../fairytale.cpp" line="1132"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1131"/>
+        <location filename="../fairytale.cpp" line="1136"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1138"/>
+        <location filename="../fairytale.cpp" line="1143"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1142"/>
+        <location filename="../fairytale.cpp" line="1147"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

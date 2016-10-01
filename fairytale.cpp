@@ -273,6 +273,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 	connect(actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
+	connect(pauseGamePushButton, &QPushButton::clicked, this, &fairytale::pauseGameAction);
+	connect(cancelGamePushButton, &QPushButton::clicked, this, &fairytale::cancelGame);
+
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
 	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
@@ -876,6 +879,8 @@ void fairytale::clearSolution()
 
 void fairytale::setGameButtonsEnabled(bool enabled)
 {
+	gameButtonsWidget->setEnabled(enabled);
+	gameButtonsWidget->setVisible(enabled);
 	actionPauseGame->setEnabled(enabled);
 	actionCancelGame->setEnabled(enabled);
 	actionShowCustomFairytale->setEnabled(enabled);
