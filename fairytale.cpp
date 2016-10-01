@@ -24,6 +24,7 @@
 #include "customfairytaledialog.h"
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
+#include "gamemodecreative.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -322,6 +323,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
 	GameModeOneOutOfFour *gameModeOneOutOfFour = new GameModeOneOutOfFour(this);
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
+	GameModeCreative *gameModeCreative = new GameModeCreative(this);
+	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -721,7 +724,7 @@ bool fairytale::isTimerRunning() const
 
 void fairytale::pauseTimer()
 {
-	if (this->isTimerPaused())
+	if (this->isTimerPaused() || !this->isTimerRunning())
 	{
 		qDebug() << "Warning: Invalid call of pauseTimer()";
 
@@ -735,7 +738,7 @@ void fairytale::pauseTimer()
 
 void fairytale::resumeTimer()
 {
-	if (!this->isTimerPaused())
+	if (!this->isTimerPaused() || !this->isTimerRunning())
 	{
 		qDebug() << "Warning: Invalid call of resumeTimer()";
 
@@ -779,53 +782,61 @@ void fairytale::nextTurn()
 
 		case GameMode::State::Running:
 		{
-			Clip *solution = this->gameMode()->solution();
-
-			if (this->m_turns == 0)
+			if (this->gameMode()->hasToChooseTheSolution())
 			{
-				this->m_startPerson = solution;
-			}
+				Clip *solution = this->gameMode()->solution();
 
-			const QString description = this->description(this->m_startPerson, this->m_turns, solution);
+				if (this->m_turns == 0)
+				{
+					this->m_startPerson = solution;
+				}
 
-			this->m_remainingTime = this->gameMode()->time();
-			this->descriptionLabel->clear();
-			this->timeLabel->clear();
+				const QString description = this->description(this->m_startPerson, this->m_turns, solution);
 
-			qDebug() << "Queue the sounds.";
+				this->m_remainingTime = this->gameMode()->time();
+				this->descriptionLabel->clear();
+				this->timeLabel->clear();
 
-			// play the sound for the inital character again
-			if (solution->isPerson() && turns() > 1)
-			{
+				qDebug() << "Queue the sounds.";
+
+				// play the sound for the inital character again
+				if (solution->isPerson() && turns() > 1)
+				{
+					PlayerSoundData data;
+					data.narratorSoundUrl = this->m_startPerson->narratorUrl();
+					data.description = this->description(this->m_startPerson, 0, this->m_startPerson);
+					data.imageUrl = this->m_startPerson->imageUrl();
+					data.prefix = true;
+					this->queuePlayerSound(data);
+				}
+
+				// play the sound "and"
+				if (solution->isPerson() && turns() > 0)
+				{
+					PlayerSoundData data;
+					data.narratorSoundUrl = this->narratorSoundUrl();
+					data.description = tr("and");
+					data.imageUrl = solution->imageUrl();
+					data.prefix = true;
+					this->queuePlayerSound(data);
+				}
+
+				/*
+				* Play the narrator sound for the current solution as hint.
+				*/
+				// Make sure that the current click sound ends before playing the narrator sound.
 				PlayerSoundData data;
-				data.narratorSoundUrl = this->m_startPerson->narratorUrl();
-				data.description = this->description(this->m_startPerson, 0, this->m_startPerson);
-				data.imageUrl = this->m_startPerson->imageUrl();
-				data.prefix = true;
-				this->queuePlayerSound(data);
-			}
-
-			// play the sound "and"
-			if (solution->isPerson() && turns() > 0)
-			{
-				PlayerSoundData data;
-				data.narratorSoundUrl = this->narratorSoundUrl();
-				data.description = tr("and");
+				data.narratorSoundUrl = solution->narratorUrl();
+				data.description = this->description(this->m_startPerson, 0, solution); // use always the stand alone description
 				data.imageUrl = solution->imageUrl();
-				data.prefix = true;
+				data.prefix = false;
 				this->queuePlayerSound(data);
 			}
-
-			/*
-			 * Play the narrator sound for the current solution as hint.
-			 */
-			// Make sure that the current click sound ends before playing the narrator sound.
-			PlayerSoundData data;
-			data.narratorSoundUrl = solution->narratorUrl();
-			data.description = this->description(this->m_startPerson, 0, solution); // use always the stand alone description
-			data.imageUrl = solution->imageUrl();
-			data.prefix = false;
-			this->queuePlayerSound(data);
+			// Just continue with the game mode
+			else
+			{
+				this->gameMode()->afterNarrator();
+			}
 
 			break;
 		}
@@ -835,10 +846,21 @@ void fairytale::nextTurn()
 void fairytale::onFinishTurn()
 {
 	// Store the time it took to finish the turn, ignore pauses!
-	this->m_totalElapsedTime += this->gameMode()->time() - m_remainingTime;
-	this->m_timer.stop();
+	if (this->gameMode()->hasLimitedTime())
+	{
+		this->m_totalElapsedTime += this->gameMode()->time() - m_remainingTime;
+		this->m_timer.stop();
+	}
+
 	this->m_remainingTime = 0;
 	this->m_turns++;
+
+	// If no start person has been selected yet, make sure this one is used as the start person.
+	if (this->m_startPerson == nullptr)
+	{
+		this->m_startPerson = this->gameMode()->solution();
+	}
+
 	addCurrentSolution();
 
 	switch (this->gameMode()->state())
@@ -974,9 +996,12 @@ void fairytale::onFinishVideoAndSounds()
 					this->gameMode()->afterNarrator();
 
 					// run every second
-					this->m_isRunningTimer = true;
-					this->m_pausedTimer = false;
-					this->m_timer.start(1000);
+					if (this->gameMode()->hasLimitedTime())
+					{
+						this->m_isRunningTimer = true;
+						this->m_pausedTimer = false;
+						this->m_timer.start(1000);
+					}
 				}
 				// played only the word "and" or the first person sound then we always expect another sound
 				else
@@ -1104,8 +1129,15 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	this->customFairytaleDialog()->addClip(this->gameMode()->solution());
-	this->m_completeSolution.push_back(this->gameMode()->solution());
+	if (this->gameMode()->solution() != nullptr)
+	{
+		this->customFairytaleDialog()->addClip(this->gameMode()->solution());
+		this->m_completeSolution.push_back(this->gameMode()->solution());
+	}
+	else
+	{
+		qDebug() << "Warning missing current solution!";
+	}
 }
 
 QString fairytale::description(Clip *startPersonClip, int turn, Clip *clip, bool markBold)

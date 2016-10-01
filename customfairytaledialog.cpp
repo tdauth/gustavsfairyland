@@ -144,7 +144,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 			text += m_app->description(m_app->startPerson(), i, clip, false);
 
-			if (i > 0 && i % 2 == 0)
+			if ((i > 0 && i % 2 == 0) || (i == m_clips.size() - 1))
 			{
 				text += "<br/>";
 			}

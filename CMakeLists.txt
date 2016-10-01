@@ -77,6 +77,7 @@ set(fairyland_HEADERS
 	gamemode.h
 	gamemodemoving.h
 	gamemodeoneoutoffour.h
+	gamemodecreative.h
 	iconbutton.h
 	roomwidget.h
 	settingsdialog.h
@@ -105,6 +106,7 @@ set(fairyland_SRCS
 	gamemode.cpp
 	gamemodemoving.cpp
 	gamemodeoneoutoffour.cpp
+	gamemodecreative.cpp
 	iconbutton.cpp
 	roomwidget.cpp
 	settingsdialog.cpp

@@ -36,6 +36,8 @@ class GameModeOneOutOfFour : public GameMode
 		virtual Clip* solution() override;
 		virtual void nextTurn() override;
 		virtual void afterNarrator() override;
+		virtual bool hasToChooseTheSolution() override;
+		virtual bool hasLimitedTime() override;
 		virtual long int time() override;
 
 	private:
@@ -84,6 +86,16 @@ inline int GameModeOneOutOfFour::size() const
 inline void GameModeOneOutOfFour::setState(GameMode::State state)
 {
 	this->m_state = state;
+}
+
+inline bool GameModeOneOutOfFour::hasToChooseTheSolution()
+{
+	return true;
+}
+
+inline bool GameModeOneOutOfFour::hasLimitedTime()
+{
+	return true;
 }
 
 #endif // GAMEMODEONEOUTOFFOUR_H

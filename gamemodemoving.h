@@ -19,8 +19,10 @@ class GameModeMoving : public GameMode
 		virtual QString name() const override;
 		virtual GameMode::State state() override;
 		virtual Clip* solution() override;
+		virtual bool hasLimitedTime() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
+		virtual bool hasToChooseTheSolution() override;
 		virtual void nextTurn() override;
 		virtual void resume() override;
 		virtual void pause() override;
@@ -71,6 +73,16 @@ inline bool GameModeMoving::playClickSounds() const
 inline void GameModeMoving::setState(GameMode::State state)
 {
 	this->m_state = state;
+}
+
+inline bool GameModeMoving::hasToChooseTheSolution()
+{
+	return true;
+}
+
+inline bool GameModeMoving::hasLimitedTime()
+{
+	return true;
 }
 
 #endif // GAMEMODEMOVING_H

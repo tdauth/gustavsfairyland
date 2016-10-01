@@ -51,6 +51,11 @@ class GameMode : public QObject
 		virtual void resume() = 0;
 		virtual void nextTurn() = 0;
 		virtual void afterNarrator() = 0;
+		/**
+		 * \return Returns true if the game mode sets a solution in \ref nextTurn() which has to be chosen in \ref afterNarrator(). Otherwise it returns false.
+		 */
+		virtual bool hasToChooseTheSolution() = 0;
+		virtual bool hasLimitedTime() = 0;
 		virtual long int time() = 0;
 		virtual Clip* solution() = 0;
 		virtual State state() = 0;
