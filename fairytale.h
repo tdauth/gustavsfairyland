@@ -137,6 +137,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void gameOver();
 		void win();
+		void afterOutroWin();
 
 		bool isMediaPlayerPaused() const;
 		bool isMediaPlayerPlaying() const;
@@ -340,6 +341,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The currently selected clip package which is used to play.
 		 */
 		ClipPackage *m_clipPackage;
+
+		bool m_playIntro;
+		bool m_playOutroWin;
 
 		CompleteSolution m_completeSolution;
 		int m_completeSolutionIndex;

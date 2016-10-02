@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>363</height>
+    <height>412</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -243,16 +243,22 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pauseGamePushButton">
+        <widget class="QPushButton" name="cancelGamePushButton">
          <property name="text">
-          <string>Pause Game</string>
+          <string>Cancel Game (C)</string>
+         </property>
+         <property name="shortcut">
+          <string>C</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="cancelGamePushButton">
+        <widget class="QPushButton" name="pauseGamePushButton">
          <property name="text">
-          <string>Cancel Game</string>
+          <string>Pause Game (P)</string>
+         </property>
+         <property name="shortcut">
+          <string>P</string>
          </property>
         </widget>
        </item>

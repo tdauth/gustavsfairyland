@@ -56,6 +56,13 @@ void ClipTest::testLoadXml()
 	ClipPackage pkg(nullptr);
 	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
 	QCOMPARE(pkg.clips().size(), 9);
+	QCOMPARE(pkg.intro().toString(), QString("./mahler/intro3.mkv"));
+	QCOMPARE(pkg.outros().size(), 4);
+	QCOMPARE(pkg.outros().at(0).toString(), QString("./mahler/end5.mkv"));
+	QCOMPARE(pkg.outros().at(1).toString(), QString("./mahler/end5.mkv"));
+	QCOMPARE(pkg.outros().at(2).toString(), QString("./mahler/end5.mkv"));
+	QCOMPARE(pkg.outros().at(3).toString(), QString("./mahler/end5.mkv"));
+	QCOMPARE(pkg.bonusClips().size(), 1);
 }
 
 void ClipTest::testSaveLoadXml()

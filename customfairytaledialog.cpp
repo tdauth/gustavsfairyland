@@ -71,6 +71,7 @@ void CustomFairytaleDialog::addClip(Clip *clip)
 	label->setFile(imageFile);
 	label->setEnabled(true); // dont grey out the clip icon
 	this->playFinalVideoPushButton->setEnabled(true);
+	this->savePushButton->setEnabled(true);
 }
 
 CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false)
@@ -100,6 +101,7 @@ void CustomFairytaleDialog::clear()
 
 	this->m_clipLabels.clear();
 	this->playFinalVideoPushButton->setEnabled(false);
+	this->savePushButton->setEnabled(false);
 
 	qDebug() << "After the rest";
 }

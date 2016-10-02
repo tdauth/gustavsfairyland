@@ -8,6 +8,8 @@
 #include <QtCore/QList>
 #include <QtCore/QFile>
 #include <QtCore/QMap>
+#include <QtCore/QVector>
+#include <QtCore/QUrl>
 
 class Clip;
 class BonusClip;
@@ -33,6 +35,7 @@ class ClipPackage : public QObject
 		 */
 		typedef QMap<QString, Clip*> Clips;
 		typedef QList<BonusClip*> BonusClips;
+		typedef QVector<QUrl> Outros;
 
 		ClipPackage(fairytale *app, QObject *parent = nullptr);
 		virtual ~ClipPackage();
@@ -62,6 +65,13 @@ class ClipPackage : public QObject
 		Clips& clips();
 		const Clips& clips() const;
 		const BonusClips& bonusClips() const;
+		void setIntro(const QUrl &video);
+		QUrl intro() const;
+		/**
+		 * Sets the outro video for the difficulty \p index.
+		 */
+		void setOutro(int index, const QUrl &video);
+		const Outros& outros() const;
 
 		/**
 		 * \return Returns the number of rounds possible with these clips.
@@ -106,12 +116,15 @@ class ClipPackage : public QObject
 		Clips m_clips;
 		/// Additional clips which can be unlocked.
 		BonusClips m_bonusClips;
+		QUrl m_intro;
+		Outros m_outros;
 };
 
 inline void ClipPackage::clear()
 {
 	this->m_clips.clear();
 	this->m_bonusClips.clear();
+	this->m_outros.clear();
 	this->removeDir();
 }
 
@@ -153,6 +166,31 @@ inline const ClipPackage::Clips& ClipPackage::clips() const
 inline const ClipPackage::BonusClips& ClipPackage::bonusClips() const
 {
 	return this->m_bonusClips;
+}
+
+inline void ClipPackage::setIntro(const QUrl &video)
+{
+	this->m_intro = video;
+}
+
+inline QUrl ClipPackage::intro() const
+{
+	return this->m_intro;
+}
+
+inline void ClipPackage::setOutro(int index, const QUrl &video)
+{
+	if (this->m_outros.size() <= index)
+	{
+		this->m_outros.resize(index + 1);
+	}
+
+	this->m_outros[index] = video;
+}
+
+inline const ClipPackage::Outros& ClipPackage::outros() const
+{
+	return this->m_outros;
 }
 
 #endif // CLIPPACKAGE_H

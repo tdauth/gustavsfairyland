@@ -321,17 +321,17 @@ p, li { white-space: pre-wrap; }
         <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="135"/>
+        <location filename="../customfairytaledialog.cpp" line="137"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="157"/>
+        <location filename="../customfairytaledialog.cpp" line="159"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
         <translation>Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.&lt;br/&gt;Ende</translation>
     </message>
     <message>
-        <location filename="../customfairytaledialog.cpp" line="166"/>
+        <location filename="../customfairytaledialog.cpp" line="168"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation>Aber niemand weiß, was als Nächstes passierte.&lt;br/&gt;Ende</translation>
     </message>
@@ -541,6 +541,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="291"/>
+        <location filename="../build/ui_mainwindow.h" line="309"/>
         <source>P</source>
         <translation>P</translation>
     </message>
@@ -566,6 +567,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="296"/>
+        <location filename="../build/ui_mainwindow.h" line="307"/>
         <source>C</source>
         <translation>C</translation>
     </message>
@@ -606,41 +608,45 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="306"/>
-        <source>Pause Game</source>
-        <translation type="unfinished">Spiel anhalten</translation>
-    </message>
-    <message>
-        <location filename="../build/ui_mainwindow.h" line="307"/>
-        <source>Cancel Game</source>
-        <translation type="unfinished"></translation>
+        <source>Cancel Game (C)</source>
+        <translation type="unfinished">Spiel abbrechen (C)</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="308"/>
+        <source>Pause Game (P)</source>
+        <translation type="unfinished">Spiel pausieren (P)</translation>
+    </message>
+    <message>
+        <source>Pause Game</source>
+        <translation type="obsolete">Spiel anhalten</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="310"/>
         <source>Fi&amp;le</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="309"/>
+        <location filename="../build/ui_mainwindow.h" line="311"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="310"/>
+        <location filename="../build/ui_mainwindow.h" line="312"/>
         <source>Setti&amp;ngs</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="311"/>
+        <location filename="../build/ui_mainwindow.h" line="313"/>
         <source>&amp;Achievements</source>
         <translation>E&amp;rfolge</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="312"/>
+        <location filename="../build/ui_mainwindow.h" line="314"/>
         <source>Lan&amp;guage</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="313"/>
+        <location filename="../build/ui_mainwindow.h" line="315"/>
         <source>&amp;Custom Fairytales</source>
         <translation>Eigene &amp;Märchen</translation>
     </message>
@@ -881,68 +887,78 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../fairytale.cpp" line="199"/>
-        <location filename="../fairytale.cpp" line="702"/>
+        <location filename="../fairytale.cpp" line="729"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="200"/>
         <location filename="../fairytale.cpp" line="201"/>
-        <location filename="../fairytale.cpp" line="703"/>
-        <location filename="../fairytale.cpp" line="704"/>
+        <location filename="../fairytale.cpp" line="730"/>
+        <location filename="../fairytale.cpp" line="731"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="677"/>
+        <location filename="../fairytale.cpp" line="226"/>
+        <source>Intro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fairytale.cpp" line="652"/>
+        <source>Outro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fairytale.cpp" line="704"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="678"/>
-        <location filename="../fairytale.cpp" line="679"/>
+        <location filename="../fairytale.cpp" line="705"/>
+        <location filename="../fairytale.cpp" line="706"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="821"/>
+        <location filename="../fairytale.cpp" line="848"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1128"/>
+        <location filename="../fairytale.cpp" line="1171"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1156"/>
-        <location filename="../fairytale.cpp" line="1190"/>
+        <location filename="../fairytale.cpp" line="1199"/>
+        <location filename="../fairytale.cpp" line="1233"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1160"/>
-        <location filename="../fairytale.cpp" line="1194"/>
+        <location filename="../fairytale.cpp" line="1203"/>
+        <location filename="../fairytale.cpp" line="1237"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1167"/>
+        <location filename="../fairytale.cpp" line="1210"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1171"/>
+        <location filename="../fairytale.cpp" line="1214"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1178"/>
+        <location filename="../fairytale.cpp" line="1221"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1182"/>
+        <location filename="../fairytale.cpp" line="1225"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

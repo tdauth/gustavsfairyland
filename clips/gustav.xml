@@ -366,6 +366,15 @@
 		</clip>
 	</acts>
 
+	<intro>./mahler/intro3.mkv</intro>
+
+	<outro>
+		<easy>./mahler/end5.mkv</easy>
+		<normal>./mahler/end5.mkv</normal>
+		<hard>./mahler/end5.mkv</hard>
+		<mahlerisch>./mahler/end5.mkv</mahlerisch>
+	</outro>
+
 	<bonusClip>
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/mahler.avi</video>

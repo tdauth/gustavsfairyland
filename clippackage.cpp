@@ -373,6 +373,8 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 		}
 	}
 
+	// TODO write intro and outro
+
 	for (int i = 0; i < this->bonusClips().size(); ++i)
 	{
 		const BonusClip *clip = this->bonusClips().at(i);
@@ -622,6 +624,26 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		}
 	}
 
+	const QDomNodeList introNodes = root.elementsByTagName("intro");
+
+	for (int i = 0; i < introNodes.size(); ++i)
+	{
+		QDomNode node = introNodes.at(i);
+		const QUrl video = QUrl(node.toElement().text());
+		this->setIntro(video);
+	}
+
+	const QDomNodeList outroNodes = root.elementsByTagName("outro");
+
+	for (int i = 0; i < outroNodes.size(); ++i)
+	{
+		QDomNode node = outroNodes.at(i);
+		this->setOutro(0, QUrl(node.firstChildElement("easy").text()));
+		this->setOutro(1, QUrl(node.firstChildElement("normal").text()));
+		this->setOutro(2, QUrl(node.firstChildElement("hard").text()));
+		this->setOutro(3, QUrl(node.firstChildElement("mahlerisch").text()));
+	}
+
 	const QDomNodeList bonusClipNodes = root.elementsByTagName("bonusClip");
 
 	for (int i = 0; i < bonusClipNodes.size(); ++i)
@@ -756,6 +778,25 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 		else
 		{
 			acts.appendChild(clipElement);
+		}
+	}
+
+	QDomElement introElement = document.createElement("intro");
+	QDomText videoTextNode = document.createTextNode(this->intro().toString());
+	introElement.appendChild(videoTextNode);
+
+	QDomElement outroElement = document.createElement("outro");
+	QStringList outroElements;
+	outroElements << "easy" << "normal" << "hard" << "mahlerisch";
+
+	for (int i = 0; i < outroElements.size(); ++i)
+	{
+		if (this->outros().size() > i)
+		{
+			QDomElement difficultyElement = document.createElement(outroElements.at(i));
+			outroElement.appendChild(difficultyElement);
+			QDomText difficultyTextNode = document.createTextNode(this->outros().at(i).toString());
+			difficultyElement.appendChild(difficultyTextNode);
 		}
 	}
 

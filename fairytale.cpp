@@ -217,9 +217,18 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 	this->gameMode()->start();
 	qDebug() << "start";
 	this->m_isRunning = true;
-	nextTurn();
 
 	setGameButtonsEnabled(true);
+
+	if (!this->clipPackage()->intro().isEmpty())
+	{
+		this->m_playIntro = true;
+		this->m_player->playVideo(this, this->clipPackage()->intro(), tr("Intro"));
+	}
+	else
+	{
+		nextTurn();
+	}
 }
 
 fairytale::fairytale(Qt::WindowFlags flags)
@@ -235,6 +244,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_remainingTime(0)
 , m_requiresPerson(true)
 , m_clipPackage(nullptr)
+, m_playIntro(false)
+, m_playOutroWin(false)
 , m_completeSolutionIndex(0)
 , m_playCompleteSolution(false)
 , m_paused(false)
@@ -631,7 +642,23 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
+	const QUrl outroUrl = this->clipPackage()->outros().size() > (int)this->difficulty() ? this->resolveClipUrl(this->clipPackage()->outros().at((int)this->difficulty())) : QUrl();
 
+	qDebug() << "Outro URL:" << outroUrl;
+
+	if (!outroUrl.isEmpty())
+	{
+		this->m_playOutroWin = true;
+		this->m_player->playVideo(this, outroUrl, tr("Outro"));
+	}
+	else
+	{
+		this->afterOutroWin();
+	}
+}
+
+void fairytale::afterOutroWin()
+{
 	this->wonDialog()->exec();
 
 	QString name = qgetenv("USER");
@@ -978,8 +1005,24 @@ void fairytale::onFinishVideoAndSounds()
 		this->m_isPlayingMediaPlayer = false;
 		this->m_pausedMediaPlayer = false;
 
+		// played intro
+		if (this->m_playIntro)
+		{
+			this->m_playIntro = false;
+			this->m_player->stop();
+			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+			nextTurn();
+		}
+		// played outro win
+		else if (this->m_playOutroWin)
+		{
+			this->m_playOutroWin = false;
+			this->m_player->stop();
+			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+			afterOutroWin();
+		}
 		// played narrator stuff
-		if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
+		else if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
 		{
 			// Only react if the game mode has not been canceled
 			if (this->gameMode()->state() == GameMode::State::Running)
