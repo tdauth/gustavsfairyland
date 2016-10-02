@@ -371,12 +371,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameModeCreative</name>
     <message>
-        <location filename="../gamemodecreative.cpp" line="91"/>
+        <location filename="../gamemodecreative.cpp" line="92"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gamemodecreative.cpp" line="177"/>
+        <location filename="../gamemodecreative.cpp" line="178"/>
         <source>Creative Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -778,79 +778,89 @@ p, li { white-space: pre-wrap; }
         <translation>Neuen Inhalt herunterladen</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="62"/>
-        <location filename="../settingsdialog.cpp" line="214"/>
+        <location filename="../settingsdialog.cpp" line="63"/>
+        <location filename="../settingsdialog.cpp" line="215"/>
         <source>Clips Directory</source>
         <translation>Clips-Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="87"/>
-        <location filename="../settingsdialog.cpp" line="92"/>
-        <location filename="../settingsdialog.cpp" line="168"/>
-        <location filename="../settingsdialog.cpp" line="173"/>
+        <location filename="../settingsdialog.cpp" line="88"/>
+        <location filename="../settingsdialog.cpp" line="93"/>
+        <location filename="../settingsdialog.cpp" line="169"/>
+        <location filename="../settingsdialog.cpp" line="174"/>
         <source>Game mode is missing</source>
         <translation>Spielmodus fehlt</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="87"/>
-        <location filename="../settingsdialog.cpp" line="92"/>
-        <location filename="../settingsdialog.cpp" line="168"/>
-        <location filename="../settingsdialog.cpp" line="173"/>
+        <location filename="../settingsdialog.cpp" line="88"/>
+        <location filename="../settingsdialog.cpp" line="93"/>
+        <location filename="../settingsdialog.cpp" line="169"/>
+        <location filename="../settingsdialog.cpp" line="174"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
         <translation>Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Eine Option hat keine Auswirkungen.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="194"/>
+        <location filename="../settingsdialog.cpp" line="195"/>
         <source>Add Clip</source>
         <translation>Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="194"/>
+        <location filename="../settingsdialog.cpp" line="195"/>
         <source>Clip Files (*.xml)</source>
         <translation>Clip-Dateien (*.xml)</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="249"/>
+        <location filename="../settingsdialog.cpp" line="250"/>
         <source>Missing Clips</source>
         <translation>Fehlende Clips</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="249"/>
+        <location filename="../settingsdialog.cpp" line="250"/>
         <source>Missing clips in the directory.</source>
         <translation>Clips im Verzeichnis fehlen.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="318"/>
+        <location filename="../settingsdialog.cpp" line="319"/>
         <source>Custom Fairytale Name</source>
         <translation>Name des eigenen Märchens</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="318"/>
+        <location filename="../settingsdialog.cpp" line="319"/>
         <source>Name of custom fairytale:</source>
         <translation>Name des eigenen Märchens:</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="325"/>
+        <location filename="../settingsdialog.cpp" line="326"/>
         <source>Overwrite existing custom fairytale?</source>
         <translation>Bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="325"/>
+        <location filename="../settingsdialog.cpp" line="326"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
         <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="430"/>
+        <location filename="../settingsdialog.cpp" line="431"/>
         <source>Persons</source>
         <translation>Personen</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="432"/>
+        <location filename="../settingsdialog.cpp" line="433"/>
         <source>Acts</source>
         <translation>Handlungen</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="434"/>
+        <location filename="../settingsdialog.cpp" line="436"/>
+        <source>Intro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="442"/>
+        <source>Outros</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="456"/>
         <source>Bonuses</source>
         <translation>Boni</translation>
     </message>

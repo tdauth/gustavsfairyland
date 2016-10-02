@@ -1,14 +1,18 @@
 #!/bin/bash
 
+export HOME_TAMINO="/home/tamino"
+export NDK_ROOT="$HOME_TAMINO/android-ndk-r12b"
+export INSTALL_DIR="../installffmpeg"
+export PROJECT_DIR=$(pwd)
+export QT_PATH="$HOME_TAMINO/Qt5.7.0"
+
 # TODO build ffmpeg with Android compiler
 # https://github.com/wang-bin/build_ffmpeg/wiki
 if [ ! -d ./build_ffmpeg ] ; then
 	git clone https://github.com/wang-bin/build_ffmpeg.git ./build_ffmpeg
 fi
 cd ./build_ffmpeg
-export NDK_ROOT="$HOME/android-ndk-r12b"
-export INSTALL_DIR="../installffmpeg"
-export FFSRC="$HOME/Dokumente/Projekte/fairytale/ffmpeg-3.1.4/" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
+export FFSRC="$PROJECT_DIR/ffmpeg-3.1.4/" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
 ./build_ffmpeg.sh android x86
 
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
@@ -30,31 +34,31 @@ fi
 
 mkdir ./buildqtav
 cd ./buildqtav
-#export CPATH="$HOME/Dokumente/Projekte/fairytale/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
-#export LIBRARY_PATH="$HOME/Dokumente/Projekte/fairytale/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
-export CPATH="$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/include/":$CPATH
-export LIBRARY_PATH="$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/":$LIBRARY_PATH
-export LD_LIBRARY_PATH="$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/":$LD_LIBRARY_PATH
-export ANDROID_NDK_ROOT="$HOME/android-ndk-r12b"
+#export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
+#export LIBRARY_PATH="$PROJECT_DIR/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
+export CPATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/":$CPATH
+export LIBRARY_PATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/":$LIBRARY_PATH
+export LD_LIBRARY_PATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/":$LD_LIBRARY_PATH
+export ANDROID_NDK_ROOT="$NDK_ROOT"
 
-for f in "$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/include/"* ; do
+for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/"* ; do
 	echo "Creating link for $f"
-	target="$HOME/Qt5.7.0/5.7/android_x86/include"
+	target="$QT_PATH/5.7/android_x86/include"
 
 	if [ ! -e "$target" ] ; then
 		ln -s "$f" "$target"
 	fi
 done
 
-for f in "$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/"* ; do
+for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"* ; do
 	echo "Creating link for $f"
-	target="$HOME/Qt5.7.0/5.7/android_x86/lib"
+	target="$QT_PATH/5.7/android_x86/lib"
 
 	if [ ! -e "$target" ] ; then
 		ln -s "$f" "$target"
 	fi
 done
 
-# "$HOME/Qt5.7.0/5.7/android_x86/bin/qmake"
-"$HOME/Qt5.7.0/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests -r "CONFIG+=recheck" "LIBS+=-L$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/"
+# "$QT_PATH/5.7/android_x86/bin/qmake"
+"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests -r "CONFIG+=recheck" "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
 #make -j4
