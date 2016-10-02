@@ -11,8 +11,17 @@ export QT_PATH="$HOME_TAMINO/Qt5.7.0"
 if [ ! -d ./build_ffmpeg ] ; then
 	git clone https://github.com/wang-bin/build_ffmpeg.git ./build_ffmpeg
 fi
-cd ./build_ffmpeg
+
 export FFSRC="$PROJECT_DIR/ffmpeg-3.1.4/" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
+
+# Download and extract ffmpeg if it does not exist.
+# TODO checksums? or rather use a local copy
+if [ ! -e "$FFSRC" ] ; then
+	wget http://ffmpeg.org/releases/ffmpeg-3.1.4.tar.bz2
+	tar -xjb ffmpeg-3.1.4.tar.bz2
+fi
+
+cd ./build_ffmpeg
 ./build_ffmpeg.sh android x86
 
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
