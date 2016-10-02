@@ -61,7 +61,8 @@ void GameModeCreative::afterNarrator()
 	{
 		Clip *clip = *iterator;
 
-		if ((this->app()->requiresPerson() && !clip->isPerson()) || (!this->app()->requiresPerson() && clip->isPerson()))
+		// never use a clip twice and only show expected clips
+		if (this->app()->completeSolution().contains(clip) || (this->app()->requiresPerson() && !clip->isPerson()) || (!this->app()->requiresPerson() && clip->isPerson()))
 		{
 			continue;
 		}

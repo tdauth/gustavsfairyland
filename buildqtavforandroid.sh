@@ -14,9 +14,11 @@ export FFSRC="$HOME/Dokumente/Projekte/fairytale/ffmpeg-3.1.4/" #/path/to/ffmpeg
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
 if [ ! -d ./qtav ]; then
 	git clone https://github.com/wang-bin/QtAV.git ./qtav
+	cd ./qtav
+	git submodule update --init
+	cd ..
 fi
 cd ./qtav
-git pull
 git submodule update --init
 
 cd ..
@@ -54,5 +56,5 @@ for f in "$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/"*
 done
 
 # "$HOME/Qt5.7.0/5.7/android_x86/bin/qmake"
-"$HOME/Qt5.7.0/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests -r "CONFIG+=recheck"
+"$HOME/Qt5.7.0/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests -r "CONFIG+=recheck" "LIBS+=-L$HOME/Dokumente/Projekte/fairytale/build_ffmpeg/sdk-android-x86/lib/"
 #make -j4
