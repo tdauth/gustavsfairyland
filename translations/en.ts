@@ -4,12 +4,12 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="92"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="92"/>
         <source>About Gustav&apos;s Faryland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="95"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="95"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -34,12 +34,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="120"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="120"/>
         <source>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="94"/>
+        <location filename="../buildandroid/ui_aboutdialog.h" line="94"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
@@ -47,7 +47,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipEditor</name>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="266"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="266"/>
         <source>Clip</source>
         <translation type="unfinished"></translation>
     </message>
@@ -57,52 +57,52 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="268"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="268"/>
         <source>Is a Person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="269"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="269"/>
         <source>Set Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="271"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="271"/>
         <source>Set Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="273"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="273"/>
         <source>Narrating Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="274"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="274"/>
         <source>Add Narrating Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="276"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="276"/>
         <source>Descriptions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="275"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="275"/>
         <source>Remove Narrating Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="277"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="277"/>
         <source>Add Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="278"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="278"/>
         <source>Remove Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="267"/>
+        <location filename="../buildandroid/ui_clipeditor.h" line="267"/>
         <source>Clip ID:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -145,32 +145,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="88"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="88"/>
         <source>Select Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="89"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="89"/>
         <source>Use Max Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="92"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="92"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="93"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="93"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="94"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="94"/>
         <source>Hard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="95"/>
+        <location filename="../buildandroid/ui_clippackagedialog.h" line="95"/>
         <source>Mahlerisch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,47 +178,47 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageEditor</name>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="145"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="145"/>
         <source>Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="146"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="146"/>
         <source>Add Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="147"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="147"/>
         <source>Edit Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="148"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="148"/>
         <source>Remove Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="149"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="149"/>
         <source>New Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="150"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="150"/>
         <source>Load Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="151"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="151"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="152"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="152"/>
         <source>Close Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="153"/>
+        <location filename="../buildandroid/ui_clippackageeditor.h" line="153"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -332,27 +332,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="114"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="114"/>
         <source>Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="116"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="116"/>
         <source>Play Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="117"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="117"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="118"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="118"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="115"/>
+        <location filename="../buildandroid/ui_customfairytale.h" line="115"/>
         <source>Retry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -389,12 +389,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameOverDialog</name>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="70"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="70"/>
         <source>Game Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="72"/>
+        <location filename="../buildandroid/ui_gameoverdialog.h" line="72"/>
         <source>Game Over!!!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -402,38 +402,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HighScores</name>
     <message>
-        <location filename="../build/ui_highscores.h" line="94"/>
-        <location filename="../build/ui_highscores.h" line="95"/>
+        <location filename="../buildandroid/ui_highscores.h" line="94"/>
+        <location filename="../buildandroid/ui_highscores.h" line="95"/>
         <source>High Scores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="97"/>
+        <location filename="../buildandroid/ui_highscores.h" line="97"/>
         <source>Difficulty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="99"/>
+        <location filename="../buildandroid/ui_highscores.h" line="99"/>
         <source>Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="101"/>
+        <location filename="../buildandroid/ui_highscores.h" line="101"/>
         <source>Time (ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="103"/>
+        <location filename="../buildandroid/ui_highscores.h" line="103"/>
         <source>Game Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="105"/>
+        <location filename="../buildandroid/ui_highscores.h" line="105"/>
         <source>Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="107"/>
+        <location filename="../buildandroid/ui_highscores.h" line="107"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -461,17 +461,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LanguageDialog</name>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="57"/>
+        <location filename="../buildandroid/ui_languagedialog.h" line="57"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="60"/>
+        <location filename="../buildandroid/ui_languagedialog.h" line="60"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="61"/>
+        <location filename="../buildandroid/ui_languagedialog.h" line="61"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,144 +479,144 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="284"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="284"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="285"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="285"/>
         <source>&amp;New Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="286"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="286"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="287"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="287"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="288"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="288"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="289"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="289"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="290"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="290"/>
         <source>&amp;Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="291"/>
-        <location filename="../build/ui_mainwindow.h" line="309"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="291"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="309"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="292"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="292"/>
         <source>&amp;Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="293"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="293"/>
         <source>&amp;Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="294"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="294"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="295"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="295"/>
         <source>&amp;Cancel Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="296"/>
-        <location filename="../build/ui_mainwindow.h" line="307"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="296"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="307"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="297"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="297"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="298"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="298"/>
         <source>&amp;Highscores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="299"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="299"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="302"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="302"/>
         <source>Let&apos;s Go!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="303"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="303"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="304"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="304"/>
         <source>High Scores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="305"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="305"/>
         <source>Custom Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="306"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="306"/>
         <source>Cancel Game (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="308"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="308"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="310"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="310"/>
         <source>Fi&amp;le</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="311"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="311"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="312"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="312"/>
         <source>Setti&amp;ngs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="313"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="313"/>
         <source>&amp;Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="314"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="314"/>
         <source>Lan&amp;guage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="315"/>
+        <location filename="../buildandroid/ui_mainwindow.h" line="315"/>
         <source>&amp;Custom Fairytales</source>
         <translation type="unfinished"></translation>
     </message>
@@ -624,27 +624,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="145"/>
+        <location filename="../buildandroid/ui_player.h" line="145"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="147"/>
+        <location filename="../buildandroid/ui_player.h" line="147"/>
         <source>Cancel Game (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="148"/>
+        <location filename="../buildandroid/ui_player.h" line="148"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="149"/>
+        <location filename="../buildandroid/ui_player.h" line="149"/>
         <source>Skip (Space)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="150"/>
+        <location filename="../buildandroid/ui_player.h" line="150"/>
         <source>Skip All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -667,83 +667,83 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../build/ui_settings.h" line="183"/>
+        <location filename="../buildandroid/ui_settings.h" line="183"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="184"/>
+        <location filename="../buildandroid/ui_settings.h" line="184"/>
         <source>Choose Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="186"/>
+        <location filename="../buildandroid/ui_settings.h" line="186"/>
         <source>Clips Directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="188"/>
+        <location filename="../buildandroid/ui_settings.h" line="188"/>
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="194"/>
+        <location filename="../buildandroid/ui_settings.h" line="194"/>
         <source>Possible Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="195"/>
+        <location filename="../buildandroid/ui_settings.h" line="195"/>
         <source>Number of Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="196"/>
+        <location filename="../buildandroid/ui_settings.h" line="196"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="197"/>
+        <location filename="../buildandroid/ui_settings.h" line="197"/>
         <source>Custom Fairytales:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="198"/>
+        <location filename="../buildandroid/ui_settings.h" line="198"/>
         <source>Copy to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="199"/>
+        <location filename="../buildandroid/ui_settings.h" line="199"/>
         <source>Import from clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="201"/>
+        <location filename="../buildandroid/ui_settings.h" line="201"/>
         <source>Clear All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="202"/>
+        <location filename="../buildandroid/ui_settings.h" line="202"/>
         <source>Click Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="189"/>
+        <location filename="../buildandroid/ui_settings.h" line="189"/>
         <source>Add File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="190"/>
+        <location filename="../buildandroid/ui_settings.h" line="190"/>
         <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="191"/>
-        <location filename="../build/ui_settings.h" line="200"/>
+        <location filename="../buildandroid/ui_settings.h" line="191"/>
+        <location filename="../buildandroid/ui_settings.h" line="200"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="192"/>
+        <location filename="../buildandroid/ui_settings.h" line="192"/>
         <source>Download New Content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -825,7 +825,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="187"/>
+        <location filename="../buildandroid/ui_settings.h" line="187"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -833,12 +833,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WonDialog</name>
     <message>
-        <location filename="../build/ui_wondialog.h" line="71"/>
+        <location filename="../buildandroid/ui_wondialog.h" line="71"/>
         <source>Won</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_wondialog.h" line="72"/>
+        <location filename="../buildandroid/ui_wondialog.h" line="72"/>
         <source>Won!!!</source>
         <translation type="unfinished"></translation>
     </message>

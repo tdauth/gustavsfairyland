@@ -1,6 +1,8 @@
 build
 build-android
 buildandroid
+buildqtav
+ffmpeg-3.1.4
 unmodifiedclips
 doc/html
 doc/latex

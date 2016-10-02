@@ -60,6 +60,10 @@ https://developer.android.com/guide/topics/media/index.html
 https://developer.android.com/samples/index.html
 https://developer.android.com/ndk/guides/stable_apis.html
 
+Video muss deinterlaced werden?
+Fehler: NuPlayer: onSetVideoSurface no video decoder
+http://stackoverflow.com/questions/32611368/android-marshmallow-cant-play-this-video-error
+
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben
 

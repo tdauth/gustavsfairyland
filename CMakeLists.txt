@@ -162,7 +162,11 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
+	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
+	add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
+
         add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+        add_dependencies(fairyland qtav)
 	set_property(TARGET fairyland PROPERTY VERSION "1")
 	install(TARGETS fairyland LIBRARY DESTINATION lib)
 else ()
