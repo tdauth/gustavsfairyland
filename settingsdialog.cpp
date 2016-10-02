@@ -10,6 +10,7 @@
 #include "customfairytale.h"
 #include "gamemode.h"
 #include "gamemodemoving.h"
+#include "highscores.h"
 
 void SettingsDialog::restoreDefaults()
 {
@@ -430,6 +431,27 @@ void SettingsDialog::fill(ClipPackage *package)
 	personsItem->setText(0, tr("Persons"));
 	QTreeWidgetItem *actsItem = new QTreeWidgetItem(topLevelItem);
 	actsItem->setText(0, tr("Acts"));
+
+	QTreeWidgetItem *introItem = new QTreeWidgetItem(topLevelItem);
+	introItem->setText(0, tr("Intro"));
+	const QUrl introUrl = m_app->resolveClipUrl(package->intro());
+	introItem->setIcon(0, QIcon(introUrl.toLocalFile()));
+	introItem->setText(1, QString::number(1));
+
+	QTreeWidgetItem *outrosItem = new QTreeWidgetItem(topLevelItem);
+	outrosItem->setText(0, tr("Outros"));
+	outrosItem->setText(1, QString::number(package->outros().size()));
+
+	for (int i = 0; i < package->outros().size(); ++i)
+	{
+		const QUrl outroUrl = m_app->resolveClipUrl(package->outros().at(i));
+		QTreeWidgetItem *outroItem = new QTreeWidgetItem(outrosItem);
+
+		const QString name = HighScores::difficultyToString(fairytale::Difficulty(i));
+		outroItem->setText(0, name);
+		outroItem->setIcon(0, QIcon(outroUrl.toLocalFile()));
+	}
+
 	QTreeWidgetItem *bonusesItem = new QTreeWidgetItem(topLevelItem);
 	bonusesItem->setText(0, tr("Bonuses"));
 

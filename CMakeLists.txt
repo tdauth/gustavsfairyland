@@ -45,13 +45,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Find all Qt modules which are required
-find_package(Qt5Core)
-find_package(Qt5Widgets)
-find_package(Qt5Multimedia)
-find_package(Qt5MultimediaWidgets)
-find_package(Qt5Xml)
-find_package(Qt5Svg)
-find_package(Qt5LinguistTools)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
+find_package(Qt5MultimediaWidgets REQUIRED)
+find_package(Qt5Xml REQUIRED)
+find_package(Qt5Svg REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
 
 # Requires Qt Quick for playing videos
 if (ANDROID)
@@ -163,7 +163,8 @@ endif ()
 
 if (ANDROID)
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
+	# TODO fix the build
+	#add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
 
         add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
         add_dependencies(fairyland qtav)
