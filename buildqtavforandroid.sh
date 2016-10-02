@@ -18,7 +18,7 @@ export FFSRC="$PROJECT_DIR/ffmpeg-3.1.4/" #/path/to/ffmpeg # if no ffmpeg source
 # TODO checksums? or rather use a local copy
 if [ ! -e "$FFSRC" ] ; then
 	wget http://ffmpeg.org/releases/ffmpeg-3.1.4.tar.bz2
-	tar -xjb ffmpeg-3.1.4.tar.bz2
+	tar -xjf ffmpeg-3.1.4.tar.bz2
 fi
 
 cd ./build_ffmpeg
