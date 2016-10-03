@@ -155,16 +155,15 @@ endif ()
 set(RES_FILES "")
 # Add a resource file containing the icon. This adds an icon to the executable.
 if (WIN32)
-    set(RES_FILES "${CMAKE_SOURCE_DIR}/win32/client.rc")
-    set(CMAKE_RC_COMPILER_INIT windres)
-    ENABLE_LANGUAGE(RC)
-    SET(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+	set(RES_FILES "${CMAKE_SOURCE_DIR}/win32/client.rc")
+	set(CMAKE_RC_COMPILER_INIT windres)
+	ENABLE_LANGUAGE(RC)
+	SET(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
 endif ()
 
 if (ANDROID)
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	# TODO fix the build
-	#add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
+	add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
 
         add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
         add_dependencies(fairyland qtav)
@@ -179,6 +178,14 @@ target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multime
 
 if (ANDROID)
 	target_link_libraries(fairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets)
+	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAV.so")
+	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAVWidgets.so")
+	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQmlAV.so")
+	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libcommon.a")
+	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
+	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
+	include_directories("${CMAKE_SOURCE_DIR}/qtav/widgets/")
+	include_directories("${CMAKE_SOURCE_DIR}/qtav/widgets/QtAVWidgets/")
 endif ()
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)

@@ -24,6 +24,9 @@ fi
 cd ./build_ffmpeg
 ./build_ffmpeg.sh android x86
 
+# Change back to the project dir
+cd ..
+
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
 if [ ! -d ./qtav ]; then
 	git clone https://github.com/wang-bin/QtAV.git ./qtav
@@ -36,12 +39,10 @@ git submodule update --init
 
 cd ..
 
-if [ -d ./buildqtav ]; then
-	echo "Deleting ./buildqtav"
-	rm -rf ./buildqtav
+if [ ! -d ./buildqtav ]; then
+	mkdir ./buildqtav
 fi
 
-mkdir ./buildqtav
 cd ./buildqtav
 #export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
 #export LIBRARY_PATH="$PROJECT_DIR/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
@@ -68,6 +69,8 @@ for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"* ; do
 	fi
 done
 
+echo "LIBRARY_PATH: $LIBRARY_PATH"
+echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 # "$QT_PATH/5.7/android_x86/bin/qmake"
-"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests -r "CONFIG+=recheck" "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
-#make -j4
+"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
+make -j4
