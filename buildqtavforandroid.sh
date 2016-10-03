@@ -14,6 +14,8 @@ fi
 
 export FFSRC="$PROJECT_DIR/ffmpeg-3.1.4/" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
 
+export FFMPEG_PREFIX="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/"
+
 # Download and extract ffmpeg if it does not exist.
 # TODO checksums? or rather use a local copy
 if [ ! -e "$FFSRC" ] ; then
@@ -37,7 +39,9 @@ if [ ! -d ./qtav ]; then
 	git submodule update --init
 	cd ..
 fi
+
 cd ./qtav
+git pull
 git submodule update --init
 
 cd ..
@@ -49,9 +53,10 @@ fi
 cd ./buildqtav
 #export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
 #export LIBRARY_PATH="$PROJECT_DIR/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
-export CPATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/":$CPATH
-export LIBRARY_PATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/":$LIBRARY_PATH
-export LD_LIBRARY_PATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/":$LD_LIBRARY_PATH
+export CPATH="$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/:$CPATH"
+export FFMPEG_LIB_DIR="$FFMPEG_PREFIX/lib"
+export LIBRARY_PATH="$FFMPEG_LIB_DIR:$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$FFMPEG_LIB_DIR:$LD_LIBRARY_PATH"
 export ANDROID_NDK_ROOT="$NDK_ROOT"
 
 for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/"* ; do
@@ -63,7 +68,7 @@ for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/include/"* ; do
 	fi
 done
 
-for f in "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"* ; do
+for f in "$FFMPEG_LIB_DIR/"* ; do
 	echo "Creating link for $f"
 	target="$QT_PATH/5.7/android_x86/lib"
 
@@ -74,10 +79,15 @@ done
 
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-echo "ls $PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/:"
-ls "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
+echo "ls $FFMPEG_LIB_DIR/:"
+ls "$FFMPEG_LIB_DIR/"
+echo "Building QtAV from: $(pwd)"
 # "$QT_PATH/5.7/android_x86/bin/qmake"
 # += staticlib to build itself statically
 # "CONFIG += static_ffmpeg static_openal"
-"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
+# Needs the library paths for -lswresample and -lavresample
+# -L$FFMPEG_LIB_DIR/
+# -r "CONFIG+=recheck"
+# "CONFIG += no_config_tests" NOTE Don't use this, it leads to errors.
+"$QT_PATH/5.7/android_x86/bin/qmake" -Wall "LIBS+=-L$QT_PATH/5.7/android_x86/lib -L$FFMPEG_LIB_DIR" ../qtav/QtAV.pro
 make -j4
