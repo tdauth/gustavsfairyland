@@ -21,6 +21,7 @@ if [ ! -e "$FFSRC" ] ; then
 	tar -xjf ffmpeg-3.1.4.tar.bz2
 fi
 
+# TODO specify NDK_ROOT in file "config-android.sh" as well as static build
 cd ./build_ffmpeg
 ./build_ffmpeg.sh android x86
 
@@ -72,5 +73,5 @@ done
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 # "$QT_PATH/5.7/android_x86/bin/qmake"
-"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
+"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/" "CONFIG += staticlib static_ffmpeg static_openal"
 make -j4
