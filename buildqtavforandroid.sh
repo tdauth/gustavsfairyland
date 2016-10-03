@@ -73,5 +73,7 @@ done
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 # "$QT_PATH/5.7/android_x86/bin/qmake"
-"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/" "CONFIG += staticlib static_ffmpeg static_openal"
+# += staticlib to build itself statically
+# "CONFIG += static_ffmpeg static_openal"
+"$QT_PATH/5.7/android_x86/bin/qmake" ../qtav/QtAV.pro -config no_config_tests "LIBS+=-L$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
 make -j4

@@ -58,7 +58,8 @@ if (ANDROID)
 	find_package(Qt5Quick REQUIRED)
 	find_package(Qt5Qml REQUIRED)
 	find_package(Qt5QuickWidgets REQUIRED)
-	find_package(Qt5OpenGL REQUIRED)
+	find_package(Qt5OpenGL REQUIRED) # Required by QtAV
+	find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
 endif ()
 
 set(fairyland_HEADERS
@@ -150,11 +151,22 @@ add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(fairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL)
-	target_link_libraries(fairylandlib "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAV.a")
-	target_link_libraries(fairylandlib "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAVWidgets.a")
-	target_link_libraries(fairylandlib "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQmlAV.a")
-	target_link_libraries(fairylandlib "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libcommon.a")
+	target_link_libraries(fairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras)
+
+	set(QTAV_LIBRARIES
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavcodec.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavfilter.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavformat.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavresample.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavutil.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libswresample.so"
+		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libswscale.so"
+		"${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAV.so"
+		"${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAVWidgets.so"
+		"${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQmlAV.so"
+	)
+
+	target_link_libraries(fairylandlib ${QTAV_LIBRARIES})
 endif ()
 
 set(RES_FILES "")
@@ -182,11 +194,8 @@ endif()
 target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(fairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL)
-	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAV.a")
-	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQtAVWidgets.a")
-	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQmlAV.a")
-	target_link_libraries(fairyland "${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libcommon.a")
+	target_link_libraries(fairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
+
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/widgets/")
@@ -208,15 +217,15 @@ else ()
 endif ()
 
 if (UNIX)
-    find_program(DESKTOP_FILE_VALIDATE_PATH desktop-file-validate)
+	find_program(DESKTOP_FILE_VALIDATE_PATH desktop-file-validate)
 
-    if (DESKTOP_FILE_VALIDATE_PATH)
-        message(STATUS "Validating .desktop files with program ${DESKTOP_FILE_VALIDATE_PATH}.")
-        add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/fairyland.desktop SOURCES fairyland.desktop)
-    endif ()
+	if (DESKTOP_FILE_VALIDATE_PATH)
+		message(STATUS "Validating .desktop files with program ${DESKTOP_FILE_VALIDATE_PATH}.")
+		add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/fairyland.desktop SOURCES fairyland.desktop)
+	endif ()
 
-    install(FILES fairyland.desktop DESTINATION share/applications)
-    install(FILES resources/logo.jpg DESTINATION share/applications RENAME fairyland.jpg)
+	install(FILES fairyland.desktop DESTINATION share/applications)
+	install(FILES resources/logo.jpg DESTINATION share/applications RENAME fairyland.jpg)
 endif ()
 
 if (USE_COMPRESSED_FILES)
@@ -279,17 +288,17 @@ endforeach ()
 # Installs all required Qt binary files on Windows.
 # The program windeployqt generates all files into the binary directory which have to be installed
 if (WIN32)
-    # Make sure the output directory is cleaned everytime a clean is done since there might be different DLLs when distributing the relase version.
-    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/qtdeployment")
-    find_program(WINDEPLOYQT_PROGRAM windeployqt)
+	# Make sure the output directory is cleaned everytime a clean is done since there might be different DLLs when distributing the relase version.
+	set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/qtdeployment")
+	find_program(WINDEPLOYQT_PROGRAM windeployqt)
 
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-        set(WINDEPLOYQT_ARGS "--debug")
-    else ()
-        set(WINDEPLOYQT_ARGS "--release")
-    endif ()
-    add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairyland> ${WINDEPLOYQT_ARGS} --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairyland)
-    install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
+	if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+		set(WINDEPLOYQT_ARGS "--debug")
+	else ()
+		set(WINDEPLOYQT_ARGS "--release")
+	endif ()
+	add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairyland> ${WINDEPLOYQT_ARGS} --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairyland)
+	install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
 endif ()
 
 if (ANDROID)
@@ -299,9 +308,12 @@ if (ANDROID)
 	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
 	# PACKAGE_NAME "org.tacaproductions.gustavsfairyland"
-	add_qt_android_apk(my_app_apk fairyland NAME "@string/ApplicationName")
-	add_dependencies(my_app_apk CopyAssets)
+	add_qt_android_apk(my_app_apk fairyland NAME "@string/ApplicationName"
+		DEPENDS
+		${QTAV_LIBRARIES}
+	)
 	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
+	add_dependencies(my_app_apk CopyAssets)
 endif ()
 
 # Only create Unit Tests in debug mode. Otherwise the test lib is linked and might cause creating a console on Windows.

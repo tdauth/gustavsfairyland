@@ -38,8 +38,8 @@ Für Windows-Release ".wmv" verwenden.
 - Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
 - Optional: Mit Hilfe von valgrind nach Speicherleaks suchen.
 - DONE: Mahlers Musik! https://archive.org/details/Mahler_Symphony_5
-- Mahlers Musik komprimieren, zumindest wenn Option aktiv ist.
-- Erzählersounds müssen am Ende parallel zu den Videos kommen.
+- DONE: Mahlers Musik komprimieren, zumindest wenn Option aktiv ist.
+- DONE: Erzählersounds müssen am Ende parallel zu den Videos kommen.
 - Wenn Clips Kollision haben, zittern sie? Unklar welche Richtung?
 - DONE: Gameover Dialog: Auch Bild einfügen.
 - FIXED (context geändert): Shortcuts in Player gehen nicht immer.
@@ -63,6 +63,10 @@ https://developer.android.com/ndk/guides/stable_apis.html
 Video muss deinterlaced werden?
 Fehler: NuPlayer: onSetVideoSurface no video decoder
 http://stackoverflow.com/questions/32611368/android-marshmallow-cant-play-this-video-error
+
+QtAV verwenden um Videos auf Android abzuspielen. Aktuelles Problem:
+https://github.com/wang-bin/QtAV/issues/138
+Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben
