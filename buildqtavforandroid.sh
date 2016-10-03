@@ -74,6 +74,8 @@ done
 
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo "ls $PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/:"
+ls "$PROJECT_DIR/build_ffmpeg/sdk-android-x86/lib/"
 # "$QT_PATH/5.7/android_x86/bin/qmake"
 # += staticlib to build itself statically
 # "CONFIG += static_ffmpeg static_openal"
