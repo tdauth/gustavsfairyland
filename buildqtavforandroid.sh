@@ -21,6 +21,8 @@ if [ ! -e "$FFSRC" ] ; then
 	tar -xjf ffmpeg-3.1.4.tar.bz2
 fi
 
+# Overwrite custom Android configuration with the correct NDK path
+cp -f "$PROJEKT_DIR/config-android.sh" "$FFSRC"
 # TODO specify NDK_ROOT in file "config-android.sh" as well as static build
 cd ./build_ffmpeg
 ./build_ffmpeg.sh android x86
