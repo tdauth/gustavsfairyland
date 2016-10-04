@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.11)
-project(fairyland)
+project(gustavsfairyland)
 
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
@@ -147,11 +147,11 @@ QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyl
 
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 
-add_library(fairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
+target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(fairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras)
+	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras)
 
 	set(QTAV_LIBRARIES
 		"${CMAKE_SOURCE_DIR}/build_ffmpeg/sdk-android-x86/lib/libavcodec.so"
@@ -166,7 +166,7 @@ if (ANDROID)
 		"${CMAKE_SOURCE_DIR}/buildqtav/lib_android_x86/libQmlAV.so"
 	)
 
-	target_link_libraries(fairylandlib ${QTAV_LIBRARIES})
+	target_link_libraries(gustavsfairylandlib ${QTAV_LIBRARIES})
 endif ()
 
 set(RES_FILES "")
@@ -182,19 +182,19 @@ if (ANDROID)
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
 	add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
 
-        add_library(fairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
-        add_dependencies(fairyland qtav)
-	set_property(TARGET fairyland PROPERTY VERSION "1")
-	install(TARGETS fairyland LIBRARY DESTINATION lib)
+        add_library(gustavsfairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+        add_dependencies(gustavsfairyland qtav)
+	set_property(TARGET gustavsfairyland PROPERTY VERSION "1")
+	install(TARGETS gustavsfairyland LIBRARY DESTINATION lib)
 else ()
-        add_executable(fairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
-	install(TARGETS fairyland RUNTIME DESTINATION bin)
+        add_executable(gustavsfairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
 endif()
 
-target_link_libraries(fairyland fairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(fairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
+	target_link_libraries(gustavsfairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
 
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
@@ -221,11 +221,11 @@ if (UNIX)
 
 	if (DESKTOP_FILE_VALIDATE_PATH)
 		message(STATUS "Validating .desktop files with program ${DESKTOP_FILE_VALIDATE_PATH}.")
-		add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/fairyland.desktop SOURCES fairyland.desktop)
+		add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/gustavsfairyland.desktop SOURCES gustavsfairyland.desktop)
 	endif ()
 
-	install(FILES fairyland.desktop DESTINATION share/applications)
-	install(FILES resources/logo.jpg DESTINATION share/icons RENAME fairyland.jpg)
+	install(FILES gustavsfairyland.desktop DESTINATION share/applications)
+	install(FILES gustavsfairyland.png DESTINATION share/icons)
 endif ()
 
 if (USE_COMPRESSED_FILES)
@@ -297,7 +297,7 @@ if (WIN32)
 	else ()
 		set(WINDEPLOYQT_ARGS "--release")
 	endif ()
-	add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:fairyland> ${WINDEPLOYQT_ARGS} --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS fairyland)
+	add_custom_target(deployqt ALL ${WINDEPLOYQT_PROGRAM} $<TARGET_FILE:gustavsfairyland> ${WINDEPLOYQT_ARGS} --dir "${CMAKE_BINARY_DIR}/qtdeployment" DEPENDS gustavsfairyland)
 	install(DIRECTORY "${CMAKE_BINARY_DIR}/qtdeployment/" DESTINATION bin)
 endif ()
 
@@ -308,7 +308,7 @@ if (ANDROID)
 	# keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
 	# PACKAGE_NAME "org.tacaproductions.gustavsfairyland"
-	add_qt_android_apk(my_app_apk fairyland NAME "@string/ApplicationName"
+	add_qt_android_apk(my_app_apk gustavsfairyland NAME "@string/ApplicationName"
 		DEPENDS
 		${QTAV_LIBRARIES}
 	)
@@ -331,8 +331,8 @@ set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "gustavsfairyland")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-set(CPACK_PACKAGE_EXECUTABLES "fairyland" "Gustav's Fairland")
-set(CPACK_CREATE_DESKTOP_LINKS "fairyland")
+set(CPACK_PACKAGE_EXECUTABLES "gustavsfairyland" "Gustav's Fairland")
+set(CPACK_CREATE_DESKTOP_LINKS "gustavsfairyland")
 set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
 
 # NSIS Windows
