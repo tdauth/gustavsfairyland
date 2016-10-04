@@ -105,7 +105,7 @@ void GameModeCreative::afterNarrator()
 
 		button->iconButton()->setFile(filePath);
 		connect(button->iconButton(), &IconButton::clicked, this, &GameModeCreative::clickCard);
-		button->label()->setText(clip->description());
+		button->label()->setText(this->app()->description(this->app()->startPerson(), this->app()->turns(), clip, false));
 		button->show();
 	}
 
