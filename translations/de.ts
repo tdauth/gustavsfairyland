@@ -373,12 +373,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../gamemodecreative.cpp" line="92"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../gamemodecreative.cpp" line="178"/>
         <source>Creative Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreativmodus</translation>
     </message>
 </context>
 <context>
@@ -488,18 +488,18 @@ p, li { white-space: pre-wrap; }
     <name>LanguageDialog</name>
     <message>
         <location filename="../build/ui_languagedialog.h" line="57"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+        <source>Language</source>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location filename="../build/ui_languagedialog.h" line="60"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../build/ui_languagedialog.h" line="61"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Englisch</translation>
     </message>
 </context>
 <context>
@@ -584,7 +584,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="299"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Über &amp;Qt</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="302"/>
@@ -609,12 +609,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="306"/>
         <source>Cancel Game (C)</source>
-        <translation type="unfinished">Spiel abbrechen (C)</translation>
+        <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="308"/>
         <source>Pause Game (P)</source>
-        <translation type="unfinished">Spiel pausieren (P)</translation>
+        <translation>Spiel pausieren (P)</translation>
     </message>
     <message>
         <source>Pause Game</source>
@@ -852,12 +852,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../settingsdialog.cpp" line="436"/>
         <source>Intro</source>
-        <translation type="unfinished"></translation>
+        <translation>Intro</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="442"/>
         <source>Outros</source>
-        <translation type="unfinished"></translation>
+        <translation>Outros</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="456"/>
@@ -912,12 +912,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fairytale.cpp" line="226"/>
         <source>Intro</source>
-        <translation type="unfinished"></translation>
+        <translation>Intro</translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="653"/>
         <source>Outro</source>
-        <translation type="unfinished"></translation>
+        <translation>Outro</translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="705"/>

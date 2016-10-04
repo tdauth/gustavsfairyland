@@ -462,7 +462,7 @@ p, li { white-space: pre-wrap; }
     <name>LanguageDialog</name>
     <message>
         <location filename="../build/ui_languagedialog.h" line="57"/>
-        <source>Form</source>
+        <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
