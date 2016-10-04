@@ -488,7 +488,8 @@ void Player::setVolume(int volume)
 
 	//qDebug() << "Set volume to" << realVolume;
 
-	this->m_player->audio()->setVolume(volume);
+	const qreal realVolume = (qreal)(volume) * 0.01;
+	this->m_player->audio()->setVolume(realVolume);
 #else
 	this->mediaPlayer()->setVolume(volume);
 #endif
