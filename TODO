@@ -25,7 +25,7 @@
 - Offenes Fenster, Licht fällt rein, nimmt weniger Platz ein, Helligkeit einfach ändern
 - Sounds: Fenster auf, Windsound
 - GIF mit Vorhängen von oben die durch Wind bewegt werden
-- Videosupport für Android mit Hilfe von QML:
+- DEPRECATED (verwende QtAV): Videosupport für Android mit Hilfe von QML:
 https://forum.qt.io/topic/70420/playing-videos-from-c-using-qml-on-android-does-not-work-either
 http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 
@@ -52,6 +52,12 @@ Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann
 - Erhöhte Geschwindigkeit mit neuer API der relativen Geschwindigkeit von fliegenden Clips einbauen.
 - CustomFairytale -> Als Avidemux-Projekt exportieren. Bei Angabe des Pfads von Avidemux auch als solches Rendern. Besseres Programm? Besser vielleicht: QMediaRecorder und direkt irgendwie in Datei rendern.
 QMediaRecorder nimmt einen QMediaPlayer entgegen der alles zusammen abspielt?
+- Kreativmodus:
+	- kein Intro
+	- kein Outro
+	- Nicht zu Highscores
+	- Kein Schwierigkeitsgrad
+	- Keine Rundenzahl
 
 https://wiki.qt.io/Qt_5.7_Multimedia_Backends
 NDK Android API to play videos:
@@ -64,9 +70,13 @@ Video muss deinterlaced werden?
 Fehler: NuPlayer: onSetVideoSurface no video decoder
 http://stackoverflow.com/questions/32611368/android-marshmallow-cant-play-this-video-error
 
+DONE:
 QtAV verwenden um Videos auf Android abzuspielen. Aktuelles Problem:
 https://github.com/wang-bin/QtAV/issues/138
 Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
+
+
+- Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß.
 
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben

@@ -220,7 +220,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 
 	setGameButtonsEnabled(true);
 
-	if (!this->clipPackage()->intro().isEmpty())
+	if (!this->clipPackage()->intro().isEmpty() && this->gameMode()->playIntro())
 	{
 		this->m_playIntro = true;
 		this->m_player->playVideo(this, this->clipPackage()->intro(), tr("Intro"));
@@ -647,7 +647,7 @@ void fairytale::win()
 
 	qDebug() << "Outro URL:" << outroUrl;
 
-	if (!outroUrl.isEmpty())
+	if (!outroUrl.isEmpty() && this->gameMode()->playOutro())
 	{
 		this->m_playOutroWin = true;
 		this->m_player->playVideo(this, outroUrl, tr("Outro"));
@@ -660,17 +660,23 @@ void fairytale::win()
 
 void fairytale::afterOutroWin()
 {
-	this->wonDialog()->exec();
-
-	QString name = qgetenv("USER");
-
-	if (name.isEmpty())
+	if (this->gameMode()->showWinDialog())
 	{
-		name = qgetenv("USERNAME");
+		this->wonDialog()->exec();
 	}
 
-	HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->difficulty(), this->rounds(), this->m_totalElapsedTime);
-	this->highScores()->addHighScore(highScore);
+	if (this->gameMode()->addToHighScores())
+	{
+		QString name = qgetenv("USER");
+
+		if (name.isEmpty())
+		{
+			name = qgetenv("USERNAME");
+		}
+
+		HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->difficulty(), this->rounds(), this->m_totalElapsedTime);
+		this->highScores()->addHighScore(highScore);
+	}
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	this->customFairytaleDialog()->exec();

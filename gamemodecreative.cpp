@@ -195,6 +195,26 @@ bool GameModeCreative::hasLimitedTime()
 	return false;
 }
 
+bool GameModeCreative::playIntro()
+{
+	return false;
+}
+
+bool GameModeCreative::playOutro()
+{
+	return false;
+}
+
+bool GameModeCreative::showWinDialog()
+{
+	return false;
+}
+
+bool GameModeCreative::addToHighScores()
+{
+	return false;
+}
+
 GameModeCreative::ClipButton::ClipButton(QWidget *parent, Clip *clip) : QWidget(parent), m_clip(clip), m_iconButton(new IconButton(this)), m_label(new QLabel(this))
 {
 	QVBoxLayout *layout = new QVBoxLayout();

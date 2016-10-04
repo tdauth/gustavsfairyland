@@ -51,14 +51,21 @@ class GameMode : public QObject
 		virtual void resume() = 0;
 		virtual void nextTurn() = 0;
 		virtual void afterNarrator() = 0;
-		/**
-		 * \return Returns true if the game mode sets a solution in \ref nextTurn() which has to be chosen in \ref afterNarrator(). Otherwise it returns false.
-		 */
-		virtual bool hasToChooseTheSolution() = 0;
-		virtual bool hasLimitedTime() = 0;
 		virtual long int time() = 0;
 		virtual Clip* solution() = 0;
 		virtual State state() = 0;
+
+		/**
+		 * \return Returns true if the game mode sets a solution in \ref nextTurn() which has to be chosen in \ref afterNarrator(). Otherwise it returns false.
+		 */
+		virtual bool hasToChooseTheSolution();
+		virtual bool playIntro();
+		virtual bool playOutro();
+		virtual bool useMaxRounds();
+		virtual bool useDifficulty();
+		virtual bool hasLimitedTime();
+		virtual bool showWinDialog();
+		virtual bool addToHighScores();
 
 	private:
 		fairytale *m_app;
@@ -67,6 +74,46 @@ class GameMode : public QObject
 inline fairytale* GameMode::app() const
 {
 	return this->m_app;
+}
+
+inline bool GameMode::hasToChooseTheSolution()
+{
+	return true;
+}
+
+inline bool GameMode::playIntro()
+{
+	return true;
+}
+
+inline bool GameMode::playOutro()
+{
+	return true;
+}
+
+inline bool GameMode::useMaxRounds()
+{
+	return true;
+}
+
+inline bool GameMode::useDifficulty()
+{
+	return true;
+}
+
+inline bool GameMode::hasLimitedTime()
+{
+	return true;
+}
+
+inline bool GameMode::showWinDialog()
+{
+	return true;
+}
+
+inline bool GameMode::addToHighScores()
+{
+	return true;
 }
 
 #endif // GAMEMODE_H

@@ -22,10 +22,8 @@ class GameModeCreative : public GameMode
 
 		virtual GameMode::State state() override;
 		virtual Clip* solution() override;
-		virtual bool hasLimitedTime() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
-		virtual bool hasToChooseTheSolution() override;
 		virtual void nextTurn() override;
 		virtual void resume() override;
 		virtual void pause() override;
@@ -33,6 +31,13 @@ class GameModeCreative : public GameMode
 		virtual void start() override;
 		virtual QString name() const override;
 		virtual QString id() const override;
+
+		virtual bool hasToChooseTheSolution() override;
+		virtual bool hasLimitedTime() override;
+		virtual bool playIntro() override;
+		virtual bool playOutro() override;
+		virtual bool showWinDialog() override;
+		virtual bool addToHighScores() override;
 
 	private:
 		class ClipButton : public QWidget
