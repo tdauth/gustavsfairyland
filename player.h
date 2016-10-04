@@ -163,7 +163,7 @@ QMediaPlayer*
 QObject*
 #endif
 */
-Player::mediaPlayer() const
+QMediaPlayer* Player::mediaPlayer() const
 {
 	return this->m_mediaPlayer;
 }
