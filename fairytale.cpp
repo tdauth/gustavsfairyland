@@ -295,11 +295,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
 #ifndef Q_OS_ANDROID
-	connect(this->m_player->mediaPlayer(), SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishNarrator(QMediaPlayer::State)));
 #else
 	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
-	connect(this->m_player->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(finishNarratorAndroid()));
+	//connect(this->m_player->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(finishNarratorAndroid()));
 #endif
+
+	connect(this->m_player, &Player::stateChanged, this, &fairytale::finishNarrator);
 	connect(this->m_player, &Player::finishVideoAndSounds, this, &fairytale::onFinishVideoAndSounds);
 
 	const QDir dir(translationsDir());

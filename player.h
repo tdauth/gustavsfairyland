@@ -6,9 +6,13 @@
 #include <QtCore/QQueue>
 // On Android videos can be only played in QML.
 #ifdef Q_OS_ANDROID
+/*
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlProperty>
+*/
+#include <QtAV>
+#include <QtAVWidgets>
 #else
 #include <QtMultimediaWidgets/QVideoWidget>
 #endif
@@ -30,6 +34,8 @@ class Player : public QDialog, protected Ui::Player
 		 * This signal is emitted when the video/sound and the parallel sounds have finished both.
 		 */
 		void finishVideoAndSounds();
+
+		void stateChanged(QMediaPlayer::State state);
 
 	public slots:
 		void playVideo(fairytale *app, const QUrl &url, const QString &description);
@@ -77,12 +83,16 @@ class Player : public QDialog, protected Ui::Player
 		QMediaPlayer::State state() const;
 		int volume() const;
 
+/*
 #ifdef Q_OS_ANDROID
 		QObject*
 #else
 		QMediaPlayer*
 #endif
-		mediaPlayer() const;
+*/
+#ifndef Q_OS_ANDROID
+		QMediaPlayer* mediaPlayer() const;
+#endif
 
 		/**
 		 * \return Returns true if the video or sound has been skipped. This value is reset whenever a new media is played.
@@ -107,6 +117,7 @@ class Player : public QDialog, protected Ui::Player
 		void onChangeState(QMediaPlayer::State state);
 #ifdef Q_OS_ANDROID
 		void onChangeStateAndroid();
+		void onChangeStateAndroidQtAv(QtAV::AVPlayer::State state);
 #endif
 
 	private:
@@ -128,27 +139,35 @@ class Player : public QDialog, protected Ui::Player
 		QMediaPlayer *m_parallelSoundsMediaPlayer;
 
 #ifdef Q_OS_ANDROID
+		/*
 		QQuickView *m_view;
 		QQuickItem *m_item;
 		QObject *m_mediaPlayer;
 		QWidget *m_videoWidget;
+		*/
+
+		QtAV::AVPlayer *m_player;
+		QtAV::WidgetRenderer *m_renderer;
 #else
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;
 #endif
 };
 
-
+#ifndef Q_OS_ANDROID
 inline
+/*
 #ifndef Q_OS_ANDROID
 QMediaPlayer*
 #else
 QObject*
 #endif
+*/
 Player::mediaPlayer() const
 {
 	return this->m_mediaPlayer;
 }
+#endif
 
 inline bool Player::skipped() const
 {

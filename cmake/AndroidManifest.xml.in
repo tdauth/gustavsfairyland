@@ -28,6 +28,7 @@
 		</activity>
 	</application>
 	<supports-screens android:anyDensity="true" android:normalScreens="true" android:smallScreens="true" android:largeScreens="true"/>
+	<uses-feature android:glEsVersion="0x00020000"></uses-feature> <!-- Tamino: Required by QtAV GLRenderer -->
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21"/>
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

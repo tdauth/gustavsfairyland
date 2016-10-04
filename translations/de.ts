@@ -679,17 +679,17 @@ p, li { white-space: pre-wrap; }
         <translation>Alle überspringen</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="92"/>
+        <location filename="../player.cpp" line="109"/>
         <source>SPACE</source>
         <translation>SPACE</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="96"/>
+        <location filename="../player.cpp" line="113"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="99"/>
+        <location filename="../player.cpp" line="116"/>
         <source>C</source>
         <translation>C</translation>
     </message>
@@ -897,15 +897,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../fairytale.cpp" line="199"/>
-        <location filename="../fairytale.cpp" line="729"/>
+        <location filename="../fairytale.cpp" line="730"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
         <location filename="../fairytale.cpp" line="200"/>
         <location filename="../fairytale.cpp" line="201"/>
-        <location filename="../fairytale.cpp" line="730"/>
         <location filename="../fairytale.cpp" line="731"/>
+        <location filename="../fairytale.cpp" line="732"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
@@ -915,60 +915,60 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="652"/>
+        <location filename="../fairytale.cpp" line="653"/>
         <source>Outro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="704"/>
+        <location filename="../fairytale.cpp" line="705"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="705"/>
         <location filename="../fairytale.cpp" line="706"/>
+        <location filename="../fairytale.cpp" line="707"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="848"/>
+        <location filename="../fairytale.cpp" line="849"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1171"/>
+        <location filename="../fairytale.cpp" line="1172"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1199"/>
-        <location filename="../fairytale.cpp" line="1233"/>
+        <location filename="../fairytale.cpp" line="1200"/>
+        <location filename="../fairytale.cpp" line="1234"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1203"/>
-        <location filename="../fairytale.cpp" line="1237"/>
+        <location filename="../fairytale.cpp" line="1204"/>
+        <location filename="../fairytale.cpp" line="1238"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1210"/>
+        <location filename="../fairytale.cpp" line="1211"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1214"/>
+        <location filename="../fairytale.cpp" line="1215"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1221"/>
+        <location filename="../fairytale.cpp" line="1222"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1225"/>
+        <location filename="../fairytale.cpp" line="1226"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

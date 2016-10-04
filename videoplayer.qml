@@ -11,7 +11,7 @@ Rectangle {
         id: player
         objectName: "player"
         audioRole: MediaPlayer.GameRole
-        source: "assets:/clips/vampir/vampir.avi"
+        source: "assets:/clips/mahler/bonus/trauer.mkv"
     }
 
     VideoOutput {
