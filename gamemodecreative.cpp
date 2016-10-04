@@ -10,13 +10,12 @@ void GameModeCreative::clickCard()
 
 	for (int i = 0; i < this->m_buttons.size() && !success; ++i)
 	{
-		if (QObject::sender() == this->m_buttons[i])
+		if (QObject::sender() == this->m_buttons[i]->iconButton())
 		{
-			this->m_currentSolution = this->m_clips[i];
+			this->m_currentSolution = this->m_buttons[i]->clip();
 			success = true;
 		}
 	}
-
 
 	this->app()->onFinishTurn();
 }
@@ -67,10 +66,9 @@ void GameModeCreative::afterNarrator()
 			continue;
 		}
 
-		IconButton *button = new IconButton(this->app());
+		ClipButton *button = new ClipButton(this->app(), clip);
 
 		this->m_buttons.push_back(button);
-		this->m_clips.push_back(clip);
 		this->app()->gameAreaLayout()->addWidget(button, row, column);
 		button->show(); // first show and resize
 		button->updateGeometry();
@@ -89,15 +87,15 @@ void GameModeCreative::afterNarrator()
 	}
 
 	m_finishButton = new QPushButton(this->app());
-	m_finishButton->setText(tr("Finish"));
+	m_finishButton->setText(tr("Complete"));
 	this->app()->gameAreaLayout()->addWidget(m_finishButton, row, column);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
 
 	// now show buttons
 	for (int i = 0; i < m_buttons.size(); ++i)
 	{
-		IconButton *button = m_buttons[i];
-		Clip *clip = m_clips[i];
+		ClipButton *button = m_buttons[i];
+		Clip *clip = button->clip();
 		const QUrl url = this->app()->resolveClipUrl(clip->imageUrl());
 #ifndef Q_OS_ANDROID
 		const QString filePath = url.toLocalFile();
@@ -105,8 +103,9 @@ void GameModeCreative::afterNarrator()
 		const QString filePath = url.url();
 #endif
 
-		button->setFile(filePath);
-		connect(button, SIGNAL(clicked()), this, SLOT(clickCard()));
+		button->iconButton()->setFile(filePath);
+		connect(button->iconButton(), &IconButton::clicked, this, &GameModeCreative::clickCard);
+		button->label()->setText(clip->description());
 		button->show();
 	}
 
@@ -117,13 +116,12 @@ void GameModeCreative::nextTurn()
 {
 	this->m_currentSolution = nullptr;
 
-	foreach (IconButton *button, this->m_buttons)
+	foreach (ClipButton *button, this->m_buttons)
 	{
 		delete button;
 	}
 
 	this->m_buttons.clear();
-	this->m_clips.clear();
 
 	if (m_finishButton != nullptr)
 	{
@@ -136,7 +134,7 @@ void GameModeCreative::nextTurn()
 
 void GameModeCreative::resume()
 {
-	foreach (IconButton *button, this->m_buttons)
+	foreach (ClipButton *button, this->m_buttons)
 	{
 		button->setEnabled(true);
 	}
@@ -144,7 +142,7 @@ void GameModeCreative::resume()
 
 void GameModeCreative::pause()
 {
-	foreach (IconButton *button, this->m_buttons)
+	foreach (ClipButton *button, this->m_buttons)
 	{
 		button->setEnabled(false);
 	}
@@ -154,13 +152,12 @@ void GameModeCreative::end()
 {
 	this->m_currentSolution = nullptr;
 
-	foreach (IconButton *button, this->m_buttons)
+	foreach (ClipButton *button, this->m_buttons)
 	{
 		delete button;
 	}
 
 	this->m_buttons.clear();
-	this->m_clips.clear();
 
 	if (m_finishButton != nullptr)
 	{
@@ -197,3 +194,13 @@ bool GameModeCreative::hasLimitedTime()
 {
 	return false;
 }
+
+GameModeCreative::ClipButton::ClipButton(QWidget *parent, Clip *clip) : QWidget(parent), m_clip(clip), m_iconButton(new IconButton(this)), m_label(new QLabel(this))
+{
+	QVBoxLayout *layout = new QVBoxLayout();
+	setLayout(layout);
+	layout->addWidget(m_iconButton);
+	layout->addWidget(m_label);
+	layout->setAlignment(m_label, Qt::AlignCenter);
+}
+

@@ -371,12 +371,16 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameModeCreative</name>
     <message>
-        <location filename="../gamemodecreative.cpp" line="92"/>
         <source>Finish</source>
-        <translation>Beenden</translation>
+        <translation type="vanished">Beenden</translation>
     </message>
     <message>
-        <location filename="../gamemodecreative.cpp" line="178"/>
+        <location filename="../gamemodecreative.cpp" line="90"/>
+        <source>Complete</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location filename="../gamemodecreative.cpp" line="175"/>
         <source>Creative Mode</source>
         <translation>Kreativmodus</translation>
     </message>
@@ -654,27 +658,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="145"/>
+        <location filename="../build/ui_player.h" line="155"/>
         <source>Player</source>
         <translation>Abspielprogramm</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="147"/>
+        <location filename="../build/ui_player.h" line="157"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="148"/>
+        <location filename="../build/ui_player.h" line="158"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="149"/>
+        <location filename="../build/ui_player.h" line="159"/>
         <source>Skip (Space)</source>
         <translation>Überspringen (Leertaste)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="150"/>
+        <location filename="../build/ui_player.h" line="160"/>
         <source>Skip All</source>
         <translation>Alle überspringen</translation>
     </message>
