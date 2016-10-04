@@ -1,7 +1,6 @@
-"fairytale" is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale.
+"Gustav's Fairyland" is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale.
 
 Contact: tamino@cdauth.eu
-
 
 Compilation instructions:
 Create a binary directory and run:
@@ -40,6 +39,9 @@ It is in /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign but expected in
 Just do:
 ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign
 
+The Android build uses QtAV for playing videos on Android devices since QtMultimediaWidgets are not supported on Android.
+Therefore ffmpeg and QtAV have to build for Android too which happens in the build script "buildatavforandroid.sh".
+
 Use the following command to get debugging output:
 /home/tamino/Android/Sdk/platform-tools/adb logcat
 
@@ -52,6 +54,10 @@ https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device
 Make sure the codec is supported on Android:
 https://developer.android.com/guide/appendix/media-formats.html
 
+Audio compression:
+Run the Bash script "compressaudio.sh".
+
 Video compression:
-Run the Bash script compressvideos.sh and make sure it creates videos which can be played on Android as well.
-Set the option USE_COMPRESSED_FILES in CMake and it will install the compressed videos instead.
+Run the Bash script "compressvideos.sh" and make sure it creates videos which can be played on Android as well.
+
+Set the option USE_COMPRESSED_FILES in CMake and it will install the compressed files instead.
