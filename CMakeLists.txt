@@ -225,7 +225,7 @@ if (UNIX)
 	endif ()
 
 	install(FILES fairyland.desktop DESTINATION share/applications)
-	install(FILES resources/logo.jpg DESTINATION share/applications RENAME fairyland.jpg)
+	install(FILES resources/logo.jpg DESTINATION share/icons RENAME fairyland.jpg)
 endif ()
 
 if (USE_COMPRESSED_FILES)
