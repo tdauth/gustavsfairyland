@@ -180,7 +180,7 @@ endif ()
 
 if (ANDROID)
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	add_custom_target(qtav bash buildqtavforandroid.sh WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
+	add_custom_target(qtav bash buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
 
         add_library(gustavsfairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
         add_dependencies(gustavsfairyland qtav)
