@@ -147,9 +147,6 @@ QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyl
 
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
 
-add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
-
 if (ANDROID)
 	set(QTAV_LIBRARIES
 		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavcodec.so"
@@ -166,9 +163,15 @@ if (ANDROID)
 
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
 	add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+endif ()
 
-	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras)
-	target_link_libraries(gustavsfairylandlib ${QTAV_LIBRARIES})
+add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
+target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+
+if (ANDROID)
+	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})
+	add_dependencies(gustavsfairylandlib GeneratedQtAVLibraries)
+	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
 endif ()
 
 set(RES_FILES "")
