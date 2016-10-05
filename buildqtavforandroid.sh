@@ -7,14 +7,17 @@ ANDROID_TARGET="$3"
 export HOME_TAMINO="/home/tamino"
 
 if [ -z "$QT_DIR" ] ; then
+	echo "Setting QT_DIR automatically"
 	QT_DIR="$HOME_TAMINO/Qt/5.7/android_armv7" # "$HOME_TAMINO/Qt5.7.0"
 fi
 
 if [ -z "$ANDROID_PREFIX" ] ; then
+	echo "Setting ANDROID_PREFIX automatically"
 	ANDROID_PREFIX="sdk-android-armv7" # sdk-android-x86
 fi
 
 if [ -z "$ANDROID_TARGET" ] ; then
+	echo "Setting ANDROID_TARGET automatically"
 	ANDROID_TARGET="armv7" # x86
 fi
 
