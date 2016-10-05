@@ -1,3 +1,5 @@
+#include <QtWidgets>
+
 #include "clippackagedialog.h"
 #include "gamemode.h"
 #include "clippackage.h"
@@ -7,6 +9,8 @@
 ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialog(parent, f)
 {
 	this->setupUi(this);
+
+	connect(this->gameModesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ClipPackageDialog::currentGameModeIndexChanged);
 }
 
 void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)
@@ -50,8 +54,11 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fair
 	}
 
 	this->difficultyComboBox->setCurrentIndex((int)app->defaultDifficulty());
+	this->difficultyComboBox->setEnabled(app->defaultGameMode()->useDifficulty());
 	this->useMaxRoundsCheckBox->setChecked(app->defaultUseMaxRounds());
+	this->useMaxRoundsCheckBox->setEnabled(app->defaultGameMode()->useMaxRounds());
 	this->maxRoundsSpinBox->setValue(app->defaultMaxRounds());
+	this->maxRoundsSpinBox->setEnabled(app->defaultGameMode()->useMaxRounds());
 
 	if (gameModes.isEmpty() || packages.isEmpty())
 	{
@@ -96,4 +103,17 @@ int ClipPackageDialog::maxRounds() const
 bool ClipPackageDialog::useMaxRounds() const
 {
 	return this->useMaxRoundsCheckBox->isChecked();
+}
+
+void ClipPackageDialog::currentGameModeIndexChanged(int index)
+{
+	qDebug() << "Changing index to" << index;
+
+	if (index > 0 && index < this->m_gameModes.size())
+	{
+		GameMode *gameMode = this->m_gameModes[this->gameModesComboBox->itemData(index).toString()];
+		this->difficultyComboBox->setEnabled(gameMode->useDifficulty());
+		this->useMaxRoundsCheckBox->setEnabled(gameMode->useMaxRounds());
+		this->maxRoundsSpinBox->setEnabled(gameMode->useMaxRounds());
+	}
 }

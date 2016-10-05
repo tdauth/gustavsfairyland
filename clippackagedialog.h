@@ -1,7 +1,7 @@
 #ifndef CLIPPACKAGEDIALOG_H
 #define CLIPPACKAGEDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 #include "ui_clippackagedialog.h"
 
@@ -33,6 +33,9 @@ class ClipPackageDialog : public QDialog, protected Ui::ClipPackageDialog
 		fairytale::Difficulty difficulty() const;
 		int maxRounds() const;
 		bool useMaxRounds() const;
+
+	private slots:
+		void currentGameModeIndexChanged(int index);
 
 	private:
 		fairytale::ClipPackages m_packages;
