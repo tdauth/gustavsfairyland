@@ -225,7 +225,7 @@ if (UNIX)
 	endif ()
 
 	install(FILES gustavsfairyland.desktop DESTINATION share/applications)
-	install(FILES gustavsfairyland.png DESTINATION share/icons)
+	install(FILES gustavsfairyland.png DESTINATION share/icons/hicolor/48x48/apps)
 endif ()
 
 if (USE_COMPRESSED_FILES)
