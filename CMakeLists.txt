@@ -179,15 +179,14 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
-	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	add_custom_target(qtav bash buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES buildqtavforandroid.sh)
-
-        add_library(gustavsfairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
-        add_dependencies(gustavsfairyland qtav)
+	add_library(gustavsfairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	set_property(TARGET gustavsfairyland PROPERTY VERSION "1")
 	install(TARGETS gustavsfairyland LIBRARY DESTINATION lib)
+
+	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
+	add_custom_command(TARGET gustavsfairylandlib PRE_BUILD COMMAND bash ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 else ()
-        add_executable(gustavsfairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+	add_executable(gustavsfairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
 endif()
 
