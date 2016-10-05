@@ -109,5 +109,6 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # -r "CONFIG+=recheck"
 # "CONFIG += no_config_tests" NOTE Don't use this, it leads to errors.
 # Take off config_vaapi  for ARM?
-"$QT_PATH/bin/qmake" -Wall "LIBS+=-L$QT_PATH/lib -L$FFMPEG_LIB_DIR" ../qtav/QtAV.pro
+#"$QT_PATH/bin/qmake" -Wall "LIBS+=-L$QT_PATH/lib -L$FFMPEG_LIB_DIR" ../qtav/QtAV.pro
+"$QT_PATH/bin/qmake" -Wall "LIBS+=-L$QT_PATH/lib -L$FFMPEG_LIB_DIR" "CONFIG += no_config_tests" ../qtav/QtAV.pro
 make -j4
