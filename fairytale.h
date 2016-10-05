@@ -381,6 +381,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		HighScores *m_highScores;
 
+		typedef QPair<QString, QString> BonusClipKey;
+		typedef QMap<BonusClipKey, bool> BonusClipUnlocks;
+		BonusClipUnlocks m_bonusClipUnlocks;
 		typedef QMap<QAction*, BonusClip*> BonusClipActions;
 		BonusClipActions m_bonusClipActions;
 		bool m_playingBonusClip;

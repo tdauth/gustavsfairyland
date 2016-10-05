@@ -210,6 +210,11 @@ bool GameModeCreative::showWinDialog()
 	return false;
 }
 
+bool GameModeCreative::unlockBonusClip()
+{
+	return false;
+}
+
 bool GameModeCreative::addToHighScores()
 {
 	return false;

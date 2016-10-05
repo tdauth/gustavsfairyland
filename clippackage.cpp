@@ -375,10 +375,8 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 	// TODO write intro and outro
 
-	for (int i = 0; i < this->bonusClips().size(); ++i)
+	foreach (BonusClip *clip, this->bonusClips().values())
 	{
-		const BonusClip *clip = this->bonusClips().at(i);
-
 		// write image file
 		Block imageBlock;
 		const bool imageBlockExists = !clip->imageUrl().isEmpty();
@@ -654,6 +652,16 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		{
 			std::cerr << "Read bonus clip";
 
+			const QDomElement element = node.toElement();
+
+			if (!element.hasAttribute("id"))
+			{
+				std::cerr << "Missing unique ID for bonus clip" << std::endl;
+
+				return false;
+			}
+
+			const QString id = element.attribute("id");
 			const QUrl image = QUrl(node.firstChildElement("image").text());
 			const QUrl video = QUrl(node.firstChildElement("video").text());
 			const QDomNodeList descriptionNodes = node.firstChildElement("description").childNodes();
@@ -666,7 +674,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 				descriptions.insert(node.nodeName(), node.toElement().text());
 			}
 
-			m_bonusClips.push_back(new BonusClip(image, video, descriptions, this));
+			m_bonusClips.insert(id, new BonusClip(image, video, descriptions, this));
 		}
 	}
 
@@ -800,10 +808,12 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 		}
 	}
 
-	for (int i = 0; i < this->bonusClips().size(); ++i)
+	for (BonusClips::const_iterator iterator = this->bonusClips().constBegin(); iterator != this->bonusClips().constEnd(); ++iterator)
 	{
-		const BonusClip *clip = this->bonusClips().at(i);
+		const QString clipId = iterator.key();
+		const BonusClip *clip = iterator.value();
 		QDomElement clipElement = document.createElement("bonusClip");
+		clipElement.setAttribute("id", clipId);
 
 		if (!clip->imageUrl().isEmpty())
 		{

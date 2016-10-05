@@ -292,6 +292,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
 	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
+	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
 #ifndef Q_OS_ANDROID
@@ -356,6 +357,20 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	settings.endArray();
 
+	const int bonusClipUnlocksSize = settings.beginReadArray("bonusclipunlocks");
+
+	for (int i = 0; i < bonusClipUnlocksSize; ++i)
+	{
+		settings.setArrayIndex(i);
+		const QString packageId = settings.value("package").toString();
+		const QString clipId = settings.value("clip").toString();
+		const bool unlock = settings.value("unlock").toBool();
+
+		this->m_bonusClipUnlocks[BonusClipKey(packageId, clipId)] = unlock;
+	}
+
+	settings.endArray();
+
 	qApp->installTranslator(&m_translator);
 
 	loadLanguage(locale);
@@ -398,6 +413,21 @@ fairytale::~fairytale()
 	}
 
 	qDebug() << "Wrote high scores:" << i;
+
+	settings.endArray();
+
+	settings.beginWriteArray("bonusclipunlocks");
+
+	for (BonusClipUnlocks::const_iterator iterator = this->m_bonusClipUnlocks.begin(); iterator != this->m_bonusClipUnlocks.end(); ++iterator)
+	{
+		settings.setArrayIndex(i);
+		const QString packageId = iterator.key().first;
+		settings.setValue("package", packageId);
+		const QString clipId = iterator.key().second;
+		settings.setValue("clip", clipId);
+		const bool unlock = iterator.value();
+		settings.setValue("unlock", unlock);
+	}
 
 	settings.endArray();
 
@@ -663,6 +693,50 @@ void fairytale::afterOutroWin()
 	if (this->gameMode()->showWinDialog())
 	{
 		this->wonDialog()->exec();
+	}
+
+	if (this->gameMode()->unlockBonusClip())
+	{
+		ClipPackage::BonusClips lockedBonusClips;
+
+		for (ClipPackage::BonusClips::const_iterator iterator = this->clipPackage()->bonusClips().begin(); iterator != this->clipPackage()->bonusClips().end(); ++iterator)
+		{
+			if (this->m_bonusClipUnlocks.find(BonusClipKey(this->clipPackage()->id(), iterator.key())) == this->m_bonusClipUnlocks.end())
+			{
+				lockedBonusClips.insert(iterator.key(), iterator.value());
+			}
+		}
+
+		const int index = qrand() % lockedBonusClips.size();
+		int i = 0;
+		BonusClip *bonusClip = nullptr;
+
+		for (ClipPackage::BonusClips::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
+		{
+			if (i == index)
+			{
+				this->m_bonusClipUnlocks.insert(BonusClipKey(this->clipPackage()->id(), iterator.key()), true);
+				bonusClip = iterator.value();
+
+				break;
+			}
+		}
+
+		// Play the bonus clip
+		if (bonusClip != nullptr)
+		{
+			// TODO play it
+			QMessageBox::information(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip %1!").arg(bonusClip->description()));
+
+			// enable action
+			for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
+			{
+				if (iterator.value() == bonusClip)
+				{
+					iterator.key()->setEnabled(true);
+				}
+			}
+		}
 	}
 
 	if (this->gameMode()->addToHighScores())
@@ -944,9 +1018,27 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	actionCancelGame->setEnabled(enabled);
 	actionShowCustomFairytale->setEnabled(enabled);
 
-	foreach (QAction *action, this->m_bonusClipActions.keys())
+	// TODO weak performance, too many loops
+	foreach (ClipPackage *package, this->m_clipPackages)
 	{
-		action->setEnabled(!enabled);
+		for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
+		{
+			const QString clipId = iterator.key();
+
+			if (m_bonusClipUnlocks.find(BonusClipKey(package->id(), clipId)) != m_bonusClipUnlocks.end())
+			{
+				for (BonusClipActions::const_iterator actionIterator = this->m_bonusClipActions.begin(); actionIterator != this->m_bonusClipActions.end(); ++actionIterator)
+				{
+					if (actionIterator.value() == iterator.value())
+					{
+						QAction *action = actionIterator.key();
+						action->setEnabled(!enabled);
+
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1146,7 +1238,7 @@ void fairytale::startMusic()
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
 	// Music should not be annoyingly loud.
-	m_musicPlayer->setVolume(50);
+	m_musicPlayer->setVolume(30);
 }
 
 void fairytale::finishMusic(QMediaPlayer::State state)
@@ -1438,15 +1530,26 @@ GameOverDialog* fairytale::gameOverDialog()
 	return this->m_gameOverDialog;
 }
 
-void fairytale::addClipPackage(ClipPackage* package)
+void fairytale::addClipPackage(ClipPackage *package)
 {
 	this->m_clipPackages.insert(package->id(), package);
 
-	foreach (BonusClip *bonusClip, package->bonusClips())
+	for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
 	{
+		const QString clipId = iterator.key();
+		BonusClip *bonusClip = iterator.value();
 		QAction *action = menuAchievements->addAction(bonusClip->description());
 		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
 		this->m_bonusClipActions.insert(action, bonusClip);
+
+		if (m_bonusClipUnlocks.find(BonusClipKey(package->id(), clipId)) != m_bonusClipUnlocks.end())
+		{
+			action->setEnabled(true);
+		}
+		else
+		{
+			action->setEnabled(false);
+		}
 	}
 
 	/*

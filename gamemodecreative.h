@@ -37,6 +37,7 @@ class GameModeCreative : public GameMode
 		virtual bool playIntro() override;
 		virtual bool playOutro() override;
 		virtual bool showWinDialog() override;
+		virtual bool unlockBonusClip() override;
 		virtual bool addToHighScores() override;
 
 	private:

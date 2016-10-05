@@ -65,6 +65,7 @@ class GameMode : public QObject
 		virtual bool useDifficulty();
 		virtual bool hasLimitedTime();
 		virtual bool showWinDialog();
+		virtual bool unlockBonusClip();
 		virtual bool addToHighScores();
 
 	private:
@@ -107,6 +108,11 @@ inline bool GameMode::hasLimitedTime()
 }
 
 inline bool GameMode::showWinDialog()
+{
+	return true;
+}
+
+inline bool GameMode::unlockBonusClip()
 {
 	return true;
 }

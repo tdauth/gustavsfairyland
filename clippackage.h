@@ -29,12 +29,12 @@ class ClipPackage : public QObject
 	Q_OBJECT
 
 	public:
-		typedef QMap<QString,QString> Names;
+		typedef QMap<QString, QString> Names;
 		/**
 		 * \brief A map of clips which every package stores. They key is the unique ID of a clip.
 		 */
 		typedef QMap<QString, Clip*> Clips;
-		typedef QList<BonusClip*> BonusClips;
+		typedef QMap<QString, BonusClip*> BonusClips;
 		typedef QVector<QUrl> Outros;
 
 		ClipPackage(fairytale *app, QObject *parent = nullptr);

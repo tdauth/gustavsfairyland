@@ -344,6 +344,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	m_player->setFile(resolvedUrl.toString());
 	m_player->load();
 	m_renderer->show();
+	this->m_renderer->resize(app->size() / 1.5); // make videos bigger
 	// disable audio for tests
 	//player->audio()->setBackends(QStringList() << "null");
 #else
