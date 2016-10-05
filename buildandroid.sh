@@ -23,6 +23,7 @@ fi
 # Parameters for build QtAV
 ANDROID_PREFIX="$4"
 ANDROID_TARGET="$5"
+QTAV_LIB_DIR="$6"
 
 if [ -z "$ANDROID_PREFIX" ] ; then
 	echo "Setting ANDROID_PREFIX automatically"
@@ -32,6 +33,11 @@ fi
 if [ -z "$ANDROID_TARGET" ] ; then
 	echo "Setting ANDROID_TARGET automatically"
 	ANDROID_TARGET="armv7" # x86
+fi
+
+if [ -z "$QTAV_LIB_DIR" ] ; then
+	echo "Setting QTAV_LIB_DIR automatically"
+	QTAV_LIB_DIR="lib_android_arm" # lib_android_x86
 fi
 
 export ANDROID_HOME="$HOME_TAMINO/Android/Sdk"
@@ -47,7 +53,7 @@ fi
 cd "$BUILD_DIR"
 echo "Build dir: $(pwd)"
 # If build type Debug is used CMAKE_GDBSERVER has to specified for the command android_create_apk()
-cmake -DUSE_COMPRESSED_FILES=1 -DJAVA_HOME="/usr/java/default/" -DANDROID_SDK="$ANDROID_HOME" -DQT_ANDROID_SDK_ROOT="$ANDROID_HOME" -DQT_ANDROID_ANT="$ANT_PATH" -DCMAKE_MODULE_PATH="../cmake" -DCMAKE_PREFIX_PATH="$QT_DIR/lib/cmake" -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DANDROID_NDK="$HOME_TAMINO/android-ndk-r12b" -DCMAKE_BUILD_TYPE=Debug -DANDROID_ABI="$ANDROID_ABI" -DANDROID_NATIVE_API_LEVEL="$ANDROID_API_LEVEL" -DQT_DIR="$QT_DIR" -DANDROID_PREFIX="$ANDROID_PREFIX" -DANDROID_TARGET="$ANDROID_TARGET" ../
+cmake -DUSE_COMPRESSED_FILES=1 -DJAVA_HOME="/usr/java/default/" -DANDROID_SDK="$ANDROID_HOME" -DQT_ANDROID_SDK_ROOT="$ANDROID_HOME" -DQT_ANDROID_ANT="$ANT_PATH" -DCMAKE_MODULE_PATH="../cmake" -DCMAKE_PREFIX_PATH="$QT_DIR/lib/cmake" -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DANDROID_NDK="$HOME_TAMINO/android-ndk-r12b" -DCMAKE_BUILD_TYPE=Debug -DANDROID_ABI="$ANDROID_ABI" -DANDROID_NATIVE_API_LEVEL="$ANDROID_API_LEVEL" -DQT_DIR="$QT_DIR" -DANDROID_PREFIX="$ANDROID_PREFIX" -DANDROID_TARGET="$ANDROID_TARGET" -DQTAV_LIB_DIR="$QTAV_LIB_DIR" ../
 
 cmake --build .
 # Manual installation of the packed apk file for the emulator
