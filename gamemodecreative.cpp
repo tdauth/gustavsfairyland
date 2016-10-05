@@ -205,6 +205,16 @@ bool GameModeCreative::playOutro()
 	return false;
 }
 
+bool GameModeCreative::useMaxRounds()
+{
+	return false;
+}
+
+bool GameModeCreative::useDifficulty()
+{
+	return false;
+}
+
 bool GameModeCreative::showWinDialog()
 {
 	return false;

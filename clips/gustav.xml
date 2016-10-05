@@ -375,7 +375,7 @@
 		<mahlerisch>./mahler/end5.mkv</mahlerisch>
 	</outro>
 
-	<bonusClip>
+	<bonusClip id="mahlerabouthimself">
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/mahler.avi</video>
 		<description>
@@ -383,7 +383,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="mahleraboutalma">
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/ueberalma.avi</video>
 		<description>
@@ -391,7 +391,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="mahlersad">
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/trauer.avi</video>
 		<description>
@@ -400,7 +400,7 @@
 		</description>
 	</bonusClip>
 
-        <bonusClip>
+        <bonusClip id="mahlerabouthisdaughter">
                 <image>./mahler/mahler.jpg</image>
                 <video>./mahler/bonus/tochter.avi</video>
                 <description>
@@ -420,7 +420,7 @@
 	</bonusClip>
 	-->
 
-	<bonusClip>
+	<bonusClip id="fightingjedi">
 		<image>./jedi/jedi.jpg</image>
 		<video>./jedi/bonus/jedi.mkv</video>
 		<description>
@@ -429,7 +429,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="kill">
 		<image>./kill/kill.jpg</image>
 		<video>./kill/bonus/kill.mkv</video>
 		<description>
@@ -438,7 +438,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="opajotttohishouse">
 		<image>./opajott/opajott.jpg</image>
 		<video>./opajott/bonus/opajott.mkv</video>
 		<description>
@@ -447,7 +447,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="popcornthrows">
 		<image>./popcorn/popcorn.jpg</image>
 		<video>./popcorn/bonus/popcorn.mkv</video>
 		<description>
@@ -456,7 +456,7 @@
 		</description>
 	</bonusClip>
 
-	<bonusClip>
+	<bonusClip id="steampunkdancing">
 		<image>./steampunk/steampunk.jpg</image>
 		<video>./steampunk/bonus/steampunk.mkv</video>
 		<description>

@@ -36,6 +36,8 @@ class GameModeCreative : public GameMode
 		virtual bool hasLimitedTime() override;
 		virtual bool playIntro() override;
 		virtual bool playOutro() override;
+		virtual bool useMaxRounds() override;
+		virtual bool useDifficulty() override;
 		virtual bool showWinDialog() override;
 		virtual bool unlockBonusClip() override;
 		virtual bool addToHighScores() override;
