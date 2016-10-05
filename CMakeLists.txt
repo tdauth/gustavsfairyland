@@ -165,7 +165,7 @@ if (ANDROID)
 	)
 
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+	add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 
 	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras)
 	target_link_libraries(gustavsfairylandlib ${QTAV_LIBRARIES})
