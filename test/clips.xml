@@ -111,7 +111,7 @@
 		<mahlerisch>./mahler/end5.mkv</mahlerisch>
 	</outro>
 
-        <bonusClip>
+        <bonusClip id="scheiterhaufen">
             <image>./fairytale/clips/scheiterhaufen.jpg</image>
             <video>./Film (TaCaMo)/output.mp4</video>
             <description>are burned</description>
