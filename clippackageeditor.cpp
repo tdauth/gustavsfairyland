@@ -96,12 +96,17 @@ void ClipPackageEditor::loadPackage()
 
 		if (isCompressedPackage)
 		{
-			if (!this->m_clipPackage->loadClipsFromCompressedArchive(fileName, this->app()->clipsDir().toLocalFile()))
+			TmpDir tmpDir(new QTemporaryDir());
+			qDebug() << "Loading compressed clips package with clips dir:" << tmpDir->path();
+
+			if (!this->m_clipPackage->loadClipsFromCompressedArchive(fileName, tmpDir->path()))
 			{
 				QMessageBox::critical(this, tr("Error"), tr("Error on loading compressed package."));
 
 				return;
 			}
+
+			this->m_extractDir.swap(tmpDir);
 		}
 		else if (isDescriptionFile)
 		{

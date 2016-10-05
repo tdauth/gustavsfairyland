@@ -24,7 +24,7 @@ void ClipEditor::setIsPerson(bool isAPerson)
 
 void ClipEditor::chooseImage()
 {
-	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Image"), this->m_dir,  tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
+	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Image"), this->m_dir,  tr("All files (*);;Images (*.jpg *.jpeg *.png)"));
 
 	if (!filePath.isEmpty())
 	{
@@ -40,7 +40,7 @@ void ClipEditor::chooseImage()
 
 void ClipEditor::chooseVideo()
 {
-	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Video"), this->m_dir,  tr("MKV (*.mkv);;AVI (*.avi);;MP4 (*.mp4)"));
+	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Video"), this->m_dir,  tr("All files (*);;Videos (*.mkv *.avi *.mp4)"));
 
 	if (!filePath.isEmpty())
 	{
@@ -55,7 +55,7 @@ void ClipEditor::chooseVideo()
 
 void ClipEditor::addNarratingSound()
 {
-	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Narrating Sound"), this->m_dir,  tr("WAV (*.wav)"));
+	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Narrating Sound"), this->m_dir,  tr("All files (*);;Audio (*.wav)"));
 
 	if (!filePath.isEmpty())
 	{

@@ -2,6 +2,7 @@
 #define CLIPPACKAGEEDITOR_H
 
 #include <QtWidgets/QDialog>
+#include <QTemporaryDir>
 
 #include "ui_clippackageeditor.h"
 
@@ -49,6 +50,12 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		ClipEditor *m_clipEditor;
 		ClipPackage *m_clipPackage;
 		QString m_dir;
+
+		/**
+		 * A temporary directory which is used for extraction of all clips.
+		 */
+		typedef QScopedPointer<QTemporaryDir> TmpDir;
+		TmpDir m_extractDir;
 };
 
 inline fairytale* ClipPackageEditor::app() const

@@ -29,6 +29,18 @@
 https://forum.qt.io/topic/70420/playing-videos-from-c-using-qml-on-android-does-not-work-either
 http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 
+- Editor:
+	- Clip-Pakete trotzdem laden, auch wenn Dateien leer sind bzw. nicht extrahiert werden oder gefunden werden konnten.
+	- Vorschausymbol für Clip-Icon geht nicht.
+	- Sprache zunächst auswählen, dann Eintrag schreiben.
+	- Bonus-Clips unterstützen.
+	- Intro unterstützen.
+	- Outros unterstützen.
+	- Nach Eindeutigkeit von IDS überprüfen.
+	- Beim Erstellen des Pakets (sowohl XML als auch komprimiert) absolute Pfade anhand von Verzeichnis zu relativen machen, wenn ausgewählt.
+	- Falls Webcam existiert, Clipvideos direkt aufnehmen wenn gewünscht, ebenso mit Symbolen.
+	- Falls Mikro existiert, Beschreibungen direkt aufnehmen wenn gewünscht.
+
 - Windows 10 Videos gehen mit entsprechendem Qt Backend nicht:
 "-wmf-backend" Use wmf as backend for QMultimedia. Otherwise MP4 videos won't be supported when DirectShow is used: https://bugreports.qt.io/browse/QTBUG-51692
 Da Qt aber nicht manuell gebaut wird, eventuell einfach ein anderes Videoformat benutzen.
@@ -53,9 +65,9 @@ Logo: https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann
 - CustomFairytale -> Als Avidemux-Projekt exportieren. Bei Angabe des Pfads von Avidemux auch als solches Rendern. Besseres Programm? Besser vielleicht: QMediaRecorder und direkt irgendwie in Datei rendern.
 QMediaRecorder nimmt einen QMediaPlayer entgegen der alles zusammen abspielt?
 - Kreativmodus:
-	- kein Intro
-	- kein Outro
-	- Nicht zu Highscores
+	- FIXED: kein Intro
+	- FIXED: kein Outro
+	- FIXED: Nicht zu Highscores
 	- Kein Schwierigkeitsgrad
 	- Keine Rundenzahl
 
