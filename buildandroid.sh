@@ -7,10 +7,11 @@ export ANT_PATH=$(which ant)
 
 BUILD_DIR="./buildandroid$ANDROID_ABI"
 
-if [ ! -d "$BUILD_DIR" ] ; then
-	mkdir "$BUILD_DIR"
+if [ -d "$BUILD_DIR" ] ; then
+	rm -rf "$BUILD_DIR"
 fi
 
+mkdir "$BUILD_DIR"
 cd "$BUILD_DIR"
 echo "Build dir: $(pwd)"
 # If build type Debug is used CMAKE_GDBSERVER has to specified for the command android_create_apk()
