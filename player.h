@@ -147,7 +147,7 @@ class Player : public QDialog, protected Ui::Player
 		*/
 
 		QtAV::AVPlayer *m_player;
-		QtAV::GLWidgetRenderer2 *m_renderer; // QtAV::WidgetRenderer
+		QtAV::WidgetRenderer *m_renderer; // GLWidgetRenderer2
 #else
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;

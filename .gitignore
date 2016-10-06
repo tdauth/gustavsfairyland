@@ -1,8 +1,10 @@
-build
-build-android
-buildandroid
-buildqtav
-ffmpeg-3.1.4
-unmodifiedclips
+/build
+/buildandroid_x86
+/buildandroidarmeabi-v7a
+/buildqtav
+/build_ffmpeg
+/qtav
+/ffmpeg-3.1.4
+/unmodifiedclips
 doc/html
 doc/latex
