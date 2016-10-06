@@ -49,7 +49,14 @@ Android does not support multimedia widgets in C++ like QVideoWidget. Therefore 
 to show videos:
 http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
 
+Android debugging:
 https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device
+
+Add udev rules for the device:
+https://developer.android.com/studio/run/device.html
+
+Install app on the current device:
+./adb -d install -r /home/tamino/Downloads/gustavsfairyland.apk
 
 Make sure the codec is supported on Android:
 https://developer.android.com/guide/appendix/media-formats.html

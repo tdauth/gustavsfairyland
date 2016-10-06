@@ -90,9 +90,11 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 
 
 - Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß.
-
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben
+- Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
+- Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß.
+- Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
