@@ -12,5 +12,5 @@ find ./clips -type f \( \( -iname "*.wav" -o -iname "*.mp3" \) -and -not -iname 
 	fi
 	# Make sure the codec is supported on Android:
 	# https://developer.android.com/guide/appendix/media-formats.html
-	ffmpeg -nostdin -i "$line" -acodec mp3 -f mp3 "$compressedName"
+	ffmpeg -nostdin -i "$line" -acodec mp3 -b:a 64k -f mp3 "$compressedName"
 done
