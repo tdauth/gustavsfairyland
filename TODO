@@ -89,7 +89,7 @@ https://github.com/wang-bin/QtAV/issues/138
 Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 
 
-- Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß.
+- Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben
 - Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
