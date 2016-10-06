@@ -56,7 +56,7 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 	*/
 
 	this->m_player = new QtAV::AVPlayer(this);
-	this->m_renderer = new QtAV::WidgetRenderer(this);
+	this->m_renderer = new QtAV::GLWidgetRenderer2(this); //new QtAV::WidgetRenderer(this);
 	this->m_player->setRenderer(m_renderer);
 #else
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);

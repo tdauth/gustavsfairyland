@@ -77,17 +77,17 @@ export LIBRARY_PATH="$FFMPEG_LIB_DIR:$LIBRARY_PATH"
 export LD_LIBRARY_PATH="$FFMPEG_LIB_DIR:$LD_LIBRARY_PATH"
 export ANDROID_NDK_ROOT="$NDK_ROOT"
 
-for f in "$FFMPEG_PREFIX/include/"* ; do
-	target="$QT_PATH/include"
-	echo "Creating link for $f to $target"
-	ln -fs "$f" "$target"
-done
-
-for f in "$FFMPEG_LIB_DIR/"* ; do
-	target="$QT_PATH/lib"
-	echo "Creating link for $f to $target"
-	ln -fs "$f" "$target"
-done
+# for f in "$FFMPEG_PREFIX/include/"* ; do
+# 	target="$QT_PATH/include"
+# 	echo "Creating link for $f to $target"
+# 	ln -fs "$f" "$target"
+# done
+# 
+# for f in "$FFMPEG_LIB_DIR/"* ; do
+# 	target="$QT_PATH/lib"
+# 	echo "Creating link for $f to $target"
+# 	ln -fs "$f" "$target"
+# done
 
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
@@ -103,5 +103,6 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # -r "CONFIG+=recheck"
 # "CONFIG += no_config_tests" NOTE Don't use this, it leads to errors.
 # Take off config_vaapi  for ARM?
-"$QT_PATH/bin/qmake" -Wall "LIBS+=-L$QT_PATH/lib" "LIBS+=-L$FFMPEG_LIB_DIR" ../qtav/QtAV.pro
+# "LIBS+=-L$QT_PATH/lib" don't use this and don't create symbolic links
+"$QT_PATH/bin/qmake" -Wall "LIBS+=-L$FFMPEG_LIB_DIR" ../qtav/QtAV.pro
 make -j4
