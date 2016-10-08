@@ -358,7 +358,7 @@ set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_NSIS_URL_INFO_ABOUT "http://wc3lib.org")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
-string(REPLACE "/" "\\\\" WINDOWS_EXE_PATH "$<TARGET_FILE:fairytale>")
+string(REPLACE "/" "\\\\" WINDOWS_EXE_PATH "$<TARGET_FILE:gustavsfairyland>")
 set(CPACK_NSIS_INSTALLED_ICON_NAME "${WINDOWS_EXE_PATH}")
 set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
 set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")

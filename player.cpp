@@ -298,7 +298,7 @@ void Player::checkForFinish()
 	}
 }
 
-void Player::playVideo(fairytale *app, const QUrl &url, const QString &description)
+void Player::playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame)
 {
 	this->m_isPrefix = false;
 	this->m_skipped = false;
@@ -320,8 +320,8 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
-	this->cancelPushButton->show();
-	this->pausePushButton->show();
+	this->cancelPushButton->setVisible(duringGame);
+	this->pausePushButton->setVisible(duringGame);
 
 	this->descriptionLabel->setText(description);
 	const QUrl resolvedUrl = app->resolveClipUrl(url);

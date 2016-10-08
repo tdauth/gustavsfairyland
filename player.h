@@ -24,6 +24,9 @@ class IconLabel;
 
 /**
  * \brief The video player which allows to play video sequences which can be skipped or paused as well.
+ *
+ * \note There can only be played one video at a time but you can play parallel sounds to the video on another track.
+ * \note On Android the backend is not QMultimedia and QMultimediaWidgets since the widgets are not supported on Android. On Android QtAV is used instead.
  */
 class Player : public QDialog, protected Ui::Player
 {
@@ -38,7 +41,7 @@ class Player : public QDialog, protected Ui::Player
 		void stateChanged(QMediaPlayer::State state);
 
 	public slots:
-		void playVideo(fairytale *app, const QUrl &url, const QString &description);
+		void playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame = true);
 		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
 		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
 
@@ -121,6 +124,9 @@ class Player : public QDialog, protected Ui::Player
 #endif
 
 	private:
+		/**
+		 * Checks if the video and the parallel sounds have all been finished. If so the signal \ref finishVideoAndSounds() is emitted.
+		 */
 		void checkForFinish();
 
 		fairytale *m_app;

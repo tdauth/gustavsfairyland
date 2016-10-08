@@ -530,7 +530,7 @@ void fairytale::playCustomFairytaleClip(int index)
 			}
 
 			this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-			this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution));
+			this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution), false);
 		}
 	}
 
