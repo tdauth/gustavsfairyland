@@ -7,6 +7,10 @@
 
 class RoomWidget;
 
+/**
+ * \brief A simple animation in form of a circle to show the player where he or she has clicked.
+ * The radius becomes bigger the longer the animation is shown until it disappears.
+ */
 class ClickAnimation : public QObject
 {
 	public:
