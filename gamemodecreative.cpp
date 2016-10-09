@@ -87,8 +87,8 @@ void GameModeCreative::afterNarrator()
 	}
 
 	m_finishButton = new QPushButton(this->app());
-	m_finishButton->setText(tr("Complete"));
-	this->app()->gameAreaLayout()->addWidget(m_finishButton, row, column);
+	m_finishButton->setText(tr("Complete Fairytale"));
+	this->app()->gameAreaLayout()->addWidget(m_finishButton, row + 1, 0, 1, 4, Qt::AlignCenter);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
 
 	// now show buttons
