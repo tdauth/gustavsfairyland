@@ -42,7 +42,7 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 	- Falls Mikro existiert, Beschreibungen direkt aufnehmen wenn gewünscht.
 
 - Für den Android Build sollten die symbolischen Links in Jenkins für eine kopierte Qt-Version angelegt werden. Ansonsten wird von Jenkins in das Homeverzeichnis des anderen Benutzers geschrieben.
-- Windows 10 Videos gehen mit entsprechendem Qt Backend nicht:
+- FIXED (ffmpeg-Konvertierung für Windows ging): Windows 10 Videos gehen mit entsprechendem Qt Backend nicht:
 "-wmf-backend" Use wmf as backend for QMultimedia. Otherwise MP4 videos won't be supported when DirectShow is used: https://bugreports.qt.io/browse/QTBUG-51692
 Da Qt aber nicht manuell gebaut wird, eventuell einfach ein anderes Videoformat benutzen.
 Für Windows-Release ".wmv" verwenden.
@@ -95,6 +95,7 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
 - Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß.
 - Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
+- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht.
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling

@@ -1412,10 +1412,17 @@ void fairytale::cleanupGame()
 		this->gameMode()->end(); // end the game mode before stopping the player, the player has to know that the game mode is ended
 	}
 
+	// cleanup all flags, make sure nothing is playing when the player is stopped!
+	this->m_isRunning = false;
+	this->m_isPlayingMediaPlayer = false;
+	this->m_pausedMediaPlayer = false;
+	this->m_playIntro = false;
+	this->m_playOutroWin = false;
+
+	// Note: Make sure this has no effect in its connected slots!
 	this->m_player->stop();
 	this->m_player->hide();
 	this->cleanupAfterOneGame();
-	this->m_isRunning = false;
 }
 
 void fairytale::cleanupAfterOneGame()
