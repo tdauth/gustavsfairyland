@@ -7,6 +7,8 @@
 
 /**
  * \brief A dialog to select a language tag for a clip package.
+ *
+ * After calling the exec() method you can use \ref getLanguage() to get the selected language.
  */
 class LanguageDialog : public QDialog, protected Ui::LanguageDialog
 {
