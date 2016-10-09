@@ -1,17 +1,12 @@
 #include <iostream>
 
-#include <QtCore/QSettings>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QFileDialog>
+#include <QtCore>
+#include <QtGui>
+#include <QtWidgets>
+#include <QtMultimedia>
 #include <QTouchDevice>
 #include <QMimeDatabase>
 #include <QMimeType>
-
-#include <QtMultimedia/QMultimedia>
 
 #include "fairytale.h"
 #include "clip.h"
@@ -268,6 +263,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_playingBonusClip(false)
 , m_playingCustomFairytale(nullptr)
 , m_customFairytaleIndex(0)
+, m_pauseGameShortcut(nullptr)
+, m_cancelGameShortcut(nullptr)
 {
 	this->m_player->hide();
 
@@ -303,6 +300,18 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	connect(this->m_player, &Player::stateChanged, this, &fairytale::finishNarrator);
 	connect(this->m_player, &Player::finishVideoAndSounds, this, &fairytale::onFinishVideoAndSounds);
+
+	/*
+	 * NOTE: Don't use the same shortcuts for menu actions or anything else to avoid ambiguous shortcuts.
+	 */
+	m_pauseGameShortcut = new QShortcut(QKeySequence(tr("P")), this);
+	m_pauseGameShortcut->setContext(Qt::ApplicationShortcut);
+	connect(m_pauseGameShortcut, &QShortcut::activated, this, &fairytale::pauseGameAction);
+	connect(m_pauseGameShortcut, &QShortcut::activatedAmbiguously, this, &fairytale::pauseGameAction); // TEST
+	m_cancelGameShortcut = new QShortcut(QKeySequence(tr("C")), this);
+	m_cancelGameShortcut->setContext(Qt::ApplicationShortcut);
+	connect(m_cancelGameShortcut, &QShortcut::activated, this, &fairytale::cancelGame);
+	connect(m_cancelGameShortcut, &QShortcut::activatedAmbiguously, this, &fairytale::cancelGame); // TEST
 
 	const QDir dir(translationsDir());
 
@@ -1012,6 +1021,8 @@ void fairytale::clearSolution()
 
 void fairytale::setGameButtonsEnabled(bool enabled)
 {
+	m_pauseGameShortcut->setEnabled(enabled);
+	m_cancelGameShortcut->setEnabled(enabled);
 	gameButtonsWidget->setEnabled(enabled);
 	gameButtonsWidget->setVisible(enabled);
 	actionPauseGame->setEnabled(enabled);

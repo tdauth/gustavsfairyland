@@ -11,6 +11,7 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtCore/QTranslator>
 #include <QtCore/QDir>
+#include <QShortcut>
 
 #include "ui_mainwindow.h"
 
@@ -399,6 +400,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		CustomFairytale *m_playingCustomFairytale;
 		int m_customFairytaleIndex;
+
+		QShortcut *m_pauseGameShortcut;
+		QShortcut *m_cancelGameShortcut;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const

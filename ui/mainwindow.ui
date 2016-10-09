@@ -259,18 +259,12 @@
          <property name="text">
           <string>Pause Game (P)</string>
          </property>
-         <property name="shortcut">
-          <string>P</string>
-         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="cancelGamePushButton">
          <property name="text">
           <string>Cancel Game (C)</string>
-         </property>
-         <property name="shortcut">
-          <string>C</string>
          </property>
         </widget>
        </item>
@@ -298,7 +292,7 @@
      <x>0</x>
      <y>0</y>
      <width>607</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -376,9 +370,6 @@
    <property name="text">
     <string>&amp;Pause Game</string>
    </property>
-   <property name="shortcut">
-    <string>P</string>
-   </property>
   </action>
   <action name="actionClips">
    <property name="text">
@@ -404,9 +395,6 @@
    </property>
    <property name="text">
     <string>&amp;Cancel Game</string>
-   </property>
-   <property name="shortcut">
-    <string>C</string>
    </property>
   </action>
   <action name="actionSettings">
