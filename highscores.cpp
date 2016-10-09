@@ -1,7 +1,5 @@
-#include <iostream>
-
 #include <QtGui>
-#include <QPushButton>
+#include <QtWidgets>
 
 #include "highscores.h"
 #include "fairytale.h"
@@ -44,8 +42,8 @@ bool HighScores::addHighScore(const HighScore &highScore)
 
 		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || (existingHighScore.rounds() < highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || ((int)existingHighScore.difficulty() < (int)highScore.difficulty()))
 		{
-			std::cerr << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << " and difficulty " << (int)existingHighScore.difficulty() << std::endl;
-			std::cerr << "This highscore with time: " << highScore.time() << " and rounds " << highScore.rounds() << " and difficulty " << (int)highScore.difficulty() << std::endl;
+			qDebug() << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << " and difficulty " << (int)existingHighScore.difficulty();
+			qDebug() << "This highscore with time: " << highScore.time() << " and rounds " << highScore.rounds() << " and difficulty " << (int)highScore.difficulty();
 
 			break;
 		}
@@ -75,7 +73,7 @@ void HighScores::changeEvent(QEvent *event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of highscore dialog" << std::endl;
+			qDebug() << "Retranslate UI of highscore dialog";
 			this->retranslateUi(this);
 
 			break;
@@ -118,7 +116,7 @@ void HighScores::showEvent(QShowEvent *event)
 			tableWidget->setItem(row, 0, newItem);
 			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
 			tableWidget->setItem(row, 1, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.time()));
+			newItem = new QTableWidgetItem(QString::number(highScore.time() / 1000)); // show time in seconds
 			tableWidget->setItem(row, 2, newItem);
 			newItem = new QTableWidgetItem(gameModeName);
 			tableWidget->setItem(row, 3, newItem);
@@ -130,6 +128,9 @@ void HighScores::showEvent(QShowEvent *event)
 			++row;
 		}
 	}
+
+	tableWidget->resizeColumnsToContents();
+	tableWidget->resizeRowsToContents();
 }
 
 QString HighScores::difficultyToString(fairytale::Difficulty difficulty)
