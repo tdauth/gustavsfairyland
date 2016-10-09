@@ -8,6 +8,7 @@
 #include "speed.h"
 #include "gamemodemoving.h"
 #include "fairytale.h"
+#include "clickanimation.h"
 
 void RoomWidget::changeWind()
 {
@@ -106,6 +107,12 @@ void RoomWidget::updatePaint()
 	foreach (FloatingClip *clip, m_floatingClips)
 	{
 		clip->updatePosition(interval);
+	}
+
+	// update delta for click animations
+	foreach (ClickAnimation *clickAnimation, m_clickAnimations)
+	{
+		clickAnimation->updateInterval(interval);
 	}
 
 	//qDebug() << "Repaint";
@@ -270,6 +277,11 @@ void RoomWidget::clearFloatingClipsExceptFirst()
 	this->m_floatingClips.resize(1);
 }
 
+void RoomWidget::clearClickAnimations()
+{
+	this->m_clickAnimations.clear();
+}
+
 void RoomWidget::paintEvent(QPaintEvent *event)
 {
 	//qDebug() << "Paint event";
@@ -300,6 +312,11 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 		(*iterator)->paint(&painter, this);
 	}
 
+	foreach (ClickAnimation *clickAnimation, this->m_clickAnimations)
+	{
+		clickAnimation->paint(&painter, this);
+	}
+
 	painter.end();
 
 	//qDebug() << "Paint event end";
@@ -310,6 +327,8 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 void RoomWidget::mousePressEvent(QMouseEvent *event)
 {
 	QWidget::mousePressEvent(event);
+
+	this->m_clickAnimations.push_back(new ClickAnimation(this, event->pos()));
 
 	if (!this->m_won)
 	{

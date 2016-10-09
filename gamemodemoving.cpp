@@ -63,6 +63,7 @@ long int GameModeMoving::time()
 void GameModeMoving::afterNarrator()
 {
 	this->m_roomWidget->floatingClips().at(0)->setClip(m_currentSolution);
+	this->m_roomWidget->clearClickAnimations();
 
 	// add more floating clips every round to make it a bit harder
 	if (this->app()->turns() > 0)
@@ -181,6 +182,7 @@ void GameModeMoving::start()
 		this->m_roomWidget->clearFloatingClipsExceptFirst();
 		// update speed due to difficulty
 		this->m_roomWidget->floatingClips().front()->setSpeed(m_roomWidget->floatingClipSpeed());
+		this->m_roomWidget->clearClickAnimations();
 		this->m_roomWidget->show();
 	}
 

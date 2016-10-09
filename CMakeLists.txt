@@ -89,6 +89,7 @@ set(fairyland_HEADERS
 	bonusclip.h
 	gameoverdialog.h
 	languagedialog.h
+	clickanimation.h
 )
 
 set(fairyland_SRCS
@@ -118,6 +119,7 @@ set(fairyland_SRCS
 	bonusclip.cpp
 	gameoverdialog.cpp
 	languagedialog.cpp
+	clickanimation.cpp
 )
 
 set(fairyland_UI

@@ -13,6 +13,7 @@ class GameModeMoving;
 class Door;
 class FloatingClip;
 class Clip;
+class ClickAnimation;
 
 // Use QOpenGLWidget for better performance but there is a bug when resizing the widget with OpenGL. It is painted over the sizes.
 typedef QWidget RoomWidgetParent;
@@ -39,6 +40,7 @@ class RoomWidget : public RoomWidgetParent
 	public:
 		typedef QVector<Door*> Doors;
 		typedef QVector<FloatingClip*> FloatingClips;
+		typedef QVector<ClickAnimation*> ClickAnimations;
 
 		/**
 		 * The size of a floating clip depends on the room widget's size.
@@ -68,6 +70,7 @@ class RoomWidget : public RoomWidgetParent
 
 		void addFloatingClip(Clip *clip, int width, int speed);
 		void clearFloatingClipsExceptFirst();
+		void clearClickAnimations();
 		const Doors& doors() const;
 		const FloatingClips& floatingClips() const;
 
@@ -108,6 +111,8 @@ class RoomWidget : public RoomWidgetParent
 		QSvgRenderer m_woodSvg;
 		QImage m_woodImage;
 		QImage m_woodImageDisabled;
+
+		ClickAnimations m_clickAnimations;
 };
 
 inline GameModeMoving* RoomWidget::gameMode() const
