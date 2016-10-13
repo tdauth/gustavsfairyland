@@ -50,7 +50,7 @@ void fairytale::newGame()
 	ClipPackage *clipPackage = nullptr;
 	GameMode *gameMode = nullptr;
 
-	if (this->m_clipPackageDialog->exec() == QDialog::Accepted)
+	if (execInCentralWidgetIfNecessary(this->m_clipPackageDialog) == QDialog::Accepted)
 	{
 		clipPackage = this->m_clipPackageDialog->clipPackage();
 		gameMode = this->m_clipPackageDialog->gameMode();
@@ -111,7 +111,7 @@ void fairytale::showCustomFairytale()
 		pauseGame();
 	}
 
-	this->customFairytaleDialog()->exec();
+	execInCentralWidgetIfNecessary(this->customFairytaleDialog());
 
 	// continue game
 	if (pausedGame)
@@ -130,7 +130,7 @@ void fairytale::settings()
 	}
 
 	settingsDialog()->update();
-	settingsDialog()->exec();
+	execInCentralWidgetIfNecessary(settingsDialog());
 
 	// continue game
 	if (pausedGame)
@@ -168,6 +168,8 @@ QRect fairytale::screenRect()
 	 * Get the screen size of the current screen where the application is shown.
 	 */
 	return qApp->primaryScreen()->geometry();
+
+	// TODO react to 	primaryScreenChanged(QScreen *screen)
 }
 
 Qt::ScreenOrientation fairytale::screenOrientation()
@@ -181,44 +183,46 @@ Qt::ScreenOrientation fairytale::screenOrientation()
 		return primaryOrientation;
 	}
 
+	// TODO react to orientationChanged(Qt::ScreenOrientation orientation)
+
 	return orientation;
 }
 
 QRect fairytale::referenceRect()
 {
 	/*
-	 * The original UI files have been designed on a system with this screen size.
+	 * The original UI files have been designed on a system with this default size.
 	 */
-	return QRect(0, 0, 1920, 1080);
+	return QRect(0, 0, 500, 500);
 }
 
 Qt::ScreenOrientation fairytale::referenceOrientation()
 {
-	return Qt::LandscapeOrientation;
-}
+	// the width must be bigger than or equal to the height
+	if (referenceRect().width() >= referenceRect().height())
+	{
+		return Qt::LandscapeOrientation;
+	}
 
-bool fairytale::widthAndHeightIsSwitched()
-{
-	return screenOrientation() != referenceOrientation();
+	return Qt::PortraitOrientation;
 }
 
 qreal fairytale::screenWidthRatio()
 {
-	const qreal widthRatio = widthAndHeightIsSwitched() ? (qreal)referenceRect().height() / (qreal)screenRect().width() : (qreal)referenceRect().width() / (qreal)screenRect().width();
+	const qreal widthRatio = (qreal)(screenRect().width()) / (qreal)(referenceRect().width());
+
+	qDebug() << "reference width" << referenceRect().width() << "Screen width" << screenRect().width() << "Screen width ratio" << widthRatio;
 
 	return widthRatio;
 }
 
 qreal fairytale::screenHeightRatio()
 {
-	const qreal heightRatio = widthAndHeightIsSwitched() ? (qreal)referenceRect().width() / (qreal)screenRect().height() : (qreal)referenceRect().height() / (qreal)screenRect().height();
+	const qreal heightRatio = (qreal)(screenRect().height()) / (qreal)(referenceRect().height());
+
+	qDebug() << "reference height" << referenceRect().height() << "Screen height" << screenRect().height() << "Screen height ratio" << heightRatio;
 
 	return heightRatio;
-}
-
-qreal fairytale::screenRatio()
-{
-	return qMin(screenWidthRatio(), screenHeightRatio());
 }
 
 void fairytale::updateSize(QWidget *widget)
@@ -226,11 +230,11 @@ void fairytale::updateSize(QWidget *widget)
 	const QSize oldSize = widget->size();
 	QFont oldFont = widget->font();
 	const int oldFontSize = oldFont.pixelSize();
-	const int newFontSize = fontSize(oldFont.pixelSize());
-	oldFont.setPixelSize(newFontSize);
-	widget->setFont(oldFont);
+	const int newFontSize = fontSize(oldFontSize);
 	const QSize newSize = widgetSize(oldSize);
 	widget->resize(newSize);
+	oldFont.setPixelSize(newFontSize);
+	widget->setFont(oldFont);
 
 	qDebug() << "Old size:" << oldSize << "old font size:" << oldFontSize << "new size:" << newSize << "new font size:" << newFontSize;
 	//widget->
@@ -253,12 +257,12 @@ void fairytale::updateSize(QWidget *widget)
 
 QSize fairytale::widgetSize(const QSize &currentSize)
 {
-	return QSize(currentSize.width() * screenWidthRatio(), currentSize.height() * screenHeightRatio());
+	return QSize((qreal)(currentSize.width()) * screenWidthRatio(), (qreal)(currentSize.height()) * screenHeightRatio());
 }
 
 qreal fairytale::fontSize(int currentFontSize)
 {
-	return currentFontSize * screenWidthRatio();
+	return (qreal)(currentFontSize) * screenWidthRatio();
 }
 
 QString fairytale::localeToName(const QString &locale)
@@ -368,6 +372,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->m_player->hide();
 
 	setupUi(this);
+
+	this->m_currentScreen = qApp->primaryScreen();
+	changePrimaryScreen(this->m_currentScreen);
+	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
 
 	connect(&this->m_timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
@@ -665,27 +673,83 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 	}
 }
 
-void fairytale::setPlayerWidgetsShown(bool show)
+QList<QWidget*> fairytale::hideWidgetsInMainWindow()
 {
-	if (this->m_isRunning)
+	// TODO make a more generic way to store all shown widgets and hide them and show them afterwards
+	QList<QWidget*> widgets;
+	widgets.push_back(this->timeLabel);
+	widgets.push_back(descriptionLabel);
+	widgets.push_back(gameAreaWidget());
+	widgets.push_back(gameButtonsWidget);
+	widgets.push_back(menuButtonsWidget);
+
+	QList<QWidget*> hiddenWidgets;
+
+	foreach (QWidget *widget, widgets)
 	{
-		this->gameAreaWidget()->setVisible(show);
-		this->gameButtonsWidget->setVisible(show);
+		qDebug() << "Checking widget" << widget;
+
+		if (widget->isVisible())
+		{
+			hiddenWidgets.push_back(widget);
+
+			if (widget->layout() != nullptr)
+			{
+				for (int i = 0; i < widget->layout()->count(); ++i)
+				{
+					if (widget->layout()->itemAt(i)->widget() != nullptr)
+					{
+						widgets.push_back(widget->layout()->itemAt(i)->widget());
+					}
+				}
+			}
+		}
 	}
-	else
+
+	foreach (QWidget *widget, hiddenWidgets)
 	{
-		this->menuButtonsWidget->setVisible(show);
+		widget->hide();
 	}
+
+	return hiddenWidgets;
+}
+
+void fairytale::showWidgetsInMainWindow(QList<QWidget*> widgets)
+{
+	foreach (QWidget *widget, widgets)
+	{
+		widget->show();
+	}
+}
+
+int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
+{
+#ifndef Q_OS_ANDROID
+	return dialog->exec();
+#else
+	QList<QWidget*> hiddenWidgets = hideWidgetsInMainWindow();
+
+	//setPlayerWidgetsShown(false);
+	// make sure the dialog does not become too big
+	dialog->setMaximumSize(this->maximumSize());
+	this->centralWidget()->layout()->addWidget(dialog);
+	const int result = dialog->exec();
+	//setPlayerWidgetsShown(true);
+
+	showWidgetsInMainWindow(hiddenWidgets);
+
+	return result;
+#endif
 }
 
 void fairytale::showHighScores()
 {
-	this->highScores()->exec();
+	execInCentralWidgetIfNecessary(this->highScores());
 }
 
 void fairytale::about()
 {
-	this->aboutDialog()->exec();
+	execInCentralWidgetIfNecessary(this->aboutDialog());
 }
 
 void fairytale::quickGame()
@@ -772,10 +836,13 @@ void fairytale::gameOver()
 	this->gameMode()->end();
 	this->m_isRunning = false;
 
-	this->gameOverDialog()->exec();
+	// make sure execInCentralWidgetIfNecessary() has not to hide them
+	hideGameWidgets();
+
+	execInCentralWidgetIfNecessary(this->gameOverDialog());
 
 	// Show the custom fairytale dialog which allows the loser to watch his created fairytale.
-	this->customFairytaleDialog()->exec();
+	execInCentralWidgetIfNecessary(this->customFairytaleDialog());
 
 	// dont clean up on retry
 	// make sure everything is cleaned up
@@ -794,6 +861,9 @@ void fairytale::win()
 {
 	this->gameMode()->end();
 	this->m_isRunning = false;
+
+	hideGameWidgets();
+
 	const QUrl outroUrl = this->clipPackage()->outros().size() > (int)this->difficulty() ? this->resolveClipUrl(this->clipPackage()->outros().at((int)this->difficulty())) : QUrl();
 
 	qDebug() << "Outro URL:" << outroUrl;
@@ -813,7 +883,7 @@ void fairytale::afterOutroWin()
 {
 	if (this->gameMode()->showWinDialog())
 	{
-		this->wonDialog()->exec();
+		execInCentralWidgetIfNecessary(this->wonDialog());
 	}
 
 	if (this->gameMode()->unlockBonusClip())
@@ -874,7 +944,7 @@ void fairytale::afterOutroWin()
 	}
 
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
-	this->customFairytaleDialog()->exec();
+	execInCentralWidgetIfNecessary(this->customFairytaleDialog());
 
 	// dont clean up on retry
 	// make sure everything is cleaned up
@@ -1525,6 +1595,14 @@ void fairytale::changeEvent(QEvent* event)
 	QMainWindow::changeEvent(event);
 }
 
+void fairytale::showEvent(QShowEvent *event)
+{
+	QMainWindow::showEvent(event);
+
+	this->updateSize(menuButtonsWidget);
+	this->updateSize(gameButtonsWidget);
+}
+
 void fairytale::cleanupGame()
 {
 	this->m_playerSounds.clear();
@@ -1555,14 +1633,20 @@ void fairytale::cleanupAfterOneGame()
 	this->setGameButtonsEnabled(false);
 	qDebug() << "After disabling game buttons";
 
+	hideGameWidgets();
+
+	this->menuButtonsWidget->show();
+	// Make sure all paint stuff from the game mode disappears.
+	this->repaint();
+}
+
+void fairytale::hideGameWidgets()
+{
 	this->timeLabel->setText("");
 	this->timeLabel->hide();
 	this->descriptionLabel->setText("");
 	this->descriptionLabel->hide();
 	this->gameAreaWidget()->hide();
-	this->menuButtonsWidget->show();
-	// Make sure all paint stuff from the game mode disappears.
-	this->repaint();
 }
 
 void fairytale::finishPlayingCustomFairytale()
@@ -1877,6 +1961,25 @@ void fairytale::playCustomFairytaleSlot()
 	{
 		this->playCustomFairytale(iterator.value());
 	}
+}
+
+void fairytale::changePrimaryScreen(QScreen *screen)
+{
+	if (m_currentScreen != nullptr)
+	{
+		disconnect(m_currentScreen, &QScreen::availableGeometryChanged, this, &fairytale::changeAvailableGeometry);
+	}
+
+	m_currentScreen = screen;
+	connect(m_currentScreen, &QScreen::availableGeometryChanged, this, &fairytale::changeAvailableGeometry);
+}
+
+void fairytale::changeAvailableGeometry(const QRect &geometry)
+{
+	qDebug() << "available geometry" << geometry;
+	const QSize size = QSize(geometry.width(), geometry.height());
+	this->setMaximumSize(size); // prevent widgets from expanding too wide!
+	this->resize(QSize(geometry.width(), geometry.height()));
 }
 
 void fairytale::addCustomFairytale(CustomFairytale *customFairytale)

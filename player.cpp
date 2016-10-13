@@ -22,31 +22,26 @@ Player::Player(QWidget *parent, fairytale *app)
 {
 	setupUi(this);
 
-#ifndef Q_OS_ANDROID
-	this->setModal(true);
-#endif
-
 #ifdef Q_OS_ANDROID
 	this->m_player = new QtAV::AVPlayer(this);
 	this->m_renderer = new QtAV::OpenGLWidgetRenderer(this); // GLWidgetRenderer2
 	this->m_player->setRenderer(m_renderer);
+
+	// expanding makes sure that it uses the maximum possible size
+	this->m_renderer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	//this->m_renderer->setMinimumSize(QSize(100, 100));
+
+	videoPlayerLayout->addWidget(this->m_renderer->widget());
 #else
+	this->setModal(true);
+
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
 	this->m_mediaPlayer->setAudioRole(QAudio::GameRole);
-#endif
-
-#ifndef Q_OS_ANDROID
 	// expanding makes sure that it uses the maximum possible size
 	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->m_videoWidget->setMinimumSize(QSize(240, 240));
 	videoPlayerLayout->addWidget(m_videoWidget);
 	this->m_videoWidget->show();
-#else
-	// expanding makes sure that it uses the maximum possible size
-	//this->m_renderer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	this->m_renderer->setMinimumSize(QSize(100, 100));
-
-	videoPlayerLayout->addWidget(this->m_renderer->widget());
 #endif
 
 	volumeSlider->setValue(100);
@@ -64,12 +59,14 @@ Player::Player(QWidget *parent, fairytale *app)
 
 	this->m_iconLabel->setAlignment(Qt::AlignCenter);
 	this->m_iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+#ifndef Q_OS_ANDROID
 	this->m_iconLabel->setMinimumSize(QSize(240, 240));
+#endif
 	videoPlayerLayout->addWidget(m_iconLabel);
 
-	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
+	connect(this->skipPushButton, &QPushButton::clicked, this, &Player::skip);
 	connect(this->skipAllPushButton, &QPushButton::clicked, this, &Player::skipAll);
-	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGameAction()));
+	connect(this->pausePushButton, &QPushButton::clicked, app, &fairytale::pauseGameAction);
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 
@@ -242,7 +239,7 @@ void Player::checkForFinish()
 		qDebug() << "Emitting signal";
 
 #ifdef Q_OS_ANDROID
-		m_app->setPlayerWidgetsShown(true);
+		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
 #endif
 
 		emit finishVideoAndSounds();
@@ -269,8 +266,8 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	}
 #else
 	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
 	app->centralWidget()->layout()->addWidget(this);
-	app->setPlayerWidgetsShown(false);
 	this->show();
 #endif
 
@@ -342,8 +339,8 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	}
 #else
 	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
 	app->centralWidget()->layout()->addWidget(this);
-	app->setPlayerWidgetsShown(false);
 	this->show();
 #endif
 

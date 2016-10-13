@@ -171,6 +171,8 @@ class Player
 
 		QtAV::AVPlayer *m_player;
 		QtAV::OpenGLWidgetRenderer *m_renderer; // GLWidgetRenderer2
+
+		QList<QWidget*> m_hiddenWidgets;
 #else
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;

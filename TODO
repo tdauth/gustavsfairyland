@@ -99,6 +99,9 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
 - FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
 - Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
+- Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
+- Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
+- Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
