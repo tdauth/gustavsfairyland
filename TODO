@@ -4,7 +4,7 @@
 - DEPRECATED: untere Anzeigen fixen
 - Oberfläche mittelalterlich
 - Schwierigkeitsgrade: mit Vertauschungen oder Springen links rechts
-- Zufällige Tastenkürzel für Karten
+- DEPRECATED (bringt mit Touch nichts): Zufällige Tastenkürzel für Karten
 - Spielmodus: Erzähler mehrere Clips, merken, dann auswählen
 - Clips werden erst freigeschaltet, je nach spielerischer Leistung
 - DONE: Erzähler kleiner
@@ -16,7 +16,7 @@
 - Titelschriftzug, Logo
 - DONE: Holzboden
 - DONE: Fenster öffnen, anders darstellen
-- Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
+- DONE: Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
 - Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
 - DONE: Bei Pause RoomWidget ausgrauen
 - DONE: Märchen während Spielanzeigen fixen (geht nur einmal)
@@ -92,10 +92,13 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben
-- Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
-- Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß.
+- FIXED: Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
+- Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß. Auto-Skalierfunktionen fixen.
 - Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
-- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht.
+- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
+- Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
+- FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
+- Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling

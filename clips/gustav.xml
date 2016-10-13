@@ -151,7 +151,7 @@
 				<de>./boar/boar.wav</de>
 			</narrator>
 			<description>
-				<en>rode a boar</en>
+				<en>rode a wild boar</en>
 				<de>ritten auf einem Wildschwein</de>
 			</description>
 		</clip>
@@ -288,7 +288,7 @@
 				<de>./trash/trash.wav</de>
 			</narrator>
 			<description>
-				<en>ransacked the rubbish</en>
+				<en>rummaged through the rubbish</en>
 				<de>durchwühlten den Müll</de>
 			</description>
 		</clip>
@@ -312,7 +312,7 @@
 				<de>./well/well.wav</de>
 			</narrator>
 			<description>
-				<en>soaked a fountain</en>
+				<en>drank from a fountain</en>
 				<de>tranken von einem Brunnen</de>
 			</description>
 		</clip>
@@ -348,7 +348,7 @@
 				<de>./throne/throne.wav</de>
 			</narrator>
 			<description>
-				<en>ascended the throne</en>
+				<en>mounted the throne</en>
 				<de>bestiegen den Thron</de>
 			</description>
 		</clip>

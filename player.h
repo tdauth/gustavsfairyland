@@ -13,6 +13,7 @@
 */
 #include <QtAV>
 #include <QtAVWidgets>
+#include <OpenGLWidgetRenderer.h>
 #else
 #include <QtMultimediaWidgets/QVideoWidget>
 #endif
@@ -28,7 +29,13 @@ class IconLabel;
  * \note There can only be played one video at a time but you can play parallel sounds to the video on another track.
  * \note On Android the backend is not QMultimedia and QMultimediaWidgets since the widgets are not supported on Android. On Android QtAV is used instead.
  */
-class Player : public QDialog, protected Ui::Player
+class Player
+#ifndef Q_OS_ANDROID
+: public QDialog
+#else
+: public QWidget
+#endif
+, protected Ui::Player
 {
 	Q_OBJECT
 
@@ -80,6 +87,14 @@ class Player : public QDialog, protected Ui::Player
 		void skipAll();
 
 	public:
+		typedef
+#ifndef Q_OS_ANDROID
+		QDialog
+#else
+		QWidget
+#endif
+		Base;
+
 		Player(QWidget *parent, fairytale *app);
 		virtual ~Player();
 
@@ -114,6 +129,7 @@ class Player : public QDialog, protected Ui::Player
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;
+		virtual void showEvent(QShowEvent *event) override;
 
 	private slots:
 		void onChangeStateParallelSoundPlayer(QMediaPlayer::State state);
@@ -130,6 +146,7 @@ class Player : public QDialog, protected Ui::Player
 		void checkForFinish();
 
 		fairytale *m_app;
+
 		/**
 		 * The icon label is used for showing a clip picture when playing a sound only.
 		 */
@@ -153,7 +170,7 @@ class Player : public QDialog, protected Ui::Player
 		*/
 
 		QtAV::AVPlayer *m_player;
-		QtAV::WidgetRenderer *m_renderer; // GLWidgetRenderer2
+		QtAV::OpenGLWidgetRenderer *m_renderer; // GLWidgetRenderer2
 #else
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;

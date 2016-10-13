@@ -162,6 +162,105 @@ bool fairytale::hasTouchDevice()
 	return false;
 }
 
+QRect fairytale::screenRect()
+{
+	/*
+	 * Get the screen size of the current screen where the application is shown.
+	 */
+	return qApp->primaryScreen()->geometry();
+}
+
+Qt::ScreenOrientation fairytale::screenOrientation()
+{
+	const Qt::ScreenOrientation orientation = qApp->primaryScreen()->orientation();
+
+	if (orientation == Qt::PrimaryOrientation)
+	{
+		const Qt::ScreenOrientation primaryOrientation = qApp->primaryScreen()->primaryOrientation();
+
+		return primaryOrientation;
+	}
+
+	return orientation;
+}
+
+QRect fairytale::referenceRect()
+{
+	/*
+	 * The original UI files have been designed on a system with this screen size.
+	 */
+	return QRect(0, 0, 1920, 1080);
+}
+
+Qt::ScreenOrientation fairytale::referenceOrientation()
+{
+	return Qt::LandscapeOrientation;
+}
+
+bool fairytale::widthAndHeightIsSwitched()
+{
+	return screenOrientation() != referenceOrientation();
+}
+
+qreal fairytale::screenWidthRatio()
+{
+	const qreal widthRatio = widthAndHeightIsSwitched() ? (qreal)referenceRect().height() / (qreal)screenRect().width() : (qreal)referenceRect().width() / (qreal)screenRect().width();
+
+	return widthRatio;
+}
+
+qreal fairytale::screenHeightRatio()
+{
+	const qreal heightRatio = widthAndHeightIsSwitched() ? (qreal)referenceRect().width() / (qreal)screenRect().height() : (qreal)referenceRect().height() / (qreal)screenRect().height();
+
+	return heightRatio;
+}
+
+qreal fairytale::screenRatio()
+{
+	return qMin(screenWidthRatio(), screenHeightRatio());
+}
+
+void fairytale::updateSize(QWidget *widget)
+{
+	const QSize oldSize = widget->size();
+	QFont oldFont = widget->font();
+	const int oldFontSize = oldFont.pixelSize();
+	const int newFontSize = fontSize(oldFont.pixelSize());
+	oldFont.setPixelSize(newFontSize);
+	widget->setFont(oldFont);
+	const QSize newSize = widgetSize(oldSize);
+	widget->resize(newSize);
+
+	qDebug() << "Old size:" << oldSize << "old font size:" << oldFontSize << "new size:" << newSize << "new font size:" << newFontSize;
+	//widget->
+
+	// TODO if it is horizontal or vertical layout change if the orientation changed
+
+	if (widget->layout() != nullptr)
+	{
+		for (int i = 0; i < widget->layout()->count(); ++i)
+		{
+			QLayoutItem *item = widget->layout()->itemAt(i);
+
+			if (item->widget() != nullptr)
+			{
+				updateSize(item->widget());
+			}
+		}
+	}
+}
+
+QSize fairytale::widgetSize(const QSize &currentSize)
+{
+	return QSize(currentSize.width() * screenWidthRatio(), currentSize.height() * screenHeightRatio());
+}
+
+qreal fairytale::fontSize(int currentFontSize)
+{
+	return currentFontSize * screenWidthRatio();
+}
+
 QString fairytale::localeToName(const QString &locale)
 {
 	if (locale == "de")
@@ -563,6 +662,19 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 		this->m_playingCustomFairytale = customFairytale;
 		this->setCustomFairytaleButtonsEnabled(true);
 		this->playCustomFairytaleClip(0);
+	}
+}
+
+void fairytale::setPlayerWidgetsShown(bool show)
+{
+	if (this->m_isRunning)
+	{
+		this->gameAreaWidget()->setVisible(show);
+		this->gameButtonsWidget->setVisible(show);
+	}
+	else
+	{
+		this->menuButtonsWidget->setVisible(show);
 	}
 }
 

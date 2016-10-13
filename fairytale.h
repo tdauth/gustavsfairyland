@@ -120,6 +120,32 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		static bool hasTouchDevice();
 
+		/**
+		 * Screen utility functions to scale widgets to the current screen where the game is played.
+		 *
+		 * \{
+		 */
+		static QRect screenRect();
+		static Qt::ScreenOrientation screenOrientation();
+		static QRect referenceRect();
+		static Qt::ScreenOrientation referenceOrientation();
+		static bool widthAndHeightIsSwitched();
+		/**
+		 * Calculates a scaling factor depending on the current DPI settings and display size.
+		 */
+		static qreal screenWidthRatio();
+		static qreal screenHeightRatio();
+		static qreal screenRatio();
+		/**
+		 * Updates the size of \p widget and all sub widgets in its layout to the current screen size.
+		 */
+		static void updateSize(QWidget *widget);
+		static QSize widgetSize(const QSize &currentSize);
+		static qreal fontSize(int currentFontSize);
+		/**
+		 * \}
+		 */
+
 		static QString localeToName(const QString &locale);
 
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
@@ -256,6 +282,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		typedef QMap<QString, CustomFairytale*> CustomFairytales;
 		const CustomFairytales& customFairytales() const;
+
+		/**
+		 * Called on Android only to hide widgets in the central widget of the main window when the player is shown.
+		 */
+		void setPlayerWidgetsShown(bool show);
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;
