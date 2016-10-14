@@ -103,6 +103,10 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
 - Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
 
+Tonaufnahmen:
+- "and.wav" aufnehmen.
+- Fluchsounds aufnehmen.
+
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
 

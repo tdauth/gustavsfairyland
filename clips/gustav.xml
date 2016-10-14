@@ -6,25 +6,12 @@
 	</name>
 	<!-- persons -->
 	<persons>
-		<!--
-		<clip id="crazy">
-			<image>./crazy/runterholer.jpg</image>
-			<video>./crazy/runterholer.mkv</video>
-			<narrator>
-				<de>./crazy/crazy.wav</de>
-			</narrator>
-			<description>
-				<en>the Pedophile</en>
-				<de>der Runterholer</de>
-			</description>
-		</clip>
-		-->
-
 		<clip id="opajott">
 			<image>./opajott/opajott1.jpg</image>
 			<video>./opajott/opajott1.mkv</video>
 			<narrator>
-				<de>./opajott/opajott.wav</de>
+				<en>./opajott/opajott_en.wav</en>
+				<de>./opajott/opajott_de.wav</de>
 			</narrator>
 			<description>
 				<en>Grandpa Jott</en>
@@ -35,7 +22,8 @@
 			<image>./vampir/vampir.png</image>
 			<video>./vampir/vampir.avi</video>
 			<narrator>
-				<de>./vampir/vampir.wav</de>
+				<en>./vampir/vampir_en.wav</en>
+				<de>./vampir/vampir_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Vampire</en>
@@ -46,7 +34,8 @@
 			<image>./werwolf/werwolf.png</image>
 			<video>./werwolf/werwolf.avi</video>
 			<narrator>.
-				<de>./werwolf/werwolf.wav</de>
+				<en>./werwolf/werwolf_en.wav</en>
+				<de>./werwolf/werwolf_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Werewolf</en>
@@ -57,31 +46,32 @@
 			<image>./steampunk/steampunk.jpg</image>
 			<video>./steampunk/steampunk.mkv</video>
 			<narrator>
-				<de>./steampunk/steampunk.wav</de>
+				<en>./steampunk/steampunk_en.wav</en>
+				<de>./steampunk/steampunk_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Plague Doctor</en>
 				<de>der Pestdoktor</de>
 			</description>
 		</clip>
-
 		<clip id="popcorn">
 			<image>./popcorn/popcorn.jpg</image>
 			<video>./popcorn/popcorn.mkv</video>
 			<narrator>
-				<de>./popcorn/popcorn.wav</de>
+				<en>./popcorn/popcorn_en.wav</en>
+				<de>./popcorn/popcorn_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Popcorn Saleswoman</en>
 				<de>die Popcornverkäuferin</de>
 			</description>
 		</clip>
-
 		<clip id="fairy">
 			<image>./fairy/fairy.jpg</image>
 			<video>./fairy/fairy.mkv</video>
 			<narrator>
-				<de>./fairy/fairy.wav</de>
+				<en>./fairy/fairy_en.wav</en>
+				<de>./fairy/fairy_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Fairy</en>
@@ -93,53 +83,26 @@
 			<image>./princess/princess.jpg</image>
 			<video>./princess/princess.mkv</video>
 			<narrator>
-                                <de>./princess/princess.wav</de>
+				<en>./princess/princess_en.wav</en>
+                                <de>./princess/princess_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Princess</en>
 				<de>die Prinzessin</de>
 			</description>
 		</clip>
-
-		<!--
-                <clip id="hello">
-                        <image>./hello/hello.jpg</image>
-                        <video>./hello/hello.mkv</video>
-                        <narrator>
-                                <de>./hello/hello.wav</de>
-                        </narrator>
-                        <description>
-                                <en>the Hello Saying</en>
-                                <de>der Hallo-Sager</de>
-                        </description>
-                </clip>
-		-->
-
 		<clip id="jedi">
 			<image>./jedi/jedi.jpg</image>
 			<video>./jedi/jedi.mkv</video>
 			<narrator>
-				<de>./jedi/jedi.wav</de>
+				<en>./jedi/jedi_en.wav</en>
+				<de>./jedi/jedi_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Jedi</en>
 				<de>der Jedi</de>
 			</description>
 		</clip>
-
-		<!--
-		<clip id="bank">
-			<image>./bank/bank.jpg</image>
-			<video>./bank/bank.mkv</video>
-			<narrator>
-				<de>./bank/bank.wav</de>
-			</narrator>
-			<description>
-				<en>the guy on the bench</en>
-				<de>der Typ auf der Bank</de>
-			</description>
-		</clip>
-		-->
 	</persons>
 
 	<!-- new acts -->
@@ -148,216 +111,176 @@
 			<image>./boar/boar.jpg</image>
 			<video>./boar/boar.mkv</video>
 			<narrator>
-				<de>./boar/boar.wav</de>
+				<en>./boar/boar_en.wav</en>
+				<de>./boar/boar_de.wav</de>
 			</narrator>
 			<description>
 				<en>rode a wild boar</en>
 				<de>ritten auf einem Wildschwein</de>
 			</description>
 		</clip>
-
 		<clip id="cave">
 			<image>./cave/cave.jpg</image>
 			<video>./cave/cave.mkv</video>
 			<narrator>
-				<de>./cave/cave.wav</de>
+				<en>./cave/cave_en.wav</en>
+				<de>./cave/cave_de.wav</de>
 			</narrator>
 			<description>
 				<en>found a cave</en>
 				<de>fanden eine Höhle</de>
 			</description>
 		</clip>
-
 		<clip id="caveman">
 			<image>./caveman/caveman.jpg</image>
 			<video>./caveman/caveman.mkv</video>
 			<narrator>
-				<de>./caveman/caveman.wav</de>
+				<en>./caveman/caveman_en.wav</en>
+				<de>./caveman/caveman_de.wav</de>
 			</narrator>
 			<description>
 				<en>met a caveman</en>
 				<de>trafen auf einen Höhlenmenschen</de>
 			</description>
 		</clip>
-
 		<clip id="chess">
 			<image>./chess/chess.jpg</image>
 			<video>./chess/chess.mkv</video>
 			<narrator>
-				<de>./chess/chess.wav</de>
+				<en>./chess/chess_en.wav</en>
+				<de>./chess/chess_de.wav</de>
 			</narrator>
 			<description>
 				<en>played chess</en>
 				<de>spielten Schach</de>
 			</description>
 		</clip>
-
 		<clip id="climbing">
 			<image>./climbing/climbing.jpg</image>
 			<video>./climbing/climbing.mkv</video>
 			<narrator>
-				<de>./climbing/climbing.wav</de>
+				<en>./climbing/climbing_en.wav</en>
+				<de>./climbing/climbing_de.wav</de>
 			</narrator>
 			<description>
 				<en>climbed a mountain</en>
 				<de>erklommen einen Berg</de>
 			</description>
 		</clip>
-
-		<!-- zu blöd, beide
-		<clip id="gate">
-			<image>./gate/gate.jpg</image>
-			<video>./gate/gate.mkv</video>
-			<narrator>
-				<de>./gate/gate.wav</de>
-			</narrator>
-			<description>
-				<en>met a watchman</en>
-				<de>trafen auf einen Wächter</de>
-			</description>
-		</clip>
-
-		<clip id="gate2">
-			<image>./gate/gate2.jpg</image>
-			<video>./gate/gate2.mkv</video>
-			<narrator>
-				<de>./gate/gate2.wav</de>
-			</narrator>
-			<description>
-				<en>met on a gate</en>
-				<de>trafen auf ein Tor</de>
-			</description>
-		</clip>
-		-->
-
 		<clip id="maninthebox">
 			<image>./maninthebox/maninthebox.jpg</image>
 			<video>./maninthebox/maninthebox.mkv</video>
 			<narrator>
-				<de>./maninthebox/maninthebox.wav</de>
+				<en>./maninthebox/maninthebox_en.wav</en>
+				<de>./maninthebox/maninthebox_de.wav</de>
 			</narrator>
 			<description>
 				<en>found a man in a box</en>
 				<de>fanden einen Mann in einer Kiste</de>
 			</description>
 		</clip>
-
 		<clip id="prison">
 			<image>./prison/prison.jpg</image>
 			<video>./prison/prison.mkv</video>
 			<narrator>
-				<de>./prison/prison.wav</de>
+				<en>./prison/prison_en.wav</en>
+				<de>./prison/prison_de.wav</de>
 			</narrator>
 			<description>
 				<en>were imprisoned</en>
 				<de>wurden eingesperrt</de>
 			</description>
 		</clip>
-
 		<clip id="robbery">
 			<image>./robery/robery.jpg</image>
 			<video>./robery/robery.mkv</video>
 			<narrator>
-				<de>./robery/robery.wav</de>
+				<en>./robery/robery_en.wav</en>
+				<de>./robery/robery_de.wav</de>
 			</narrator>
 			<description>
 				<en>were robbed</en>
 				<de>wurden ausgeraubt</de>
 			</description>
 		</clip>
-
-		<!--
-		des isch Scheiße
-		<clip id="train">
-			<image>./train/train.jpg</image>
-			<video>./train/train.mkv</video>
-			<narrator>
-				<de>./train/train.wav</de>
-			</narrator>
-			<description>
-				<en>took a train</en>
-				<de>fuhren mit einem Zug</de>
-			</description>
-		</clip>
-		-->
-
 		<clip id="trash">
 			<image>./trash/trash.jpg</image>
 			<video>./trash/trash.mkv</video>
 			<narrator>
-				<de>./trash/trash.wav</de>
+				<en>./trash/trash_en.wav</en>
+				<de>./trash/trash_de.wav</de>
 			</narrator>
 			<description>
 				<en>rummaged through the rubbish</en>
 				<de>durchwühlten den Müll</de>
 			</description>
 		</clip>
-
 		<clip id="treasure">
 			<image>./treasure/treasure.jpg</image>
 			<video>./treasure/treasure.mkv</video>
 			<narrator>
-				<de>./treasure/treasure.wav</de>
+				<en>./treasure/treasure_en.wav</en>
+				<de>./treasure/treasure_de.wav</de>
 			</narrator>
 			<description>
 				<en>found a treasure</en>
 				<de>fanden einen Schatz</de>
 			</description>
 		</clip>
-
 		<clip id="well">
 			<image>./well/well.jpg</image>
 			<video>./well/well.mkv</video>
 			<narrator>
-				<de>./well/well.wav</de>
+				<en>./well/well_en.wav</en>
+				<de>./well/well_de.wav</de>
 			</narrator>
 			<description>
 				<en>drank from a fountain</en>
 				<de>tranken von einem Brunnen</de>
 			</description>
 		</clip>
-
 		<clip id="castle">
 			<image>./castle/castle.jpg</image>
 			<video>./castle/castle.mkv</video>
 			<narrator>
-				<de>./castle/castle.wav</de>
+				<en>./castle/castle_en.wav</en>
+				<de>./castle/castle_de.wav</de>
 			</narrator>
 			<description>
 				<en>lived in a castle</en>
 				<de>lebten in einer Burg</de>
 			</description>
 		</clip>
-
 		<clip id="tower">
 			<image>./tower/tower.jpg</image>
 			<video>./tower/tower.mkv</video>
 			<narrator>
-				<de>./tower/tower.wav</de>
+				<en>./tower/tower_en.wav</en>
+				<de>./tower/tower_de.wav</de>
 			</narrator>
 			<description>
 				<en>starved in the tower</en>
 				<de>hungerten im Turm</de>
 			</description>
 		</clip>
-
 		<clip id="throne">
 			<image>./throne/throne.jpg</image>
 			<video>./throne/throne.mkv</video>
 			<narrator>
-				<de>./throne/throne.wav</de>
+				<en>./throne/throne_en.wav</en>
+				<de>./throne/throne_de.wav</de>
 			</narrator>
 			<description>
 				<en>mounted the throne</en>
 				<de>bestiegen den Thron</de>
 			</description>
 		</clip>
-
 		<clip id="kill">
 			<image>./kill/kill.jpg</image>
 			<video>./kill/kill.mkv</video>
 			<narrator>
-				<de>./kill/kill.wav</de>
+				<en>./kill/kill_en.wav</en>
+				<de>./kill/kill_de.wav</de>
 			</narrator>
 			<description>
 				<en>killed a stranger</en>
@@ -408,17 +331,6 @@
                         <de>Gustav Mahler über seine Tochter</de>
                 </description>
         </bonusClip>
-
-	<!-- zu heftig
-	<bonusClip>
-		<image>./mahler/mahler.jpg</image>
-		<video>./nazi/peter.mkv</video>
-		<description>
-                        <en>the old Nazi</en>
-			<de>der alte Nazi</de>
-		</description>
-	</bonusClip>
-	-->
 
 	<bonusClip id="fightingjedi">
 		<image>./jedi/jedi.jpg</image>
