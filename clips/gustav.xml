@@ -289,18 +289,19 @@
 		</clip>
 	</acts>
 
-	<intro>./mahler/intro3.mkv</intro>
+	<intro>./mahler/intro.mkv</intro> <!-- intro8 -->
 
 	<outro>
-		<easy>./mahler/end5.mkv</easy>
-		<normal>./mahler/end5.mkv</normal>
-		<hard>./mahler/end5.mkv</hard>
-		<mahlerisch>./mahler/end5.mkv</mahlerisch>
+		<easy>./mahler/end_easy.mkv</easy> <!-- end_easy1 -->
+		<normal>./mahler/end_normal.mkv</normal> <!-- end_normal3 -->
+		<hard>./mahler/end_hard.mkv</hard> <!-- end_hard1 -->
+		<mahlerisch>./mahler/end_mahlerisch.mkv</mahlerisch> <!-- end_mahlerisch1 -->
+		<lost>./mahler/end_lost.mkv</lost> <!-- end_lost1 -->
 	</outro>
 
 	<bonusClip id="mahlerabouthimself">
 		<image>./mahler/mahler.jpg</image>
-		<video>./mahler/mahler.avi</video>
+		<video>./mahler/bonus/mahler.avi</video>
 		<description>
 			<de>Gustav Mahler über sich selbst</de>
 		</description>

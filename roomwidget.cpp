@@ -202,12 +202,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 
 	m_floatingClips.push_back(new FloatingClip(this, this->floatingClipWidth(), this->floatingClipSpeed()));
 
-	m_failSoundPaths.push_back("qrc:/resources/fuck1.wav");
-	m_failSoundPaths.push_back("qrc:/resources/fuck2.wav");
-	m_failSoundPaths.push_back("qrc:/resources/fuck3.wav");
-
-	m_successSoundPaths.push_back("qrc:/resources/success1.wav");
-	m_successSoundPaths.push_back("qrc:/resources/success2.wav");
+	updateSounds();
 
 	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
@@ -411,6 +406,28 @@ void RoomWidget::resizeEvent(QResizeEvent *event)
 	QWidget::resizeEvent(event);
 }
 
+void RoomWidget::changeEvent(QEvent* event)
+{
+	switch(event->type())
+	{
+		// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+		{
+			qDebug() << "Retranslate UI of about dialog";
+			updateSounds();
+
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+
+	RoomWidgetParent::changeEvent(event);
+}
+
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
 	if (this->gameMode()->playClickSounds())
@@ -421,6 +438,22 @@ void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 		qDebug() << "Play sound:" << soundEffects[value];
 		gameMode()->app()->playSound(QUrl(soundEffects[value]));
 	}
+}
+
+void RoomWidget::updateSounds()
+{
+	const QString language = this->m_gameMode->app()->currentTranslation();
+
+	qDebug() << "Room widget sounds for language" << language;
+
+	m_failSoundPaths.clear();
+	m_failSoundPaths.push_back(QString("qrc:/resources/fuck1_") + language + ".wav");
+	m_failSoundPaths.push_back(QString("qrc:/resources/fuck2_") + language + ".wav");
+	m_failSoundPaths.push_back(QString("qrc:/resources/fuck3_") + language + ".wav");
+
+	m_successSoundPaths.clear();
+	m_successSoundPaths.push_back(QString("qrc:/resources/success1_") + language + ".wav");
+	m_successSoundPaths.push_back(QString("qrc:/resources/success2_") + language + ".wav");
 }
 
 #include "roomwidget.moc"

@@ -52,7 +52,6 @@ QUrl Clip::narratorUrl() const
 
 QString Clip::description() const
 {
-
 	if (m_app != nullptr)
 	{
 		const Descriptions::const_iterator iterator = this->m_descriptions.find(m_app->currentTranslation());

@@ -1659,8 +1659,8 @@ void fairytale::finishPlayingCustomFairytale()
 
 QUrl fairytale::narratorSoundUrl() const
 {
-	// TODO use locale "and".
-	const QUrl narratorSoundUrl = QUrl("qrc:/resources/and.wav");
+	const QString language = this->currentTranslation();
+	const QUrl narratorSoundUrl = QUrl(QString("qrc:/resources/and_") + language + ".wav");
 
 	return narratorSoundUrl;
 }
