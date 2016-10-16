@@ -3,4 +3,3 @@
 bash -x copyclipsforbuild.sh
 cd "$WORKSPACE/build"
 make -j4
-ctest -T "Test" || true
