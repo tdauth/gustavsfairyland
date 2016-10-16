@@ -170,7 +170,7 @@ target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia
 if (ANDROID)
 	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})
 	add_dependencies(gustavsfairylandlib GeneratedQtAVLibraries)
-	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
+	target_link_libraries(gustavsfairylandlib Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
 endif ()
 
 set(RES_FILES "")
@@ -194,7 +194,7 @@ endif()
 target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(gustavsfairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
+	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
 
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
