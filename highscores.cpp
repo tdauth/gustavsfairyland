@@ -14,6 +14,16 @@ HighScore::HighScore(const QString &name, const QString &package, const QString 
 {
 }
 
+void HighScores::clearAll()
+{
+	if (QMessageBox::question(this, tr("Clear all High Scores?"), tr("Do you really want to clear all High Scores?")) == QMessageBox::Yes)
+	{
+		this->tableWidget->clearContents();
+		this->tableWidget->setRowCount(0);
+		this->m_highScores.clear();
+	}
+}
+
 HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
@@ -21,6 +31,7 @@ HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	this->setModal(true);
 
 	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	connect(this->clearPushButton, &QPushButton::clicked, this, &HighScores::clearAll);
 }
 
 bool HighScores::addHighScore(const HighScore &highScore)

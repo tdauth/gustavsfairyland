@@ -102,6 +102,7 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
 - Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
 - Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
+- lost.mkv abspielen wenn man verloren hat!
 
 Tonaufnahmen:
 - "and.wav" aufnehmen.

@@ -239,6 +239,7 @@ void Player::checkForFinish()
 		qDebug() << "Emitting signal";
 
 #ifdef Q_OS_ANDROID
+		m_app->centralWidget()->layout()->removeWidget(this);
 		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
 #endif
 

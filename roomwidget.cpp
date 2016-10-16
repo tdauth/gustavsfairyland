@@ -188,7 +188,7 @@ int RoomWidget::maxCollisionDistance() const
 	return availableWidth / 5;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString("qrc://resources/wood.svg"))
 {
 	// The room widget is painted all the time directly.
 	//this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -430,7 +430,7 @@ void RoomWidget::changeEvent(QEvent* event)
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
-	if (this->gameMode()->playClickSounds())
+	if (this->gameMode()->playClickSounds() && !soundEffects.isEmpty())
 	{
 		std::mt19937 eng(rd()); // seed the generator
 		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
@@ -446,14 +446,50 @@ void RoomWidget::updateSounds()
 
 	qDebug() << "Room widget sounds for language" << language;
 
+	QStringList failSounds;
+	failSounds.push_back(QString("qrc:/resources/fuck1_") + language + ".wav");
+	failSounds.push_back(QString("qrc:/resources/fuck2_") + language + ".wav");
+	failSounds.push_back(QString("qrc:/resources/fuck3_") + language + ".wav");
+
 	m_failSoundPaths.clear();
-	m_failSoundPaths.push_back(QString("qrc:/resources/fuck1_") + language + ".wav");
-	m_failSoundPaths.push_back(QString("qrc:/resources/fuck2_") + language + ".wav");
-	m_failSoundPaths.push_back(QString("qrc:/resources/fuck3_") + language + ".wav");
+
+	foreach (QString sound, failSounds)
+	{
+		QString fileInfoPath = sound;
+		// qrc:/ is not supported by QFileInfo
+		const QFileInfo fileInfo(fileInfoPath.remove(0, 3));
+
+		if (fileInfo.exists() && fileInfo.isReadable())
+		{
+			m_failSoundPaths.push_back(sound);
+		}
+		else
+		{
+			qDebug() << "Invalid fail sound path" << sound;
+		}
+	}
+
+	QStringList successSounds;
+	successSounds.push_back(QString("qrc:/resources/success1_") + language + ".wav");
+	successSounds.push_back(QString("qrc:/resources/success2_") + language + ".wav");
 
 	m_successSoundPaths.clear();
-	m_successSoundPaths.push_back(QString("qrc:/resources/success1_") + language + ".wav");
-	m_successSoundPaths.push_back(QString("qrc:/resources/success2_") + language + ".wav");
+
+	foreach (QString sound, successSounds)
+	{
+		QString fileInfoPath = sound;
+		// qrc:/ is not supported by QFileInfo
+		const QFileInfo fileInfo(fileInfoPath.remove(0, 3));
+
+		if (fileInfo.exists() && fileInfo.isReadable())
+		{
+			m_successSoundPaths.push_back(sound);
+		}
+		else
+		{
+			qDebug() << "Invalid success sound path" << sound;
+		}
+	}
 }
 
 #include "roomwidget.moc"

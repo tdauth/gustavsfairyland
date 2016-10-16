@@ -594,6 +594,8 @@ void fairytale::playFinalVideo()
 {
 	if (m_playCompleteSolution)
 	{
+		qDebug() << "Plays already the complete solution.";
+
 		return;
 	}
 
@@ -677,11 +679,7 @@ QList<QWidget*> fairytale::hideWidgetsInMainWindow()
 {
 	// TODO make a more generic way to store all shown widgets and hide them and show them afterwards
 	QList<QWidget*> widgets;
-	widgets.push_back(this->timeLabel);
-	widgets.push_back(descriptionLabel);
-	widgets.push_back(gameAreaWidget());
-	widgets.push_back(gameButtonsWidget);
-	widgets.push_back(menuButtonsWidget);
+	widgets.push_back(this->centralWidget());
 
 	QList<QWidget*> hiddenWidgets;
 
@@ -727,14 +725,14 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 #ifndef Q_OS_ANDROID
 	return dialog->exec();
 #else
-	QList<QWidget*> hiddenWidgets = hideWidgetsInMainWindow();
+	const QList<QWidget*> hiddenWidgets = hideWidgetsInMainWindow();
 
-	//setPlayerWidgetsShown(false);
 	// make sure the dialog does not become too big
 	dialog->setMaximumSize(this->maximumSize());
 	this->centralWidget()->layout()->addWidget(dialog);
 	const int result = dialog->exec();
-	//setPlayerWidgetsShown(true);
+
+	this->centralWidget()->layout()->removeWidget(dialog);
 
 	showWidgetsInMainWindow(hiddenWidgets);
 

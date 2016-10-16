@@ -53,11 +53,8 @@ find_package(Qt5Xml REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
-# Requires Qt Quick for playing videos
+# Requires QtAV for playing videos
 if (ANDROID)
-	find_package(Qt5Quick REQUIRED)
-	find_package(Qt5Qml REQUIRED)
-	find_package(Qt5QuickWidgets REQUIRED)
 	find_package(Qt5OpenGL REQUIRED) # Required by QtAV
 	find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
 endif ()

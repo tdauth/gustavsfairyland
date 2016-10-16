@@ -6,11 +6,6 @@
 #include <QtCore/QQueue>
 // On Android videos can be only played in QML.
 #ifdef Q_OS_ANDROID
-/*
-#include <QQuickView>
-#include <QQuickItem>
-#include <QQmlProperty>
-*/
 #include <QtAV>
 #include <QtAVWidgets>
 #include <OpenGLWidgetRenderer.h>
@@ -101,13 +96,6 @@ class Player
 		QMediaPlayer::State state() const;
 		int volume() const;
 
-/*
-#ifdef Q_OS_ANDROID
-		QObject*
-#else
-		QMediaPlayer*
-#endif
-*/
 #ifndef Q_OS_ANDROID
 		QMediaPlayer* mediaPlayer() const;
 #endif
@@ -162,13 +150,6 @@ class Player
 		QMediaPlayer *m_parallelSoundsMediaPlayer;
 
 #ifdef Q_OS_ANDROID
-		/*
-		QQuickView *m_view;
-		QQuickItem *m_item;
-		QObject *m_mediaPlayer;
-		QWidget *m_videoWidget;
-		*/
-
 		QtAV::AVPlayer *m_player;
 		QtAV::OpenGLWidgetRenderer *m_renderer; // GLWidgetRenderer2
 
@@ -180,15 +161,7 @@ class Player
 };
 
 #ifndef Q_OS_ANDROID
-inline
-/*
-#ifndef Q_OS_ANDROID
-QMediaPlayer*
-#else
-QObject*
-#endif
-*/
-QMediaPlayer* Player::mediaPlayer() const
+inline QMediaPlayer* Player::mediaPlayer() const
 {
 	return this->m_mediaPlayer;
 }
