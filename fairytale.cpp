@@ -1423,11 +1423,13 @@ void fairytale::startMusic()
 	// TODO add to package XML file, each package can have its own background music
 	QList<QUrl> urls;
 	urls.push_back(QUrl("./music/01.PSO020103-Mahler-5-I.mp3"));
+	/*
 	urls.push_back(QUrl("./music/02.PSO020103-Mahler-5-II.mp3"));
 	urls.push_back(QUrl("./music/03.PSO020103-Mahler-5-III.mp3"));
 	urls.push_back(QUrl("./music/04.PSO020103-Mahler-5-IV.mp3"));
 	urls.push_back(QUrl("./music/05.PSO020103-Mahler-5-V.mp3"));
 	urls.push_back(QUrl("./music/MahlerPianoQuartet_64kb.mp3"));
+	*/
 	const QUrl url = urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
 	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;

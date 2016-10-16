@@ -995,39 +995,39 @@ p, li { white-space: pre-wrap; }
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1466"/>
+        <location filename="../fairytale.cpp" line="1468"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1494"/>
-        <location filename="../fairytale.cpp" line="1528"/>
+        <location filename="../fairytale.cpp" line="1496"/>
+        <location filename="../fairytale.cpp" line="1530"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1498"/>
-        <location filename="../fairytale.cpp" line="1532"/>
+        <location filename="../fairytale.cpp" line="1500"/>
+        <location filename="../fairytale.cpp" line="1534"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1505"/>
+        <location filename="../fairytale.cpp" line="1507"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1509"/>
+        <location filename="../fairytale.cpp" line="1511"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1516"/>
+        <location filename="../fairytale.cpp" line="1518"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../fairytale.cpp" line="1520"/>
+        <location filename="../fairytale.cpp" line="1522"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>
