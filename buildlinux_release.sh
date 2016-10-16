@@ -1,8 +1,7 @@
 #!/bin/bash
 # The Jenkins build script for Linux.
-bash -x copyclipsforbuild.sh
-cd "$WORKSPACE/fairytale"
+bash -x "$WORKSPACE/fairytale/copyclipsforbuild.sh"
 mkdir "$WORKSPACE/build"
 cd "$WORKSPACE/build"
-cmake ../ -DUSE_COMPRESSED_FILES=${USE_COMPRESSED_FILES} -DCMAKE_BUILD_TYPE="Release"
+cmake "$WORKSPACE/fairytale/" -DUSE_COMPRESSED_FILES=${USE_COMPRESSED_FILES} -DCMAKE_BUILD_TYPE="Release"
 make -j4
