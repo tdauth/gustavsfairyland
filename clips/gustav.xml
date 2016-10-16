@@ -19,7 +19,7 @@
 			</description>
 		</clip>
 		<clip id="vampir">
-			<image>./vampir/vampir.png</image>
+			<image>./vampir/vampir.jpg</image>
 			<video>./vampir/vampir.avi</video>
 			<narrator>
 				<en>./vampir/vampir_en.wav</en>
@@ -31,7 +31,7 @@
 			</description>
 		</clip>
 		<clip id="werwolf">
-			<image>./werwolf/werwolf.png</image>
+			<image>./werwolf/werwolf.jpg</image>
 			<video>./werwolf/werwolf.avi</video>
 			<narrator>.
 				<en>./werwolf/werwolf_en.wav</en>

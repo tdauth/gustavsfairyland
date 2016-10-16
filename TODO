@@ -103,6 +103,9 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
 - Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
 - lost.mkv abspielen wenn man verloren hat!
+- kein PNG-Format verwenden, immer mit JPEG komprimiren.
+- Musik reduzieren und komprimieren.
+- resources/paper.eps ist sehr groß. Wird es überhaupt verwendet?
 
 Tonaufnahmen:
 - "and.wav" aufnehmen.
