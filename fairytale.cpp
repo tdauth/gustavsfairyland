@@ -689,7 +689,11 @@ QList<QWidget*> fairytale::hideWidgetsInMainWindow()
 
 		if (widget->isVisible())
 		{
-			hiddenWidgets.push_back(widget);
+			// Do never hide the central widget itself.
+			if (widget != this->centralWidget())
+			{
+				hiddenWidgets.push_back(widget);
+			}
 
 			if (widget->layout() != nullptr)
 			{
