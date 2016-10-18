@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.0.0)
 project(gustavsfairyland)
 
 if (ANDROID)
@@ -15,8 +15,8 @@ add_compile_options(-std=c++11 -Wall)
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DDEBUG=1)
 elseif (WIN32)
-    # Don't show a console in release mode on Windows: -mwindows
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
+	# Don't show a console in release mode on Windows: -mwindows
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
 endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
@@ -30,10 +30,10 @@ if (XMLLINT_PATH)
 	message(STATUS "Validating XML files.")
 	set(XML_FILES
 		"${CMAKE_SOURCE_DIR}/clips/gustav.xml"
-		"${CMAKE_SOURCE_DIR}/test/clips.xml"
+		"${CMAKE_SOURCE_DIR}/src/test/clips.xml"
 	)
 	# TODO check against an XML schema as well
-	add_custom_target(ValidateXMLFiles ALL ${XMLLINT_PATH} --noout "${CMAKE_SOURCE_DIR}/clips/gustav.xml" "${CMAKE_SOURCE_DIR}/test/clips.xml"  SOURCES ${XML_FILES})
+	add_custom_target(ValidateXMLFiles ALL ${XMLLINT_PATH} --noout "${CMAKE_SOURCE_DIR}/clips/gustav.xml" "${CMAKE_SOURCE_DIR}/src/test/clips.xml" SOURCES ${XML_FILES})
 endif ()
 
 # Find includes in corresponding build directories
@@ -60,63 +60,63 @@ if (ANDROID)
 endif ()
 
 set(fairyland_HEADERS
-	aboutdialog.h
-	fairytale.h
-	floatingclip.h
-	clip.h
-	door.h
-	player.h
-	iconbutton.h
-	clippackage.h
-	clippackagedialog.h
-	clippackageeditor.h
-	clipeditor.h
-	customfairytale.h
-	customfairytaledialog.h
-	gamemode.h
-	gamemodemoving.h
-	gamemodeoneoutoffour.h
-	gamemodecreative.h
-	iconbutton.h
-	roomwidget.h
-	settingsdialog.h
-	wondialog.h
-	iconlabel.h
-	highscores.h
-	bonusclip.h
-	gameoverdialog.h
-	languagedialog.h
-	clickanimation.h
+	src/aboutdialog.h
+	src/fairytale.h
+	src/floatingclip.h
+	src/clip.h
+	src/door.h
+	src/player.h
+	src/iconbutton.h
+	src/clippackage.h
+	src/clippackagedialog.h
+	src/clippackageeditor.h
+	src/clipeditor.h
+	src/customfairytale.h
+	src/customfairytaledialog.h
+	src/gamemode.h
+	src/gamemodemoving.h
+	src/gamemodeoneoutoffour.h
+	src/gamemodecreative.h
+	src/iconbutton.h
+	src/roomwidget.h
+	src/settingsdialog.h
+	src/wondialog.h
+	src/iconlabel.h
+	src/highscores.h
+	src/bonusclip.h
+	src/gameoverdialog.h
+	src/languagedialog.h
+	src/clickanimation.h
 )
 
 set(fairyland_SRCS
-	aboutdialog.cpp
-	fairytale.cpp
-	floatingclip.cpp
-	clip.cpp
-	door.cpp
-	player.cpp
-	iconbutton.cpp
-	clippackage.cpp
-	clippackagedialog.cpp
-	clippackageeditor.cpp
-	clipeditor.cpp
-	customfairytale.cpp
-	customfairytaledialog.cpp
-	gamemode.cpp
-	gamemodemoving.cpp
-	gamemodeoneoutoffour.cpp
-	gamemodecreative.cpp
-	iconbutton.cpp
-	roomwidget.cpp
-	settingsdialog.cpp
-	wondialog.cpp
-	iconlabel.cpp
-	highscores.cpp
-	bonusclip.cpp
-	gameoverdialog.cpp
-	languagedialog.cpp
-	clickanimation.cpp
+	src/aboutdialog.cpp
+	src/fairytale.cpp
+	src/floatingclip.cpp
+	src/clip.cpp
+	src/door.cpp
+	src/player.cpp
+	src/iconbutton.cpp
+	src/clippackage.cpp
+	src/clippackagedialog.cpp
+	src/clippackageeditor.cpp
+	src/clipeditor.cpp
+	src/customfairytale.cpp
+	src/customfairytaledialog.cpp
+	src/gamemode.cpp
+	src/gamemodemoving.cpp
+	src/gamemodeoneoutoffour.cpp
+	src/gamemodecreative.cpp
+	src/iconbutton.cpp
+	src/roomwidget.cpp
+	src/settingsdialog.cpp
+	src/wondialog.cpp
+	src/iconlabel.cpp
+	src/highscores.cpp
+	src/bonusclip.cpp
+	src/gameoverdialog.cpp
+	src/languagedialog.cpp
+	src/clickanimation.cpp
 )
 
 set(fairyland_UI
@@ -135,6 +135,7 @@ set(fairyland_UI
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})
+include_directories("${CMAKE_BINARY_DIR}/ui")
 
 set(fairyland_TRANSLATIONS
 	translations/en.ts
@@ -164,6 +165,8 @@ if (ANDROID)
 	add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 endif ()
 
+add_subdirectory(src)
+
 add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
@@ -183,11 +186,11 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
-	add_library(gustavsfairyland SHARED main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+	add_library(gustavsfairyland SHARED src/main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	set_property(TARGET gustavsfairyland PROPERTY VERSION "1")
 	install(TARGETS gustavsfairyland LIBRARY DESTINATION lib)
 else ()
-	add_executable(gustavsfairyland main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
+	add_executable(gustavsfairyland src/main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
 endif()
 
@@ -327,12 +330,6 @@ if (ANDROID)
 	)
 	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
 	add_dependencies(my_app_apk CopyAssets)
-endif ()
-
-# Only create Unit Tests in debug mode. Otherwise the test lib is linked and might cause creating a console on Windows.
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	message(STATUS "Adding test directory.")
-	add_subdirectory(test)
 endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")

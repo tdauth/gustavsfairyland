@@ -27,6 +27,8 @@
 #include "highscores.h"
 #include "customfairytale.h"
 
+fairytale::WidgetSizes fairytale::m_widgetSizes;
+
 void fairytale::newGame()
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -193,7 +195,7 @@ QRect fairytale::referenceRect()
 	/*
 	 * The original UI files have been designed on a system with this default size.
 	 */
-	return QRect(0, 0, 500, 500);
+	return QRect(0, 0, 1920, 1080);
 }
 
 Qt::ScreenOrientation fairytale::referenceOrientation()
@@ -227,17 +229,51 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
-	const QSize oldSize = widget->size();
-	QFont oldFont = widget->font();
-	const int oldFontSize = oldFont.pixelSize();
-	const int newFontSize = fontSize(oldFontSize);
-	const QSize newSize = widgetSize(oldSize);
-	widget->resize(newSize);
-	oldFont.setPixelSize(newFontSize);
-	widget->setFont(oldFont);
+	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
+	if (dynamic_cast<QPushButton*>(widget) != nullptr)
+	{
+		WidgetSizes::iterator iterator = m_widgetSizes.find(widget);
 
-	qDebug() << "Old size:" << oldSize << "old font size:" << oldFontSize << "new size:" << newSize << "new font size:" << newFontSize;
-	//widget->
+		if (iterator == m_widgetSizes.end())
+		{
+			WidgetSizeData sizeData;
+			sizeData.size = widget->size();
+			sizeData.font =  widget->font();
+
+			iterator = m_widgetSizes.insert(widget, sizeData);
+		}
+		else
+		{
+			qDebug() << "update size a second or another time for widget" << widget;
+		}
+
+		const WidgetSizeData &sizeData = iterator.value();
+
+		/*
+		 * Resize to a scaled size.
+		 */
+		const QSize newSize = widgetSize(sizeData.size);
+		widget->resize(newSize);
+
+		const bool usePixelSize = sizeData.font.pixelSize() != -1;
+		QFont oldFont = sizeData.font;
+		const int oldFontSize = usePixelSize ? oldFont.pixelSize() : oldFont.pointSize();
+		const int newFontSize = fontSize(oldFontSize);
+
+		if (usePixelSize)
+		{
+			oldFont.setPixelSize(newFontSize);
+		}
+		else
+		{
+			oldFont.setPointSize(newFontSize);
+		}
+
+		widget->setFont(oldFont);
+
+		qDebug() << "Old size:" << sizeData.size << "old font size:" << oldFontSize << "new size:" << newSize << "new font size:" << newFontSize;
+		//widget->
+	}
 
 	// TODO if it is horizontal or vertical layout change if the orientation changed
 

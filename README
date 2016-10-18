@@ -4,10 +4,14 @@ Contact: tamino@cdauth.eu
 
 Compilation instructions:
 Create a binary directory and run:
-cmake <path to fairytale folder>
+cmake <path to the fairytale folder>
 
 Now compile everything in the binary directory:
 make -j4
+
+Alternatively you can use one of the scripts:
+buildlinux_debug.sh
+buildlinux_release.sh
 
 For Linux:
 Just use cpack in the build directory:
@@ -40,14 +44,12 @@ Just do:
 ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign
 
 The Android build uses QtAV for playing videos on Android devices since QtMultimediaWidgets are not supported on Android.
-Therefore ffmpeg and QtAV have to build for Android too which happens in the build script "buildatavforandroid.sh".
+Therefore ffmpeg and QtAV have to be build for Android too which happens in the build script "buildqtavforandroid.sh".
+
+If you want to build an Android version for Qt manually, use the script "buildqt.sh".
 
 Use the following command to get debugging output:
 /home/tamino/Android/Sdk/platform-tools/adb logcat
-
-Android does not support multimedia widgets in C++ like QVideoWidget. Therefore QML has to be used
-to show videos:
-http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
 
 Android debugging:
 https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device

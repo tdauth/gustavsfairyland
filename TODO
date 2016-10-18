@@ -106,6 +106,9 @@ Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 - kein PNG-Format verwenden, immer mit JPEG komprimiren.
 - Musik reduzieren und komprimieren.
 - resources/paper.eps ist sehr groß. Wird es überhaupt verwendet?
+- QtApp kann nicht anders definiert werden. In Jenkins-Job die Datei umbenennen und so releasen und hochladen.
+- Lokalen GIT-Server aufsetzen, der ebenfalls die Projekte enthält. Dies erlaubt das Laufen der Jenkins-Jobs ohne Internetverbindung.
+- ANDROID_APK_FULLSCREEN auf TRUE? Dann gibt es keinen Titlebar mehr. Mehr Platz für das Spiel selbst?
 
 Tonaufnahmen:
 - "and.wav" aufnehmen.

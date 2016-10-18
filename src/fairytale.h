@@ -12,6 +12,7 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QDir>
 #include <QShortcut>
+#include <QHash>
 
 #include "ui_mainwindow.h"
 
@@ -449,6 +450,25 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QShortcut *m_cancelGameShortcut;
 
 		QScreen *m_currentScreen;
+
+		/**
+		 * \brief Size data for a widget which can be stored.
+		 */
+		struct WidgetSizeData
+		{
+			QSize size;
+			QFont font;
+		};
+
+		/**
+		 * \brief Allows fast access by a widget to its initial size data.
+		 */
+		typedef QHash<QWidget*, WidgetSizeData> WidgetSizes;
+		/**
+		 * Stores the initial size data for widgets.
+		 * This data is used as a reference when scaling them in \ref updateSize().
+		 */
+		static WidgetSizes m_widgetSizes;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const
