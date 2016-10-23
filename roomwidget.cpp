@@ -188,7 +188,7 @@ int RoomWidget::maxCollisionDistance() const
 	return availableWidth / 5;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString("qrc://resources/wood.svg"))
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg"))
 {
 	// The room widget is painted all the time directly.
 	//this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -386,7 +386,7 @@ void RoomWidget::resizeEvent(QResizeEvent *event)
 		floatingClip->setWidth(floatingClipWidth());
 		floatingClip->setSpeed(floatingClipSpeed());
 
-		// check new borders of room widget
+		// check new borders of room widget TODO maybe make floating clip X and Y relative to the room widget?
 		int x = floatingClip->x();
 		int y = floatingClip->y();
 
