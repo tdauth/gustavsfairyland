@@ -89,6 +89,8 @@ class RoomWidget : public RoomWidgetParent
 		 */
 		virtual void resizeEvent(QResizeEvent *event) override;
 
+		virtual void changeEvent(QEvent *event) override;
+
 	private:
 		/**
 		 * Only plays a random sound from the given list \p soundEffects if the last played sound did already finish.
@@ -96,6 +98,8 @@ class RoomWidget : public RoomWidgetParent
 		 * \param soundEffects A list of possible file paths for the sound which is played. The path of the actual played sound is choosen randomly.
 		 */
 		void playSoundFromList(const QStringList &soundEffects);
+
+		void updateSounds();
 
 		GameModeMoving *m_gameMode;
 		bool m_won;

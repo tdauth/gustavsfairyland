@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>607</width>
-    <height>462</height>
+    <width>500</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -107,23 +107,28 @@
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="highScoresPushButton">
+         <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>40</height>
+           <width>200</width>
+           <height>0</height>
           </size>
          </property>
-        </spacer>
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>High Scores</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="quickGamePushButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -156,10 +161,23 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="8" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="0">
         <widget class="QPushButton" name="quitPushButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -180,37 +198,6 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="highScoresPushButton">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>High Scores</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="customGamePushButton">
          <property name="font">
@@ -223,7 +210,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="6" column="0">
         <widget class="QPushButton" name="settingsPushButton">
          <property name="font">
           <font>
@@ -232,6 +219,43 @@
          </property>
          <property name="text">
           <string>Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="bonusClipsPushButton">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Bonus Clips</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="customFairytalesPushButton">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Custom Fairytales</string>
          </property>
         </widget>
        </item>
@@ -291,8 +315,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>607</width>
-     <height>21</height>
+     <width>500</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

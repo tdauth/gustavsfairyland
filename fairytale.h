@@ -120,6 +120,36 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		static bool hasTouchDevice();
 
+		/**
+		 * Screen utility functions to scale widgets to the current screen where the game is played.
+		 *
+		 * \{
+		 */
+		/**
+		 * \return Returns the current screen's rect.
+		 */
+		static QRect screenRect();
+		/**
+		 * \return Returns the current screen's orientation.
+		 */
+		static Qt::ScreenOrientation screenOrientation();
+		static QRect referenceRect();
+		static Qt::ScreenOrientation referenceOrientation();
+		/**
+		 * Calculates a scaling factor depending on the current DPI settings and display size.
+		 */
+		static qreal screenWidthRatio();
+		static qreal screenHeightRatio();
+		/**
+		 * Updates the size of \p widget and all sub widgets in its layout to the current screen size.
+		 */
+		static void updateSize(QWidget *widget);
+		static QSize widgetSize(const QSize &currentSize);
+		static qreal fontSize(int currentFontSize);
+		/**
+		 * \}
+		 */
+
 		static QString localeToName(const QString &locale);
 
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
@@ -257,8 +287,18 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QMap<QString, CustomFairytale*> CustomFairytales;
 		const CustomFairytales& customFairytales() const;
 
+		QList<QWidget*> hideWidgetsInMainWindow();
+		void showWidgetsInMainWindow(QList<QWidget*> widgets);
+		/**
+		 * On the Android platform modal dialogs do not work. All widgets should be shown in the top level main window.
+		 * This function executes a dialog as widget part of the central widget of the main window if the application is run on Android.
+		 * Otherwise the dialog is executed normally.
+		 */
+		int execInCentralWidgetIfNecessary(QDialog *dialog);
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
+		virtual void showEvent(QShowEvent *event) override;
 
 	private slots:
 #ifdef Q_OS_ANDROID
@@ -274,11 +314,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void playCustomFairytaleSlot();
 
+		void changePrimaryScreen(QScreen *screen);
+		void changeAvailableGeometry(const QRect &geometry);
+
 	private:
 		void updateTimeLabel();
 		void addCurrentSolution();
 		void cleanupGame();
 		void cleanupAfterOneGame();
+		void hideGameWidgets();
 		void finishPlayingCustomFairytale();
 		/**
 		  * \return Returns the URL to the "and" sound in the current language.
@@ -403,6 +447,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QShortcut *m_pauseGameShortcut;
 		QShortcut *m_cancelGameShortcut;
+
+		QScreen *m_currentScreen;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const

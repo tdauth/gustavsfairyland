@@ -5,6 +5,7 @@ fi
 mkdir ./buildqt5
 git clone git://code.qt.io/qt/qt5.git qt5
 cd qt5
+# Not using all modules reduces the build time.
 perl init-repository -f --module-subset=default,-qtwebkit,-qtwebkit-examples,-qtwebengine
 export HOME_TAMINO="/home/tamino"
 export JAVA_HOME=/usr/java/default/ # You need a JDK (version 1.6+, required 32bit) and you should also have this in your PATH.

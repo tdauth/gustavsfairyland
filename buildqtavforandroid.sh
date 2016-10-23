@@ -13,7 +13,7 @@ fi
 
 if [ -z "$ANDROID_PREFIX" ] ; then
 	echo "Setting ANDROID_PREFIX automatically"
-	ANDROID_PREFIX="sdk-android-armv7" # sdk-android-x86
+	ANDROID_PREFIX="sdk-android-armv7-gcc" # sdk-android-x86
 fi
 
 if [ -z "$ANDROID_TARGET" ] ; then
@@ -82,7 +82,7 @@ export ANDROID_NDK_ROOT="$NDK_ROOT"
 # 	echo "Creating link for $f to $target"
 # 	ln -fs "$f" "$target"
 # done
-# 
+#
 # for f in "$FFMPEG_LIB_DIR/"* ; do
 # 	target="$QT_PATH/lib"
 # 	echo "Creating link for $f to $target"

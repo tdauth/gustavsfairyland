@@ -109,9 +109,11 @@ void ClipPackageDialog::currentGameModeIndexChanged(int index)
 {
 	qDebug() << "Changing index to" << index;
 
-	if (index > 0 && index < this->m_gameModes.size())
+	if (index >= 0 && index < this->m_gameModes.size())
 	{
-		GameMode *gameMode = this->m_gameModes[this->gameModesComboBox->itemData(index).toString()];
+		const QString id = this->gameModesComboBox->itemData(index).toString();
+		qDebug() << "ID:" << id;
+		GameMode *gameMode = this->m_gameModes[id];
 		this->difficultyComboBox->setEnabled(gameMode->useDifficulty());
 		this->useMaxRoundsCheckBox->setEnabled(gameMode->useMaxRounds());
 		this->maxRoundsSpinBox->setEnabled(gameMode->useMaxRounds());

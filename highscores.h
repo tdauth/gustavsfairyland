@@ -73,6 +73,9 @@ class HighScores : public QDialog, protected Ui::HighScores
 {
 	Q_OBJECT
 
+	public slots:
+		void clearAll();
+
 	public:
 		/// Store high scores with the samge package and game mode, comparing highscores from different packages or game modes does not make any sense.
 		typedef QPair<QString, QString> Key;

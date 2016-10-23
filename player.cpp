@@ -6,13 +6,14 @@
 #include "fairytale.h"
 #include "iconlabel.h"
 
-Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_skippedAll(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
+Player::Player(QWidget *parent, fairytale *app)
+#ifndef Q_OS_ANDROID
+: QDialog(parent)
+#else
+: QWidget(parent)
+#endif
+, m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_skippedAll(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
 #ifdef Q_OS_ANDROID
-/*
-, m_view(nullptr), m_item(nullptr)
-, m_mediaPlayer(nullptr)
-, m_videoWidget(nullptr)
-*/
 , m_player(nullptr)
 , m_renderer(nullptr)
 #else
@@ -20,63 +21,27 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 #endif
 {
 	setupUi(this);
-	this->setModal(true);
 
 #ifdef Q_OS_ANDROID
-	//QQuickWindow *quickWindow = new QQuickWindow(QApplication::desktop()->screen());
-	// On Android a QML script is used to create a media player and video output since QVideoWidget is not supported. The script is packed as resource.
-	//m_view = new QQuickView();
-	//m_videoWidget = QWidget::createWindowContainer(m_view, this);
-	//m_videoWidget->setFocusPolicy(Qt::TabFocus);
-
-	// TEST to check if the widget appears at all
-	//QPalette pal;
-	//pal.setColor(QPalette::Background, Qt::green);
-	//m_videoWidget->setPalette(pal);
-
-	//m_view->setSource(QUrl("qrc:/videoplayer.qml"));
-
-	/*
-	qDebug() << "QML Errors:";
-	foreach (QQmlError error, m_view->errors())
-	{
-		qDebug() << error.description();
-	}
-
-	if (m_view != nullptr)
-	{
-		m_item = m_view->rootObject();
-		qDebug() << "Children size: " << m_item->children().size();
-
-		if (m_item != nullptr)
-		{
-			m_mediaPlayer = m_item->findChild<QObject*>("player");
-		}
-	}
-	*/
-
 	this->m_player = new QtAV::AVPlayer(this);
-	this->m_renderer = new QtAV::WidgetRenderer(this); // GLWidgetRenderer2
+	this->m_renderer = new QtAV::OpenGLWidgetRenderer(this); // GLWidgetRenderer2
 	this->m_player->setRenderer(m_renderer);
+
+	// expanding makes sure that it uses the maximum possible size
+	this->m_renderer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	//this->m_renderer->setMinimumSize(QSize(100, 100));
+
+	videoPlayerLayout->addWidget(this->m_renderer->widget());
 #else
+	this->setModal(true);
+
 	this->m_mediaPlayer->setVideoOutput(m_videoWidget);
 	this->m_mediaPlayer->setAudioRole(QAudio::GameRole);
-#endif
-
-#ifndef Q_OS_ANDROID
 	// expanding makes sure that it uses the maximum possible size
 	this->m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->m_videoWidget->setMinimumSize(QSize(240, 240));
 	videoPlayerLayout->addWidget(m_videoWidget);
 	this->m_videoWidget->show();
-#else
-	// expanding makes sure that it uses the maximum possible size
-	this->m_renderer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	//this->m_videoWidget->setMinimumSize(QSize(100, 100));
-	this->m_renderer->setMinimumSize(QSize(200, 200));
-
-	videoPlayerLayout->addWidget(m_renderer);
-	this->m_renderer->show();
 #endif
 
 	volumeSlider->setValue(100);
@@ -89,19 +54,19 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 #ifndef Q_OS_ANDROID
 	connect(this->mediaPlayer(), &QMediaPlayer::stateChanged, this, &Player::onChangeState);
 #else
-	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
-	//connect(this->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(onChangeStateAndroid()));
 	connect(this->m_player, &QtAV::AVPlayer::stateChanged, this, &Player::onChangeStateAndroidQtAv);
 #endif
 
 	this->m_iconLabel->setAlignment(Qt::AlignCenter);
 	this->m_iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+#ifndef Q_OS_ANDROID
 	this->m_iconLabel->setMinimumSize(QSize(240, 240));
+#endif
 	videoPlayerLayout->addWidget(m_iconLabel);
 
-	connect(this->skipPushButton, SIGNAL(clicked()), this, SLOT(skip()));
+	connect(this->skipPushButton, &QPushButton::clicked, this, &Player::skip);
 	connect(this->skipAllPushButton, &QPushButton::clicked, this, &Player::skipAll);
-	connect(this->pausePushButton, SIGNAL(clicked()), app, SLOT(pauseGameAction()));
+	connect(this->pausePushButton, &QPushButton::clicked, app, &fairytale::pauseGameAction);
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
 	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
 
@@ -120,35 +85,11 @@ Player::Player(QWidget *parent, fairytale *app) : QDialog(parent), m_app(app), m
 
 Player::~Player()
 {
-#ifdef Q_OS_ANDROID
-	/*
-	if (m_view != nullptr)
-	{
-		delete m_view;
-	}
-	*/
-#endif
 }
 
 QMediaPlayer::State Player::state() const
 {
 #ifdef Q_OS_ANDROID
-	//const int state = QQmlProperty::read(m_mediaPlayer, "playbackState").toInt();
-	/*
-	 QMediaPlayer::StoppedState	0	The media player is not playing content, playback will begin from the start of the current track.
-	 QMediaPlayer::PlayingState	1	The media player is currently playing content.
-	 QMediaPlayer::PausedState	2
-
-	 Note that QML has a different order of states but still uses the same integer values.
-	 PlayingState - the media is currently playing.
-	 PausedState - playback of the media has been suspended.
-	 StoppedState - playback of the media is yet to begin.
-	*/
-
-	//qDebug() << "Has state:" << state;
-
-	//return QMediaPlayer::State(state);
-
 	return QMediaPlayer::State(this->m_player->state());
 #else
 	return this->mediaPlayer()->state();
@@ -158,11 +99,7 @@ QMediaPlayer::State Player::state() const
 int Player::volume() const
 {
 #ifdef Q_OS_ANDROID
-	//const qreal volume = QQmlProperty::read(m_mediaPlayer, "volume").toReal();
-
-	//return volume * 100;
-
-	return this->m_player->audio()->volume();
+	return this->m_player->audio()->volume() * 100.0;
 #else
 	return this->mediaPlayer()->volume();
 #endif
@@ -187,7 +124,14 @@ void Player::changeEvent(QEvent *event)
 		}
 	}
 
-	QDialog::changeEvent(event);
+	Base::changeEvent(event);
+}
+
+void Player::showEvent(QShowEvent *event)
+{
+	Base::showEvent(event);
+
+	fairytale::updateSize(buttonsWidget);
 }
 
 void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
@@ -294,6 +238,11 @@ void Player::checkForFinish()
 	{
 		qDebug() << "Emitting signal";
 
+#ifdef Q_OS_ANDROID
+		m_app->centralWidget()->layout()->removeWidget(this);
+		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
+#endif
+
 		emit finishVideoAndSounds();
 	}
 }
@@ -307,7 +256,6 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_iconLabel->setFile("");
 #ifndef Q_OS_ANDROID
 	this->m_videoWidget->show();
-#endif
 
 	if (app->isFullScreen())
 	{
@@ -317,6 +265,12 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	{
 		this->show();
 	}
+#else
+	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
+	app->centralWidget()->layout()->addWidget(this);
+	this->show();
+#endif
 
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
@@ -327,26 +281,10 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	const QUrl resolvedUrl = app->resolveClipUrl(url);
 
 #ifdef Q_OS_ANDROID
-	/*
-	if (m_mediaPlayer)
-	{
-		qDebug() << "There is a player and we set its source to:" << resolvedUrl;
-		//m_mediaPlayer->setProperty("source", resolvedUrl);
-		//QQmlProperty::write(m_mediaPlayer, "source", resolvedUrl);
-	}
-	else
-	{
-		qDebug() << "No player!";
-	}
-	*/
-
 	qDebug() << "Playing video:" << resolvedUrl.toString();
 	m_player->setFile(resolvedUrl.toString());
 	m_player->load();
-	m_renderer->show();
-	this->m_renderer->resize(app->size() / 1.5); // make videos bigger
-	// disable audio for tests
-	//player->audio()->setBackends(QStringList() << "null");
+	//this->m_renderer->resize(app->size() / 1.5); // make videos bigger
 #else
 	/*
 	 * Play the narrator clip for the current solution as hint.
@@ -355,6 +293,10 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 #endif
 
 	this->play();
+
+#ifdef Q_OS_ANDROID
+	this->m_renderer->widget()->show();
+#endif
 }
 
 void Player::playBonusVideo(fairytale *app, const QUrl &url, const QString &description)
@@ -382,11 +324,12 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 #ifndef Q_OS_ANDROID
 	this->m_videoWidget->hide();
 #else
-	this->m_renderer->hide();
+	this->m_renderer->widget()->hide();
 #endif
 	this->m_iconLabel->show();
 	this->m_iconLabel->setFile(imageFile);
 
+#ifndef Q_OS_ANDROID
 	if (app->isFullScreen())
 	{
 		this->showFullScreen();
@@ -395,6 +338,12 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	{
 		this->show();
 	}
+#else
+	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
+	app->centralWidget()->layout()->addWidget(this);
+	this->show();
+#endif
 
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
@@ -404,21 +353,6 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->descriptionLabel->setText(description);
 
 #ifdef Q_OS_ANDROID
-	/*
-	if (m_mediaPlayer)
-	{
-		qDebug() << "There is a player and we set its source to:" << soundUrl;
-		//m_mediaPlayer->setProperty("source", soundUrl);
-		//QQmlProperty::write(m_mediaPlayer, "source", soundUrl);
-
-		//qDebug() << "Current source after setting it in QML:" << QQmlProperty::read(m_mediaPlayer, "source").toString();
-	}
-	else
-	{
-		qDebug() << "No player!";
-	}
-	*/
-
 	qDebug() << "Playing video:" << soundUrl.toString();
 	m_player->setFile(soundUrl.toString());
 	m_player->load();
@@ -451,8 +385,6 @@ void Player::playParallelSound(fairytale *app, const QUrl &url)
 void Player::play()
 {
 #ifdef Q_OS_ANDROID
-	qDebug() << "Play on Android by invoking the QML method";
-	//QMetaObject::invokeMethod(m_mediaPlayer, "play");
 	this->m_player->play();
 #else
 	this->mediaPlayer()->play();
@@ -462,7 +394,6 @@ void Player::play()
 void Player::pause()
 {
 #ifdef Q_OS_ANDROID
-	//QMetaObject::invokeMethod(m_mediaPlayer, "pause");
 	this->m_player->pause(true);
 #else
 	this->mediaPlayer()->pause();
@@ -472,8 +403,6 @@ void Player::pause()
 void Player::stop()
 {
 #ifdef Q_OS_ANDROID
-	qDebug() << "Invoking stop method";
-	//QMetaObject::invokeMethod(m_mediaPlayer, "stop");
 	this->m_player->stop();
 #else
 	this->mediaPlayer()->stop();
@@ -483,12 +412,6 @@ void Player::stop()
 void Player::setVolume(int volume)
 {
 #ifdef Q_OS_ANDROID
-	//const qreal realVolume = (qreal)(volume) * 0.01;
-	//m_mediaPlayer->setProperty("volume", realVolume);
-	//QQmlProperty::write(m_mediaPlayer, "volume", realVolume);
-
-	//qDebug() << "Set volume to" << realVolume;
-
 	const qreal realVolume = (qreal)(volume) * 0.01;
 	this->m_player->audio()->setVolume(realVolume);
 #else

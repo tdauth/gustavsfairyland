@@ -53,11 +53,8 @@ find_package(Qt5Xml REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
-# Requires Qt Quick for playing videos
+# Requires QtAV for playing videos
 if (ANDROID)
-	find_package(Qt5Quick REQUIRED)
-	find_package(Qt5Qml REQUIRED)
-	find_package(Qt5QuickWidgets REQUIRED)
 	find_package(Qt5OpenGL REQUIRED) # Required by QtAV
 	find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
 endif ()
@@ -173,7 +170,7 @@ target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia
 if (ANDROID)
 	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})
 	add_dependencies(gustavsfairylandlib GeneratedQtAVLibraries)
-	target_link_libraries(gustavsfairylandlib Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
+	target_link_libraries(gustavsfairylandlib Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
 endif ()
 
 set(RES_FILES "")
@@ -197,7 +194,7 @@ endif()
 target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
-	target_link_libraries(gustavsfairyland Qt5::Quick Qt5::Qml Qt5::QuickWidgets Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
+	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
 
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
@@ -209,7 +206,7 @@ configure_file(doc/doxygen.conf doc/doxygen.conf)
 
 if (ANDROID)
 	# This custom target is referenced by all install commands for Android.
-	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_SOURCE_DIR}/videoplayer.qml)
+	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml)
 
 	foreach (f ${fairytale_QM_FILES})
 		get_filename_component(fileName "${f}" NAME)
@@ -266,19 +263,15 @@ if (ANDROID)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values/fairylandstrings.xml)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values-de/fairylandstrings-de.xml)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values-de/fairylandstrings-de.xml)
-
-	# QML script for playing videos on Android
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/videoplayer.qml ${CMAKE_BINARY_DIR}/assets/videoplayer.qml)
 else ()
 	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
-	install(DIRECTORY clips/music DESTINATION share/gustavsfairyland/clips)
 endif ()
 message(STATUS "Compressed files: ${COMPRESSED_FILES}")
 file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
 file(GLOB_RECURSE IMAGE_FILES_PNG "${CMAKE_SOURCE_DIR}/clips/*/*.png")
 list(APPEND IMAGE_FILES ${IMAGE_FILES_JPG} ${IMAGE_FILES_PNG})
 message(STATUS "Image files: ${IMAGE_FILES}")
-list(APPEND INSTALL_FILES ${COMPRESSED_FILES} ${IMAGE_FILES} ${SPEECH_FILES} ${MUSIC_FILES} ${PACKAGE_FILES})
+list(APPEND INSTALL_FILES ${COMPRESSED_FILES} ${IMAGE_FILES})
 
 # Specify the install directory for every found file.
 foreach (f ${INSTALL_FILES})
