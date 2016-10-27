@@ -146,7 +146,20 @@ void fairytale::openEditor()
 		this->m_editor = new ClipPackageEditor(this, this);
 	}
 
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	this->m_editor->show();
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 bool fairytale::hasTouchDevice()
@@ -748,12 +761,38 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 
 void fairytale::showHighScores()
 {
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	execInCentralWidgetIfNecessary(this->highScores());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 void fairytale::about()
 {
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	execInCentralWidgetIfNecessary(this->aboutDialog());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 void fairytale::quickGame()
