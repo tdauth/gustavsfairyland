@@ -227,6 +227,7 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
+#ifdef Q_OS_ANDROID
 	const QSize oldSize = widget->size();
 	QFont oldFont = widget->font();
 	const int oldFontSize = oldFont.pixelSize();
@@ -253,6 +254,7 @@ void fairytale::updateSize(QWidget *widget)
 			}
 		}
 	}
+#endif
 }
 
 QSize fairytale::widgetSize(const QSize &currentSize)
