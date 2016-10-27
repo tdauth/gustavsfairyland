@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>500</height>
+    <height>527</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -107,7 +107,7 @@
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="0">
+       <item row="3" column="0">
         <widget class="QPushButton" name="highScoresPushButton">
          <property name="minimumSize">
           <size>
@@ -161,7 +161,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="6" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -174,7 +174,7 @@
          </property>
         </spacer>
        </item>
-       <item row="7" column="0">
+       <item row="5" column="0">
         <widget class="QPushButton" name="quitPushButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
@@ -210,7 +210,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="4" column="0">
         <widget class="QPushButton" name="settingsPushButton">
          <property name="font">
           <font>
@@ -219,18 +219,6 @@
          </property>
          <property name="text">
           <string>Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="bonusClipsPushButton">
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Bonus Clips</string>
          </property>
         </widget>
        </item>
@@ -246,18 +234,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="customFairytalesPushButton">
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Custom Fairytales</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -316,7 +292,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
