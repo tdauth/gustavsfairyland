@@ -28,9 +28,7 @@ int main(int argc, char** argv)
 	// Loads the settings and therefore is shown.
 	fairytale fairytale;
 
-// showing maximized or fullscren leads to menu actions disappearing on a smartphone
 #ifndef Q_OS_ANDROID
-	//fairytale.showFullScreen();
 	splash.finish(&fairytale);
 #endif
 

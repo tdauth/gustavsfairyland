@@ -15,10 +15,12 @@ class BonusClip : public QObject
 
 		BonusClip(QObject *parent = nullptr);
 		BonusClip(const BonusClip &clip, QObject *parent = nullptr);
-		BonusClip(const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, QObject *parent = nullptr);
+		BonusClip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, QObject *parent = nullptr);
 
 		void assign(const BonusClip &clip);
 
+		void setId(const QString &id);
+		QString id() const;
 		void setImageUrl(const QUrl &url);
 		QUrl imageUrl() const;
 		void setVideoUrl(const QUrl &url);
@@ -27,10 +29,21 @@ class BonusClip : public QObject
 		QString description() const;
 
 	private:
+		QString m_id;
 		QUrl m_imageUrl;
 		QUrl m_videoUrl;
 		Descriptions m_descriptions;
 };
+
+inline void BonusClip::setId(const QString &id)
+{
+	this->m_id = id;
+}
+
+inline QString BonusClip::id() const
+{
+	return this->m_id;
+}
 
 inline void BonusClip::setImageUrl(const QUrl &url)
 {
