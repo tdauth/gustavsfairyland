@@ -382,7 +382,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/gamemodecreative.cpp" line="90"/>
         <source>Complete Fairytale</source>
-        <translation type="unfinished"></translation>
+        <translation>Märchen vollenden</translation>
     </message>
     <message>
         <location filename="../src/gamemodecreative.cpp" line="175"/>
@@ -445,7 +445,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_highscores.h" line="135"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Platz</translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="137"/>
@@ -460,12 +460,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_highscores.h" line="141"/>
         <source>Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekunden</translation>
     </message>
     <message>
         <location filename="../build/ui_highscores.h" line="149"/>
         <source>Clear All</source>
-        <translation type="unfinished">Alle löschen</translation>
+        <translation>Alle löschen</translation>
     </message>
     <message>
         <source>Time (ms)</source>
@@ -489,12 +489,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/highscores.cpp" line="19"/>
         <source>Clear all High Scores?</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle High Scores löschen?</translation>
     </message>
     <message>
         <location filename="../src/highscores.cpp" line="19"/>
         <source>Do you really want to clear all High Scores?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie wirklich alle High Scores löschen?</translation>
     </message>
     <message>
         <location filename="../src/highscores.cpp" line="154"/>
@@ -951,12 +951,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="465"/>
         <source>P</source>
-        <translation type="unfinished">P</translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="469"/>
         <source>C</source>
-        <translation type="unfinished">C</translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="953"/>
