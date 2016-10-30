@@ -123,18 +123,20 @@ void HighScores::showEvent(QShowEvent *event)
 			const fairytale::ClipPackages::const_iterator packageIterator = app()->clipPackages().find(highScore.package());
 			const QString packageName = packageIterator != app()->clipPackages().end() ? packageIterator.value()->name() : highScore.package();
 
-			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
+			newItem = new QTableWidgetItem(QString::number(row + 1));
 			tableWidget->setItem(row, 0, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
+			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
 			tableWidget->setItem(row, 1, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.time() / 1000)); // show time in seconds
+			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
 			tableWidget->setItem(row, 2, newItem);
-			newItem = new QTableWidgetItem(gameModeName);
+			newItem = new QTableWidgetItem(QString::number(highScore.time() / 1000)); // show time in seconds
 			tableWidget->setItem(row, 3, newItem);
-			newItem = new QTableWidgetItem(packageName);
+			newItem = new QTableWidgetItem(gameModeName);
 			tableWidget->setItem(row, 4, newItem);
-			newItem = new QTableWidgetItem(highScore.name());
+			newItem = new QTableWidgetItem(packageName);
 			tableWidget->setItem(row, 5, newItem);
+			newItem = new QTableWidgetItem(highScore.name());
+			tableWidget->setItem(row, 6, newItem);
 
 			++row;
 		}

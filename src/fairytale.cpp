@@ -148,7 +148,20 @@ void fairytale::openEditor()
 		this->m_editor = new ClipPackageEditor(this, this);
 	}
 
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	this->m_editor->show();
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 bool fairytale::hasTouchDevice()
@@ -229,6 +242,7 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
+#ifdef Q_OS_ANDROID
 	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
 	if (dynamic_cast<QPushButton*>(widget) != nullptr)
 	{
@@ -289,6 +303,7 @@ void fairytale::updateSize(QWidget *widget)
 			}
 		}
 	}
+#endif
 }
 
 QSize fairytale::widgetSize(const QSize &currentSize)
@@ -782,12 +797,38 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 
 void fairytale::showHighScores()
 {
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	execInCentralWidgetIfNecessary(this->highScores());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 void fairytale::about()
 {
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
 	execInCentralWidgetIfNecessary(this->aboutDialog());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
 }
 
 void fairytale::quickGame()
@@ -939,12 +980,14 @@ void fairytale::afterOutroWin()
 		const int index = qrand() % lockedBonusClips.size();
 		int i = 0;
 		BonusClip *bonusClip = nullptr;
+		BonusClipKey bonusClipKey;
 
 		for (ClipPackage::BonusClips::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
 		{
 			if (i == index)
 			{
-				this->m_bonusClipUnlocks.insert(BonusClipKey(this->clipPackage()->id(), iterator.key()), true);
+				bonusClipKey = BonusClipKey(this->clipPackage()->id(), iterator.key());
+				this->m_bonusClipUnlocks.insert(bonusClipKey, true);
 				bonusClip = iterator.value();
 
 				break;
@@ -960,7 +1003,7 @@ void fairytale::afterOutroWin()
 			// enable action
 			for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
 			{
-				if (iterator.value() == bonusClip)
+				if (iterator.value() == bonusClipKey)
 				{
 					iterator.key()->setEnabled(true);
 				}
@@ -1078,7 +1121,7 @@ void fairytale::pauseTimer()
 
 void fairytale::resumeTimer()
 {
-	if (!this->isTimerPaused() || !this->isTimerRunning())
+	if (!this->isTimerPaused() || this->isTimerRunning())
 	{
 		qDebug() << "Warning: Invalid call of resumeTimer()";
 
@@ -1255,12 +1298,13 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 		for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
 		{
 			const QString clipId = iterator.key();
+			const BonusClipKey bonusClipKey = BonusClipKey(package->id(), clipId);
 
-			if (m_bonusClipUnlocks.find(BonusClipKey(package->id(), clipId)) != m_bonusClipUnlocks.end())
+			if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
 			{
 				for (BonusClipActions::const_iterator actionIterator = this->m_bonusClipActions.begin(); actionIterator != this->m_bonusClipActions.end(); ++actionIterator)
 				{
-					if (actionIterator.value() == iterator.value())
+					if (actionIterator.value() == bonusClipKey)
 					{
 						QAction *action = actionIterator.key();
 						action->setEnabled(!enabled);
@@ -1283,9 +1327,21 @@ void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
 		action->setEnabled(!enabled);
 	}
 
-	foreach (QAction *action, this->m_bonusClipActions.keys())
+	/*
+	 * Do not allow playing bonus clips during a custom fairytale.
+	 */
+	for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
 	{
-		action->setEnabled(!enabled);
+		QAction *action = iterator.key();
+		BonusClipKey key = iterator.value();
+
+		BonusClipUnlocks::const_iterator unlockIterator = this->m_bonusClipUnlocks.find(key);
+
+		// only disable/enable unlocked bonus clips
+		if (unlockIterator != this->m_bonusClipUnlocks.end() && unlockIterator.value())
+		{
+			action->setEnabled(!enabled);
+		}
 	}
 }
 
@@ -1795,9 +1851,10 @@ void fairytale::addClipPackage(ClipPackage *package)
 		BonusClip *bonusClip = iterator.value();
 		QAction *action = menuAchievements->addAction(bonusClip->description());
 		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
-		this->m_bonusClipActions.insert(action, bonusClip);
+		const BonusClipKey bonusClipKey(package->id(), clipId);
+		this->m_bonusClipActions.insert(action, bonusClipKey);
 
-		if (m_bonusClipUnlocks.find(BonusClipKey(package->id(), clipId)) != m_bonusClipUnlocks.end())
+		if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
 		{
 			action->setEnabled(true);
 		}
@@ -1806,39 +1863,6 @@ void fairytale::addClipPackage(ClipPackage *package)
 			action->setEnabled(false);
 		}
 	}
-
-	/*
-	if (!package->clips().isEmpty())
-	{
-		Clip *firstClip = package->clips().first();
-		const QUrl url = this->resolveClipUrl(firstClip->videoUrl());
-#ifndef Q_OS_ANDROID
-		const QString videoFile = url.toLocalFile();
-#else
-		const QString videoFile = url.url();
-#endif
-
-		const QFileInfo fileInfo(videoFile);
-
-		if (fileInfo.isReadable())
-		{
-			QMimeDatabase db;
-			// Actually it is always mp4 for compressed videos
-			QMimeType mime = db.mimeTypeForFile(videoFile);
-			std::cerr << "Mime type: " << mime.name().toStdString() << std::endl;
-			QStringList codecs;
-			codecs << "h264";
-
-			if (QMediaPlayer::hasSupport(mime.name(), codecs) == QMultimedia::ProbablySupported)
-			{
-				QMessageBox::information(this, tr("Supported"), tr("The video codec is supported."));
-			}
-			else
-			{
-			}
-		}
-	}
-	*/
 }
 
 void fairytale::playBonusClip()
@@ -1854,8 +1878,17 @@ void fairytale::playBonusClip()
 
 	if (iterator != this->m_bonusClipActions.end())
 	{
-		this->m_playingBonusClip = true;
-		this->m_player->playBonusVideo(this, iterator.value()->videoUrl(), iterator.value()->description());
+		BonusClip *bonusClip = this->getBonusClipByKey(iterator.value());
+
+		if (bonusClip != nullptr)
+		{
+			this->m_playingBonusClip = true;
+			this->m_player->playBonusVideo(this, bonusClip->videoUrl(), bonusClip->description());
+		}
+		else
+		{
+			qDebug() << "Missing Bonus Clip" << iterator.value();
+		}
 	}
 }
 
@@ -2066,6 +2099,27 @@ void fairytale::removeCustomFairytale(CustomFairytale *customFairytale)
 
 		delete customFairytale;
 	}
+}
+
+BonusClip* fairytale::getBonusClipByKey(const BonusClipKey &key)
+{
+	ClipPackages::iterator iterator = m_clipPackages.find(key.first);
+
+	if (iterator == m_clipPackages.end())
+	{
+		return nullptr;
+	}
+
+	ClipPackage *package = iterator.value();
+
+	ClipPackage::BonusClips::const_iterator bonusClipIterator = package->bonusClips().find(key.second);
+
+	if (bonusClipIterator == package->bonusClips().end())
+	{
+		return nullptr;
+	}
+
+	return bonusClipIterator.value();
 }
 
 
