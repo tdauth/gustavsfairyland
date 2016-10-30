@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>551</height>
+    <width>518</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,11 +16,17 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>448</height>
+      </size>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../resource.qrc">:/resources/lost.jpg</pixmap>
+      <pixmap resource="../resource.qrc">:/resources/lost2.jpg</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

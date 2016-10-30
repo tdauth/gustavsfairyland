@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>597</height>
+    <width>512</width>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,14 +31,20 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>516</height>
+      </size>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../resource.qrc">:/resources/won.jpg</pixmap>
+      <pixmap resource="../resource.qrc">:/resources/won3.jpg</pixmap>
      </property>
      <property name="scaledContents">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
