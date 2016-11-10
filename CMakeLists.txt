@@ -87,6 +87,7 @@ set(fairyland_HEADERS
 	src/gameoverdialog.h
 	src/languagedialog.h
 	src/clickanimation.h
+	src/recorder.h
 )
 
 set(fairyland_SRCS
@@ -117,6 +118,7 @@ set(fairyland_SRCS
 	src/gameoverdialog.cpp
 	src/languagedialog.cpp
 	src/clickanimation.cpp
+	src/recorder.cpp
 )
 
 set(fairyland_UI
