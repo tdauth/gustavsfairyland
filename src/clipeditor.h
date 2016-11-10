@@ -2,7 +2,9 @@
 #define CLIPEDITOR_H
 
 #include <QtWidgets/QDialog>
+#include <QTemporaryFile>
 
+#include "recorder.h"
 #include "ui_clipeditor.h"
 
 class Clip;
@@ -22,6 +24,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void clipIdChanged(const QString &text);
 		void setIsPerson(bool isAPerson);
 		void chooseImage();
+		void captureImage();
 		void chooseVideo();
 		void addNarratingSound();
 		void removeNarratingSound();
@@ -56,6 +59,10 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		Clip *m_clip;
 		LanguageDialog *m_languageDialog;
 		QString m_dir;
+
+		Recorder m_recorder;
+		QTemporaryFile m_file;
+		bool m_recording;
 };
 
 #endif // CLIPEDITOR_H

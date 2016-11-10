@@ -5,6 +5,7 @@
 
 #include "clipeditor.h"
 #include "languagedialog.h"
+#include "recorder.h"
 
 #include "clipeditor.moc"
 
@@ -36,6 +37,13 @@ void ClipEditor::chooseImage()
 
 		checkForValidFields();
 	}
+}
+
+void ClipEditor::captureImage()
+{
+	m_recorder.showCameraFinder(this);
+	// TODO start GUI which shows the camera view
+	//m_recorder.recordImage(m_file.fileName());
 }
 
 void ClipEditor::chooseVideo()
@@ -141,7 +149,7 @@ QString ClipEditor::execLanguageDialog()
 	return QString();
 }
 
-ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr)
+ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recording(false)
 {
 	setupUi(this);
 
@@ -150,6 +158,7 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->clipIdLineEdit, &QLineEdit::textChanged, this, &ClipEditor::clipIdChanged);
 	connect(this->isAPersonCheckBox, SIGNAL(toggled(bool)), this, SLOT(setIsPerson(bool)));
 	connect(this->imagePushButton, &QPushButton::clicked, this, &ClipEditor::chooseImage);
+	connect(this->captureImagePushButton, &QPushButton::clicked, this, &ClipEditor::captureImage);
 	connect(this->videoPushButton, &QPushButton::clicked, this, &ClipEditor::chooseVideo);
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);

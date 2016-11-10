@@ -14,7 +14,9 @@ class RecordTest : public QObject
 		void init();
 		void cleanup();
 
-		void testRecord();
+		void testRecordVideo();
+		void testCaptureImage();
+		void testRecordAudio();
 
 };
 
