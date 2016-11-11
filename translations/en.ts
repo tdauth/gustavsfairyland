@@ -48,97 +48,112 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipEditor</name>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="266"/>
+        <location filename="../build/ui_clipeditor.h" line="291"/>
         <source>Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="27"/>
+        <location filename="../src/clipeditor.cpp" line="30"/>
         <source>All files (*);;Images (*.jpg *.jpeg *.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="43"/>
+        <location filename="../src/clipeditor.cpp" line="121"/>
         <source>All files (*);;Videos (*.mkv *.avi *.mp4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="58"/>
+        <location filename="../src/clipeditor.cpp" line="161"/>
         <source>All files (*);;Audio (*.wav)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="95"/>
+        <location filename="../src/clipeditor.cpp" line="198"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="268"/>
+        <location filename="../build/ui_clipeditor.h" line="293"/>
         <source>Is a Person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="269"/>
+        <location filename="../build/ui_clipeditor.h" line="294"/>
         <source>Set Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="271"/>
+        <location filename="../build/ui_clipeditor.h" line="295"/>
+        <source>Capture Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clipeditor.h" line="297"/>
         <source>Set Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="273"/>
+        <location filename="../build/ui_clipeditor.h" line="299"/>
+        <source>Record Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clipeditor.h" line="300"/>
         <source>Narrating Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="274"/>
+        <location filename="../build/ui_clipeditor.h" line="301"/>
         <source>Add Narrating Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="276"/>
+        <location filename="../build/ui_clipeditor.h" line="302"/>
+        <source>Record Narrating Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clipeditor.h" line="304"/>
         <source>Descriptions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="275"/>
+        <location filename="../build/ui_clipeditor.h" line="303"/>
         <source>Remove Narrating Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="277"/>
+        <location filename="../build/ui_clipeditor.h" line="305"/>
         <source>Add Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="278"/>
+        <location filename="../build/ui_clipeditor.h" line="306"/>
         <source>Remove Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="267"/>
+        <location filename="../build/ui_clipeditor.h" line="292"/>
         <source>Clip ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="27"/>
+        <location filename="../src/clipeditor.cpp" line="30"/>
         <source>Choose Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="43"/>
+        <location filename="../src/clipeditor.cpp" line="121"/>
         <source>Choose Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="58"/>
+        <location filename="../src/clipeditor.cpp" line="161"/>
         <source>Choose Narrating Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="95"/>
+        <location filename="../src/clipeditor.cpp" line="198"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -675,6 +690,40 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="81"/>
         <source>C</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RecorderView</name>
+    <message>
+        <location filename="../build/ui_recorderview.h" line="107"/>
+        <source>Recorder View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_recorderview.h" line="109"/>
+        <location filename="../src/recorderview.cpp" line="23"/>
+        <source>Make Photo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_recorderview.h" line="110"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_recorderview.h" line="111"/>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_recorderview.h" line="108"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/recorderview.cpp" line="32"/>
+        <source>Record Video</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

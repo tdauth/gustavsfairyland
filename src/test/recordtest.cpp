@@ -29,7 +29,8 @@ void RecordTest::testRecordVideo()
 {
 	Recorder recorder;
 	const QFileInfo fileInfo("tmp.mkv");
-	recorder.recordVideo(fileInfo.absoluteFilePath());
+	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.recordVideo();
 	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
 	//QThread::sleep(8);
 	int i = 0;
@@ -61,7 +62,8 @@ void RecordTest::testCaptureImage()
 {
 	Recorder recorder;
 	const QFileInfo fileInfo("tmp.jpg");
-	recorder.recordImage(fileInfo.absoluteFilePath());
+	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.recordImage();
 	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
 	//QThread::sleep(8);
 	int i = 0;
@@ -80,7 +82,8 @@ void RecordTest::testRecordAudio()
 {
 	Recorder recorder;
 	const QFileInfo fileInfo("tmp.wav");
-	recorder.recordAudio(fileInfo.absoluteFilePath());
+	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.recordAudio();
 	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
 	//QThread::sleep(8);
 	int i = 0;

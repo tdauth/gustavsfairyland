@@ -1,11 +1,13 @@
 #include <iostream>
 
 #include <QSettings>
-#include <QtWidgets/QtWidgets>
+#include <QtGui>
+#include <QtWidgets>
 
 #include "clipeditor.h"
 #include "languagedialog.h"
 #include "recorder.h"
+#include "recorderview.h"
 
 #include "clipeditor.moc"
 
@@ -41,9 +43,77 @@ void ClipEditor::chooseImage()
 
 void ClipEditor::captureImage()
 {
-	m_recorder.showCameraFinder(this);
+	QTemporaryFile file("XXXXXX.jpeg");
+
+	if (!file.open())
+	{
+		return;
+	}
+
+	qDebug() << "Recording to file" << file.fileName();
+	m_recorder.setOutputFile(file.fileName());
+	RecorderView *recorderView = m_recorder.showCameraFinder(this, QCamera::CaptureStillImage);
+
+	if (recorderView->exec() == QDialog::Accepted)
+	{
+	}
+
+	qDebug() << "capture error state" << m_recorder.imageCapture()->error();
+
+	delete recorderView;
+	recorderView = nullptr;
 	// TODO start GUI which shows the camera view
 	//m_recorder.recordImage(m_file.fileName());
+}
+
+void ClipEditor::imageSaved(int id, const QString &fileName)
+{
+	// delete old image file
+	if (!m_clip->imageUrl().isEmpty())
+	{
+		QFile file(m_clip->imageUrl().toLocalFile());
+		file.remove();
+	}
+
+	// Use temporary file.
+	QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder.imageCapture()->error();
+
+	QPixmap pixmap(fileName);
+	qDebug() << "Pixmap:" << pixmap.size();
+	imageLabel->setPixmap(pixmap);
+	m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
+
+	m_recorder.clearCameraFinder();
+}
+
+void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
+{
+	qDebug() << "Recorder state changed" << state;
+
+	if (state == QMediaRecorder::StoppedState)
+	{
+		// TODO check if the video is discarded
+
+		// delete old image file
+		if (!m_clip->videoUrl().isEmpty())
+		{
+			QFile file(m_clip->videoUrl().toLocalFile());
+			file.remove();
+		}
+
+		// Use temporary file.
+		const QString fileName = m_recorder.recorder()->outputLocation().toLocalFile();
+		QFileInfo fileInfo(fileName);
+		qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder.recorder()->error();
+
+		//QPixmap pixmap(fileName);
+		//qDebug() << "Pixmap:" << pixmap.size();
+		//imageLabel->setPixmap(pixmap);
+		m_clip->setVideoUrl(QUrl::fromLocalFile(fileName));
+
+		m_recorder.clearCameraFinder();
+	}
 }
 
 void ClipEditor::chooseVideo()
@@ -59,6 +129,31 @@ void ClipEditor::chooseVideo()
 
 		checkForValidFields();
 	}
+}
+
+void ClipEditor::recordVideo()
+{
+	QTemporaryFile file("XXXXXX.mkv");
+
+	if (!file.open())
+	{
+		return;
+	}
+
+	qDebug() << "Recording to file" << file.fileName();
+	m_recorder.setOutputFile(file.fileName());
+	RecorderView *recorderView = m_recorder.showCameraFinder(this, QCamera::CaptureVideo);
+
+	if (recorderView->exec() == QDialog::Accepted)
+	{
+	}
+
+	qDebug() << "capture error state" << m_recorder.imageCapture()->error();
+
+	delete recorderView;
+	recorderView = nullptr;
+	// TODO start GUI which shows the camera view
+	//m_recorder.recordImage(m_file.fileName());
 }
 
 void ClipEditor::addNarratingSound()
@@ -160,6 +255,7 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->imagePushButton, &QPushButton::clicked, this, &ClipEditor::chooseImage);
 	connect(this->captureImagePushButton, &QPushButton::clicked, this, &ClipEditor::captureImage);
 	connect(this->videoPushButton, &QPushButton::clicked, this, &ClipEditor::chooseVideo);
+	connect(this->recordVideoPushButton, &QPushButton::clicked, this, &ClipEditor::recordVideo);
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
@@ -168,6 +264,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	connect(this->m_recorder.imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
+	connect(this->m_recorder.recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();

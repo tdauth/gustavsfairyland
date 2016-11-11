@@ -26,6 +26,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void chooseImage();
 		void captureImage();
 		void chooseVideo();
+		void recordVideo();
 		void addNarratingSound();
 		void removeNarratingSound();
 		void addDescription();
@@ -47,6 +48,10 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 * \return Returns a newly allocated clip object.
 		 */
 		Clip* clip(QObject *parent);
+
+	private slots:
+		void imageSaved(int id, const QString &fileName);
+		void videoRecorderStateChanged(QMediaRecorder::State state);
 
 	private:
 		/**
