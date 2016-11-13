@@ -18,6 +18,8 @@ class RecordTest : public QObject
 		void testCaptureImage();
 		void testRecordAudio();
 
+		void delay();
+
 };
 
 #endif // RECORDTEST_H

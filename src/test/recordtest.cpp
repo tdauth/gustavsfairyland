@@ -28,87 +28,73 @@ void RecordTest::cleanup()
 void RecordTest::testRecordVideo()
 {
 	Recorder recorder;
-	const QFileInfo fileInfo("tmp.mkv");
-	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.setOutputFile("video");
 	recorder.recordVideo();
-	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
-	//QThread::sleep(8);
-	int i = 0;
-	while (i < 10000000){
-		qApp->processEvents();
-		++i;
-	}
+
+	delay();
+
 	qDebug() << "State:" << recorder.state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
-	//QCOMPARE(recorder.state(), QMediaRecorder::RecordingState);
 	recorder.stopRecordingVideo();
-	QVERIFY(fileInfo.exists());
 
-	/*
-	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
-	QCOMPARE(pkg.clips().size(), 9);
-	QCOMPARE(pkg.intro().toString(), QString("./mahler/intro3.mkv"));
-	QCOMPARE(pkg.outros().size(), 4);
-	QCOMPARE(pkg.outros().at(0).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(1).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(2).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(3).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.bonusClips().size(), 1);
-	*/
+	delay();
+
+	const QString filePath = recorder.recorder()->outputLocation().toLocalFile();
+	QVERIFY(!filePath.isEmpty());
+	const QFileInfo fileInfo(filePath);
+	QVERIFY(fileInfo.exists());
 }
 
 void RecordTest::testCaptureImage()
 {
 	Recorder recorder;
-	const QFileInfo fileInfo("tmp.jpg");
-	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.setOutputFile("image");
 	recorder.captureImage();
-	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
-	//QThread::sleep(8);
-	int i = 0;
-	while (i < 10000000){
-		qApp->processEvents();
-		++i;
-	}
+
+	delay();
+
 	qDebug() << "State:" << recorder.state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
-	//QCOMPARE(recorder.state(), QMediaRecorder::RecordingState);
+
+	delay();
+
+	const QString filePath = "image.jpg"; // TODO get the exact file name by the slot
+	QVERIFY(!filePath.isEmpty());
+	const QFileInfo fileInfo(filePath);
 	QVERIFY(fileInfo.exists());
 }
 
 void RecordTest::testRecordAudio()
 {
 	Recorder recorder;
-	const QFileInfo fileInfo("tmp.wav");
-	recorder.setOutputFile(fileInfo.absoluteFilePath());
+	recorder.setOutputFile("audio");
 	recorder.recordAudio();
-	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
-	//QThread::sleep(8);
-	int i = 0;
-	while (i < 10000000){
-		qApp->processEvents();
-		++i;
-	}
+
+	delay();
+
 	qDebug() << "State:" << recorder.state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
-	//QCOMPARE(recorder.state(), QMediaRecorder::RecordingState);
 	recorder.stopRecordingAudio();
-	QVERIFY(fileInfo.exists());
 
-	/*
-	QVERIFY(pkg.loadClipsFromFile("clips.xml"));
-	QCOMPARE(pkg.clips().size(), 9);
-	QCOMPARE(pkg.intro().toString(), QString("./mahler/intro3.mkv"));
-	QCOMPARE(pkg.outros().size(), 4);
-	QCOMPARE(pkg.outros().at(0).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(1).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(2).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.outros().at(3).toString(), QString("./mahler/end5.mkv"));
-	QCOMPARE(pkg.bonusClips().size(), 1);
-	*/
+	delay();
+
+	const QString filePath = recorder.audioRecorder()->outputLocation().toLocalFile();
+	QVERIFY(!filePath.isEmpty());
+	const QFileInfo fileInfo(filePath);
+	QVERIFY(fileInfo.exists());
+}
+
+void RecordTest::delay()
+{
+	int i = 0;
+	while (i < 10000000)
+	{
+		qApp->processEvents();
+		++i;
+	}
 }
 
 #include "recordtest.moc"
