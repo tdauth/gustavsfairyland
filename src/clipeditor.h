@@ -28,6 +28,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void chooseVideo();
 		void recordVideo();
 		void addNarratingSound();
+		void recordNarratingSound();
 		void removeNarratingSound();
 		void addDescription();
 		void removeDescription();
@@ -52,6 +53,11 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 	private slots:
 		void imageSaved(int id, const QString &fileName);
 		void videoRecorderStateChanged(QMediaRecorder::State state);
+		void audioRecorderStateChanged(QMediaRecorder::State state);
+
+		void updateClipImage();
+		void updateClipVideo();
+		void updateClipNarratingSound();
 
 	private:
 		/**
@@ -60,14 +66,15 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 */
 		bool checkForValidFields();
 
+		bool deleteRecordedFile();
+
 		fairytale *m_app;
 		Clip *m_clip;
 		LanguageDialog *m_languageDialog;
 		QString m_dir;
 
-		Recorder m_recorder;
-		QTemporaryFile m_file;
-		bool m_recording;
+		Recorder *m_recorder;
+		QString m_recordedFile;
 };
 
 #endif // CLIPEDITOR_H

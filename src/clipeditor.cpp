@@ -7,7 +7,6 @@
 #include "clipeditor.h"
 #include "languagedialog.h"
 #include "recorder.h"
-#include "recorderview.h"
 
 #include "clipeditor.moc"
 
@@ -43,77 +42,35 @@ void ClipEditor::chooseImage()
 
 void ClipEditor::captureImage()
 {
-	QTemporaryFile file("XXXXXX.jpeg");
+	qDebug() << "Recording to file image";
+	m_recorder->setOutputFile("image");
 
-	if (!file.open())
+	if (m_recorder->showCameraFinder(QCamera::CaptureStillImage) == QDialog::Accepted)
 	{
-		return;
+		updateClipImage();
+	}
+	else
+	{
+		deleteRecordedFile();
 	}
 
-	qDebug() << "Recording to file" << file.fileName();
-	m_recorder.setOutputFile(file.fileName());
-	RecorderView *recorderView = m_recorder.showCameraFinder(this, QCamera::CaptureStillImage);
-
-	if (recorderView->exec() == QDialog::Accepted)
-	{
-	}
-
-	qDebug() << "capture error state" << m_recorder.imageCapture()->error();
-
-	delete recorderView;
-	recorderView = nullptr;
-	// TODO start GUI which shows the camera view
-	//m_recorder.recordImage(m_file.fileName());
+	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
 void ClipEditor::imageSaved(int id, const QString &fileName)
 {
-	// delete old image file
-	if (!m_clip->imageUrl().isEmpty())
+	qDebug() << "Image saved as " << fileName;
+
+	// Dont delete the current file.
+	if (fileName != m_recordedFile)
 	{
-		QFile file(m_clip->imageUrl().toLocalFile());
-		file.remove();
+		deleteRecordedFile();
 	}
 
-	// Use temporary file.
-	QFileInfo fileInfo(fileName);
-	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder.imageCapture()->error();
+	m_recordedFile = fileName;
+	qDebug() << "Recorded file is" << m_recordedFile;
 
-	QPixmap pixmap(fileName);
-	qDebug() << "Pixmap:" << pixmap.size();
-	imageLabel->setPixmap(pixmap);
-	m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
-
-	m_recorder.clearCameraFinder();
-}
-
-void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
-{
-	qDebug() << "Recorder state changed" << state;
-
-	if (state == QMediaRecorder::StoppedState)
-	{
-		// TODO check if the video is discarded
-
-		// delete old image file
-		if (!m_clip->videoUrl().isEmpty())
-		{
-			QFile file(m_clip->videoUrl().toLocalFile());
-			file.remove();
-		}
-
-		// Use temporary file.
-		const QString fileName = m_recorder.recorder()->outputLocation().toLocalFile();
-		QFileInfo fileInfo(fileName);
-		qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder.recorder()->error();
-
-		//QPixmap pixmap(fileName);
-		//qDebug() << "Pixmap:" << pixmap.size();
-		//imageLabel->setPixmap(pixmap);
-		m_clip->setVideoUrl(QUrl::fromLocalFile(fileName));
-
-		m_recorder.clearCameraFinder();
-	}
+	updateClipImage();
 }
 
 void ClipEditor::chooseVideo()
@@ -133,27 +90,148 @@ void ClipEditor::chooseVideo()
 
 void ClipEditor::recordVideo()
 {
-	QTemporaryFile file("XXXXXX.mkv");
+	qDebug() << "Recording to file video";
+	m_recorder->setOutputFile("video");
 
-	if (!file.open())
+	if (m_recorder->showCameraFinder(QCamera::CaptureVideo) == QDialog::Accepted)
+	{
+		updateClipVideo();
+	}
+	else
+	{
+		deleteRecordedFile();
+	}
+
+	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+}
+
+void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
+{
+	qDebug() << "Recorder state changed" << state;
+
+	if (state == QMediaRecorder::StoppedState)
+	{
+		qDebug() << "Saved file";
+
+		const QString filePath = m_recorder->recorder()->outputLocation().toLocalFile();
+
+		// Dont delete the current file.
+		if (filePath != m_recordedFile)
+		{
+			deleteRecordedFile();
+		}
+
+		m_recordedFile = filePath;
+
+		updateClipVideo();
+	}
+}
+
+void ClipEditor::audioRecorderStateChanged(QMediaRecorder::State state)
+{
+	qDebug() << "Audio recorder state changed" << state;
+
+	if (state == QMediaRecorder::StoppedState)
+	{
+		qDebug() << "Saved file";
+
+		const QString filePath = m_recorder->audioRecorder()->outputLocation().toLocalFile();
+
+		// Dont delete the current file.
+		if (filePath != m_recordedFile)
+		{
+			deleteRecordedFile();
+		}
+
+		m_recordedFile = filePath;
+
+		updateClipVideo();
+	}
+}
+
+void ClipEditor::updateClipImage()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
 	{
 		return;
 	}
 
-	qDebug() << "Recording to file" << file.fileName();
-	m_recorder.setOutputFile(file.fileName());
-	RecorderView *recorderView = m_recorder.showCameraFinder(this, QCamera::CaptureVideo);
+	const QFileInfo fileInfo(m_recordedFile);
 
-	if (recorderView->exec() == QDialog::Accepted)
+	qDebug() << "Using file" << m_recordedFile << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->imageCapture()->error();
+
+	if (fileInfo.exists())
 	{
+		QPixmap pixmap(fileName);
+		qDebug() << "Pixmap:" << pixmap.size();
+		imageLabel->setPixmap(pixmap);
+		m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
+
+		// Dont delete the old file. TODO leaks afterwards when removed.
+		m_recordedFile.clear();
+
+		checkForValidFields();
+	}
+}
+
+void ClipEditor::updateClipVideo()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
+	{
+		return;
 	}
 
-	qDebug() << "capture error state" << m_recorder.imageCapture()->error();
+	const QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->recorder()->error();
 
-	delete recorderView;
-	recorderView = nullptr;
-	// TODO start GUI which shows the camera view
-	//m_recorder.recordImage(m_file.fileName());
+	if (fileInfo.exists())
+	{
+		m_clip->setVideoUrl(QUrl::fromLocalFile(fileName));
+		videoLabel->setText(fileName);
+
+		// Dont delete the old file. TODO leaks afterwards when removed.
+		m_recordedFile.clear();
+
+		checkForValidFields();
+	}
+}
+
+void ClipEditor::updateClipNarratingSound()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	const QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->recorder()->error();
+
+	if (fileInfo.exists())
+	{
+		const QString language = this->execLanguageDialog();
+
+		if (!language.isEmpty())
+		{
+			Clip::Urls narratorUrls = this->m_clip->narratorUrls();
+			narratorUrls.insert(language, QUrl::fromLocalFile(fileName));
+			this->m_clip->setNarratorUrls(narratorUrls);
+			this->narratingSoundsListWidget->addItem(fileName);
+
+			// Dont delete the old file. TODO leaks afterwards when removed.
+			m_recordedFile.clear();
+
+			checkForValidFields();
+		}
+	}
 }
 
 void ClipEditor::addNarratingSound()
@@ -175,6 +253,23 @@ void ClipEditor::addNarratingSound()
 			checkForValidFields();
 		}
 	}
+}
+
+void ClipEditor::recordNarratingSound()
+{
+	qDebug() << "Recording to file audio";
+	m_recorder->setOutputFile("audio");
+
+	if (m_recorder->showAudioRecorder() == QDialog::Accepted)
+	{
+		updateClipNarratingSound();
+	}
+	else
+	{
+		deleteRecordedFile();
+	}
+
+	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
 void ClipEditor::removeNarratingSound()
@@ -244,7 +339,7 @@ QString ClipEditor::execLanguageDialog()
 	return QString();
 }
 
-ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recording(false)
+ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recorder(new Recorder(this))
 {
 	setupUi(this);
 
@@ -258,6 +353,7 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->recordVideoPushButton, &QPushButton::clicked, this, &ClipEditor::recordVideo);
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
+	connect(this->recordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSound);
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
@@ -265,8 +361,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-	connect(this->m_recorder.imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
-	connect(this->m_recorder.recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
+	connect(this->m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
+	connect(this->m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
+	connect(this->m_recorder->audioRecorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::audioRecorderStateChanged);
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();
@@ -332,4 +429,17 @@ bool ClipEditor::checkForValidFields()
 	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(result);
 
 	return result;
+}
+
+bool ClipEditor::deleteRecordedFile()
+{
+	// delete old temporary video file
+	if (!m_recordedFile.isEmpty())
+	{
+		QFile file(m_recordedFile);
+
+		return file.remove();
+	}
+
+	return false;
 }

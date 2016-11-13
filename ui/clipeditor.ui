@@ -103,19 +103,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
    <item row="3" column="0">
@@ -128,13 +115,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="videoLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="recordVideoPushButton">
        <property name="text">
         <string>Record Video</string>
@@ -142,17 +122,11 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QLabel" name="videoLabel">
+       <property name="text">
+        <string/>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
     </layout>
    </item>

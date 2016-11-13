@@ -1,14 +1,14 @@
 #ifndef RECORDER_H
 #define RECORDER_H
 
-#include <QObject>
+#include <QDialog>
 #include <QCamera>
 #include <QMediaRecorder>
 #include <QCameraImageCapture>
 #include <QAudioRecorder>
 #include <QCameraViewfinder>
 
-class RecorderView;
+#include "ui_recorder.h"
 
 /**
  * @brief The Recorder class allows recording videos or images.
@@ -17,40 +17,60 @@ class RecorderView;
  *
  * @note Windows support: https://bugreports.qt.io/browse/QTBUG-29175
  */
-class Recorder : public QObject
+class Recorder : public QDialog, protected Ui::Recorder
 {
 	Q_OBJECT
 
+	private slots:
+		void pressCapturePhoto();
+		/**
+		 * Pauses if already recoridng.
+		 */
+		void pressRecordVideo();
+		void pressRecordAudio();
+		void pressStopRecording();
+
 	public slots:
 		void recordVideo();
-		void recordImage();
+		void captureImage();
 		void recordAudio();
 		void pauseRecordingVideo();
+		void pauseRecordingAudio();
 		void stopRecordingVideo();
 		void stopRecordingAudio();
+		void stopAllRecording();
 
 		void clearCameraFinder();
 
-		RecorderView* showCameraFinder(QWidget *parent, QCamera::CaptureMode captureMode = QCamera::CaptureStillImage);
+		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage);
+		int showAudioRecorder();
 
 	public:
-		Recorder(QObject *object = nullptr);
+		Recorder(QWidget *parent = nullptr);
 
 		QMediaRecorder::State state() const;
 
 		QCamera* camera() const;
 		QMediaRecorder* recorder() const;
 		QCameraImageCapture* imageCapture() const;
+		QAudioRecorder* audioRecorder() const;
 
 		void setOutputFile(const QString &outputFile);
 		QString outputFile() const;
+
+		void setCameraCaptureMode(QCamera::CaptureMode captureMode);
+
+		QCameraViewfinder* cameraViewFinder() const;
+
+	protected:
+		virtual void closeEvent(QCloseEvent *event) override;
 
 	private:
 		QCamera *m_camera;
 		QMediaRecorder *m_recorder;
 		QCameraImageCapture *m_imageCapture;
 		QAudioRecorder *m_audioRecorder;
-		QCameraViewfinder *m_viewfinder;
+		QCameraViewfinder *m_cameraViewFinder;
 		QString m_outputFile;
 };
 
@@ -72,6 +92,11 @@ inline QMediaRecorder* Recorder::recorder() const
 inline QCameraImageCapture* Recorder::imageCapture() const
 {
 	return this->m_imageCapture;
+}
+
+inline QAudioRecorder* Recorder::audioRecorder() const
+{
+	return this->m_audioRecorder;
 }
 
 inline void Recorder::setOutputFile(const QString &outputFile)

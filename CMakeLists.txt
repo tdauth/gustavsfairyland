@@ -88,7 +88,6 @@ set(fairyland_HEADERS
 	src/languagedialog.h
 	src/clickanimation.h
 	src/recorder.h
-	src/recorderview.h
 )
 
 set(fairyland_SRCS
@@ -120,7 +119,6 @@ set(fairyland_SRCS
 	src/languagedialog.cpp
 	src/clickanimation.cpp
 	src/recorder.cpp
-	src/recorderview.cpp
 )
 
 set(fairyland_UI
@@ -136,7 +134,7 @@ set(fairyland_UI
 	ui/highscores.ui
 	ui/gameoverdialog.ui
 	ui/languagedialog.ui
-	ui/recorderview.ui
+	ui/recorder.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})

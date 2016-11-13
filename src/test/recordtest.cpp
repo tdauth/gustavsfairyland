@@ -63,7 +63,7 @@ void RecordTest::testCaptureImage()
 	Recorder recorder;
 	const QFileInfo fileInfo("tmp.jpg");
 	recorder.setOutputFile(fileInfo.absoluteFilePath());
-	recorder.recordImage();
+	recorder.captureImage();
 	qDebug() << "Recording to" << fileInfo.absoluteFilePath();
 	//QThread::sleep(8);
 	int i = 0;

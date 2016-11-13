@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RecorderView</class>
- <widget class="QWidget" name="RecorderView">
+ <class>Recorder</class>
+ <widget class="QWidget" name="Recorder">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>611</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,6 +52,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="okPushButton">
+          <property name="text">
+           <string>OK</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="photoPushButton">
           <property name="text">
            <string>Make Photo</string>
@@ -59,9 +66,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pausePushButton">
+         <widget class="QPushButton" name="recordAudioPushButton">
           <property name="text">
-           <string>Pause</string>
+           <string>Record Audio</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="recordVideoPushButton">
+          <property name="text">
+           <string>Record Video</string>
           </property>
          </widget>
         </item>

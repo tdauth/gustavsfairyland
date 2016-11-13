@@ -8,3 +8,5 @@ configure_file(clips.xml clips.xml COPYONLY)
 add_executable(recordtest recordtest.cpp)
 target_link_libraries(recordtest Qt5::Core Qt5::Test gustavsfairylandlib)
 add_test(NAME RecordTest COMMAND ./recordtest)
+
+include_directories("${CMAKE_BINARY_DIR}")
