@@ -23,9 +23,6 @@
       <widget class="QWidget" name="cameraFinderWidget" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="audioLevelWidget" native="true"/>
-     </item>
-     <item>
       <widget class="QWidget" name="widget_2" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
