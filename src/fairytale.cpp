@@ -20,6 +20,7 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
+#include "gamemodestory.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -506,6 +507,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
+	GameModeStory *gameMode = new GameModeStory(this);
+	m_gameModes.insert(gameMode->id(), gameMode);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
