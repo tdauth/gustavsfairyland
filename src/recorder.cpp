@@ -31,6 +31,7 @@ void Recorder::recordVideo()
 	qDebug() << "Recording from:" << m_recorder->mediaObject();
 	m_recorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
 	m_recorder->record();
+	m_isRecording = true;
 }
 
 void Recorder::captureImage()
@@ -60,45 +61,39 @@ void Recorder::recordAudio()
 {
 	m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
 	m_audioRecorder->record();
+	m_isRecording = true;
+
+	qDebug() << "Record audio to" << outputFile();
 }
 
 void Recorder::pauseRecordingVideo()
 {
 	m_recorder->pause();
+	m_isRecording = false;
 }
 
 void Recorder::pauseRecordingAudio()
 {
 	m_audioRecorder->pause();
+	m_isRecording = false;
 }
 
 void Recorder::stopRecordingVideo()
 {
 	m_recorder->stop();
+	m_isRecording = false;
 }
 
 void Recorder::stopRecordingAudio()
 {
 	m_audioRecorder->stop();
+	m_isRecording = false;
 }
 
 void Recorder::stopAllRecording()
 {
-	if (m_recorder->state() != QMediaRecorder::State::StoppedState)
-	{
-		m_recorder->stop();
-	}
-
-	if (m_audioRecorder->state() != QMediaRecorder::State::StoppedState)
-	{
-		m_audioRecorder->stop();
-	}
-}
-
-void Recorder::clearCameraFinder()
-{
-	//m_camera->stop();
-	//m_camera->setViewfinder((QVideoWidget*)nullptr);
+	m_recorder->stop();
+	m_audioRecorder->stop();
 }
 
 int Recorder::showCameraFinder(QCamera::CaptureMode captureMode)
@@ -122,6 +117,8 @@ int Recorder::showAudioRecorder()
 	setResult(QDialog::Rejected);
 
 	m_cameraViewFinder->hide();
+	okPushButton->show();
+	cancelPushButton->show();
 	photoPushButton->hide();
 	recordVideoPushButton->hide();
 	recordAudioPushButton->show();
@@ -129,7 +126,7 @@ int Recorder::showAudioRecorder()
 	return this->exec();
 }
 
-Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this))
+Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this)), m_isRecording(false)
 {
 	const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
 
@@ -147,30 +144,33 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	m_imageCapture = new QCameraImageCapture(m_camera);
 
 	m_audioRecorder = new QAudioRecorder(this);
-	QStringList inputs = m_audioRecorder->audioInputs();
-	QString selectedInput = m_audioRecorder->defaultAudioInput();
+	const QStringList inputs = m_audioRecorder->audioInputs();
+	const QString selectedInput = m_audioRecorder->defaultAudioInput();
 
-	foreach (QString input, inputs)
+	foreach (const QString &input, inputs)
 	{
-		QString description = m_audioRecorder->audioInputDescription(input);
+		const QString description = m_audioRecorder->audioInputDescription(input);
 		// show descriptions to user and allow selection
-		selectedInput = input;
-		qDebug() << "Audio input" << input;
+		qDebug() << "Audio input" << input << description;
 	}
 
-	m_audioRecorder->setAudioInput(selectedInput);
+	qDebug() << "Selected audio input" << selectedInput;
 
-	QAudioEncoderSettings audioSettings;
-	audioSettings.setCodec("audio/amr");
-	audioSettings.setQuality(QMultimedia::HighQuality);
+	foreach (const QString &codecName, m_audioRecorder->supportedAudioCodecs())
+	{
+		qDebug() << "Audio codec" << codecName;
+	}
 
-	m_audioRecorder->setEncodingSettings(audioSettings);
+	qDebug() << "Selected audio codec" << m_audioRecorder->audioSettings().codec();
 
 	m_camera->setViewfinder(m_cameraViewFinder);
 
 	setupUi(this);
 
-	verticalLayout->replaceWidget(widget, m_cameraViewFinder);
+	verticalLayout->replaceWidget(cameraFinderWidget, m_cameraViewFinder);
+
+	connect(m_recorder, &QMediaRecorder::stateChanged, this, &Recorder::videoRecorderStateChanged);
+	connect(m_audioRecorder, &QMediaRecorder::stateChanged, this, &Recorder::audioRecorderStateChanged);
 
 	connect(photoPushButton, &QPushButton::clicked, this, &Recorder::pressCapturePhoto);
 	connect(recordVideoPushButton, &QPushButton::clicked, this, &Recorder::pressRecordVideo);
@@ -178,6 +178,11 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	connect(stopPushButton, &QPushButton::clicked, this, &Recorder::pressStopRecording);
 	connect(okPushButton, &QPushButton::clicked, this, &Recorder::accept);
 	connect(cancelPushButton, &QPushButton::clicked, this, &Recorder::reject);
+
+	/*
+	 * Make sure that all recording is finished after setting the state to rejected or accepted.
+	 */
+	connect(this, &QDialog::finished, this, &Recorder::stopAllRecording);
 }
 
 void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
@@ -200,6 +205,62 @@ void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
 	}
 }
 
+void Recorder::videoRecorderStateChanged(QMediaRecorder::State state)
+{
+	switch (state)
+	{
+		case QMediaRecorder::StoppedState:
+		{
+			m_isRecording = false;
+
+			break;
+		}
+
+		case QMediaRecorder::PausedState:
+		{
+			m_isRecording = false;
+
+			break;
+		}
+
+		case QMediaRecorder::RecordingState:
+		{
+			m_isRecording = true;
+
+			break;
+		}
+	}
+}
+
+void Recorder::audioRecorderStateChanged(QMediaRecorder::State state)
+{
+	qDebug() << "Audio recorder state changed" << state;
+
+	switch (state)
+	{
+		case QMediaRecorder::StoppedState:
+		{
+			m_isRecording = false;
+
+			break;
+		}
+
+		case QMediaRecorder::PausedState:
+		{
+			m_isRecording = false;
+
+			break;
+		}
+
+		case QMediaRecorder::RecordingState:
+		{
+			m_isRecording = true;
+
+			break;
+		}
+	}
+}
+
 void Recorder::pressCapturePhoto()
 {
 	setResult(QDialog::Accepted);
@@ -210,8 +271,7 @@ void Recorder::pressCapturePhoto()
 
 void Recorder::pressRecordVideo()
 {
-	// TODO store state manually as flag since the calls are asynchronus-
-	if (m_recorder->state() == QMediaRecorder::RecordingState)
+	if (m_isRecording)
 	{
 		recordVideoPushButton->setText(tr("Continue Recording"));
 		pauseRecordingVideo();
@@ -225,8 +285,9 @@ void Recorder::pressRecordVideo()
 
 void Recorder::pressRecordAudio()
 {
-	// TODO store state manually as flag since the calls are asynchronus-
-	if (m_audioRecorder->state() == QMediaRecorder::RecordingState)
+	qDebug() << "Pressed record audio";
+
+	if (m_isRecording)
 	{
 		recordAudioPushButton->setText(tr("Continue Recording"));
 		pauseRecordingAudio();
@@ -243,12 +304,12 @@ void Recorder::pressStopRecording()
 	stopAllRecording();
 }
 
-void Recorder::closeEvent(QCloseEvent *event)
+void Recorder::hideEvent(QHideEvent *event)
 {
 	qDebug() << "Stopping all recorders";
 	this->stopAllRecording();
 	m_camera->stop();
-	QDialog::closeEvent(event);
+	QDialog::hideEvent(event);
 }
 
 #include "moc_recorder.cpp"

@@ -11,17 +11,20 @@
 #include "ui_recorder.h"
 
 /**
- * @brief The Recorder class allows recording videos or images.
+ * \brief The Recorder class allows recording videos or images.
  *
  * Recording videos and images directly with a webcam allows the users to create their own clips.
  *
- * @note Windows support: https://bugreports.qt.io/browse/QTBUG-29175
+ * \note Windows support: https://bugreports.qt.io/browse/QTBUG-29175
  */
 class Recorder : public QDialog, protected Ui::Recorder
 {
 	Q_OBJECT
 
 	private slots:
+		void videoRecorderStateChanged(QMediaRecorder::State state);
+		void audioRecorderStateChanged(QMediaRecorder::State state);
+
 		void pressCapturePhoto();
 		/**
 		 * Pauses if already recoridng.
@@ -39,8 +42,6 @@ class Recorder : public QDialog, protected Ui::Recorder
 		void stopRecordingVideo();
 		void stopRecordingAudio();
 		void stopAllRecording();
-
-		void clearCameraFinder();
 
 		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage);
 		int showAudioRecorder();
@@ -63,7 +64,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		QCameraViewfinder* cameraViewFinder() const;
 
 	protected:
-		virtual void closeEvent(QCloseEvent *event) override;
+		virtual void hideEvent(QHideEvent *event) override;
 
 	private:
 		QCamera *m_camera;
@@ -72,6 +73,8 @@ class Recorder : public QDialog, protected Ui::Recorder
 		QAudioRecorder *m_audioRecorder;
 		QCameraViewfinder *m_cameraViewFinder;
 		QString m_outputFile;
+
+		bool m_isRecording;
 };
 
 inline QMediaRecorder::State Recorder::state() const

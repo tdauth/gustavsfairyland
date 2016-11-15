@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include <QSettings>
+#include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
 
@@ -42,8 +40,9 @@ void ClipEditor::chooseImage()
 
 void ClipEditor::captureImage()
 {
-	qDebug() << "Recording to file image";
-	m_recorder->setOutputFile("image");
+	const QFileInfo fileInfo = QDir::current().filePath("image");
+	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
 
 	if (m_recorder->showCameraFinder(QCamera::CaptureStillImage) == QDialog::Accepted)
 	{
@@ -90,8 +89,9 @@ void ClipEditor::chooseVideo()
 
 void ClipEditor::recordVideo()
 {
-	qDebug() << "Recording to file video";
-	m_recorder->setOutputFile("video");
+	const QFileInfo fileInfo = QDir::current().filePath("video");
+	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+	m_recorder->setOutputFile(fileInfo.absolutePath());
 
 	if (m_recorder->showCameraFinder(QCamera::CaptureVideo) == QDialog::Accepted)
 	{
@@ -133,9 +133,8 @@ void ClipEditor::audioRecorderStateChanged(QMediaRecorder::State state)
 
 	if (state == QMediaRecorder::StoppedState)
 	{
-		qDebug() << "Saved file";
-
 		const QString filePath = m_recorder->audioRecorder()->outputLocation().toLocalFile();
+		qDebug() << "Saved audio file" << filePath;
 
 		// Dont delete the current file.
 		if (filePath != m_recordedFile)
@@ -145,7 +144,7 @@ void ClipEditor::audioRecorderStateChanged(QMediaRecorder::State state)
 
 		m_recordedFile = filePath;
 
-		updateClipVideo();
+		updateClipNarratingSound();
 	}
 }
 
@@ -182,6 +181,9 @@ void ClipEditor::updateClipVideo()
 	// Use temporary file.
 	const QString fileName = m_recordedFile;
 
+	/*
+	 * The recorder dialog has to be accepted, otherwise the file is recorded but not used for the clip.
+	 */
 	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
 	{
 		return;
@@ -213,7 +215,7 @@ void ClipEditor::updateClipNarratingSound()
 	}
 
 	const QFileInfo fileInfo(fileName);
-	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->recorder()->error();
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->audioRecorder()->error();
 
 	if (fileInfo.exists())
 	{
@@ -257,8 +259,9 @@ void ClipEditor::addNarratingSound()
 
 void ClipEditor::recordNarratingSound()
 {
-	qDebug() << "Recording to file audio";
-	m_recorder->setOutputFile("audio");
+	const QFileInfo fileInfo = QDir::current().filePath("audio");
+	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
 
 	if (m_recorder->showAudioRecorder() == QDialog::Accepted)
 	{
@@ -416,7 +419,7 @@ void ClipEditor::assignToClip(Clip *clip)
 
 Clip* ClipEditor::clip(QObject *parent)
 {
-	std::cerr << "Clips description on getting clip " << m_clip->description().toUtf8().constData() << std::endl;
+	qDebug() << "Clips description on getting clip" << m_clip->description();
 
 	return new Clip(*m_clip, parent);
 }

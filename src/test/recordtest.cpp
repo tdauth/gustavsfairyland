@@ -33,7 +33,7 @@ void RecordTest::testRecordVideo()
 
 	delay();
 
-	qDebug() << "State:" << recorder.state();
+	qDebug() << "State:" << recorder.recorder()->state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
 	recorder.stopRecordingVideo();
@@ -54,7 +54,7 @@ void RecordTest::testCaptureImage()
 
 	delay();
 
-	qDebug() << "State:" << recorder.state();
+	qDebug() << "State:" << recorder.recorder()->state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
 
@@ -74,7 +74,7 @@ void RecordTest::testRecordAudio()
 
 	delay();
 
-	qDebug() << "State:" << recorder.state();
+	qDebug() << "State:" << recorder.recorder()->state();
 	qDebug() << "Error:" << recorder.recorder()->error();
 	qDebug() << "State:" << recorder.recorder()->errorString();
 	recorder.stopRecordingAudio();

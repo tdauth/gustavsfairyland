@@ -20,7 +20,10 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QWidget" name="widget" native="true"/>
+      <widget class="QWidget" name="cameraFinderWidget" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="audioLevelWidget" native="true"/>
      </item>
      <item>
       <widget class="QWidget" name="widget_2" native="true">
@@ -43,20 +46,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="cancelPushButton">
-          <property name="text">
-           <string>Cancel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="okPushButton">
-          <property name="text">
-           <string>OK</string>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="photoPushButton">
@@ -83,6 +72,20 @@
          <widget class="QPushButton" name="stopPushButton">
           <property name="text">
            <string>Stop</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cancelPushButton">
+          <property name="text">
+           <string>Cancel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="okPushButton">
+          <property name="text">
+           <string>OK</string>
           </property>
          </widget>
         </item>
