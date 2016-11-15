@@ -47,6 +47,13 @@ class Recorder : public QDialog, protected Ui::Recorder
 		int showAudioRecorder();
 
 	public:
+		enum Mode
+		{
+			RecordVideo,
+			RecordAudio,
+			CaptureImage
+		};
+
 		Recorder(QWidget *parent = nullptr);
 
 		QMediaRecorder::State state() const;
@@ -62,6 +69,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		void setCameraCaptureMode(QCamera::CaptureMode captureMode);
 
 		QCameraViewfinder* cameraViewFinder() const;
+		Mode mode() const;
 
 	protected:
 		virtual void hideEvent(QHideEvent *event) override;
@@ -75,6 +83,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		QString m_outputFile;
 
 		bool m_isRecording;
+		Mode m_mode;
 };
 
 inline QMediaRecorder::State Recorder::state() const
@@ -110,6 +119,11 @@ inline void Recorder::setOutputFile(const QString &outputFile)
 inline QString Recorder::outputFile() const
 {
 	return this->m_outputFile;
+}
+
+inline Recorder::Mode Recorder::mode() const
+{
+	return this->m_mode;
 }
 
 #endif // RECORDER_H

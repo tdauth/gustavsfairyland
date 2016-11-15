@@ -5,6 +5,7 @@
 #include "clipeditor.h"
 #include "languagedialog.h"
 #include "recorder.h"
+#include "fairytale.h"
 
 #include "clipeditor.moc"
 
@@ -40,7 +41,7 @@ void ClipEditor::chooseImage()
 
 void ClipEditor::captureImage()
 {
-	const QFileInfo fileInfo = QDir::current().filePath("image");
+	const QFileInfo fileInfo = clipsDirectory().filePath("image");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
 
@@ -89,7 +90,7 @@ void ClipEditor::chooseVideo()
 
 void ClipEditor::recordVideo()
 {
-	const QFileInfo fileInfo = QDir::current().filePath("video");
+	const QFileInfo fileInfo = clipsDirectory().filePath("video");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absolutePath());
 
@@ -164,9 +165,10 @@ void ClipEditor::updateClipImage()
 
 	if (fileInfo.exists())
 	{
-		QPixmap pixmap(fileName);
+		const QPixmap pixmap(fileName);
 		qDebug() << "Pixmap:" << pixmap.size();
-		imageLabel->setPixmap(pixmap);
+		imageLabel->setPixmap(pixmap.scaled(64, 64));
+		imagePathLabel->setText(fileName);
 		m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
 
 		// Dont delete the old file. TODO leaks afterwards when removed.
@@ -219,12 +221,10 @@ void ClipEditor::updateClipNarratingSound()
 
 	if (fileInfo.exists())
 	{
-		const QString language = this->execLanguageDialog();
-
-		if (!language.isEmpty())
+		if (!m_language.isEmpty())
 		{
 			Clip::Urls narratorUrls = this->m_clip->narratorUrls();
-			narratorUrls.insert(language, QUrl::fromLocalFile(fileName));
+			narratorUrls.insert(m_language, QUrl::fromLocalFile(fileName));
 			this->m_clip->setNarratorUrls(narratorUrls);
 			this->narratingSoundsListWidget->addItem(fileName);
 
@@ -236,19 +236,35 @@ void ClipEditor::updateClipNarratingSound()
 	}
 }
 
+void ClipEditor::onFinish(int result)
+{
+	if (result == QDialog::Accepted && checkForValidFields())
+	{
+		moveFilesToCurrentClipIdDir();
+	}
+	// TODO delete temporary stuff?!
+	else
+	{
+	}
+}
+
 void ClipEditor::addNarratingSound()
 {
+	if (this->execLanguageDialog().isEmpty())
+	{
+		return;
+	}
+
 	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Narrating Sound"), this->m_dir,  tr("All files (*);;Audio (*.wav)"));
 
 	if (!filePath.isEmpty())
 	{
 		const QUrl url = QUrl::fromLocalFile(filePath);
-		const QString language = this->execLanguageDialog();
 
-		if (!language.isEmpty())
+		if (!m_language.isEmpty())
 		{
 			Clip::Urls narratorUrls = this->m_clip->narratorUrls();
-			narratorUrls.insert(language, url);
+			narratorUrls.insert(m_language, url);
 			this->m_clip->setNarratorUrls(narratorUrls);
 			this->narratingSoundsListWidget->addItem(filePath);
 
@@ -259,7 +275,12 @@ void ClipEditor::addNarratingSound()
 
 void ClipEditor::recordNarratingSound()
 {
-	const QFileInfo fileInfo = QDir::current().filePath("audio");
+	if (execLanguageDialog().isEmpty())
+	{
+		return;
+	}
+
+	const QFileInfo fileInfo = clipsDirectory().filePath("audio_" + m_language);
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
 
@@ -293,16 +314,19 @@ void ClipEditor::removeNarratingSound()
 
 void ClipEditor::addDescription()
 {
+	if (this->execLanguageDialog().isEmpty())
+	{
+		return;
+	}
+
 	const QString description = QInputDialog::getText(this, tr("Description"), tr("Description:"));
 
 	if (!description.isEmpty())
 	{
-		const QString language = this->execLanguageDialog();
-
-		if (!language.isEmpty())
+		if (!m_language.isEmpty())
 		{
 			Clip::Descriptions descriptions = this->m_clip->descriptions();
-			descriptions.insert(language, description);
+			descriptions.insert(m_language, description);
 			this->m_clip->setDescriptions(descriptions);
 			this->descriptionsListWidget->addItem(description);
 
@@ -336,7 +360,10 @@ QString ClipEditor::execLanguageDialog()
 
 	if (this->m_languageDialog->exec() == QDialog::Accepted)
 	{
-		return this->m_languageDialog->getLanguage();
+		const QString result = this->m_languageDialog->getLanguage();
+		m_language = result;
+
+		return result;
 	}
 
 	return QString();
@@ -361,8 +388,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
 
-	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipEditor::accept);
+	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipEditor::reject);
+	connect(this, &QDialog::finished, this, &ClipEditor::onFinish);
 
 	connect(this->m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
 	connect(this->m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
@@ -384,7 +412,7 @@ void ClipEditor::fill(Clip *clip)
 	this->isAPersonCheckBox->setChecked(clip->isPerson());
 	QPixmap pixmap(clip->imageUrl().toLocalFile());
 	this->imageLabel->setPixmap(pixmap.scaled(64, 64));
-	this->imageLabel->setText(clip->imageUrl().toString());
+	this->imagePathLabel->setText(clip->imageUrl().toString());
 	this->videoLabel->setText(clip->videoUrl().toString());
 
 	this->narratingSoundsListWidget->clear();
@@ -445,4 +473,135 @@ bool ClipEditor::deleteRecordedFile()
 	}
 
 	return false;
+}
+
+QDir ClipEditor::clipsDirectory() const
+{
+	const QDir clipsDir = QDir(this->m_app->clipsDir().toLocalFile());
+	const QFileInfo subDir = clipsDir.filePath("tmp");
+
+	if (!subDir.exists())
+	{
+		clipsDir.mkdir("tmp");
+	}
+
+	return QDir(subDir.absoluteFilePath());
+}
+
+QDir ClipEditor::currentClipDirectory() const
+{
+	return QDir(clipsDirectory().filePath(this->m_clip->id()));
+}
+
+bool ClipEditor::clipIdIsAlreadyUsed() const
+{
+	const QFileInfo fileInfo(clipsDirectory().filePath(this->m_clip->id()));
+
+	return fileInfo.exists();
+}
+
+bool ClipEditor::moveFileToCurrentClipDir(const QUrl &oldUrl, QUrl &newUrl)
+{
+	const QDir dir = currentClipDirectory();
+	const QString oldImageFilePath = this->m_app->resolveClipUrl(oldUrl).toLocalFile();
+	const QFileInfo oldImageFile(oldImageFilePath);
+	bool result = true;
+
+	if (oldImageFile.exists())
+	{
+		qDebug() << "New clips dir still is" << dir;
+		qDebug() << "image file name is" << oldImageFile.fileName();
+		const QString target = dir.filePath(oldImageFile.fileName());
+
+		qDebug() << "Has old file and copying it to " << target;
+
+		if (!QFile::copy(oldImageFile.absoluteFilePath(), target))
+		{
+			qDebug() << "Copying failed";
+
+			result = false;
+		}
+		/*
+		 * Make sure to use relative paths which work everywhere.
+		 */
+		else
+		{
+			newUrl = QUrl("./tmp/" + this->m_clip->id() + "/" + oldImageFile.fileName());
+			qDebug() << "New image URL" << newUrl;
+
+			// TODO delete old file oldImageFile
+		}
+	}
+
+	return result;
+}
+
+bool ClipEditor::moveFilesToCurrentClipIdDir()
+{
+	const QDir clipsDir = QDir(this->m_app->clipsDir().toLocalFile());
+
+	const QDir dir = currentClipDirectory();
+
+	if (!dir.exists())
+	{
+		if (!clipsDirectory().mkdir(dir.dirName()))
+		{
+			qDebug() << "Error on creating sub directory" << dir.dirName();
+
+			return false;
+		}
+	}
+
+	qDebug() << "New clips dir" << dir;
+
+	bool result = true;
+	QUrl newImageUrl;
+
+	if (moveFileToCurrentClipDir(this->m_clip->imageUrl(), newImageUrl))
+	{
+		m_clip->setImageUrl(newImageUrl);
+	}
+	else
+	{
+		result = false;
+	}
+
+	QUrl newVideoUrl;
+
+	if (moveFileToCurrentClipDir(this->m_clip->videoUrl(), newVideoUrl))
+	{
+		m_clip->setVideoUrl(newVideoUrl);
+	}
+	else
+	{
+		result = false;
+	}
+
+	Clip::Urls narratorUrls = this->m_clip->narratorUrls();
+	Clip::Urls newNarratorUrls;
+
+	foreach (const QString language, narratorUrls.keys())
+	{
+		const QUrl url = narratorUrls[language];
+		QUrl newSoundUrl;
+
+		if (moveFileToCurrentClipDir(url, newSoundUrl))
+		{
+			newNarratorUrls.insert(language, newSoundUrl);
+		}
+		else
+		{
+			result = false;
+			newNarratorUrls.insert(language, url);
+		}
+	}
+
+	this->m_clip->setNarratorUrls(newNarratorUrls);
+
+	/*
+	 * Update the whole GUI again after changing paths.
+	 */
+	this->fill(this->m_clip);
+
+	return result;
 }

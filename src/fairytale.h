@@ -199,8 +199,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		QUrl resolveClipUrl(const QUrl &url) const;
 
+		/**
+		 * The directory where all clips are stored.
+		 * \{
+		 */
 		void setClipsDir(const QUrl &url);
 		QUrl clipsDir() const;
+		/**
+		 * \}
+		 */
 
 		/**
 		 * \return Returns the current number of turns.

@@ -6,23 +6,6 @@
 
 void Recorder::recordVideo()
 {
-
-	// NOTE On Linux the encoder settings have to be supported by GStreamer.
-	// gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly
-	/*
-	QAudioEncoderSettings audioSettings;
-	audioSettings.setCodec("audio/amr");
-	audioSettings.setQuality(QMultimedia::HighQuality);
-
-	m_recorder->setAudioSettings(audioSettings);
-
-	QVideoEncoderSettings videoSettings;
-	videoSettings.setCodec("video/mpeg2");
-	videoSettings.setResolution(640, 480);
-
-	m_recorder->setVideoSettings(videoSettings);
-	*/
-
 	qDebug() << "Camera:" << m_camera;
 	qDebug() << "capture mode supported: " << m_camera->isCaptureModeSupported(QCamera::CaptureVideo);
 	m_camera->start();
@@ -32,6 +15,8 @@ void Recorder::recordVideo()
 	m_recorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
 	m_recorder->record();
 	m_isRecording = true;
+
+	recordVideoPushButton->setText(tr("Pause Recording"));
 }
 
 void Recorder::captureImage()
@@ -64,36 +49,46 @@ void Recorder::recordAudio()
 	m_isRecording = true;
 
 	qDebug() << "Record audio to" << outputFile();
+
+	recordAudioPushButton->setText(tr("Pause Recording"));
 }
 
 void Recorder::pauseRecordingVideo()
 {
 	m_recorder->pause();
 	m_isRecording = false;
+
+	recordVideoPushButton->setText(tr("Continue Recording"));
 }
 
 void Recorder::pauseRecordingAudio()
 {
 	m_audioRecorder->pause();
 	m_isRecording = false;
+
+	recordAudioPushButton->setText(tr("Continue Recording"));
 }
 
 void Recorder::stopRecordingVideo()
 {
 	m_recorder->stop();
 	m_isRecording = false;
+
+	recordVideoPushButton->setText(tr("Record Video"));
 }
 
 void Recorder::stopRecordingAudio()
 {
 	m_audioRecorder->stop();
 	m_isRecording = false;
+
+	recordAudioPushButton->setText(tr("Record Audio"));
 }
 
 void Recorder::stopAllRecording()
 {
-	m_recorder->stop();
-	m_audioRecorder->stop();
+	stopRecordingVideo();
+	stopRecordingAudio();
 }
 
 int Recorder::showCameraFinder(QCamera::CaptureMode captureMode)
@@ -107,6 +102,17 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode)
 	recordAudioPushButton->hide();
 
 	setCameraCaptureMode(captureMode);
+
+	if (captureMode == QCamera::CaptureVideo)
+	{
+		m_mode = RecordVideo;
+	}
+	else
+	{
+		m_mode = CaptureImage;
+	}
+
+	this->showFullScreen();
 
 	return this->exec();
 }
@@ -122,6 +128,10 @@ int Recorder::showAudioRecorder()
 	photoPushButton->hide();
 	recordVideoPushButton->hide();
 	recordAudioPushButton->show();
+
+	m_mode = RecordAudio;
+
+	this->showFullScreen();
 
 	return this->exec();
 }
@@ -273,12 +283,10 @@ void Recorder::pressRecordVideo()
 {
 	if (m_isRecording)
 	{
-		recordVideoPushButton->setText(tr("Continue Recording"));
 		pauseRecordingVideo();
 	}
 	else
 	{
-		recordVideoPushButton->setText(tr("Pause Recording"));
 		recordVideo();
 	}
 }
@@ -289,12 +297,10 @@ void Recorder::pressRecordAudio()
 
 	if (m_isRecording)
 	{
-		recordAudioPushButton->setText(tr("Continue Recording"));
 		pauseRecordingAudio();
 	}
 	else
 	{
-		recordAudioPushButton->setText(tr("Pause Recording"));
 		recordAudio();
 	}
 }

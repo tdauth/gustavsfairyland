@@ -1,3 +1,44 @@
+Usability:
+- Icons anstatt von Texten für Buttons verwenden. Erhöht vor allem die Usability auf Android: http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org.1.html
+- Videos und Audio im Editor direkt aufnehmen.
+- Fenster besser erkennbar machen von oben?
+- Anstatt kleinen Bildern - Symbole.
+- Logo/Splash Screen.
+- Weniger Buttons.
+- Button-Layout für Android nutzbar machen - Platz für Buttons nutzen, Buttons groß genug machen.
+
+Eigene Clips:
+- Dateimanagement mit relativen Pfaden fixen.
+- Einzelne Clips können beschrieben werden, durch ein kleines XML-File.
+- Einzelne Clips können verpackt werden (XML-Datei + Video + Bild + Audiodateien).
+- Neuer Spielmodus: "Geschichten schreiben"
+	- Der Spieler muss selbst Clips aufnehmen und Bilder dazu machen.
+	- Die Handlungen und Figuren werden zufällig vorgegeben.
+	- Multiplayer: Man gibt den anderen Spielern etwas vor und weiß aber nicht, was alle anderen Spieler machen oder alternativ man denkt sich selbst was aus.
+	- Am Ende wird ein Märchen generiert.
+
+Weitere TODOs:
+- FIXED (nur ein Musikstück): Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
+- zufälligen Bonusclip am Ende jedes Sieges abspielen
+- unfertige Märchen richtig als Text ausgeben
+- FIXED: Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
+- Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß. Auto-Skalierfunktionen fixen.
+- Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
+- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
+- Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
+- FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
+- Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
+- Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
+- Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
+- Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
+- lost.mkv abspielen wenn man verloren hat!
+- kein PNG-Format verwenden, immer mit JPEG komprimiren.
+- Musik reduzieren und komprimieren.
+- resources/paper.eps ist sehr groß. Wird es überhaupt verwendet?
+- QtApp kann nicht anders definiert werden. In Jenkins-Job die Datei umbenennen und so releasen und hochladen.
+- Lokalen GIT-Server aufsetzen, der ebenfalls die Projekte enthält. Dies erlaubt das Laufen der Jenkins-Jobs ohne Internetverbindung.
+- ANDROID_APK_FULLSCREEN auf TRUE? Dann gibt es keinen Titlebar mehr. Mehr Platz für das Spiel selbst?
+
 - DONE: Pause-Funktion
 - DONE: Endvideo überspringbar machen
 - DONE: Musik während Auswahl
@@ -47,8 +88,8 @@ http://stackoverflow.com/questions/38979135/qmediaplayer-on-android
 Da Qt aber nicht manuell gebaut wird, eventuell einfach ein anderes Videoformat benutzen.
 Für Windows-Release ".wmv" verwenden.
 
-- Intro kurz und knackig: Es war einmal ... Seiten fallen aus dem Buch VERDAMMTE SCHEISSE Nicht vergessen: Gustav Mahler improvisiert bei der Reihenfolge und gibt selbst einfach vor, welche Seite als Nächstes kommt
-- Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
+- DONE: Intro kurz und knackig: Es war einmal ... Seiten fallen aus dem Buch VERDAMMTE SCHEISSE Nicht vergessen: Gustav Mahler improvisiert bei der Reihenfolge und gibt selbst einfach vor, welche Seite als Nächstes kommt
+- DONE: Outro: Endlich kann es losgehen und die Seiten fallen wieder raus (Retry).
 - Optional: Mit Hilfe von valgrind nach Speicherleaks suchen.
 - DONE: Mahlers Musik! https://archive.org/details/Mahler_Symphony_5
 - DONE: Mahlers Musik komprimieren, zumindest wenn Option aktiv ist.
@@ -88,31 +129,9 @@ QtAV verwenden um Videos auf Android abzuspielen. Aktuelles Problem:
 https://github.com/wang-bin/QtAV/issues/138
 Crash wenn play() aufgerufen wird, obwohl alle Libraries enthalten sind.
 
-
-- Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
-- zufälligen Bonusclip am Ende jedes Sieges abspielen
-- unfertige Märchen richtig als Text ausgeben
-- FIXED: Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
-- Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß. Auto-Skalierfunktionen fixen.
-- Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
-- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
-- Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
-- FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
-- Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
-- Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
-- Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
-- Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
-- lost.mkv abspielen wenn man verloren hat!
-- kein PNG-Format verwenden, immer mit JPEG komprimiren.
-- Musik reduzieren und komprimieren.
-- resources/paper.eps ist sehr groß. Wird es überhaupt verwendet?
-- QtApp kann nicht anders definiert werden. In Jenkins-Job die Datei umbenennen und so releasen und hochladen.
-- Lokalen GIT-Server aufsetzen, der ebenfalls die Projekte enthält. Dies erlaubt das Laufen der Jenkins-Jobs ohne Internetverbindung.
-- ANDROID_APK_FULLSCREEN auf TRUE? Dann gibt es keinen Titlebar mehr. Mehr Platz für das Spiel selbst?
-
 Tonaufnahmen:
-- "and.wav" aufnehmen.
-- Fluchsounds aufnehmen.
+- DONE: "and.wav" aufnehmen.
+- DONE: Fluchsounds aufnehmen.
 
 Finale TODOS:
 - Valgrind memoryleaks and Profiling
