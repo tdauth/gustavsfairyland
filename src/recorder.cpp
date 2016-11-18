@@ -178,6 +178,7 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	setupUi(this);
 
 	verticalLayout->replaceWidget(cameraFinderWidget, m_cameraViewFinder);
+	m_cameraViewFinder->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	connect(m_recorder, &QMediaRecorder::stateChanged, this, &Recorder::videoRecorderStateChanged);
 	connect(m_audioRecorder, &QMediaRecorder::stateChanged, this, &Recorder::audioRecorderStateChanged);
