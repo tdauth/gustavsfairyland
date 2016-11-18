@@ -16,10 +16,12 @@ GameModeStory::GameModeStory(fairytale *app) : GameMode(app), m_state(State::Non
 	m_continueButton = new QPushButton(tr("Continue"), app);
 	connect(m_continueButton, &QPushButton::clicked, this, &GameModeStory::continueGameMode);
 	app->gameAreaLayout()->addWidget(m_continueButton);
+	m_continueButton->hide();
 
 	m_finishButton = new QPushButton(tr("Complete"), app);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeStory::finishGameMode);
 	app->gameAreaLayout()->addWidget(m_finishButton);
+	m_finishButton->hide();
 }
 
 GameMode::State GameModeStory::state()
@@ -60,10 +62,15 @@ void GameModeStory::pause()
 void GameModeStory::end()
 {
 	this->m_currentSolution = nullptr;
+	m_continueButton->hide();
+	m_finishButton->hide();
+	m_recorder->hide();
 }
 
 void GameModeStory::start()
 {
+	m_continueButton->show();
+	m_finishButton->show();
 }
 
 QString GameModeStory::name() const

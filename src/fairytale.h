@@ -153,6 +153,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		static QString localeToName(const QString &locale);
 
+		/**
+		 * Applies the custom style of the game to \p widget which means updating the background color
+		 * and the font.
+		 * \param widget The Widget of which the style is being updated.
+		 */
+		static void applyStyle(QWidget *widget);
+		static void applyStyleRecursively(QWidget *widget);
+
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
 
 		fairytale(Qt::WindowFlags flags = 0);

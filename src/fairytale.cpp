@@ -331,6 +331,45 @@ QString fairytale::localeToName(const QString &locale)
 	return locale;
 }
 
+void fairytale::applyStyle(QWidget *widget)
+{
+	/*
+	 * Use a custom font.
+	 */
+	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
+	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+	QFont monospace(widget->font());
+	monospace.setFamily(family);
+	widget->setFont(monospace);
+
+	// set black background
+	QPalette palette = qApp->palette();
+	palette.setColor(QPalette::Background, QColor(0xCEA66B));
+	widget->setPalette(palette);
+	//widget->setAutoFillBackground(true); // TODO performance is weak
+}
+
+void fairytale::applyStyleRecursively(QWidget *widget)
+{
+	QList<QWidget*> children;
+	children.push_back(widget);
+
+	foreach (QWidget *child, children)
+	{
+		foreach (QObject *childObject, child->children())
+		{
+			QWidget *childWidget = dynamic_cast<QWidget*>(childObject);
+
+			if (childWidget != nullptr)
+			{
+				children.push_back(childWidget);
+			}
+		}
+
+		applyStyle(child);
+	}
+}
+
 void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -425,6 +464,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
+	applyStyle(this);
+
+
 	this->m_currentScreen = qApp->primaryScreen();
 	changePrimaryScreen(this->m_currentScreen);
 	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
@@ -507,8 +549,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
-	GameModeStory *gameMode = new GameModeStory(this);
-	m_gameModes.insert(gameMode->id(), gameMode);
+	GameModeStory *gameModeStory = new GameModeStory(this);
+	m_gameModes.insert(gameModeStory->id(), gameModeStory);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
