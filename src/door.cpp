@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <QtGui>
 
 #include "door.h"
@@ -7,7 +5,6 @@
 
 Door::Door(RoomWidget *parent, Location location): QObject(parent), m_roomWidget(parent), m_location(location), m_isOpen(false)
 {
-
 }
 
 void Door::paint(QPainter *painter, QWidget *area)
