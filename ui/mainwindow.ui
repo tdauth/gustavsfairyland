@@ -292,7 +292,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -417,7 +417,10 @@
   <tabstop>quickGamePushButton</tabstop>
   <tabstop>customGamePushButton</tabstop>
   <tabstop>highScoresPushButton</tabstop>
+  <tabstop>settingsPushButton</tabstop>
   <tabstop>quitPushButton</tabstop>
+  <tabstop>pauseGamePushButton</tabstop>
+  <tabstop>cancelGamePushButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resource.qrc"/>
