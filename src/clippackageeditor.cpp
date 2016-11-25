@@ -180,6 +180,7 @@ void ClipPackageEditor::changedCurrentItem(QTreeWidgetItem *current, QTreeWidget
 ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app), m_clipEditor(nullptr), m_clipPackage(new ClipPackage(app, this))
 {
 	setupUi(this);
+	fairytale::applyStyleRecursively(this);
 
 	connect(this->idLineEdit, &QLineEdit::textChanged, this, &ClipPackageEditor::idChanged);
 	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
@@ -212,6 +213,7 @@ ClipEditor* ClipPackageEditor::clipEditor()
 	if (this->m_clipEditor == nullptr)
 	{
 		this->m_clipEditor = new ClipEditor(m_app, this);
+		fairytale::applyStyleRecursively(m_clipEditor);
 	}
 
 	return this->m_clipEditor;

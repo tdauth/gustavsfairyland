@@ -1,10 +1,10 @@
 Finale TODOS:
-Icons
-Sounds: Wind, Fenster, Turm, Schloss
-Logo-Erstellung
-Credits optimieren
-Clip-Editor
-Eigener Märchenschriftzug: „Medival“
+- Icons
+- Sounds: Wind, Fenster, Turm, Schloss
+- Logo-Erstellung
+- Credits optimieren
+- Clip-Editor
+- Eigener Märchenschriftzug: „Medival“
 
 Werbekampagne
 Soziale Kanäle
@@ -28,6 +28,7 @@ Eigene Clips:
 	- Die Handlungen und Figuren werden zufällig vorgegeben.
 	- Multiplayer: Man gibt den anderen Spielern etwas vor und weiß aber nicht, was alle anderen Spieler machen oder alternativ man denkt sich selbst was aus.
 	- Am Ende wird ein Märchen generiert.
+	- Android Netzwerk: https://developer.android.com/training/connect-devices-wirelessly/nsd.html
 
 Weitere TODOs:
 - FIXED (nur ein Musikstück): Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
@@ -36,7 +37,7 @@ Weitere TODOs:
 - FIXED: Android: Videos sind auf Samsung-Gerät schwarz. OpenGL-Beschleunigung? Renderer?
 - Android: Schrift/Buttons sind auf Samsung-Gerät viel zu groß. Auto-Skalierfunktionen fixen.
 - Android: Spiel abbrechen-Button usw. sind einfach noch sichtbar.
-- Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
+- FIXED: Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
 - Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
 - FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
 - Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!

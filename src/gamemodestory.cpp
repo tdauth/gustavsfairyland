@@ -71,6 +71,7 @@ void GameModeStory::start()
 {
 	m_continueButton->show();
 	m_finishButton->show();
+	continueGameMode();
 }
 
 QString GameModeStory::name() const
@@ -162,6 +163,7 @@ void GameModeStory::continueGameMode()
 
 		qDebug() << "Answer:" << reply->readAll();
 
+		// TODO check for canceling
 		m_recorder->showCameraFinder(QCamera::CaptureVideo);
 
 		m_recorder->showCameraFinder(QCamera::CaptureStillImage);

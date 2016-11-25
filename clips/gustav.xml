@@ -7,8 +7,8 @@
 	<!-- persons -->
 	<persons>
 		<clip id="opajott">
-			<image>./opajott/opajott1.jpg</image>
-			<video>./opajott/opajott1.mkv</video>
+			<image>./opajott/opajott.jpg</image>
+			<video>./opajott/opajott.mkv</video>
 			<narrator>
 				<en>./opajott/opajott_en.wav</en>
 				<de>./opajott/opajott_de.wav</de>
@@ -18,24 +18,24 @@
 				<de>Opa Jott</de>
 			</description>
 		</clip>
-		<clip id="vampir">
-			<image>./vampir/vampir.jpg</image>
-			<video>./vampir/vampir.avi</video>
+		<clip id="vampire">
+			<image>./vampire/vampire.jpg</image>
+			<video>./vampire/vampire.avi</video>
 			<narrator>
-				<en>./vampir/vampir_en.wav</en>
-				<de>./vampir/vampir_de.wav</de>
+				<en>./vampire/vampire_en.wav</en>
+				<de>./vampire/vampire_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Vampire</en>
 				<de>der Vampir</de>
 			</description>
 		</clip>
-		<clip id="werwolf">
-			<image>./werwolf/werwolf.jpg</image>
-			<video>./werwolf/werwolf.avi</video>
+		<clip id="werewolf">
+			<image>./werewolf/werewolf.jpg</image>
+			<video>./werewolf/werwolf.avi</video>
 			<narrator>.
-				<en>./werwolf/werwolf_en.wav</en>
-				<de>./werwolf/werwolf_de.wav</de>
+				<en>./werewolf/werewolf_en.wav</en>
+				<de>./werewolf/werewolf_de.wav</de>
 			</narrator>
 			<description>
 				<en>the Werewolf</en>

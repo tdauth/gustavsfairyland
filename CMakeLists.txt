@@ -150,7 +150,7 @@ set(fairyland_TRANSLATIONS
 set(fairytale_TRANSLATION_SRCS ${fairyland_SRCS} ${fairyland_HEADERS} ${fairyland_UI_HEADERS})
 QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyland_TRANSLATIONS})
 
-QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
+QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/oxygen.qrc)
 
 if (ANDROID)
 	set(QTAV_LIBRARIES

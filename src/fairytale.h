@@ -159,6 +159,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \param widget The Widget of which the style is being updated.
 		 */
 		static void applyStyle(QWidget *widget);
+		/**
+		 * Applies the custom style to \p widget and all of its children widgets recursively.
+		 */
 		static void applyStyleRecursively(QWidget *widget);
 
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
@@ -166,6 +169,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
 
+		/**
+		 * \return Returns the directory where the clips are stored by default.
+		 */
 		QString defaultClipsDirectory() const;
 
 		/**

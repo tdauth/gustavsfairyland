@@ -47,6 +47,7 @@ void fairytale::newGame()
 	if (this->m_clipPackageDialog == nullptr)
 	{
 		this->m_clipPackageDialog = new ClipPackageDialog(this);
+		applyStyleRecursively(m_clipPackageDialog);
 	}
 
 	this->m_clipPackageDialog->fill(this->clipPackages(), this->gameModes(), this);
@@ -345,28 +346,31 @@ void fairytale::applyStyle(QWidget *widget)
 	// set black background
 	QPalette palette = qApp->palette();
 	palette.setColor(QPalette::Background, QColor(0xCEA66B));
+	palette.setColor(QPalette::Button, QColor(0xCEA69E));
 	widget->setPalette(palette);
 	//widget->setAutoFillBackground(true); // TODO performance is weak
 }
 
 void fairytale::applyStyleRecursively(QWidget *widget)
 {
-	QList<QWidget*> children;
+	QStack<QObject*> children;
 	children.push_back(widget);
 
-	foreach (QWidget *child, children)
+	while (!children.isEmpty())
 	{
+		QObject *child = children.pop();
+
 		foreach (QObject *childObject, child->children())
 		{
-			QWidget *childWidget = dynamic_cast<QWidget*>(childObject);
-
-			if (childWidget != nullptr)
-			{
-				children.push_back(childWidget);
-			}
+			children.push(childObject);
 		}
 
-		applyStyle(child);
+		QWidget *childWidget = dynamic_cast<QWidget*>(child);
+
+		if (childWidget != nullptr)
+		{
+			applyStyle(childWidget);
+		}
 	}
 }
 
@@ -464,8 +468,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
-	applyStyle(this);
-
+	applyStyleRecursively(this);
 
 	this->m_currentScreen = qApp->primaryScreen();
 	changePrimaryScreen(this->m_currentScreen);
@@ -1841,6 +1844,7 @@ SettingsDialog* fairytale::settingsDialog()
 	if (m_settingsDialog == nullptr)
 	{
 		m_settingsDialog = new SettingsDialog(this, this);
+		applyStyle(m_settingsDialog);
 	}
 
 	return m_settingsDialog;
@@ -1851,6 +1855,7 @@ CustomFairytaleDialog* fairytale::customFairytaleDialog()
 	if (this->m_customFairytaleDialog == nullptr)
 	{
 		this->m_customFairytaleDialog = new CustomFairytaleDialog(this, this);
+		applyStyle(m_customFairytaleDialog);
 	}
 
 	return this->m_customFairytaleDialog;
@@ -1861,6 +1866,7 @@ AboutDialog* fairytale::aboutDialog()
 	if (this->m_aboutDialog == nullptr)
 	{
 		this->m_aboutDialog = new AboutDialog(this, this);
+		applyStyle(m_aboutDialog);
 	}
 
 	return this->m_aboutDialog;
@@ -1871,6 +1877,7 @@ WonDialog* fairytale::wonDialog()
 	if (this->m_wonDialog == nullptr)
 	{
 		this->m_wonDialog = new WonDialog(this, this);
+		applyStyle(m_wonDialog);
 	}
 
 	return this->m_wonDialog;
@@ -1881,6 +1888,7 @@ GameOverDialog* fairytale::gameOverDialog()
 	if (this->m_gameOverDialog == nullptr)
 	{
 		this->m_gameOverDialog = new GameOverDialog(this, this);
+		applyStyle(m_gameOverDialog);
 	}
 
 	return this->m_gameOverDialog;
