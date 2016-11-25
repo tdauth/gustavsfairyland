@@ -13,15 +13,29 @@ GameModeStory::GameModeStory(fairytale *app) : GameMode(app), m_state(State::Non
 	connect(m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &GameModeStory::onImageCaptured);
 	connect(m_recorder->audioRecorder(), &QMediaRecorder::stateChanged, this, &GameModeStory::onAudioRecorderStateChanged);
 
-	m_continueButton = new QPushButton(tr("Continue"), app);
-	connect(m_continueButton, &QPushButton::clicked, this, &GameModeStory::continueGameMode);
-	app->gameAreaLayout()->addWidget(m_continueButton);
-	m_continueButton->hide();
+	m_clipsWidget = new QWidget(app);
+	m_clipsWidget->setLayout(new QGridLayout());
+	app->gameAreaLayout()->addWidget(m_clipsWidget);
+	m_clipsWidget->hide();
+	m_clipsWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_finishButton = new QPushButton(tr("Complete"), app);
+	m_buttonsWidget = new QWidget(app);
+	QHBoxLayout *layout = new QHBoxLayout();
+	m_buttonsWidget->setLayout(layout);
+	app->gameAreaLayout()->addWidget(m_buttonsWidget);
+	m_buttonsWidget->hide();
+
+	//layout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Minimum));
+
+	m_continueButton = new QPushButton(tr("Continue"), m_buttonsWidget);
+	connect(m_continueButton, &QPushButton::clicked, this, &GameModeStory::continueGameMode);
+	m_buttonsWidget->layout()->addWidget(m_continueButton);
+
+	m_finishButton = new QPushButton(tr("Complete"), m_buttonsWidget);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeStory::finishGameMode);
-	app->gameAreaLayout()->addWidget(m_finishButton);
-	m_finishButton->hide();
+	m_buttonsWidget->layout()->addWidget(m_finishButton);
+
+	//layout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Minimum));
 }
 
 GameMode::State GameModeStory::state()
@@ -62,15 +76,15 @@ void GameModeStory::pause()
 void GameModeStory::end()
 {
 	this->m_currentSolution = nullptr;
-	m_continueButton->hide();
-	m_finishButton->hide();
+	m_clipsWidget->hide();
+	m_buttonsWidget->hide();
 	m_recorder->hide();
 }
 
 void GameModeStory::start()
 {
-	m_continueButton->show();
-	m_finishButton->show();
+	m_clipsWidget->show();
+	m_buttonsWidget->show();
 	continueGameMode();
 }
 
@@ -136,6 +150,24 @@ bool GameModeStory::addToHighScores()
 
 void GameModeStory::onVideoRecorderStateChanged(QMediaRecorder::State state)
 {
+	qDebug() << "Recorder state changed" << state;
+
+	if (state == QMediaRecorder::StoppedState)
+	{
+		qDebug() << "Saved file";
+
+		const QString filePath = m_recorder->recorder()->outputLocation().toLocalFile();
+
+		// Dont delete the current file.
+		if (filePath != m_recordedFile)
+		{
+			deleteRecordedFile();
+		}
+
+		m_recordedFile = filePath;
+
+		updateClipVideo();
+	}
 }
 
 void GameModeStory::onAudioRecorderStateChanged(QMediaRecorder::State state)
@@ -164,10 +196,18 @@ void GameModeStory::continueGameMode()
 		qDebug() << "Answer:" << reply->readAll();
 
 		// TODO check for canceling
-		m_recorder->showCameraFinder(QCamera::CaptureVideo);
+		const QFileInfo fileInfo = clipsDirectory().filePath("video");
+		qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+		m_recorder->setOutputFile(fileInfo.absolutePath());
 
-		m_recorder->showCameraFinder(QCamera::CaptureStillImage);
+		if (m_recorder->showCameraFinder(QCamera::CaptureVideo) == QDialog::Accepted)
+		{
+			updateClipVideo();
 
+			if (m_recorder->showCameraFinder(QCamera::CaptureStillImage) == QDialog::Accepted)
+			{
+			}
+		}
 	}
 	else
 	{
@@ -186,4 +226,56 @@ void GameModeStory::finishGameMode()
 	setState(GameMode::State::Won);
 
 	this->app()->onFinishTurn();
+}
+
+bool GameModeStory::deleteRecordedFile()
+{
+	// delete old temporary video file
+	if (!m_recordedFile.isEmpty())
+	{
+		QFile file(m_recordedFile);
+
+		return file.remove();
+	}
+
+	return false;
+}
+
+void GameModeStory::updateClipVideo()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	/*
+	 * The recorder dialog has to be accepted, otherwise the file is recorded but not used for the clip.
+	 */
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	const QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->recorder()->error();
+
+	if (fileInfo.exists())
+	{
+		QLabel *label = new QLabel(fileInfo.fileName());
+		m_clipsWidget->layout()->addWidget(label);
+
+		// Dont delete the old file. TODO leaks afterwards when removed.
+		m_recordedFile.clear();
+	}
+}
+
+QDir GameModeStory::clipsDirectory() const
+{
+	const QDir clipsDir = QDir(this->app()->clipsDir().toLocalFile());
+	const QFileInfo subDir = clipsDir.filePath("tmpstorymode");
+
+	if (!subDir.exists())
+	{
+		clipsDir.mkdir("tmpstorymode");
+	}
+
+	return QDir(subDir.absoluteFilePath());
 }

@@ -2,6 +2,7 @@
 #define GAMEMODESTORY_H
 
 #include <QNetworkAccessManager>
+#include <QDir>
 
 #include "gamemode.h"
 #include "recorder.h"
@@ -50,14 +51,23 @@ class GameModeStory : public GameMode
 		void setState(State state);
 		QNetworkAccessManager* networkAccessManager() const;
 
+		bool deleteRecordedFile();
+		void updateClipVideo();
+
+		QDir clipsDirectory() const;
+
 		State m_state;
 		Clip *m_currentSolution;
 		Recorder *m_recorder;
 
 		QNetworkAccessManager *m_networkAccessManager;
 
+		QWidget *m_clipsWidget;
+		QWidget *m_buttonsWidget;
 		QPushButton *m_continueButton;
 		QPushButton *m_finishButton;
+
+		QString m_recordedFile;
 };
 
 inline QNetworkAccessManager* GameModeStory::networkAccessManager() const
