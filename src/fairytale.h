@@ -76,6 +76,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Pauses the game if it is running. Otherwise if it is paused the game will be resumed.
 		 */
 		void pauseGameAction();
+		/**
+		 * Cancels the current game. Has no effect if no game is running.
+		 */
 		void cancelGame();
 		void showCustomFairytale();
 		void settings();
@@ -93,7 +96,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void retry();
 
-		void loadLanguage(const QString &language);
+		/**
+		 * Updates the language of the application by applying a new translation file.
+		 *
+		 * \param language A locale string like "en" or "de".
+		 * \return Returns true if the language file has been successfully loaded. Otherwise, for example if the file does not exist, it returns false.
+		 */
+		bool loadLanguage(const QString &language);
 
 	public:
 		/**
@@ -101,9 +110,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		enum class Difficulty
 		{
-			Easy,
-			Normal,
-			Hard,
+			Easy, /// With this difficulty should be even retarded people (no offense) should be able to finish the game.
+			Normal, /// With a limited number of rounds it should be possible to finish with a decent time but with more rounds it could be harder to finish successfully.
+			Hard, /// Only professionals can finish the game successfully with this difficulty.
 			Mahlerisch /// Impossible difficulty since Mahler himself was a genius.
 		};
 
@@ -151,6 +160,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \}
 		 */
 
+		/**
+		 * Converts a locale string to a human readable string.
+		 * Locale strings may be "en" or "de" for example which would be converted to "English" and "German".
+		 * \param locale A short string which represents language.
+		 * \return Returns a human readable string representation of the locale.
+		 */
 		static QString localeToName(const QString &locale);
 
 		/**
@@ -164,8 +179,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		static void applyStyleRecursively(QWidget *widget);
 
+		/**
+		 * Starts a new game using all specified parameters.
+		 */
 		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
 
+		/**
+		 * Creates a new game of "Gustav's Fairyland". The game is represented by a main window.
+		 */
 		fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
 
@@ -179,6 +200,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void onFinishTurn();
 
+		/**
+		 * Plays a specific clip of the complete solution with \p index.
+		 * If the index is invalid, nothing happens.
+		 */
 		void playFinalClip(int index);
 
 		void gameOver();
@@ -211,10 +236,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		const ClipPackages& clipPackages() const;
 		ClipPackage* defaultClipPackage() const;
 
+		/**
+		 * Resolves the URL of a clip using the configured clips directory if necessary.
+		 * \param url The URL of a file for a clip. This might be an absolute or relative URL.
+		 * \return Returns the resolved clip URL. If \p url is relative it prepends the directory \ref clipsDir(). Otherwise it returns the absolute URL.
+		 */
 		QUrl resolveClipUrl(const QUrl &url) const;
 
 		/**
 		 * The directory where all clips are stored.
+		 *
+		 * This directory is used in \ref resolveClipUrl() to prepend an absolute directory path to relative clip URLs.
 		 * \{
 		 */
 		void setClipsDir(const QUrl &url);
@@ -235,15 +267,42 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		SettingsDialog* settingsDialog();
 		CustomFairytaleDialog* customFairytaleDialog();
 
+		/**
+		 * \return Returns true if the current turn of the current game mode requires a person clip. Otherwise, if it requires an act clip, it returns false.
+		 */
 		bool requiresPerson() const;
+		/**
+		 * \return Returns the currently used clip package.
+		 */
 		ClipPackage* clipPackage() const;
+		/**
+		 * \return Returns the currently used game mode.
+		 */
 		GameMode* gameMode() const;
+		/**
+		 * \return Returns the currently specified difficulty.
+		 */
 		Difficulty difficulty() const;
+		/**
+		 * \return Returns true if the current game has a limited number of maximum rounds. Otherwise the maximum is defined by the number of clips the currently selected clip package offers. In this case it returns false.
+		 */
 		bool useMaxRounds() const;
+		/**
+		 * \return Returns the currently specified maximum number of rounds for the current game. This value has only an effect if \ref useMaxRounds(). Otherwise it is ignored.
+		 */
 		int maxRounds() const;
 
 
+		/**
+		 * \brief A list of clips for the solution of a complete game.
+		 *
+		 * The clips create a custom fairytale in the order they have been appended to the list.
+		 * The first clip is always the starting person.
+		 */
 		typedef QList<Clip*> CompleteSolution;
+		/**
+		 * \return Returns the current complete solution. It depends on how many turns the player has played successfully.
+		 */
 		const CompleteSolution& completeSolution() const;
 
 		QWidget* gameAreaWidget() const;
@@ -262,6 +321,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		/**
 		 * Plays a sound if no sound is already played. Otherwise it doesn't play the sound at all.
+		 * \param url The URL of the sound file.
 		 * \return Returns true if the sound is played. Otherwise it returns false.
 		 */
 		bool playSound(const QUrl &url);
@@ -281,7 +341,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Plays the sound immediately if the queue is empty. Otherwise it queues the sound.
 		 */
 		void queuePlayerSound(const PlayerSoundData &soundData);
+
+		/**
+		 * \return Returns the directory which stores all translation files of this application.
+		 */
 		QDir translationsDir() const;
+		/**
+		 * \return Returns the locale string of the current translation.
+		 */
 		QString currentTranslation() const;
 
 		/**
@@ -309,12 +376,24 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QMap<QString, CustomFairytale*> CustomFairytales;
 		const CustomFairytales& customFairytales() const;
 
-		QList<QWidget*> hideWidgetsInMainWindow();
-		void showWidgetsInMainWindow(QList<QWidget*> widgets);
+		typedef QList<QWidget*> Widgets;
+		/**
+		 * Hides all widgets in the central widget of the main window (except the central widget itself) and returns a list of them.
+		 * \return Returns all widgets which are hidden by this method.
+		 */
+		Widgets hideWidgetsInMainWindow();
+		/**
+		 * Shows all widgets from \p widgets.
+		 * \param widgets A list of widgets which is shown again.
+		 */
+		void showWidgetsInMainWindow(Widgets widgets);
 		/**
 		 * On the Android platform modal dialogs do not work. All widgets should be shown in the top level main window.
 		 * This function executes a dialog as widget part of the central widget of the main window if the application is run on Android.
 		 * Otherwise the dialog is executed normally.
+		 *
+		 * \param dialog The dialog for which exec() is called but which is placed in the central widget if necessary.
+		 * \return Returns the result of the dialog's exec() call.
 		 */
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
@@ -339,7 +418,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void changePrimaryScreen(QScreen *screen);
 		void changeAvailableGeometry(const QRect &geometry);
 
+		void finishCentralDialog(int result);
+
 	private:
+		/**
+		 * Updates the text of the time label with the remaining time.
+		 */
 		void updateTimeLabel();
 		void addCurrentSolution();
 		void cleanupGame();
@@ -373,6 +457,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		ClipsDialog *m_clipsDialog;
 		ClipPackageDialog *m_clipPackageDialog;
 
+		/**
+		 * The editor for creating custom clip packages.
+		 */
 		ClipPackageEditor *m_editor;
 
 		/**
@@ -409,7 +496,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		ClipPackage *m_clipPackage;
 
+		/**
+		 * State flag which indicates that the intro is currently played if its value is true.
+		 */
 		bool m_playIntro;
+		/**
+		 * State flag which indicates that the outro for winning the came is currently played if its value is true.
+		 */
 		bool m_playOutroWin;
 
 		CompleteSolution m_completeSolution;
@@ -448,6 +541,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		HighScores *m_highScores;
 
+		/**
+		 * The key of every bonus clip is represented by the ID of its clip package and the ID of the clip itself.
+		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
+		 */
 		typedef QPair<QString, QString> BonusClipKey;
 
 		BonusClip* getBonusClipByKey(const BonusClipKey &key);
@@ -474,6 +571,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QShortcut *m_cancelGameShortcut;
 
 		QScreen *m_currentScreen;
+
+		int m_centralDialogResult;
 
 		/**
 		 * \brief Size data for a widget which can be stored.

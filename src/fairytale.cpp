@@ -157,7 +157,7 @@ void fairytale::openEditor()
 		pauseGame();
 	}
 
-	this->m_editor->show();
+	execInCentralWidgetIfNecessary(this->m_editor);
 
 	// continue game
 	if (pausedGame)
@@ -463,6 +463,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_customFairytaleIndex(0)
 , m_pauseGameShortcut(nullptr)
 , m_cancelGameShortcut(nullptr)
+, m_currentScreen(nullptr)
+, m_centralDialogResult(-1)
 {
 	this->m_player->hide();
 
@@ -474,17 +476,17 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	changePrimaryScreen(this->m_currentScreen);
 	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
 
-	connect(&this->m_timer, SIGNAL(timeout()), this, SLOT(timerTick()));
+	connect(&this->m_timer, &QTimer::timeout, this, &fairytale::timerTick);
 
-	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
-	connect(actionPauseGame, SIGNAL(triggered()), this, SLOT(pauseGameAction()));
-	connect(actionCancelGame, SIGNAL(triggered()), this, SLOT(cancelGame()));
-	connect(actionShowCustomFairytale, SIGNAL(triggered()), SLOT(showCustomFairytale()));
-	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+	connect(actionNewGame, &QAction::triggered, this, &fairytale::newGame);
+	connect(actionPauseGame, &QAction::triggered, this, &fairytale::pauseGameAction);
+	connect(actionCancelGame, &QAction::triggered, this, &fairytale::cancelGame);
+	connect(actionShowCustomFairytale, &QAction::triggered, this, &fairytale::showCustomFairytale);
+	connect(actionQuit, &QAction::triggered, this, &fairytale::close);
 	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
-	connect(actionEditor, SIGNAL(triggered()), this, SLOT(openEditor()));
+	connect(actionEditor, &QAction::triggered, this, &fairytale::openEditor);
 	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
-	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+	connect(actionAbout, &QAction::triggered, this, &fairytale::about);
 	connect(actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
 	connect(pauseGamePushButton, &QPushButton::clicked, this, &fairytale::pauseGameAction);
@@ -529,7 +531,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	{
 		QAction *action = new QAction(localeToName(languageFile.baseName()), this);
 		action->setCheckable(true);
-		connect(action, SIGNAL(triggered()), this, SLOT(changeLanguage()));
+		connect(action, &QAction::triggered, this, &fairytale::changeLanguage);
 		menuLanguage->addAction(action);
 		m_translationFileNames.insert(action, languageFile.baseName());
 
@@ -541,10 +543,10 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	m_audioPlayer->setVolume(100);
-	connect(this->m_audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishAudio(QMediaPlayer::State)));
+	connect(this->m_audioPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishAudio);
 
-	m_audioPlayer->setAudioRole(QAudio::GameRole);
-	connect(this->m_musicPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(finishMusic(QMediaPlayer::State)));
+	m_musicPlayer->setAudioRole(QAudio::GameRole);
+	connect(this->m_musicPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishMusic);
 
 	GameModeMoving *gameModeMoving = new GameModeMoving(this);
 	m_gameModes.insert(gameModeMoving->id(), gameModeMoving);
@@ -660,6 +662,9 @@ QString fairytale::defaultClipsDirectory() const
 	 */
 	return QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips";
 #elif defined(Q_OS_ANDROID)
+	/*
+	 * Android uses the assets protocol for files which are deployed with an app.
+	 */
 	return QString("assets:/clips");
 #else
 	return QString("/usr/share/gustavsfairyland/clips");
@@ -668,6 +673,13 @@ QString fairytale::defaultClipsDirectory() const
 
 void fairytale::playFinalClip(int index)
 {
+	if (index >= this->m_completeSolution.size() || index < 0)
+	{
+		qDebug() << "Invalid final clip index" << index;
+
+		return;
+	}
+
 	this->m_completeSolutionIndex = index;
 	Clip *solution = this->m_completeSolution[index];
 
@@ -774,16 +786,16 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 	}
 }
 
-QList<QWidget*> fairytale::hideWidgetsInMainWindow()
+fairytale::Widgets fairytale::hideWidgetsInMainWindow()
 {
 	// TODO make a more generic way to store all shown widgets and hide them and show them afterwards
-	QList<QWidget*> widgets;
-	widgets.push_back(this->centralWidget());
+	QStack<QWidget*> widgets;
+	widgets.push(this->centralWidget());
+	Widgets hiddenWidgets;
 
-	QList<QWidget*> hiddenWidgets;
-
-	foreach (QWidget *widget, widgets)
+	while (!widgets.isEmpty())
 	{
+		QWidget *widget = widgets.pop();
 		qDebug() << "Checking widget" << widget;
 
 		if (widget->isVisible())
@@ -791,31 +803,30 @@ QList<QWidget*> fairytale::hideWidgetsInMainWindow()
 			// Do never hide the central widget itself.
 			if (widget != this->centralWidget())
 			{
+				qDebug() << "Hiding widget " << widget->objectName();
 				hiddenWidgets.push_back(widget);
+				widget->hide();
 			}
 
 			if (widget->layout() != nullptr)
 			{
 				for (int i = 0; i < widget->layout()->count(); ++i)
 				{
-					if (widget->layout()->itemAt(i)->widget() != nullptr)
+					QWidget *layoutItemWidget = widget->layout()->itemAt(i)->widget();
+
+					if (layoutItemWidget != nullptr)
 					{
-						widgets.push_back(widget->layout()->itemAt(i)->widget());
+						widgets.push(layoutItemWidget);
 					}
 				}
 			}
 		}
 	}
 
-	foreach (QWidget *widget, hiddenWidgets)
-	{
-		widget->hide();
-	}
-
 	return hiddenWidgets;
 }
 
-void fairytale::showWidgetsInMainWindow(QList<QWidget*> widgets)
+void fairytale::showWidgetsInMainWindow(Widgets widgets)
 {
 	foreach (QWidget *widget, widgets)
 	{
@@ -825,22 +836,52 @@ void fairytale::showWidgetsInMainWindow(QList<QWidget*> widgets)
 
 int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 {
-#ifndef Q_OS_ANDROID
-	return dialog->exec();
-#else
-	const QList<QWidget*> hiddenWidgets = hideWidgetsInMainWindow();
+//#ifndef Q_OS_ANDROID
+	//return dialog->exec();
+//#else
+	// TODO disable and enable all menu bar actions as well as long as the widget is shown
+	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
 
 	// make sure the dialog does not become too big
 	dialog->setMaximumSize(this->maximumSize());
+	const bool wasModal = dialog->isModal();
+	dialog->setModal(false);
 	this->centralWidget()->layout()->addWidget(dialog);
-	const int result = dialog->exec();
+
+	//const int result = dialog->exec(); // TODO on Linux this slows down everything and does not update the main GUI or react to button clicks in the dialog.
+	/*
+	 * exec() cannot be used since it makes the dialog modal and on Linux the main window is not updated properly anymore.
+	 * Therefore the result of the dialog has to be waited for and stored manually.
+	 */
+	m_centralDialogResult = -1;
+	connect(dialog, &QDialog::finished, this, &fairytale::finishCentralDialog);
+	dialog->show();
+
+	/*
+	 * This event loop is usually done by dialog->exec() but since we don't want to use exec() it has to be emulated.
+	 * It waits until the result of the dialog has been specified and handles all events during that time.
+	 * The check is done via polling.
+	 */
+	QEventLoop eventLoop(this);
+
+	while (m_centralDialogResult == -1)
+	{
+		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
+		//qDebug() << "Result is " << m_centralDialogResult;
+	}
+
+	eventLoop.quit();
+
+	const int result = m_centralDialogResult;
+	m_centralDialogResult = -1;
 
 	this->centralWidget()->layout()->removeWidget(dialog);
+	dialog->setModal(wasModal);
 
 	showWidgetsInMainWindow(hiddenWidgets);
 
 	return result;
-#endif
+//#endif
 }
 
 void fairytale::showHighScores()
@@ -938,7 +979,7 @@ QDir fairytale::translationsDir() const
 	return translationsDir;
 }
 
-void fairytale::loadLanguage(const QString &language)
+bool fairytale::loadLanguage(const QString &language)
 {
 	qDebug() << "Translation directory: " << translationsDir().path();
 	qDebug() << "Translation: " << language;
@@ -947,6 +988,11 @@ void fairytale::loadLanguage(const QString &language)
 	{
 		qDebug() << "Loaded file!";
 		qDebug() << "File loaded:" << language;
+
+		// Update to this language only if the translation file is valid.
+		m_currentTranslation = language;
+
+		return true;
 	}
 	else
 	{
@@ -954,8 +1000,7 @@ void fairytale::loadLanguage(const QString &language)
 		qWarning() << "File not loaded";
 	}
 
-	// Update to this language even if the translation file is invalid.
-	m_currentTranslation = language;
+	return false;
 }
 
 void fairytale::gameOver()
@@ -1271,6 +1316,13 @@ void fairytale::nextTurn()
 
 			break;
 		}
+
+		case GameMode::State::None:
+		{
+			QMessageBox::warning(this, tr("Invalid gamemode"), tr("The gamemode has invalid behaviour."));
+
+			break;
+		}
 	}
 }
 
@@ -1313,6 +1365,13 @@ void fairytale::onFinishTurn()
 		case GameMode::State::Running:
 		{
 			this->nextTurn();
+
+			break;
+		}
+
+		case GameMode::State::None:
+		{
+			QMessageBox::warning(this, tr("Invalid gamemode"), tr("The gamemode has invalid behaviour."));
 
 			break;
 		}
@@ -2106,6 +2165,13 @@ void fairytale::changeAvailableGeometry(const QRect &geometry)
 	const QSize size = QSize(geometry.width(), geometry.height());
 	this->setMaximumSize(size); // prevent widgets from expanding too wide!
 	this->resize(QSize(geometry.width(), geometry.height()));
+}
+
+void fairytale::finishCentralDialog(int result)
+{
+	m_centralDialogResult = result;
+	// Make sure the result cannot be changed anymore.
+	disconnect(dynamic_cast<QDialog*>(QObject::sender()), &QDialog::finished, this, &fairytale::finishCentralDialog);
 }
 
 void fairytale::addCustomFairytale(CustomFairytale *customFairytale)
