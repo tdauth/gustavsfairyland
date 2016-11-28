@@ -358,6 +358,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void startMusic();
 		void setMusicMuted(bool muted);
 		bool isMusicMuted() const;
+		void setMusicVolume(int volume);
+		int musicVolume() const;
 
 		/**
 		 * Loads the default clip package and returns true if it exists and has successfully been loaded.
@@ -723,6 +725,16 @@ inline void fairytale::setMusicMuted(bool muted)
 inline bool fairytale::isMusicMuted() const
 {
 	return this->m_musicPlayer->isMuted();
+}
+
+inline void fairytale::setMusicVolume(int volume)
+{
+	this->m_musicPlayer->setVolume(volume);
+}
+
+inline int fairytale::musicVolume() const
+{
+	return this->m_musicPlayer->volume();
 }
 
 inline const fairytale::CustomFairytales& fairytale::customFairytales() const

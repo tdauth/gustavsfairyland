@@ -347,6 +347,14 @@ void fairytale::applyStyle(QWidget *widget)
 	QPalette palette = qApp->palette();
 	palette.setColor(QPalette::Background, QColor(0xCEA66B));
 	palette.setColor(QPalette::Button, QColor(0xCEA69E));
+	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
+	palette.setColor(QPalette::Highlight, QColor(0xC05800));
+	palette.setColor(QPalette::Link, QColor(0xC05800));
+	palette.setColor(QPalette::WindowText, QColor(0xC05800));
+
+	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
+	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
+
 	widget->setPalette(palette);
 	//widget->setAutoFillBackground(true); // TODO performance is weak
 }
@@ -842,11 +850,20 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	// TODO disable and enable all menu bar actions as well as long as the widget is shown
 	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
 
-	// make sure the dialog does not become too big
-	dialog->setMaximumSize(this->maximumSize());
 	const bool wasModal = dialog->isModal();
 	dialog->setModal(false);
 	this->centralWidget()->layout()->addWidget(dialog);
+	/*
+	 * Place the dialog widget at the center of the central widget.
+	 * This does also align widgets properly which are too small.
+	 */
+	QGridLayout *gridLayout = dynamic_cast<QGridLayout*>(this->centralWidget()->layout());
+	/*
+	 * Take all space which is available. Don't use Qt::AlignCenter. Otherwise it won't use all space.
+	 */
+	gridLayout->addWidget(dialog, 0, 0, -1, -1);
+	dialog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	this->centralWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	//const int result = dialog->exec(); // TODO on Linux this slows down everything and does not update the main GUI or react to button clicks in the dialog.
 	/*

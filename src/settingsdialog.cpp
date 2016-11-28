@@ -15,6 +15,7 @@
 void SettingsDialog::restoreDefaults()
 {
 	musicCheckBox->setChecked(true);
+	musicVolumeSpinBox->setValue(30);
 	clickSoundsCheckBox->setChecked(true);
 
 #ifndef Q_OS_ANDROID
@@ -72,6 +73,7 @@ void SettingsDialog::changeClipsDirectory()
 void SettingsDialog::apply()
 {
 	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
+	this->m_app->setMusicVolume(musicVolumeSpinBox->value());
 
 	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
 
@@ -153,6 +155,7 @@ void SettingsDialog::apply()
 void SettingsDialog::update()
 {
 	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
+	musicVolumeSpinBox->setValue(this->m_app->musicVolume());
 
 	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
 

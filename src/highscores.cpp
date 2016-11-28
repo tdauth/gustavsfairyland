@@ -123,7 +123,7 @@ void HighScores::showEvent(QShowEvent *event)
 			const fairytale::ClipPackages::const_iterator packageIterator = app()->clipPackages().find(highScore.package());
 			const QString packageName = packageIterator != app()->clipPackages().end() ? packageIterator.value()->name() : highScore.package();
 
-			newItem = new QTableWidgetItem(QString::number(row + 1));
+			newItem = new QTableWidgetItem(tr("%1.").arg(row + 1));
 			tableWidget->setItem(row, 0, newItem);
 			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
 			tableWidget->setItem(row, 1, newItem);
@@ -142,7 +142,6 @@ void HighScores::showEvent(QShowEvent *event)
 		}
 	}
 
-	tableWidget->resizeColumnsToContents();
 	tableWidget->resizeRowsToContents();
 }
 
