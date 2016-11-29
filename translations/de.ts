@@ -51,77 +51,77 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clipeditor.h" line="373"/>
         <source>Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="383"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="389"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="28"/>
+        <location filename="../src/clipeditor.cpp" line="29"/>
         <source>All files (*);;Images (*.jpg *.jpeg *.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*);;Bilder (*.jpg *.jpeg *.png)</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="83"/>
+        <location filename="../src/clipeditor.cpp" line="84"/>
         <source>All files (*);;Videos (*.mkv *.avi *.mp4)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*);;Videos (*.mkv *.avi *.mp4)</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="269"/>
+        <location filename="../src/clipeditor.cpp" line="270"/>
         <source>All files (*);;Audio (*.wav)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*);;Audio (*.wav)</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="346"/>
+        <location filename="../src/clipeditor.cpp" line="347"/>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung:</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="388"/>
         <source>Is a Person</source>
-        <translation type="unfinished"></translation>
+        <translation>Ist eine Person</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="374"/>
         <source>Narrating Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzähler-Sounds</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="379"/>
         <source>Descriptions</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibungen</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="382"/>
         <source>Clip ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip-ID:</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="28"/>
+        <location filename="../src/clipeditor.cpp" line="29"/>
         <source>Choose Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild auswählen</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="83"/>
+        <location filename="../src/clipeditor.cpp" line="84"/>
         <source>Choose Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video auswählen</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="269"/>
+        <location filename="../src/clipeditor.cpp" line="270"/>
         <source>Choose Narrating Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzähler-Sound auswählen</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="346"/>
+        <location filename="../src/clipeditor.cpp" line="347"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
 </context>
 <context>
@@ -159,136 +159,158 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/clippackagedialog.cpp" line="142"/>
         <source>No game modes available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Spielmodi verfügbar.</translation>
     </message>
     <message>
         <location filename="../src/clippackagedialog.cpp" line="146"/>
         <source>No clip packages available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Clip-Pakete verfügbar.</translation>
     </message>
     <message>
         <location filename="../src/clippackagedialog.cpp" line="150"/>
         <source>Clip Packages have not enough clips.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip-Pakete haben nicht genügend Clips.</translation>
     </message>
     <message>
         <location filename="../src/clippackagedialog.cpp" line="153"/>
         <source>Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: %1</translation>
     </message>
 </context>
 <context>
     <name>ClipPackageEditor</name>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="145"/>
+        <location filename="../build/ui_clippackageeditor.h" line="157"/>
         <source>Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="146"/>
+        <location filename="../build/ui_clippackageeditor.h" line="158"/>
+        <source>Load Custom Clips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackageeditor.h" line="159"/>
         <source>Add Clip</source>
         <translation type="unfinished">Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="147"/>
+        <location filename="../build/ui_clippackageeditor.h" line="160"/>
         <source>Edit Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="148"/>
+        <location filename="../build/ui_clippackageeditor.h" line="161"/>
         <source>Remove Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="149"/>
+        <location filename="../build/ui_clippackageeditor.h" line="162"/>
         <source>New Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="150"/>
+        <location filename="../build/ui_clippackageeditor.h" line="163"/>
         <source>Load Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="151"/>
+        <location filename="../build/ui_clippackageeditor.h" line="164"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="152"/>
+        <location filename="../build/ui_clippackageeditor.h" line="165"/>
+        <source>Save</source>
+        <translation type="unfinished">Speichern</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clippackageeditor.h" line="166"/>
         <source>Close Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="153"/>
+        <location filename="../build/ui_clippackageeditor.h" line="167"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="73"/>
+        <location filename="../src/clippackageeditor.cpp" line="99"/>
         <source>Clear all clips?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="73"/>
+        <location filename="../src/clippackageeditor.cpp" line="99"/>
         <source>Do you really want to clear all clips?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="84"/>
+        <location filename="../src/clippackageeditor.cpp" line="110"/>
         <source>Open Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="84"/>
+        <location filename="../src/clippackageeditor.cpp" line="110"/>
         <source>All Files (*);;Clip Description (*.xml);;Compressed Clip Package (*.pkgc)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="104"/>
-        <location filename="../src/clippackageeditor.cpp" line="115"/>
-        <location filename="../src/clippackageeditor.cpp" line="151"/>
-        <location filename="../src/clippackageeditor.cpp" line="156"/>
+        <location filename="../src/clippackageeditor.cpp" line="28"/>
+        <location filename="../src/clippackageeditor.cpp" line="40"/>
+        <location filename="../src/clippackageeditor.cpp" line="130"/>
+        <location filename="../src/clippackageeditor.cpp" line="141"/>
+        <location filename="../src/clippackageeditor.cpp" line="163"/>
+        <location filename="../src/clippackageeditor.cpp" line="168"/>
+        <location filename="../src/clippackageeditor.cpp" line="185"/>
+        <location filename="../src/clippackageeditor.cpp" line="190"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="104"/>
+        <location filename="../src/clippackageeditor.cpp" line="130"/>
         <source>Error on loading compressed package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="115"/>
+        <location filename="../src/clippackageeditor.cpp" line="40"/>
+        <location filename="../src/clippackageeditor.cpp" line="141"/>
         <source>Error on loading clip description file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="141"/>
+        <location filename="../src/clippackageeditor.cpp" line="28"/>
+        <source>File %1 does not exist or is not readable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/clippackageeditor.cpp" line="153"/>
         <source>Save as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="141"/>
+        <location filename="../src/clippackageeditor.cpp" line="153"/>
         <source>All Files (*);;Compressed Clip Package (*.pkgc);;Clip Package File (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="151"/>
+        <location filename="../src/clippackageeditor.cpp" line="163"/>
+        <location filename="../src/clippackageeditor.cpp" line="185"/>
         <source>Error on saving compressed package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="156"/>
+        <location filename="../src/clippackageeditor.cpp" line="168"/>
+        <location filename="../src/clippackageeditor.cpp" line="190"/>
         <source>Error on saving clip package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="163"/>
+        <location filename="../src/clippackageeditor.cpp" line="197"/>
         <source>Closing Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackageeditor.cpp" line="163"/>
+        <location filename="../src/clippackageeditor.cpp" line="197"/>
         <source>Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -419,27 +441,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/gamemodestory.cpp" line="30"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsetzen</translation>
     </message>
     <message>
         <location filename="../src/gamemodestory.cpp" line="34"/>
         <source>Complete</source>
-        <translation type="unfinished">Abschließen</translation>
+        <translation>Abschließen</translation>
     </message>
     <message>
         <location filename="../src/gamemodestory.cpp" line="89"/>
         <source>Writing Stories</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschichten schreiben</translation>
     </message>
     <message>
         <location filename="../src/gamemodestory.cpp" line="210"/>
         <source>No network!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Netzwerk!</translation>
     </message>
     <message>
         <location filename="../src/gamemodestory.cpp" line="210"/>
         <source>Network is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzwerk ist nicht verfügbar.</translation>
     </message>
 </context>
 <context>
@@ -528,17 +550,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/highscores.cpp" line="135"/>
         <source>%1</source>
-        <translation type="unfinished">%1</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/highscores.cpp" line="139"/>
         <source>, %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/highscores.cpp" line="145"/>
         <source>%1.</source>
-        <translation type="unfinished">%1.</translation>
+        <translation>%1.</translation>
     </message>
     <message>
         <location filename="../src/highscores.cpp" line="172"/>
@@ -687,7 +709,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="323"/>
         <source>Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnehmen</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="327"/>
@@ -782,53 +804,53 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_recorder.h" line="136"/>
         <source>Recorder View</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahme-Ansicht</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="141"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="142"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="137"/>
         <location filename="../src/recorder.cpp" line="205"/>
         <source>Make Photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Foto machen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="138"/>
         <location filename="../src/recorder.cpp" line="85"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton aufnehmen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="140"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="139"/>
         <location filename="../src/recorder.cpp" line="77"/>
         <location filename="../src/recorder.cpp" line="214"/>
         <source>Record Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video aufnehmen</translation>
     </message>
     <message>
         <location filename="../src/recorder.cpp" line="61"/>
         <location filename="../src/recorder.cpp" line="69"/>
         <source>Continue Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahme fortsetzen</translation>
     </message>
     <message>
         <location filename="../src/recorder.cpp" line="19"/>
         <location filename="../src/recorder.cpp" line="53"/>
         <source>Pause Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahme anhalten</translation>
     </message>
 </context>
 <context>
@@ -891,17 +913,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_settings.h" line="271"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="273"/>
         <source>Music Volume:</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik-Lautstärke:</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="274"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="276"/>
@@ -1049,15 +1071,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="403"/>
-        <location filename="../src/fairytale.cpp" line="1357"/>
+        <location filename="../src/fairytale.cpp" line="1358"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="404"/>
         <location filename="../src/fairytale.cpp" line="405"/>
-        <location filename="../src/fairytale.cpp" line="1358"/>
         <location filename="../src/fairytale.cpp" line="1359"/>
+        <location filename="../src/fairytale.cpp" line="1360"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
@@ -1077,112 +1099,112 @@ p, li { white-space: pre-wrap; }
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1061"/>
+        <location filename="../src/fairytale.cpp" line="1062"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1061"/>
+        <location filename="../src/fairytale.cpp" line="1062"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1067"/>
+        <location filename="../src/fairytale.cpp" line="1068"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1067"/>
+        <location filename="../src/fairytale.cpp" line="1068"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1072"/>
+        <location filename="../src/fairytale.cpp" line="1073"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1072"/>
+        <location filename="../src/fairytale.cpp" line="1073"/>
         <source>Custom Clip Package is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1223"/>
+        <location filename="../src/fairytale.cpp" line="1224"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1276"/>
+        <location filename="../src/fairytale.cpp" line="1277"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1276"/>
+        <location filename="../src/fairytale.cpp" line="1277"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation>Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1332"/>
+        <location filename="../src/fairytale.cpp" line="1333"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1333"/>
         <location filename="../src/fairytale.cpp" line="1334"/>
+        <location filename="../src/fairytale.cpp" line="1335"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1478"/>
+        <location filename="../src/fairytale.cpp" line="1479"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1506"/>
-        <location filename="../src/fairytale.cpp" line="1558"/>
+        <location filename="../src/fairytale.cpp" line="1507"/>
+        <location filename="../src/fairytale.cpp" line="1559"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1506"/>
-        <location filename="../src/fairytale.cpp" line="1558"/>
+        <location filename="../src/fairytale.cpp" line="1507"/>
+        <location filename="../src/fairytale.cpp" line="1559"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1851"/>
+        <location filename="../src/fairytale.cpp" line="1852"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1872"/>
-        <location filename="../src/fairytale.cpp" line="1906"/>
+        <location filename="../src/fairytale.cpp" line="1873"/>
+        <location filename="../src/fairytale.cpp" line="1907"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1876"/>
-        <location filename="../src/fairytale.cpp" line="1910"/>
+        <location filename="../src/fairytale.cpp" line="1877"/>
+        <location filename="../src/fairytale.cpp" line="1911"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1883"/>
+        <location filename="../src/fairytale.cpp" line="1884"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1887"/>
+        <location filename="../src/fairytale.cpp" line="1888"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1894"/>
+        <location filename="../src/fairytale.cpp" line="1895"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1898"/>
+        <location filename="../src/fairytale.cpp" line="1899"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>
