@@ -19,6 +19,7 @@ void ClipEditor::clipIdChanged(const QString &text)
 
 void ClipEditor::setIsPerson(bool isAPerson)
 {
+	qDebug() << "Toggle is person to" << isAPerson;
 	this->m_clip->setIsPerson(isAPerson);
 	checkForValidFields();
 }
@@ -402,7 +403,7 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false); // enable when all fields are valid
 
 	connect(this->clipIdLineEdit, &QLineEdit::textChanged, this, &ClipEditor::clipIdChanged);
-	connect(this->isAPersonCheckBox, SIGNAL(toggled(bool)), this, SLOT(setIsPerson(bool)));
+	connect(this->isAPersonCheckBox, &QCheckBox::toggled, this, &ClipEditor::setIsPerson);
 	connect(this->imagePushButton, &QPushButton::clicked, this, &ClipEditor::chooseImage);
 	connect(this->captureImagePushButton, &QPushButton::clicked, this, &ClipEditor::captureImage);
 	connect(this->showImageButton, &QPushButton::clicked, this, &ClipEditor::showImage);
@@ -458,11 +459,13 @@ void ClipEditor::fill(Clip *clip)
 void ClipEditor::assignToClip(Clip *clip)
 {
 	clip->assign(*this->m_clip);
+	qDebug() << "Assigned clip is person" << m_clip->isPerson();
 }
 
 Clip* ClipEditor::clip(QObject *parent)
 {
 	qDebug() << "Clips description on getting clip" << m_clip->description();
+	qDebug() << "clip is person" << m_clip->isPerson();
 
 	return new Clip(*m_clip, parent);
 }
