@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>212</width>
-    <height>231</height>
+    <width>407</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,21 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Game Mode:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="gameModesComboBox"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Clip Packages:</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QWidget" name="clipPackagesWidget" native="true">
@@ -43,6 +57,13 @@
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Difficulty:</string>
+        </property>
        </widget>
       </item>
       <item>

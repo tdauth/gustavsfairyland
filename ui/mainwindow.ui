@@ -62,6 +62,16 @@
          <property name="text">
           <string>High Scores</string>
          </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -98,6 +108,16 @@
          <property name="text">
           <string>Let's Go!</string>
          </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/128x128/apps/preferences-desktop-gaming.png</normaloff>:/themes/oxygen/128x128/apps/preferences-desktop-gaming.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="7" column="0">
@@ -116,7 +136,7 @@
        <item row="6" column="0">
         <widget class="QPushButton" name="quitPushButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -135,6 +155,16 @@
          <property name="text">
           <string>Quit</string>
          </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="2" column="0">
@@ -147,6 +177,16 @@
          <property name="text">
           <string>Custom Game</string>
          </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/games-solve.png</normaloff>:/themes/oxygen/32x32/actions/games-solve.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="5" column="0">
@@ -158,6 +198,16 @@
          </property>
          <property name="text">
           <string>Settings</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -183,6 +233,16 @@
          </property>
          <property name="text">
           <string>Record</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/devices/camera-web.png</normaloff>:/themes/oxygen/32x32/devices/camera-web.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -271,12 +331,32 @@
          <property name="text">
           <string>Pause Game (P)</string>
          </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="cancelGamePushButton">
          <property name="text">
           <string>Cancel Game (C)</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -304,7 +384,7 @@
      <x>0</x>
      <y>0</y>
      <width>698</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -355,6 +435,10 @@
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionNewGame">
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/apps/preferences-desktop-gaming.png</normaloff>:/themes/oxygen/32x32/apps/preferences-desktop-gaming.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;New Game</string>
    </property>
@@ -363,6 +447,10 @@
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -379,6 +467,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Pause Game</string>
    </property>
@@ -389,6 +481,10 @@
    </property>
   </action>
   <action name="actionEditor">
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/games-config-background.png</normaloff>:/themes/oxygen/32x32/actions/games-config-background.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Editor</string>
    </property>
@@ -405,16 +501,28 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Cancel Game</string>
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Settings</string>
    </property>
   </action>
   <action name="actionHighScores">
+   <property name="icon">
+    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+     <normaloff>:/themes/oxygen/32x32/actions/games-highscores.png</normaloff>:/themes/oxygen/32x32/actions/games-highscores.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Highscores</string>
    </property>
@@ -436,6 +544,7 @@
  </tabstops>
  <resources>
   <include location="../resource.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>
 </ui>

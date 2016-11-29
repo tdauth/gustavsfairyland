@@ -64,9 +64,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normalon>:/themes/oxygen/128x128/devices/audio-headphones.png</normalon>
-            </iconset>
+            <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+             <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -295,9 +294,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normalon>:/themes/oxygen/128x128/devices/video-display.png</normalon>
-         </iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -426,9 +424,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <activeon>:/themes/oxygen/128x128/devices/video-display.png</activeon>
-         </iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</iconset>
         </property>
         <property name="iconSize">
          <size>
