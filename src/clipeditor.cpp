@@ -480,7 +480,7 @@ bool ClipEditor::deleteRecordedFile()
 
 QDir ClipEditor::clipsDirectory() const
 {
-	const QDir clipsDir = QDir(this->m_app->clipsDir().toLocalFile());
+	const QDir clipsDir = QDir(this->m_app->customClipsDirectory());
 	const QFileInfo subDir = clipsDir.filePath("tmp");
 
 	if (!subDir.exists())
