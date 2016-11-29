@@ -19,6 +19,32 @@ void ClipPackageEditor::idChanged(const QString &text)
 	checkForValidFields();
 }
 
+void ClipPackageEditor::loadCustomClipsPackage()
+{
+	const QFileInfo fileInfo(m_app->customClipPackage()->filePath());
+
+	if (!fileInfo.exists() || !fileInfo.isReadable())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("File %1 does not exist or is not readable.").arg(fileInfo.absoluteFilePath()));
+
+		return;
+	}
+
+	this->m_clipPackage->clear();
+	treeWidget->clear();
+
+	checkForValidFields();
+
+	if (!this->m_clipPackage->loadClipsFromFile(fileInfo.absoluteFilePath()))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Error on loading clip description file."));
+
+		return;
+	}
+
+	loadClipPackage();
+}
+
 void ClipPackageEditor::addClip()
 {
 	if (this->clipEditor()->exec() == QDialog::Accepted)
@@ -118,27 +144,35 @@ void ClipPackageEditor::loadPackage()
 			}
 		}
 
-		this->idLineEdit->setText(this->m_clipPackage->id());
-
-		for (ClipPackage::Clips::const_iterator iterator = this->m_clipPackage->clips().begin(); iterator != this->m_clipPackage->clips().end(); ++iterator)
-		{
-			const Clip *clip = iterator.value();
-
-			QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
-			const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
-			item->setIcon(0, QIcon(imageUrl.toLocalFile()));
-			item->setText(0, clip->description());
-			item->setData(0, Qt::UserRole, clip->id());
-			treeWidget->addTopLevelItem(item);
-		}
-
-		checkForValidFields();
+		loadClipPackage();
 	}
 }
 
 void ClipPackageEditor::saveAs()
 {
 	const QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"), this->m_dir, tr("All Files (*);;Compressed Clip Package (*.pkgc);;Clip Package File (*.xml)"));
+
+	if (!fileName.isEmpty())
+	{
+		const QFileInfo fileInfo(fileName);
+
+		if (fileInfo.suffix().toLower() == "pkgc")
+		{
+			if (!this->m_clipPackage->saveClipsToCompressedArchive(fileName))
+			{
+				QMessageBox::critical(this, tr("Error"), tr("Error on saving compressed package."));
+			}
+		}
+		else if (!this->m_clipPackage->saveClipsToFile(fileName))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Error on saving clip package."));
+		}
+	}
+}
+
+void ClipPackageEditor::save()
+{
+	const QString fileName = this->m_clipPackage->filePath();
 
 	if (!fileName.isEmpty())
 	{
@@ -183,12 +217,14 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 	fairytale::applyStyleRecursively(this);
 
 	connect(this->idLineEdit, &QLineEdit::textChanged, this, &ClipPackageEditor::idChanged);
+	connect(this->loadCustomClipsPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::loadCustomClipsPackage);
 	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
 	connect(this->editClipPushButton, SIGNAL(clicked()), this, SLOT(editClip()));
 	connect(this->removeClipPushButton, SIGNAL(clicked()), this, SLOT(removeClip()));
 	connect(this->newPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::newPackage);
 	connect(this->loadPackagePushButton, SIGNAL(clicked()), this, SLOT(loadPackage()));
 	connect(this->saveAsPushButton, SIGNAL(clicked()), this, SLOT(saveAs()));
+	connect(this->savePushButton, &QPushButton::clicked, this, &ClipPackageEditor::save);
 	connect(this->closePackagePushButton, SIGNAL(clicked()), this, SLOT(closePackage()));
 
 	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
@@ -223,6 +259,26 @@ bool ClipPackageEditor::checkForValidFields()
 {
 	bool result = !this->m_clipPackage->id().isEmpty();
 	this->saveAsPushButton->setEnabled(result);
+	this->savePushButton->setEnabled(result && !this->m_clipPackage->filePath().isEmpty());
 
 	return result;
+}
+
+void ClipPackageEditor::loadClipPackage()
+{
+	this->idLineEdit->setText(this->m_clipPackage->id());
+
+	for (ClipPackage::Clips::const_iterator iterator = this->m_clipPackage->clips().begin(); iterator != this->m_clipPackage->clips().end(); ++iterator)
+	{
+		const Clip *clip = iterator.value();
+
+		QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+		const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
+		item->setIcon(0, QIcon(imageUrl.toLocalFile()));
+		item->setText(0, clip->description());
+		item->setData(0, Qt::UserRole, clip->id());
+		treeWidget->addTopLevelItem(item);
+	}
+
+	checkForValidFields();
 }
