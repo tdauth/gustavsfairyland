@@ -659,6 +659,9 @@ fairytale::~fairytale()
 	settings.endArray();
 
 	qApp->removeTranslator(&m_translator);
+
+	// Prevent restarting on ending the app.
+	disconnect(this->m_musicPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishMusic);
 }
 
 QString fairytale::defaultClipsDirectory() const
