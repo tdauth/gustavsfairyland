@@ -130,6 +130,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QMap<QString, ClipPackage*> ClipPackages;
 
 		/**
+		 * The key of every bonus clip is represented by the ID of its clip package and the ID of the clip itself.
+		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
+		 */
+		typedef QPair<QString, QString> ClipKey;
+
+		/**
 		 * \return Returns true if the user has a touch device to press at the floating clips.
 		 */
 		static bool hasTouchDevice();
@@ -186,7 +192,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * Starts a new game using all specified parameters.
 		 */
-		void startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
+		void startNewGame(const ClipPackages &clipPackages, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
 
 		/**
 		 * Creates a new game of "Gustav's Fairyland". The game is represented by a main window.
@@ -241,6 +247,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		const ClipPackages& clipPackages() const;
 		ClipPackage* defaultClipPackage() const;
+		/**
+		 * \return Returns the clip packages which are used by default (for example when starting a quick game). These include "gustav" and "custom".
+		 */
+		ClipPackages defaultClipPackages() const;
 		ClipPackage* customClipPackage() const;
 
 		/**
@@ -281,7 +291,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * \return Returns the currently used clip package.
 		 */
-		ClipPackage* clipPackage() const;
+		const ClipPackages& currentClipPackages() const;
 		/**
 		 * \return Returns the currently used game mode.
 		 */
@@ -306,7 +316,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The clips create a custom fairytale in the order they have been appended to the list.
 		 * The first clip is always the starting person.
 		 */
-		typedef QList<Clip*> CompleteSolution;
+		typedef QList<ClipKey> CompleteSolution;
 		/**
 		 * \return Returns the current complete solution. It depends on how many turns the player has played successfully.
 		 */
@@ -323,7 +333,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * \note Is only set during a game.
 		 */
-		Clip* startPerson() const;
+		ClipKey startPerson() const;
 		QString description(Clip *startPersonClip, int turn, Clip *clip, bool markBold = true);
 
 		/**
@@ -406,6 +416,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
+		ClipPackage* getClipPackageById(const QString &packageId);
+		Clip* getClipByKey(const ClipKey &clipKey);
+
+		/**
+		 * \return Returns the maximum number of possible rounds if all clips from all \p clipPackages would be used.
+		 *
+		 * The maximum number of possible rounds depends on the number of persons and acts. One person is used in the beginning and has to be substracted.
+		 * Then the minimum number of the number of persons and the number of acts is the maximum of rounds.
+		 */
+		int maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages);
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
@@ -455,7 +476,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * The initial clip for the initial person who is the protagonist of the fairytale.
 		 */
-		Clip *m_startPerson;
+		ClipKey m_startPerson;
 
 		/**
 		 * The video player for clips and narrator clips.
@@ -501,9 +522,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		ClipPackages m_clipPackages;
 		/**
-		 * The currently selected clip package which is used to play.
+		 * The currently selected clip packages which are used to play.
 		 */
-		ClipPackage *m_clipPackage;
+		ClipPackages m_currentClipPackages;
 
 		/**
 		 * State flag which indicates that the intro is currently played if its value is true.
@@ -550,17 +571,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		HighScores *m_highScores;
 
-		/**
-		 * The key of every bonus clip is represented by the ID of its clip package and the ID of the clip itself.
-		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
-		 */
-		typedef QPair<QString, QString> BonusClipKey;
+		BonusClip* getBonusClipByKey(const ClipKey &key);
 
-		BonusClip* getBonusClipByKey(const BonusClipKey &key);
-
-		typedef QMap<BonusClipKey, bool> BonusClipUnlocks;
+		typedef QMap<ClipKey, bool> BonusClipUnlocks;
 		BonusClipUnlocks m_bonusClipUnlocks;
-		typedef QMap<QAction*, BonusClipKey> BonusClipActions;
+		typedef QMap<QAction*, ClipKey> BonusClipActions;
 		BonusClipActions m_bonusClipActions;
 		bool m_playingBonusClip;
 
@@ -664,9 +679,9 @@ inline bool fairytale::requiresPerson() const
 	return this->m_requiresPerson;
 }
 
-inline ClipPackage* fairytale::clipPackage() const
+inline const fairytale::ClipPackages& fairytale::currentClipPackages() const
 {
-	return this->m_clipPackage;
+	return this->m_currentClipPackages;
 }
 
 inline bool fairytale::isGameRunning() const
@@ -714,7 +729,7 @@ inline HighScores* fairytale::highScores() const
 	return this->m_highScores;
 }
 
-inline Clip* fairytale::startPerson() const
+inline fairytale::ClipKey fairytale::startPerson() const
 {
 	return this->m_startPerson;
 }

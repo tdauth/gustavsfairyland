@@ -5,7 +5,7 @@
 #include "floatingclip.h"
 #include "clip.h"
 
-GameModeMoving::GameModeMoving(fairytale* app): GameMode(app), m_state(State::None), m_currentSolution(nullptr), m_roomWidget(nullptr), m_playClickSounds(true)
+GameModeMoving::GameModeMoving(fairytale* app): GameMode(app), m_state(State::None), m_roomWidget(nullptr), m_playClickSounds(true)
 {
 }
 
@@ -14,7 +14,7 @@ GameMode::State GameModeMoving::state()
 	return this->m_state;
 }
 
-Clip* GameModeMoving::solution()
+fairytale::ClipKey GameModeMoving::solution()
 {
 	return this->m_currentSolution;
 }
@@ -54,7 +54,9 @@ long int GameModeMoving::time()
 		}
 	}
 
-	const int rounds = !app()->useMaxRounds() ?  this->app()->clipPackage()->rounds() : qMin(this->app()->clipPackage()->rounds(), app()->maxRounds());
+	// TODO calculate rounds by ALL used clip packages
+	const int maxRoundsByClipPackages = this->app()->maxRoundsByMultipleClipPackages(this->app()->currentClipPackages());
+	const int rounds = !app()->useMaxRounds() ?  maxRoundsByClipPackages : qMin(maxRoundsByClipPackages, app()->maxRounds());
 	const int factor = rounds * 2 - this->app()->turns();
 
 	return 1000 * factor + startValue;
@@ -94,18 +96,18 @@ void GameModeMoving::afterNarrator()
 
 void GameModeMoving::nextTurn()
 {
-	this->m_currentSolution = nullptr;
-
 	if (!this->m_remainingClips.empty() && (!app()->useMaxRounds() || app()->rounds() < app()->maxRounds()))
 	{
-		QList<Clip*> copy = this->m_remainingClips;
+		QList<fairytale::ClipKey> copy = this->m_remainingClips;
 
 		/*
 		 * Allow only persons or acts.
 		 */
 		for (int i = 0; i < copy.size(); )
 		{
-			if ((app()->requiresPerson() && !copy[i]->isPerson()) || (!app()->requiresPerson() && copy[i]->isPerson()))
+			Clip *clip = app()->getClipByKey(copy[i]);
+
+			if ((app()->requiresPerson() && !clip->isPerson()) || (!app()->requiresPerson() && clip->isPerson()))
 			{
 				copy.removeAt(i);
 			}
@@ -163,7 +165,6 @@ void GameModeMoving::end()
 	// Dont delete the room widget, which leads to segmentation fault, since the end() method is called from the slot of the signal gotIt().
 	this->m_roomWidget->hide();
 
-	this->m_currentSolution = nullptr;
 	this->m_remainingClips.clear();
 	setState(State::None);
 }
@@ -190,9 +191,14 @@ void GameModeMoving::start()
 
 	this->m_remainingClips.clear();
 
-	foreach (Clip *clip, app()->clipPackage()->clips())
+	foreach (QString packageId, app()->currentClipPackages().keys())
 	{
-		this->m_remainingClips.push_back(clip);
+		ClipPackage *clipPackage = app()->getClipPackageById(packageId);
+
+		foreach (Clip *clip, clipPackage->clips())
+		{
+			this->m_remainingClips.push_back(fairytale::ClipKey(packageId, clip->id()));
+		}
 	}
 }
 

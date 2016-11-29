@@ -43,9 +43,10 @@ class Player
 		void stateChanged(QMediaPlayer::State state);
 
 	public slots:
-		void playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame = true);
+		void playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame = true, bool multipleVideos = true);
 		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
-		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix);
+		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame = true);
+		void showImage(fairytale *app, const QUrl &imageUrl, const QString &description);
 
 		/**
 		  * Plays a parallel sound which is mixed with the current output and which is waited for as well.

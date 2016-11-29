@@ -42,9 +42,14 @@ void GameModeOneOutOfFour::start()
 
 	this->m_remainingClips.clear();
 
-	foreach (Clip *clip, app()->clipPackage()->clips())
+	foreach (QString packageId, app()->currentClipPackages().keys())
 	{
-		this->m_remainingClips.push_back(clip);
+		ClipPackage *clipPackage = app()->getClipPackageById(packageId);
+
+		foreach (Clip *clip, clipPackage->clips())
+		{
+			this->m_remainingClips.push_back(fairytale::ClipKey(packageId, clip->id()));
+		}
 	}
 
 	int row = 0;
@@ -79,7 +84,6 @@ void GameModeOneOutOfFour::end()
 	}
 
 	this->m_currentClips.clear();
-	this->m_currentSolution = nullptr;
 	this->m_remainingClips.clear();
 	setState(State::None);
 }
@@ -105,7 +109,7 @@ GameMode::State GameModeOneOutOfFour::state()
 	return m_state;
 }
 
-Clip* GameModeOneOutOfFour::solution()
+fairytale::ClipKey GameModeOneOutOfFour::solution()
 {
 	return this->m_currentSolution;
 }
@@ -113,7 +117,6 @@ Clip* GameModeOneOutOfFour::solution()
 void GameModeOneOutOfFour::nextTurn()
 {
 	this->m_currentClips.clear();
-	this->m_currentSolution = nullptr;
 
 	if (!this->m_remainingClips.empty() && (!app()->useMaxRounds() || app()->rounds() < app()->maxRounds()))
 	{
@@ -162,7 +165,9 @@ void GameModeOneOutOfFour::afterNarrator()
 	// set the pixmaps after adding all buttons so the resizing is only done once.
 	for (int i = 0; i < this->m_currentClips.size(); ++i)
 	{
-		const QUrl url = this->app()->resolveClipUrl(this->m_currentClips[i]->imageUrl());
+		Clip *clip = this->app()->getClipByKey(this->m_currentClips[i]);
+
+		const QUrl url = this->app()->resolveClipUrl(clip->imageUrl());
 #ifndef Q_OS_ANDROID
 		const QString filePath = url.toLocalFile();
 #else
@@ -175,7 +180,8 @@ void GameModeOneOutOfFour::afterNarrator()
 
 long int GameModeOneOutOfFour::time()
 {
-	const int rounds = !app()->useMaxRounds() ?  this->app()->clipPackage()->rounds() : qMin(this->app()->clipPackage()->rounds(), app()->maxRounds());
+	const int maxRoundsByClipPackages = this->app()->maxRoundsByMultipleClipPackages(this->app()->currentClipPackages());
+	const int rounds = !app()->useMaxRounds() ?  maxRoundsByClipPackages : qMin(maxRoundsByClipPackages, app()->maxRounds());
 	const int factor = rounds * 2 - this->app()->turns();
 
 	return 2000 * factor + 2000;
@@ -183,14 +189,16 @@ long int GameModeOneOutOfFour::time()
 
 void GameModeOneOutOfFour::fillCurrentClips()
 {
-	QList<Clip*> copy = this->m_remainingClips;
+	QList<fairytale::ClipKey> copy = this->m_remainingClips;
 
 	/*
 	 * Allow only persons or acts.
 	 */
 	for (int i = 0; i < copy.size(); )
 	{
-		if ((app()->requiresPerson() && !copy[i]->isPerson()) || (!app()->requiresPerson() && copy[i]->isPerson()))
+		Clip *copyClip = app()->getClipByKey(copy[i]);
+
+		if ((app()->requiresPerson() && !copyClip->isPerson()) || (!app()->requiresPerson() && copyClip->isPerson()))
 		{
 			copy.removeAt(i);
 		}
@@ -221,7 +229,7 @@ void GameModeOneOutOfFour::fillCurrentClips()
 void GameModeOneOutOfFour::selectRandomSolution()
 {
 	const int index = qrand() % this->m_currentClips.size();
-	Clip *solution = this->m_currentClips[index];
+	fairytale::ClipKey solution = this->m_currentClips[index];
 	this->m_currentSolution = solution;
 	this->m_remainingClips.removeAll(solution); // solution is done forever
 }

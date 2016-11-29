@@ -21,7 +21,7 @@ class GameModeCreative : public GameMode
 		GameModeCreative(fairytale *app);
 
 		virtual GameMode::State state() override;
-		virtual Clip* solution() override;
+		virtual fairytale::ClipKey solution() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
 		virtual void nextTurn() override;
@@ -46,14 +46,14 @@ class GameModeCreative : public GameMode
 		class ClipButton : public QWidget
 		{
 			public:
-				ClipButton(QWidget *parent, Clip *clip);
+				ClipButton(QWidget *parent, fairytale::ClipKey clip);
 
-				Clip* clip() const;
+				fairytale::ClipKey clip() const;
 				IconButton* iconButton() const;
 				QLabel* label() const;
 
 			private:
-				Clip *m_clip;
+				fairytale::ClipKey m_clip;
 				IconButton *m_iconButton;
 				QLabel *m_label;
 		};
@@ -61,7 +61,7 @@ class GameModeCreative : public GameMode
 		void setState(State state);
 
 		State m_state;
-		Clip *m_currentSolution;
+		fairytale::ClipKey m_currentSolution;
 		/**
 		 * All clip buttons from which the user has to choose one solution.
 		 */
@@ -69,7 +69,7 @@ class GameModeCreative : public GameMode
 		QPushButton *m_finishButton;
 };
 
-inline Clip* GameModeCreative::ClipButton::clip() const
+inline fairytale::ClipKey GameModeCreative::ClipButton::clip() const
 {
 	return this->m_clip;
 }

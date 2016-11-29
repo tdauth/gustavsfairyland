@@ -11,27 +11,24 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_clip(nullptr)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0)
 {
 }
 
 void FloatingClip::paint(QPainter *painter, QWidget *area)
 {
-	if (m_clip != nullptr)
-	{
-		const int x1 = this->x();
-		const int y1 = this->y();
+	const int x1 = this->x();
+	const int y1 = this->y();
 
-		const QImage &imagePaper = this->m_roomWidget->isEnabled() ? m_scaledImagePaper : m_scaledImagePaperDisabled;
-		const QRect paperRect(x1, y1, imagePaper.width(), imagePaper.height());
-		painter->drawImage(paperRect, imagePaper);
+	const QImage &imagePaper = this->m_roomWidget->isEnabled() ? m_scaledImagePaper : m_scaledImagePaperDisabled;
+	const QRect paperRect(x1, y1, imagePaper.width(), imagePaper.height());
+	painter->drawImage(paperRect, imagePaper);
 
-		// paint the image in the center of the paper
-		const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
-		const int heightDifference = (imagePaper.height() - image.height()) / 2;
-		const int widthDifference = (imagePaper.width() - image.width()) / 2;
-		painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
-	}
+	// paint the image in the center of the paper
+	const QImage &image = this->m_roomWidget->isEnabled() ? m_scaledImage : m_scaledImageDisabled;
+	const int heightDifference = (imagePaper.height() - image.height()) / 2;
+	const int widthDifference = (imagePaper.width() - image.width()) / 2;
+	painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
 }
 
 void FloatingClip::setWidth(int width)
@@ -234,10 +231,12 @@ void FloatingClip::updateScaledClipImage()
 	const int width = qMin(m_scaledImagePaper.width(), m_scaledImagePaper.height());
 
 	m_scaledImagePaperDisabled = QImage(":/resources/paper.jpg").convertToFormat(QImage::Format_Grayscale8).scaled(m_width, m_width, Qt::KeepAspectRatio);
+	Clip *clip = m_roomWidget->gameMode()->app()->getClipByKey(m_clipKey);
 
-	if (m_clip != nullptr)
+
+	if (clip != nullptr)
 	{
-		const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(m_clip->imageUrl());
+		const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(clip->imageUrl());
 #ifndef Q_OS_ANDROID
 		const QString filePath = clipUrl.toLocalFile();
 #else

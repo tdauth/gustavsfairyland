@@ -1,12 +1,12 @@
 #ifndef CUSTOMFAIRYTALEDIALOG_H
 #define CUSTOMFAIRYTALEDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 #include "ui_customfairytale.h"
 #include "fairytale.h"
+#include "customfairytale.h"
 
-class fairytale;
 class Clip;
 class IconLabel;
 
@@ -22,7 +22,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 	Q_OBJECT
 
 	public slots:
-		void addClip(Clip *clip);
+		void addClip(const fairytale::ClipKey &clipKey);
 		void save();
 		void retry();
 
@@ -37,7 +37,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		virtual void changeEvent(QEvent *event) override;
 
 	private:
-		typedef QList<Clip*> Clips;
+		typedef QList<fairytale::ClipKey> Clips;
 		typedef QList<IconLabel*> ClipLabels;
 
 		fairytale *m_app;

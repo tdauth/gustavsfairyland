@@ -15,24 +15,34 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 
 void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)
 {
+	this->m_app = app;
 	this->m_packages = packages;
 
-	this->packagesComboBox->clear();
+	foreach (QCheckBox *checkBox, m_checkBoxes)
+	{
+		delete checkBox;
+	}
+
+	m_checkBoxes.clear();
+
+	const QStringList defaultClipPackageKeys = app->defaultClipPackages().keys();
+	const QSet<QString> defaultClipPackageKeysSet = QSet<QString>::fromList(defaultClipPackageKeys);
 
 	for (fairytale::ClipPackages::const_iterator iterator = packages.begin(); iterator != packages.end(); ++iterator)
 	{
 		const ClipPackage *clipPackage = iterator.value();
-		this->packagesComboBox->addItem(clipPackage->name(), clipPackage->id());
+		//this->packagesComboBox->addItem(clipPackage->name(), clipPackage->id());
+		QCheckBox *checkBox = new QCheckBox(this);
+		checkBox->setText(clipPackage->name());
+		clipPackagesWidget->layout()->addWidget(checkBox);
+
+		checkBox->setChecked(defaultClipPackageKeysSet.contains(clipPackage->id()));
+		m_checkBoxes.push_back(checkBox);
+
+		connect(checkBox, &QCheckBox::stateChanged, this, &ClipPackageDialog::validate);
 	}
 
-	if (packages.isEmpty())
-	{
-		this->packagesComboBox->setEnabled(false);
-	}
-	else
-	{
-		this->packagesComboBox->setEnabled(true);
-	}
+	this->clipPackagesWidget->setEnabled(!packages.isEmpty());
 
 	this->m_gameModes = gameModes;
 
@@ -60,24 +70,23 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fair
 	this->maxRoundsSpinBox->setValue(app->defaultMaxRounds());
 	this->maxRoundsSpinBox->setEnabled(app->defaultGameMode()->useMaxRounds());
 
-	if (gameModes.isEmpty() || packages.isEmpty())
-	{
-		this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-	}
-	else
-	{
-		this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-	}
+	validate();
 }
 
-ClipPackage* ClipPackageDialog::clipPackage() const
+fairytale::ClipPackages ClipPackageDialog::clipPackages() const
 {
-	if (this->m_packages.isEmpty())
+	fairytale::ClipPackages result;
+	fairytale::ClipPackages::const_iterator iterator = m_packages.begin();
+
+	for (int i = 0; i < m_checkBoxes.size() && iterator != m_packages.end(); ++i, ++iterator)
 	{
-		return nullptr;
+		if (m_checkBoxes[i]->isChecked())
+		{
+			result.insert(iterator.key(), iterator.value());
+		}
 	}
 
-	return this->m_packages[this->packagesComboBox->currentData().toString()];
+	return result;
 }
 
 GameMode* ClipPackageDialog::gameMode() const
@@ -118,4 +127,31 @@ void ClipPackageDialog::currentGameModeIndexChanged(int index)
 		this->useMaxRoundsCheckBox->setEnabled(gameMode->useMaxRounds());
 		this->maxRoundsSpinBox->setEnabled(gameMode->useMaxRounds());
 	}
+}
+
+void ClipPackageDialog::validate()
+{
+	const bool gameModesAreEmpty = m_gameModes.isEmpty();
+	const bool packagesAreEmpty = m_packages.isEmpty();
+	const bool maxRoundsNotBiggerThanZero = m_app->maxRoundsByMultipleClipPackages(clipPackages()) <= 0;
+
+	QString message;
+
+	if (gameModesAreEmpty)
+	{
+		message = tr("No game modes available.");
+	}
+	else if (packagesAreEmpty)
+	{
+		message = tr("No clip packages available.");
+	}
+	else if (maxRoundsNotBiggerThanZero)
+	{
+		message = tr("Clip Packages have not enough clips.");
+	}
+
+	errorLabel->setText(tr("Error: %1").arg(message));
+	errorLabel->setVisible(!message.isEmpty());
+
+	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!gameModesAreEmpty && !packagesAreEmpty && !maxRoundsNotBiggerThanZero);
 }

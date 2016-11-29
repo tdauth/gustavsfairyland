@@ -7,6 +7,7 @@
 #include <QtWidgets/QWidget>
 
 #include "speed.h"
+#include "fairytale.h"
 
 class RoomWidget;
 class Clip;
@@ -30,9 +31,9 @@ class FloatingClip : public QObject
 
 		/**
 		 * Sets the current clip reference for the floating clip. The image of the clip will be shown on the floating clip.
-		 * \param clip The referenced clip
+		 * \param clipKey The referenced clip
 		 */
-		void setClip(Clip *clip);
+		void setClip(fairytale::ClipKey clipKey);
 		void setSpeed(int speed);
 		/**
 		 * \return Returns the pixels per S the floating clip is moved.
@@ -78,7 +79,7 @@ class FloatingClip : public QObject
 		int m_dirX;
 		int m_dirY;
 		int m_collisionDistance; // The distance which has been moved due to a collision. Every update after the collision will increase this counter until it reaches a maximum, then it will be reset. Every collision sets this to 1 again.
-		Clip *m_clip;
+		fairytale::ClipKey m_clipKey;
 		/// Store the scaled version of the clip's image to improve performance.
 		QImage m_scaledImage;
 		QImage m_scaledImageDisabled;
@@ -86,9 +87,9 @@ class FloatingClip : public QObject
 		QImage m_scaledImagePaperDisabled;
 };
 
-inline void FloatingClip::setClip(Clip *clip)
+inline void FloatingClip::setClip(fairytale::ClipKey clipKey)
 {
-	this->m_clip = clip;
+	this->m_clipKey = clipKey;
 	this->updateScaledClipImage();
 }
 

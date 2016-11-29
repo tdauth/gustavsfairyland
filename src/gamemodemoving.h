@@ -18,7 +18,7 @@ class GameModeMoving : public GameMode
 		virtual QString id() const override;
 		virtual QString name() const override;
 		virtual GameMode::State state() override;
-		virtual Clip* solution() override;
+		virtual fairytale::ClipKey solution() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
 		virtual void nextTurn() override;
@@ -42,8 +42,8 @@ class GameModeMoving : public GameMode
 		/**
 		 * All clips which have not yet been a solution in one round.
 		 */
-		QList<Clip*> m_remainingClips;
-		Clip *m_currentSolution;
+		QList<fairytale::ClipKey> m_remainingClips;
+		fairytale::ClipKey m_currentSolution;
 		RoomWidget *m_roomWidget;
 		bool m_playClickSounds;
 };

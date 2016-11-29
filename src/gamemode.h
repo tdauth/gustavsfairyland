@@ -1,10 +1,9 @@
 #ifndef GAMEMODE_H
 #define GAMEMODE_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
-class fairytale;
-class Clip;
+#include "fairytale.h"
 
 /**
  * \brief Abstract game mode class for implementing custom game modes.
@@ -52,7 +51,7 @@ class GameMode : public QObject
 		virtual void nextTurn() = 0;
 		virtual void afterNarrator() = 0;
 		virtual long int time() = 0;
-		virtual Clip* solution() = 0;
+		virtual fairytale::ClipKey solution() = 0;
 		virtual State state() = 0;
 
 		/**

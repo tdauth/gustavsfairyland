@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>219</width>
-    <height>236</height>
+    <width>212</width>
+    <height>231</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,10 +18,32 @@
     <widget class="QWidget" name="widget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QLabel" name="errorLabel">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="gameModesComboBox"/>
       </item>
       <item>
-       <widget class="QComboBox" name="packagesComboBox"/>
+       <widget class="QWidget" name="clipPackagesWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2"/>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <widget class="QComboBox" name="difficultyComboBox">
@@ -77,15 +99,12 @@
         </property>
        </spacer>
       </item>
-      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+      <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
        <widget class="QDialogButtonBox" name="buttonBox">
         <property name="standardButtons">
          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
         </property>
        </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout"/>
       </item>
      </layout>
     </widget>

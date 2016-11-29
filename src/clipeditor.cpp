@@ -6,10 +6,10 @@
 #include "languagedialog.h"
 #include "recorder.h"
 #include "fairytale.h"
+#include "player.h"
+#include "clip.h"
 
 #include "clipeditor.moc"
-
-#include "clip.h"
 
 void ClipEditor::clipIdChanged(const QString &text)
 {
@@ -55,6 +55,11 @@ void ClipEditor::captureImage()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+}
+
+void ClipEditor::showImage()
+{
+	m_player->showImage(m_app, m_clip->imageUrl(), m_clip->description());
 }
 
 void ClipEditor::imageSaved(int id, const QString &fileName)
@@ -104,6 +109,11 @@ void ClipEditor::recordVideo()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+}
+
+void ClipEditor::playVideo()
+{
+	m_player->playVideo(m_app, m_clip->videoUrl(), m_clip->description(), false, false);
 }
 
 void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
@@ -226,7 +236,8 @@ void ClipEditor::updateClipNarratingSound()
 			Clip::Urls narratorUrls = this->m_clip->narratorUrls();
 			narratorUrls.insert(m_language, QUrl::fromLocalFile(fileName));
 			this->m_clip->setNarratorUrls(narratorUrls);
-			this->narratingSoundsListWidget->addItem(fileName);
+
+			updateNarratingSoundsWidget(m_clip);
 
 			// Dont delete the old file. TODO leaks afterwards when removed.
 			m_recordedFile.clear();
@@ -266,7 +277,8 @@ void ClipEditor::addNarratingSound()
 			Clip::Urls narratorUrls = this->m_clip->narratorUrls();
 			narratorUrls.insert(m_language, url);
 			this->m_clip->setNarratorUrls(narratorUrls);
-			this->narratingSoundsListWidget->addItem(filePath);
+
+			updateNarratingSoundsWidget(m_clip);
 
 			checkForValidFields();
 		}
@@ -296,17 +308,29 @@ void ClipEditor::recordNarratingSound()
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
+void ClipEditor::playNarratingSound()
+{
+	if (!narratingSoundsListWidget->selectedItems().isEmpty())
+	{
+		QListWidgetItem *item = narratingSoundsListWidget->selectedItems().front();
+		const QString language = item->data(Qt::UserRole).toString();
+
+		m_player->playSound(m_app, m_clip->narratorUrls()[language], m_clip->description(), QUrl(), false, false);
+	}
+}
+
 void ClipEditor::removeNarratingSound()
 {
 	if (!narratingSoundsListWidget->selectedItems().isEmpty())
 	{
 		QListWidgetItem *item = narratingSoundsListWidget->selectedItems().front();
 		const QString language = item->data(Qt::UserRole).toString();
-		narratingSoundsListWidget->removeItemWidget(item);
 
 		Clip::Urls narratorUrls = this->m_clip->narratorUrls();
 		narratorUrls.remove(language);
 		this->m_clip->setNarratorUrls(narratorUrls);
+
+		updateNarratingSoundsWidget(m_clip);
 
 		checkForValidFields();
 	}
@@ -328,7 +352,8 @@ void ClipEditor::addDescription()
 			Clip::Descriptions descriptions = this->m_clip->descriptions();
 			descriptions.insert(m_language, description);
 			this->m_clip->setDescriptions(descriptions);
-			this->descriptionsListWidget->addItem(description);
+
+			updateDescriptionWidget(m_clip);
 
 			checkForValidFields();
 		}
@@ -341,11 +366,12 @@ void ClipEditor::removeDescription()
 	{
 		QListWidgetItem *item = descriptionsListWidget->selectedItems().front();
 		const QString language = item->data(Qt::UserRole).toString();
-		descriptionsListWidget->removeItemWidget(item);
 
 		Clip::Descriptions descriptions = this->m_clip->descriptions();
 		descriptions.remove(language);
 		this->m_clip->setDescriptions(descriptions);
+
+		updateDescriptionWidget(m_clip);
 
 		checkForValidFields();
 	}
@@ -369,7 +395,7 @@ QString ClipEditor::execLanguageDialog()
 	return QString();
 }
 
-ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recorder(new Recorder(this))
+ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recorder(new Recorder(this)), m_player(new Player(this, app))
 {
 	setupUi(this);
 
@@ -379,11 +405,14 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->isAPersonCheckBox, SIGNAL(toggled(bool)), this, SLOT(setIsPerson(bool)));
 	connect(this->imagePushButton, &QPushButton::clicked, this, &ClipEditor::chooseImage);
 	connect(this->captureImagePushButton, &QPushButton::clicked, this, &ClipEditor::captureImage);
+	connect(this->showImageButton, &QPushButton::clicked, this, &ClipEditor::showImage);
 	connect(this->videoPushButton, &QPushButton::clicked, this, &ClipEditor::chooseVideo);
 	connect(this->recordVideoPushButton, &QPushButton::clicked, this, &ClipEditor::recordVideo);
+	connect(this->playVideoPushButton, &QPushButton::clicked, this, &ClipEditor::playVideo);
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
 	connect(this->recordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSound);
+	connect(this->playNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::playNarratingSound);
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
@@ -418,25 +447,8 @@ void ClipEditor::fill(Clip *clip)
 	this->imagePathLabel->setText(clip->imageUrl().toString());
 	this->videoLabel->setText(clip->videoUrl().toString());
 
-	this->narratingSoundsListWidget->clear();
-
-	for (Clip::Urls::const_iterator iterator = clip->narratorUrls().begin(); iterator != clip->narratorUrls().end(); ++iterator)
-	{
-		QListWidgetItem *item = new QListWidgetItem();
-		item->setText(iterator.value().toString());
-		item->setData(Qt::UserRole, iterator.key());
-		this->narratingSoundsListWidget->addItem(item);
-	}
-
-	this->descriptionsListWidget->clear();
-
-	for (Clip::Descriptions::const_iterator iterator = clip->descriptions().begin(); iterator != clip->descriptions().end(); ++iterator)
-	{
-		QListWidgetItem *item = new QListWidgetItem();
-		item->setText(iterator.value());
-		item->setData(Qt::UserRole, iterator.key());
-		this->descriptionsListWidget->addItem(item);
-	}
+	updateNarratingSoundsWidget(clip);
+	updateDescriptionWidget(clip);
 
 	this->m_clip->assign(*clip);
 
@@ -461,6 +473,9 @@ bool ClipEditor::checkForValidFields()
 
 	// TODO make sure the ID is unique
 	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(result);
+
+	showImageButton->setEnabled(!this->m_clip->imageUrl().isEmpty());
+	playVideoPushButton->setEnabled(!this->m_clip->videoUrl().isEmpty());
 
 	return result;
 }
@@ -608,4 +623,30 @@ bool ClipEditor::moveFilesToCurrentClipIdDir(const QDir parentDir, const QString
 	this->fill(this->m_clip);
 
 	return result;
+}
+
+void ClipEditor::updateNarratingSoundsWidget(Clip* clip)
+{
+	this->narratingSoundsListWidget->clear();
+
+	for (Clip::Urls::const_iterator iterator = clip->narratorUrls().begin(); iterator != clip->narratorUrls().end(); ++iterator)
+	{
+		QListWidgetItem *item = new QListWidgetItem();
+		item->setText(iterator.value().toString());
+		item->setData(Qt::UserRole, iterator.key());
+		this->narratingSoundsListWidget->addItem(item);
+	}
+}
+
+void ClipEditor::updateDescriptionWidget(Clip *clip)
+{
+	this->descriptionsListWidget->clear();
+
+	for (Clip::Descriptions::const_iterator iterator = clip->descriptions().begin(); iterator != clip->descriptions().end(); ++iterator)
+	{
+		QListWidgetItem *item = new QListWidgetItem();
+		item->setText(iterator.value());
+		item->setData(Qt::UserRole, iterator.key());
+		this->descriptionsListWidget->addItem(item);
+	}
 }

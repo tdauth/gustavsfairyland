@@ -9,6 +9,8 @@
 #include <QtMultimedia/QSoundEffect>
 #include <QSvgRenderer>
 
+#include "fairytale.h"
+
 class GameModeMoving;
 class Door;
 class FloatingClip;
@@ -68,7 +70,7 @@ class RoomWidget : public RoomWidgetParent
 		void start();
 		void resume();
 
-		void addFloatingClip(Clip *clip, int width, int speed);
+		void addFloatingClip(const fairytale::ClipKey &clipKey, int width, int speed);
 		void clearFloatingClipsExceptFirst();
 		void clearClickAnimations();
 		const Doors& doors() const;

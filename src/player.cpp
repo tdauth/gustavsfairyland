@@ -247,7 +247,7 @@ void Player::checkForFinish()
 	}
 }
 
-void Player::playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame)
+void Player::playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame, bool multipleVideos)
 {
 	this->m_isPrefix = false;
 	this->m_skipped = false;
@@ -273,9 +273,20 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 #endif
 
 	this->skipPushButton->setEnabled(true);
-	this->skipPushButton->setFocus();
 	this->cancelPushButton->setVisible(duringGame);
 	this->pausePushButton->setVisible(duringGame);
+	this->skipAllPushButton->setVisible(multipleVideos);
+
+	if (multipleVideos)
+	{
+		this->skipAllPushButton->setFocus();
+	}
+	else
+	{
+		this->skipPushButton->setFocus();
+	}
+
+	this->volumeSlider->show();
 
 	this->descriptionLabel->setText(description);
 	const QUrl resolvedUrl = app->resolveClipUrl(url);
@@ -301,13 +312,11 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 
 void Player::playBonusVideo(fairytale *app, const QUrl &url, const QString &description)
 {
-	this->playVideo(app, url, description);
 	// Bonus videos are not played during a game.
-	this->cancelPushButton->hide();
-	this->pausePushButton->hide();
+	this->playVideo(app, url, description, false, false);
 }
 
-void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix)
+void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
 {
 	const QUrl resolvedImageUrl = app->resolveClipUrl(imageUrl);
 #ifndef Q_OS_ANDROID
@@ -347,8 +356,10 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 
 	this->skipPushButton->setEnabled(true);
 	this->skipPushButton->setFocus();
-	this->cancelPushButton->show();
-	this->pausePushButton->show();
+	this->cancelPushButton->setVisible(duringGame);
+	this->pausePushButton->setVisible(duringGame);
+	this->volumeSlider->show();
+	this->skipAllPushButton->setVisible(prefix);
 
 	this->descriptionLabel->setText(description);
 
@@ -365,6 +376,53 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 #endif
 
 	this->play();
+}
+
+void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &description)
+{
+	const QUrl resolvedImageUrl = app->resolveClipUrl(imageUrl);
+#ifndef Q_OS_ANDROID
+	const QString imageFile = resolvedImageUrl.toLocalFile();
+#else
+	const QString imageFile = resolvedImageUrl.url();
+#endif
+	qDebug() << "Image file:" << imageFile;
+
+	this->m_isPrefix = false;
+	this->m_skipped = false;
+	this->m_skippedAll = false;
+#ifndef Q_OS_ANDROID
+	this->m_videoWidget->hide();
+#else
+	this->m_renderer->widget()->hide();
+#endif
+	this->m_iconLabel->show();
+	this->m_iconLabel->setFile(imageFile);
+
+#ifndef Q_OS_ANDROID
+	if (app->isFullScreen())
+	{
+		this->showFullScreen();
+	}
+	else
+	{
+		this->show();
+	}
+#else
+	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
+	app->centralWidget()->layout()->addWidget(this);
+	this->show();
+#endif
+
+	this->skipPushButton->setEnabled(true);
+	this->skipPushButton->setFocus();
+	this->skipAllPushButton->hide();
+	this->cancelPushButton->hide();
+	this->pausePushButton->hide();
+	this->volumeSlider->hide();
+
+	this->descriptionLabel->setText(description);
 }
 
 void Player::playParallelSound(fairytale *app, const QUrl &url)

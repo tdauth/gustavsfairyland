@@ -33,15 +33,7 @@ void CustomFairytaleDialog::save()
 
 		CustomFairytale *customFairytale = new CustomFairytale(m_app);
 		customFairytale->setName(text);
-		CustomFairytale::ClipIds clipIds;
-
-		for (int i = 0; i < m_clips.size(); ++i)
-		{
-			Clip *clip = m_clips.at(i);
-			clipIds.push_back(CustomFairytale::ClipKey(this->m_app->clipPackage()->id(), clip->id()));
-		}
-
-		customFairytale->setClipIds(clipIds);
+		customFairytale->setClipIds(m_clips);
 		m_app->addCustomFairytale(customFairytale);
 	}
 }
@@ -53,15 +45,18 @@ void CustomFairytaleDialog::retry()
 	this->close();
 }
 
-void CustomFairytaleDialog::addClip(Clip *clip)
+void CustomFairytaleDialog::addClip(const CustomFairytale::ClipKey &clipKey)
 {
-	m_clips.push_back(clip);
+	m_clips.push_back(clipKey);
 	IconLabel *label = new IconLabel(this);
 	this->horizontalLayout->addWidget(label);
 	this->m_clipLabels.push_back(label);
 	label->setAlignment(Qt::AlignCenter);
 	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	label->setMaximumSize(QSize(64, 64));
+
+	const Clip *clip = m_app->getClipByKey(clipKey);
+
 #ifndef Q_OS_ANDROID
 	const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).toLocalFile();
 #else
@@ -133,17 +128,22 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 	if (!m_clips.empty())
 	{
-		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(m_clips[0]->description());
+		Clip *firstClip = m_app->getClipByKey(m_clips[0]);
+		Clip *startPersonClip = m_app->getClipByKey(m_app->startPerson());
+
+		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(firstClip->description());
 		int i = 0;
 
-		foreach (Clip *clip, m_clips)
+		foreach (fairytale::ClipKey clipKey, m_clips)
 		{
+			Clip *clip = m_app->getClipByKey(clipKey);
+
 			if (i > 0)
 			{
 				text += " ";
 			}
 
-			text += m_app->description(m_app->startPerson(), i, clip, false);
+			text += m_app->description(startPersonClip, i, clip, false);
 
 			if ((i > 0 && i % 2 == 0) || (i == m_clips.size() - 1))
 			{
@@ -155,7 +155,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 		if (this->m_app->gameMode()->state() == GameMode::State::Won)
 		{
-			text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(m_clips[0]->description());
+			text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(firstClip->description());
 		}
 		else
 		{

@@ -33,7 +33,7 @@ class GameModeOneOutOfFour : public GameMode
 		virtual void pause() override;
 		virtual void resume() override;
 		virtual GameMode::State state() override;
-		virtual Clip* solution() override;
+		virtual fairytale::ClipKey solution() override;
 		virtual void nextTurn() override;
 		virtual void afterNarrator() override;
 		virtual long int time() override;
@@ -50,16 +50,16 @@ class GameModeOneOutOfFour : public GameMode
 		/**
 		 * All clips which have not yet been a solution in one round.
 		 */
-		QList<Clip*> m_remainingClips;
+		QList<fairytale::ClipKey> m_remainingClips;
 		/**
 		 * The current solution of this round which has to be selected.
 		 */
-		Clip *m_currentSolution;
+		fairytale::ClipKey m_currentSolution;
 		/**
 		 * All clip buttons from which the user has to choose one solution.
 		 */
 		QVector<IconButton*> m_buttons;
-		QVector<Clip*> m_currentClips;
+		QVector<fairytale::ClipKey> m_currentClips;
 		/**
 		 * The current state of the game mode.
 		 */

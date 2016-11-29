@@ -23,9 +23,9 @@ class ClipPackageDialog : public QDialog, protected Ui::ClipPackageDialog
 		void fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app);
 
 		/**
-		 * \return Returns the selected clip package. Returns nullptr if the package list is empty.
+		 * \return Returns the selected clip packages.
 		 */
-		ClipPackage* clipPackage() const;
+		fairytale::ClipPackages clipPackages() const;
 		/**
 		 * \return Returns the selected clip package. Returns nullptr if the package list is empty.
 		 */
@@ -36,10 +36,13 @@ class ClipPackageDialog : public QDialog, protected Ui::ClipPackageDialog
 
 	private slots:
 		void currentGameModeIndexChanged(int index);
+		void validate();
 
 	private:
+		fairytale *m_app;
 		fairytale::ClipPackages m_packages;
 		fairytale::GameModes m_gameModes;
+		QList<QCheckBox*> m_checkBoxes;
 };
 
 #endif // CLIPPACKAGEDIALOG_H

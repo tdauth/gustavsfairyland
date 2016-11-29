@@ -33,7 +33,17 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
+   <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter|Qt::AlignTop">
     <widget class="QLabel" name="label_3">
      <property name="font">
       <font>
@@ -45,16 +55,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
-     </property>
-     <property name="centerButtons">
-      <bool>true</bool>
      </property>
     </widget>
    </item>

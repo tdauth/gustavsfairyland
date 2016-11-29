@@ -18,7 +18,7 @@ class GameModeStory : public GameMode
 		GameModeStory(fairytale *app);
 
 		virtual GameMode::State state() override;
-		virtual Clip* solution() override;
+		virtual fairytale::ClipKey solution() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
 		virtual void nextTurn() override;
@@ -57,7 +57,7 @@ class GameModeStory : public GameMode
 		QDir clipsDirectory() const;
 
 		State m_state;
-		Clip *m_currentSolution;
+		fairytale::ClipKey m_currentSolution;
 		Recorder *m_recorder;
 
 		QNetworkAccessManager *m_networkAccessManager;

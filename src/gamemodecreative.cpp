@@ -28,7 +28,7 @@ void GameModeCreative::finish()
 }
 
 
-GameModeCreative::GameModeCreative(fairytale *app) : GameMode(app), m_state(State::None), m_currentSolution(nullptr), m_finishButton(nullptr)
+GameModeCreative::GameModeCreative(fairytale *app) : GameMode(app), m_state(State::None), m_finishButton(nullptr)
 {
 }
 
@@ -37,7 +37,7 @@ GameMode::State GameModeCreative::state()
 	return this->m_state;
 }
 
-Clip* GameModeCreative::solution()
+fairytale::ClipKey GameModeCreative::solution()
 {
 	return this->m_currentSolution;
 }
@@ -53,37 +53,41 @@ void GameModeCreative::afterNarrator()
 	int column = 0;
 	int counter = 0;
 
-	ClipPackage *clipPackage = this->app()->clipPackage();
-	ClipPackage::Clips::iterator iterator = clipPackage->clips().begin();
-
-	for (int i = 0; i < clipPackage->clips().size() && iterator != clipPackage->clips().end(); ++i, ++iterator)
+	for (fairytale::ClipPackages::const_iterator packageIterator = app()->currentClipPackages().begin(); packageIterator != app()->currentClipPackages().end(); ++packageIterator)
 	{
-		Clip *clip = *iterator;
+		ClipPackage *clipPackage = packageIterator.value();
+		ClipPackage::Clips::iterator iterator = clipPackage->clips().begin();
 
-		// never use a clip twice and only show expected clips
-		if (this->app()->completeSolution().contains(clip) || (this->app()->requiresPerson() && !clip->isPerson()) || (!this->app()->requiresPerson() && clip->isPerson()))
+		for (int i = 0; i < clipPackage->clips().size() && iterator != clipPackage->clips().end(); ++i, ++iterator)
 		{
-			continue;
+			Clip *clip = *iterator;
+			const fairytale::ClipKey clipKey = fairytale::ClipKey(clipPackage->id(), clip->id());
+
+			// never use a clip twice and only show expected clips
+			if (this->app()->completeSolution().contains(clipKey) || (this->app()->requiresPerson() && !clip->isPerson()) || (!this->app()->requiresPerson() && clip->isPerson()))
+			{
+				continue;
+			}
+
+			ClipButton *button = new ClipButton(this->app(), clipKey);
+
+			this->m_buttons.push_back(button);
+			this->app()->gameAreaLayout()->addWidget(button, row, column);
+			button->show(); // first show and resize
+			button->updateGeometry();
+
+			if ((counter + 1) % 4 == 0)
+			{
+				++row;
+				column = 0;
+			}
+			else
+			{
+				column++;
+			}
+
+			++counter;
 		}
-
-		ClipButton *button = new ClipButton(this->app(), clip);
-
-		this->m_buttons.push_back(button);
-		this->app()->gameAreaLayout()->addWidget(button, row, column);
-		button->show(); // first show and resize
-		button->updateGeometry();
-
-		if ((counter + 1) % 4 == 0)
-		{
-			++row;
-			column = 0;
-		}
-		else
-		{
-			column++;
-		}
-
-		++counter;
 	}
 
 	m_finishButton = new QPushButton(this->app());
@@ -95,7 +99,7 @@ void GameModeCreative::afterNarrator()
 	for (int i = 0; i < m_buttons.size(); ++i)
 	{
 		ClipButton *button = m_buttons[i];
-		Clip *clip = button->clip();
+		Clip *clip = app()->getClipByKey(button->clip());
 		const QUrl url = this->app()->resolveClipUrl(clip->imageUrl());
 #ifndef Q_OS_ANDROID
 		const QString filePath = url.toLocalFile();
@@ -105,7 +109,7 @@ void GameModeCreative::afterNarrator()
 
 		button->iconButton()->setFile(filePath);
 		connect(button->iconButton(), &IconButton::clicked, this, &GameModeCreative::clickCard);
-		button->label()->setText(this->app()->description(this->app()->startPerson(), this->app()->turns(), clip, false));
+		button->label()->setText(this->app()->description(this->app()->getClipByKey(this->app()->startPerson()), this->app()->turns(), clip, false));
 		button->show();
 	}
 
@@ -114,8 +118,6 @@ void GameModeCreative::afterNarrator()
 
 void GameModeCreative::nextTurn()
 {
-	this->m_currentSolution = nullptr;
-
 	foreach (ClipButton *button, this->m_buttons)
 	{
 		delete button;
@@ -150,8 +152,6 @@ void GameModeCreative::pause()
 
 void GameModeCreative::end()
 {
-	this->m_currentSolution = nullptr;
-
 	foreach (ClipButton *button, this->m_buttons)
 	{
 		delete button;
@@ -230,7 +230,7 @@ bool GameModeCreative::addToHighScores()
 	return false;
 }
 
-GameModeCreative::ClipButton::ClipButton(QWidget *parent, Clip *clip) : QWidget(parent), m_clip(clip), m_iconButton(new IconButton(this)), m_label(new QLabel(this))
+GameModeCreative::ClipButton::ClipButton(QWidget *parent, fairytale::ClipKey clip) : QWidget(parent), m_clip(clip), m_iconButton(new IconButton(this)), m_label(new QLabel(this))
 {
 	QVBoxLayout *layout = new QVBoxLayout();
 	setLayout(layout);

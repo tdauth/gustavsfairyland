@@ -10,7 +10,7 @@ HighScore::HighScore() : m_rounds(0), m_time(0)
 {
 }
 
-HighScore::HighScore(const QString &name, const QString &package, const QString &gameMode, fairytale::Difficulty difficulty, int rounds, int time) : m_name(name), m_package(package), m_gameMode(gameMode), m_difficulty(difficulty), m_rounds(rounds), m_time(time)
+HighScore::HighScore(const QString &name, const QStringList &packages, const QString &gameMode, fairytale::Difficulty difficulty, int rounds, int time) : m_name(name), m_packages(packages), m_gameMode(gameMode), m_difficulty(difficulty), m_rounds(rounds), m_time(time)
 {
 }
 
@@ -36,7 +36,7 @@ HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 bool HighScores::addHighScore(const HighScore &highScore)
 {
-	const Key key(highScore.package(), highScore.gameMode());
+	const Key key(highScore.packages().join(";"), highScore.gameMode());
 
 	if (!this->m_highScores.contains(key))
 	{
@@ -120,8 +120,27 @@ void HighScores::showEvent(QShowEvent *event)
 			const fairytale::GameModes::const_iterator gameModeIterator = app()->gameModes().find(highScore.gameMode());
 			const QString gameModeName = gameModeIterator != app()->gameModes().end() ? gameModeIterator.value()->name() : highScore.gameMode();
 
-			const fairytale::ClipPackages::const_iterator packageIterator = app()->clipPackages().find(highScore.package());
-			const QString packageName = packageIterator != app()->clipPackages().end() ? packageIterator.value()->name() : highScore.package();
+			const QStringList packages = highScore.packages();
+			QString packagesText;
+			int i = 0;
+
+			foreach (const QString &packageId, packages)
+			{
+				const fairytale::ClipPackages::const_iterator packageIterator = app()->clipPackages().find(packageId);
+
+				const QString packageName = packageIterator != app()->clipPackages().end() ? packageIterator.value()->name() : packageId;
+
+				if (i == 0)
+				{
+					packagesText += tr("%1").arg(packageName);
+				}
+				else
+				{
+					packagesText += tr(", %1").arg(packageName);
+				}
+
+				++i;
+			}
 
 			newItem = new QTableWidgetItem(tr("%1.").arg(row + 1));
 			tableWidget->setItem(row, 0, newItem);
@@ -133,7 +152,7 @@ void HighScores::showEvent(QShowEvent *event)
 			tableWidget->setItem(row, 3, newItem);
 			newItem = new QTableWidgetItem(gameModeName);
 			tableWidget->setItem(row, 4, newItem);
-			newItem = new QTableWidgetItem(packageName);
+			newItem = new QTableWidgetItem(packagesText);
 			tableWidget->setItem(row, 5, newItem);
 			newItem = new QTableWidgetItem(highScore.name());
 			tableWidget->setItem(row, 6, newItem);

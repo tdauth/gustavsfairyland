@@ -15,10 +15,13 @@ class HighScore
 {
 	public:
 		HighScore();
-		HighScore(const QString &name, const QString &package, const QString &gameMode, fairytale::Difficulty difficulty, int rounds, int time);
+		HighScore(const QString &name, const QStringList &packages, const QString &gameMode, fairytale::Difficulty difficulty, int rounds, int time);
 
 		const QString& name() const;
-		const QString& package() const;
+		/**
+		 * All packages which have been used.
+		 */
+		const QStringList& packages() const;
 		const QString& gameMode() const;
 		fairytale::Difficulty difficulty() const;
 		int rounds() const;
@@ -26,7 +29,7 @@ class HighScore
 
 	private:
 		QString m_name;
-		QString m_package;
+		QStringList m_packages;
 		QString m_gameMode;
 		fairytale::Difficulty m_difficulty;
 		int m_rounds;
@@ -38,9 +41,9 @@ inline const QString& HighScore::name() const
 	return this->m_name;
 }
 
-inline const QString& HighScore::package() const
+inline const QStringList& HighScore::packages() const
 {
-	return this->m_package;
+	return this->m_packages;
 }
 
 inline const QString& HighScore::gameMode() const

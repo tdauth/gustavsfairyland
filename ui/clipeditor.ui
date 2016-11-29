@@ -59,6 +59,24 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="playNarratingSoundPushButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normalon>:/themes/oxygen/128x128/devices/audio-headphones.png</normalon>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="addNarratingSoundPushButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -119,7 +137,7 @@
      </item>
     </layout>
    </item>
-   <item row="9" column="0">
+   <item row="9" column="0" alignment="Qt::AlignHCenter">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
@@ -272,6 +290,24 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="playVideoPushButton">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/themes/oxygen/128x128/devices/video-display.png</normalon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="videoPushButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -374,6 +410,24 @@
         <property name="icon">
          <iconset>
           <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="showImageButton">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/themes/oxygen/128x128/devices/video-display.png</activeon>
          </iconset>
         </property>
         <property name="iconSize">

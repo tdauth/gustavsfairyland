@@ -255,10 +255,10 @@ void RoomWidget::resume()
 	}
 }
 
-void RoomWidget::addFloatingClip(Clip *clip, int width, int speed)
+void RoomWidget::addFloatingClip(const fairytale::ClipKey &clipKey, int width, int speed)
 {
 	FloatingClip *floatingClip = new FloatingClip(this, width, speed);
-	floatingClip->setClip(clip);
+	floatingClip->setClip(clipKey);
 	m_floatingClips.push_back(floatingClip);
 }
 

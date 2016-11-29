@@ -52,18 +52,18 @@ void fairytale::newGame()
 	}
 
 	this->m_clipPackageDialog->fill(this->clipPackages(), this->gameModes(), this);
-	ClipPackage *clipPackage = nullptr;
+	ClipPackages clipPackages;
 	GameMode *gameMode = nullptr;
 
 	if (execInCentralWidgetIfNecessary(this->m_clipPackageDialog) == QDialog::Accepted)
 	{
-		clipPackage = this->m_clipPackageDialog->clipPackage();
+		clipPackages = this->m_clipPackageDialog->clipPackages();
 		gameMode = this->m_clipPackageDialog->gameMode();
 	}
 
-	if (clipPackage != nullptr && gameMode != nullptr)
+	if (!clipPackages.isEmpty() && gameMode != nullptr)
 	{
-		startNewGame(clipPackage, gameMode, this->m_clipPackageDialog->difficulty(), this->m_clipPackageDialog->useMaxRounds(), this->m_clipPackageDialog->maxRounds());
+		startNewGame(clipPackages, gameMode, this->m_clipPackageDialog->difficulty(), this->m_clipPackageDialog->useMaxRounds(), this->m_clipPackageDialog->maxRounds());
 	}
 }
 
@@ -385,7 +385,7 @@ void fairytale::applyStyleRecursively(QWidget *widget)
 	}
 }
 
-void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
+void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
 	{
@@ -413,7 +413,7 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 	this->descriptionLabel->show();
 	this->timeLabel->show();
 
-	this->m_clipPackage = clipPackage;
+	this->m_currentClipPackages = clipPackages;
 	this->m_gameMode = gameMode;
 	this->m_difficulty = difficulty;
 	this->m_useMaxRounds = useMaxRounds;
@@ -424,10 +424,10 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 
 	setGameButtonsEnabled(true);
 
-	if (!this->clipPackage()->intro().isEmpty() && this->gameMode()->playIntro())
+	if (!this->defaultClipPackage()->intro().isEmpty() && this->gameMode()->playIntro())
 	{
 		this->m_playIntro = true;
-		this->m_player->playVideo(this, this->clipPackage()->intro(), tr("Intro"));
+		this->m_player->playVideo(this, this->defaultClipPackage()->intro(), tr("Intro"));
 	}
 	else
 	{
@@ -438,7 +438,6 @@ void fairytale::startNewGame(ClipPackage *clipPackage, GameMode *gameMode, Diffi
 fairytale::fairytale(Qt::WindowFlags flags)
 : QMainWindow(0, flags)
 , m_turns(0)
-, m_startPerson(nullptr)
 , m_player(new Player(this, this))
 , m_settingsDialog(nullptr)
 , m_clipsDialog(nullptr)
@@ -447,7 +446,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_customFairytaleDialog(nullptr)
 , m_remainingTime(0)
 , m_requiresPerson(true)
-, m_clipPackage(nullptr)
 , m_playIntro(false)
 , m_playOutroWin(false)
 , m_completeSolutionIndex(0)
@@ -580,7 +578,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	for (int i = 0; i < highScoresSize; ++i)
 	{
 		settings.setArrayIndex(i);
-		HighScore highScore(settings.value("name").toString(), settings.value("package").toString(), settings.value("gameMode").toString(), (fairytale::Difficulty)settings.value("difficulty").toInt(), settings.value("rounds").toInt(), settings.value("time").toInt());
+		HighScore highScore(settings.value("name").toString(), settings.value("packages").toString().split(";"), settings.value("gameMode").toString(), (fairytale::Difficulty)settings.value("difficulty").toInt(), settings.value("rounds").toInt(), settings.value("time").toInt());
 		this->highScores()->addHighScore(highScore);
 	}
 
@@ -595,7 +593,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 		const QString clipId = settings.value("clip").toString();
 		const bool unlock = settings.value("unlock").toBool();
 
-		this->m_bonusClipUnlocks[BonusClipKey(packageId, clipId)] = unlock;
+		this->m_bonusClipUnlocks[ClipKey(packageId, clipId)] = unlock;
 	}
 
 	settings.endArray();
@@ -631,7 +629,7 @@ fairytale::~fairytale()
 		{
 			settings.setArrayIndex(i);
 			settings.setValue("name", highScore.name());
-			settings.setValue("package", highScore.package());
+			settings.setValue("packages", highScore.packages().join(";"));
 			settings.setValue("gameMode", highScore.gameMode());
 			settings.setValue("difficulty", (int)highScore.difficulty());
 			settings.setValue("rounds", highScore.rounds());
@@ -721,24 +719,26 @@ void fairytale::playFinalClip(int index)
 	}
 
 	this->m_completeSolutionIndex = index;
-	Clip *solution = this->m_completeSolution[index];
+	fairytale::ClipKey solution = this->m_completeSolution[index];
+	Clip *solutionClip = this->getClipByKey(solution);
+	Clip *startPersonClip = this->getClipByKey(m_startPerson);
 
 	// play all sounds parallel to the clip
 
 	// play the sound for the inital character again
-	if (solution->isPerson() && index > 1)
+	if (solutionClip->isPerson() && index > 1)
 	{
-		this->m_player->playParallelSound(this, this->resolveClipUrl(this->m_startPerson->narratorUrl()));
+		this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
 	}
 
 	// play the sound "and"
-	if (solution->isPerson() && index > 0)
+	if (solutionClip->isPerson() && index > 0)
 	{
 		this->m_player->playParallelSound(this, this->narratorSoundUrl());
 	}
 
-	this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-	this->m_player->playVideo(this, solution->videoUrl(), this->description(this->m_startPerson, index, solution));
+	this->m_player->playParallelSound(this, this->resolveClipUrl(solutionClip->narratorUrl()));
+	this->m_player->playVideo(this, solutionClip->videoUrl(), this->description(startPersonClip, index, solutionClip));
 }
 
 void fairytale::playFinalVideo()
@@ -904,6 +904,11 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	dialog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->centralWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+	/*
+	 * Make sure the style is set correctly before showing it.
+	 */
+	applyStyleRecursively(dialog);
+
 	//const int result = dialog->exec(); // TODO on Linux this slows down everything and does not update the main GUI or react to button clicks in the dialog.
 	/*
 	 * exec() cannot be used since it makes the dialog modal and on Linux the main window is not updated properly anymore.
@@ -938,6 +943,67 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 
 	return result;
 //#endif
+}
+
+ClipPackage* fairytale::getClipPackageById(const QString &packageId)
+{
+	ClipPackages::iterator iterator = this->m_clipPackages.find(packageId);
+
+	if (iterator != this->m_clipPackages.end())
+	{
+		return iterator.value();
+	}
+
+	return nullptr;
+}
+
+Clip* fairytale::getClipByKey(const ClipKey &clipKey)
+{
+	ClipPackage *clipPackage = getClipPackageById(clipKey.first);
+
+	if (clipPackage == nullptr)
+	{
+		return nullptr;
+	}
+
+	ClipPackage::Clips::iterator iterator = clipPackage->clips().find(clipKey.second);
+
+	if (iterator != clipPackage->clips().end())
+	{
+		return iterator.value();
+	}
+
+	return nullptr;
+}
+
+int fairytale::maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages)
+{
+	int actClips = 0;
+	int personClips = 0;
+
+	for (ClipPackages::const_iterator packageIterator = clipPackages.begin(); packageIterator != clipPackages.end(); ++packageIterator)
+	{
+		const ClipPackage::Clips &clips = packageIterator.value()->clips();
+
+		for (ClipPackage::Clips::const_iterator clipIterator = clips.begin(); clipIterator != clips.end(); ++clipIterator)
+		{
+			if (clipIterator.value()->isPerson())
+			{
+				++personClips;
+			}
+			else
+			{
+				++actClips;
+			}
+		}
+	}
+
+	if (personClips == 0)
+	{
+		return 0;
+	}
+
+	return qMin(personClips - 1, actClips);
 }
 
 void fairytale::showHighScores()
@@ -1042,13 +1108,13 @@ void fairytale::quickGame()
 	}
 
 	// Start with the first available stuff.
-	ClipPackage *clipPackage = this->defaultClipPackage();
+	ClipPackages clipPackages = this->defaultClipPackages();
 	GameMode *gameMode = this->defaultGameMode();
 	const Difficulty difficulty = this->defaultDifficulty();
 	const bool useMaxRounds = this->defaultUseMaxRounds();
 	const int maxRounds = this->defaultMaxRounds();
 
-	startNewGame(clipPackage, gameMode, difficulty, useMaxRounds, maxRounds);
+	startNewGame(clipPackages, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
 void fairytale::retry()
@@ -1059,13 +1125,13 @@ void fairytale::retry()
 	}
 
 	// Start with the first available stuff.
-	ClipPackage *clipPackage = this->clipPackage();
+	ClipPackages clipPackages = this->currentClipPackages();
 	GameMode *gameMode = this->gameMode();
 	const Difficulty difficulty = this->difficulty();
 	const bool useMaxRounds = this->useMaxRounds();
 	const int maxRounds = this->maxRounds();
 
-	this->startNewGame(clipPackage, gameMode, difficulty, useMaxRounds, maxRounds);
+	this->startNewGame(clipPackages, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
 QDir fairytale::translationsDir() const
@@ -1147,7 +1213,7 @@ void fairytale::win()
 
 	hideGameWidgets();
 
-	const QUrl outroUrl = this->clipPackage()->outros().size() > (int)this->difficulty() ? this->resolveClipUrl(this->clipPackage()->outros().at((int)this->difficulty())) : QUrl();
+	const QUrl outroUrl = this->defaultClipPackage()->outros().size() > (int)this->difficulty() ? this->resolveClipUrl(this->defaultClipPackage()->outros().at((int)this->difficulty())) : QUrl();
 
 	qDebug() << "Outro URL:" << outroUrl;
 
@@ -1171,28 +1237,33 @@ void fairytale::afterOutroWin()
 
 	if (this->gameMode()->unlockBonusClip())
 	{
-		ClipPackage::BonusClips lockedBonusClips;
+		QSet<ClipKey> lockedBonusClips;
 
-		for (ClipPackage::BonusClips::const_iterator iterator = this->clipPackage()->bonusClips().begin(); iterator != this->clipPackage()->bonusClips().end(); ++iterator)
+		for (ClipPackages::const_iterator packageIterator = this->currentClipPackages().begin(); packageIterator != this->currentClipPackages().end(); ++packageIterator)
 		{
-			if (this->m_bonusClipUnlocks.find(BonusClipKey(this->clipPackage()->id(), iterator.key())) == this->m_bonusClipUnlocks.end())
+			ClipPackage *clipPackage = packageIterator.value();
+
+			for (ClipPackage::BonusClips::const_iterator iterator = clipPackage->bonusClips().begin(); iterator != clipPackage->bonusClips().end(); ++iterator)
 			{
-				lockedBonusClips.insert(iterator.key(), iterator.value());
+				if (this->m_bonusClipUnlocks.find(ClipKey(clipPackage->id(), iterator.key())) == this->m_bonusClipUnlocks.end())
+				{
+					lockedBonusClips.insert(ClipKey(packageIterator.key(), iterator.key()));
+				}
 			}
 		}
 
 		const int index = qrand() % lockedBonusClips.size();
 		int i = 0;
 		BonusClip *bonusClip = nullptr;
-		BonusClipKey bonusClipKey;
+		ClipKey bonusClipKey;
 
-		for (ClipPackage::BonusClips::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
+		for (QSet<ClipKey>::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
 		{
 			if (i == index)
 			{
-				bonusClipKey = BonusClipKey(this->clipPackage()->id(), iterator.key());
+				bonusClipKey = *iterator;
 				this->m_bonusClipUnlocks.insert(bonusClipKey, true);
-				bonusClip = iterator.value();
+				bonusClip = getBonusClipByKey(bonusClipKey);
 
 				break;
 			}
@@ -1224,7 +1295,7 @@ void fairytale::afterOutroWin()
 			name = qgetenv("USERNAME");
 		}
 
-		HighScore highScore(name, this->clipPackage()->id(), this->gameMode()->id(), this->difficulty(), this->rounds(), this->m_totalElapsedTime);
+		const HighScore highScore(name, this->currentClipPackages().keys(), this->gameMode()->id(), this->difficulty(), this->rounds(), this->m_totalElapsedTime);
 		this->highScores()->addHighScore(highScore);
 	}
 
@@ -1371,14 +1442,16 @@ void fairytale::nextTurn()
 		{
 			if (this->gameMode()->hasToChooseTheSolution())
 			{
-				Clip *solution = this->gameMode()->solution();
+				const ClipKey clipKey = this->gameMode()->solution();
+				Clip *solution = this->getClipByKey(clipKey);
 
 				if (this->m_turns == 0)
 				{
-					this->m_startPerson = solution;
+					this->m_startPerson = clipKey;
 				}
 
-				const QString description = this->description(this->m_startPerson, this->m_turns, solution);
+				Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
+				const QString description = this->description(startPersonClip, this->m_turns, solution);
 
 				this->m_remainingTime = this->gameMode()->time();
 				this->descriptionLabel->clear();
@@ -1390,9 +1463,9 @@ void fairytale::nextTurn()
 				if (solution->isPerson() && turns() > 1)
 				{
 					PlayerSoundData data;
-					data.narratorSoundUrl = this->m_startPerson->narratorUrl();
-					data.description = this->description(this->m_startPerson, 0, this->m_startPerson);
-					data.imageUrl = this->m_startPerson->imageUrl();
+					data.narratorSoundUrl = startPersonClip->narratorUrl();
+					data.description = this->description(startPersonClip, 0, startPersonClip);
+					data.imageUrl = startPersonClip->imageUrl();
 					data.prefix = true;
 					this->queuePlayerSound(data);
 				}
@@ -1414,7 +1487,7 @@ void fairytale::nextTurn()
 				// Make sure that the current click sound ends before playing the narrator sound.
 				PlayerSoundData data;
 				data.narratorSoundUrl = solution->narratorUrl();
-				data.description = this->description(this->m_startPerson, 0, solution); // use always the stand alone description
+				data.description = this->description(startPersonClip, 0, solution); // use always the stand alone description
 				data.imageUrl = solution->imageUrl();
 				data.prefix = false;
 				this->queuePlayerSound(data);
@@ -1450,7 +1523,7 @@ void fairytale::onFinishTurn()
 	this->m_turns++;
 
 	// If no start person has been selected yet, make sure this one is used as the start person.
-	if (this->m_startPerson == nullptr)
+	if (this->m_turns == 1)
 	{
 		this->m_startPerson = this->gameMode()->solution();
 	}
@@ -1516,7 +1589,7 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 		for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
 		{
 			const QString clipId = iterator.key();
-			const BonusClipKey bonusClipKey = BonusClipKey(package->id(), clipId);
+			const ClipKey bonusClipKey = ClipKey(package->id(), clipId);
 
 			if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
 			{
@@ -1551,7 +1624,7 @@ void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
 	for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
 	{
 		QAction *action = iterator.key();
-		BonusClipKey key = iterator.value();
+		ClipKey key = iterator.value();
 
 		BonusClipUnlocks::const_iterator unlockIterator = this->m_bonusClipUnlocks.find(key);
 
@@ -1641,7 +1714,7 @@ void fairytale::onFinishVideoAndSounds()
 
 					this->updateTimeLabel();
 					// the description label helps to remember
-					this->descriptionLabel->setText(this->description(this->m_startPerson, this->m_turns, this->gameMode()->solution()));
+					this->descriptionLabel->setText(this->description(this->getClipByKey(this->m_startPerson), this->m_turns, this->getClipByKey(this->gameMode()->solution())));
 
 					this->gameMode()->afterNarrator();
 
@@ -1782,15 +1855,8 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	if (this->gameMode()->solution() != nullptr)
-	{
-		this->customFairytaleDialog()->addClip(this->gameMode()->solution());
-		this->m_completeSolution.push_back(this->gameMode()->solution());
-	}
-	else
-	{
-		qDebug() << "Warning missing current solution!";
-	}
+	this->customFairytaleDialog()->addClip(this->gameMode()->solution());
+	this->m_completeSolution.push_back(this->gameMode()->solution());
 }
 
 QString fairytale::description(Clip *startPersonClip, int turn, Clip *clip, bool markBold)
@@ -2074,7 +2140,7 @@ void fairytale::addClipPackage(ClipPackage *package)
 		BonusClip *bonusClip = iterator.value();
 		QAction *action = menuAchievements->addAction(bonusClip->description());
 		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
-		const BonusClipKey bonusClipKey(package->id(), clipId);
+		const ClipKey bonusClipKey(package->id(), clipId);
 		this->m_bonusClipActions.insert(action, bonusClipKey);
 
 		if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
@@ -2190,6 +2256,21 @@ ClipPackage* fairytale::defaultClipPackage() const
 	}
 
 	return this->clipPackages().first();
+}
+
+fairytale::ClipPackages fairytale::defaultClipPackages() const
+{
+	ClipPackages result;
+
+	for (ClipPackages::const_iterator iterator = this->clipPackages().begin(); iterator != this->clipPackages().end(); ++iterator)
+	{
+		if (iterator.key() == "gustav" || iterator.key() == "custom")
+		{
+			result.insert(iterator.key(), iterator.value());
+		}
+	}
+
+	return result;
 }
 
 ClipPackage* fairytale::customClipPackage() const
@@ -2387,7 +2468,7 @@ void fairytale::removeCustomFairytale(CustomFairytale *customFairytale)
 	}
 }
 
-BonusClip* fairytale::getBonusClipByKey(const BonusClipKey &key)
+BonusClip* fairytale::getBonusClipByKey(const ClipKey &key)
 {
 	ClipPackages::iterator iterator = m_clipPackages.find(key.first);
 

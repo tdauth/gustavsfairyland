@@ -11,6 +11,7 @@
 class Clip;
 class fairytale;
 class LanguageDialog;
+class Player;
 
 /**
  * \brief This editor dialog allows you to create a single clip.
@@ -24,10 +25,13 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 	public slots:
 		void chooseImage();
 		void captureImage();
+		void showImage();
 		void chooseVideo();
 		void recordVideo();
+		void playVideo();
 		void addNarratingSound();
 		void recordNarratingSound();
+		void playNarratingSound();
 		void removeNarratingSound();
 		void addDescription();
 		void removeDescription();
@@ -110,6 +114,9 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		bool clipIdIsAlreadyUsed() const;
 		bool moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldUrl, QUrl &newUrl);
 
+		void updateNarratingSoundsWidget(Clip *clip);
+		void updateDescriptionWidget(Clip *clip);
+
 		fairytale *m_app;
 		Clip *m_clip;
 		LanguageDialog *m_languageDialog;
@@ -122,6 +129,8 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 
 		Recorder *m_recorder;
 		QString m_recordedFile;
+
+		Player *m_player;
 
 		/**
 		 * Currently selected language by the language dialog.
