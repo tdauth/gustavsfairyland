@@ -14,7 +14,7 @@
    <string>Game Over</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
+   <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
     <widget class="QLabel" name="label">
      <property name="maximumSize">
       <size>

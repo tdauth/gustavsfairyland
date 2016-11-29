@@ -32,14 +32,13 @@ void CustomFairytaleDialog::save()
 		}
 
 		CustomFairytale *customFairytale = new CustomFairytale(m_app);
-		customFairytale->setPackageId(this->m_app->clipPackage()->id());
 		customFairytale->setName(text);
 		CustomFairytale::ClipIds clipIds;
 
 		for (int i = 0; i < m_clips.size(); ++i)
 		{
 			Clip *clip = m_clips.at(i);
-			clipIds.push_back(clip->id());
+			clipIds.push_back(CustomFairytale::ClipKey(this->m_app->clipPackage()->id(), clip->id()));
 		}
 
 		customFairytale->setClipIds(clipIds);

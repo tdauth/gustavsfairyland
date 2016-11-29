@@ -351,12 +351,14 @@ void fairytale::applyStyle(QWidget *widget)
 	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
 	palette.setColor(QPalette::Highlight, QColor(0xC05800));
 	palette.setColor(QPalette::Link, QColor(0xC05800));
-	palette.setColor(QPalette::WindowText, QColor(0xC05800));
+	palette.setColor(QPalette::WindowText, Qt::black);
 
 	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
 	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
 
 	widget->setPalette(palette);
+
+	//widget->setStyleSheet("QWidget { selection-background-color: #C05800; selection-color: black; }");
 	//widget->setAutoFillBackground(true); // TODO performance is weak
 }
 
@@ -755,7 +757,7 @@ void fairytale::playFinalVideo()
 void fairytale::playCustomFairytaleClip(int index)
 {
 	this->m_customFairytaleIndex = index;
-	const QString packageId = this->m_playingCustomFairytale->packageId();
+	const QString packageId = this->m_playingCustomFairytale->clipIds()[index].first;
 
 	bool played = false;
 	ClipPackages::iterator iterator = this->m_clipPackages.find(packageId);
@@ -763,7 +765,7 @@ void fairytale::playCustomFairytaleClip(int index)
 	if (iterator != this->m_clipPackages.end())
 	{
 		ClipPackage *clipPackage = iterator.value();
-		const QString clipId = this->m_playingCustomFairytale->clipIds()[index];
+		const QString clipId = this->m_playingCustomFairytale->clipIds()[index].second;
 		ClipPackage::Clips::iterator clipIterator = clipPackage->clips().find(clipId);
 
 		if (clipIterator != clipPackage->clips().end())
@@ -771,33 +773,40 @@ void fairytale::playCustomFairytaleClip(int index)
 			Clip *solution = clipIterator.value();
 			Clip *startPersonClip = solution;
 
-			const QString startPersonClipId = this->m_playingCustomFairytale->clipIds()[0];
-			ClipPackage::Clips::iterator startPersonClipIterator = clipPackage->clips().find(startPersonClipId);
+			const QString startPersonPackageId = this->m_playingCustomFairytale->clipIds()[0].first;
+			ClipPackages::iterator startPersonPackageIterator = this->m_clipPackages.find(packageId);
 
-			if (startPersonClipIterator != clipPackage->clips().end())
+			if (startPersonPackageIterator != this->m_clipPackages.end())
 			{
-				startPersonClip = startPersonClipIterator.value();
+				ClipPackage *startPersonClipPackage = iterator.value();
+				const QString startPersonClipId = this->m_playingCustomFairytale->clipIds()[0].second;
+				ClipPackage::Clips::iterator startPersonClipIterator = startPersonClipPackage->clips().find(startPersonClipId);
+
+				if (startPersonClipIterator != startPersonClipPackage->clips().end())
+				{
+					startPersonClip = startPersonClipIterator.value();
+				}
+
+
+				played = true;
+
+				// play all sounds parallel to the clip
+
+				// play the sound for the inital character again
+				if (solution->isPerson() && index > 1)
+				{
+					this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
+				}
+
+				// play the sound "and"
+				if (solution->isPerson() && index > 0)
+				{
+					this->m_player->playParallelSound(this, this->narratorSoundUrl());
+				}
+
+				this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
+				this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution), false);
 			}
-
-
-			played = true;
-
-			// play all sounds parallel to the clip
-
-			// play the sound for the inital character again
-			if (solution->isPerson() && index > 1)
-			{
-				this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
-			}
-
-			// play the sound "and"
-			if (solution->isPerson() && index > 0)
-			{
-				this->m_player->playParallelSound(this, this->narratorSoundUrl());
-			}
-
-			this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-			this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution), false);
 		}
 	}
 
@@ -961,7 +970,10 @@ void fairytale::record()
 	if (customClipPackage() != nullptr)
 	{
 		Clip clip(this);
-		const QString id = QDateTime::currentDateTime().toString(Qt::ISODate);
+		/*
+		 * Don't use any special characters which are required for custom fairytale strings.
+		 */
+		const QString id = QDateTime::currentDateTime().toString(Qt::ISODate).remove(QRegExp("[;:]"));
 		clip.setId(id);
 		ClipEditor clipEditor(this, this);
 		clipEditor.fill(&clip);
@@ -1728,7 +1740,7 @@ void fairytale::startMusic()
 	urls.push_back(QUrl("./music/05.PSO020103-Mahler-5-V.mp3"));
 	urls.push_back(QUrl("./music/MahlerPianoQuartet_64kb.mp3"));
 	*/
-	const QUrl url = urls.at(qrand() % urls.size());
+	const QUrl url = urls.front(); //urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
 	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;
 	m_musicPlayer->setMedia(musicUrl);

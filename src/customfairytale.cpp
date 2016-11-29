@@ -12,16 +12,30 @@ void CustomFairytale::load(const QSettings &settings)
 {
 	this->m_clipIds.clear();
 
-	this->setPackageId(settings.value("packageId").toString());
 	this->setName(settings.value("name").toString());
-	this->setClipIds(settings.value("clipIds").toString().split(";"));
+	const QStringList clipIdPairs = settings.value("clipIds").toString().split(";");
+	ClipIds clipIds;
+
+	foreach (QString clipIdPair, clipIdPairs)
+	{
+		const QStringList pair = clipIdPair.split(":");
+		clipIds.push_back(ClipKey(pair.front(), pair.back()));
+	}
+
+	this->setClipIds(clipIds);
 }
 
 void CustomFairytale::save(QSettings &settings)
 {
-	settings.setValue("packageId", this->packageId());
 	settings.setValue("name", this->name());
-	settings.setValue("clipIds", clipIds().join(";"));
+	QStringList clipIdPairs;
+
+	foreach (ClipKey clipKey, clipIds())
+	{
+		clipIdPairs.push_back(clipKey.first + ":" + clipKey.second);
+	}
+
+	settings.setValue("clipIds", clipIdPairs.join(";"));
 }
 
 CustomFairytale* CustomFairytale::fromString(const QString& value, const QString &name, QObject *parent)
@@ -36,9 +50,17 @@ CustomFairytale* CustomFairytale::fromString(const QString& value, const QString
 	}
 
 	CustomFairytale *result = new CustomFairytale(parent);
-	result->setPackageId(values.takeFirst());
 	result->setName(name);
-	result->setClipIds(values);
+
+	ClipIds clipIds;
+
+	foreach (QString clipIdPair, values)
+	{
+		const QStringList pair = clipIdPair.split(":");
+		clipIds.push_back(ClipKey(pair.front(), pair.back()));
+	}
+
+	result->setClipIds(clipIds);
 
 	return result;
 }
@@ -46,6 +68,13 @@ CustomFairytale* CustomFairytale::fromString(const QString& value, const QString
 
 QString CustomFairytale::toString()
 {
-	return this->packageId() + ";" +  clipIds().join(";");
+	QStringList clipIdPairs;
+
+	foreach (ClipKey clipKey, clipIds())
+	{
+		clipIdPairs.push_back(clipKey.first + ":" + clipKey.second);
+	}
+
+	return clipIdPairs.join(";");
 }
 

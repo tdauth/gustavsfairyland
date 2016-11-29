@@ -11,7 +11,12 @@
 class CustomFairytale : public QObject
 {
 	public:
-		typedef QStringList ClipIds;
+		/**
+		 * The key of every clip is represented by the ID of its clip package and the ID of the clip itself.
+		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
+		 */
+		typedef QPair<QString, QString> ClipKey;
+		typedef QList<ClipKey> ClipIds;
 
 		CustomFairytale(QObject *parent);
 
@@ -23,14 +28,11 @@ class CustomFairytale : public QObject
 
 		void setName(const QString &name);
 		QString name() const;
-		void setPackageId(const QString &packageId);
-		QString packageId() const;
 		void setClipIds(const ClipIds &clipIds);
 		const ClipIds& clipIds() const;
 
 	private:
 		QString m_name;
-		QString m_packageId;
 		ClipIds m_clipIds;
 };
 
@@ -42,16 +44,6 @@ inline void CustomFairytale::setName(const QString &name)
 inline QString CustomFairytale::name() const
 {
 	return this->m_name;
-}
-
-inline void CustomFairytale::setPackageId(const QString &packageId)
-{
-	this->m_packageId = packageId;
-}
-
-inline QString CustomFairytale::packageId() const
-{
-	return this->m_packageId;
 }
 
 inline void CustomFairytale::setClipIds(const CustomFairytale::ClipIds &clipIds)

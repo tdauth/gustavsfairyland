@@ -303,17 +303,17 @@ p, li { white-space: pre-wrap; }
         <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="137"/>
+        <location filename="../src/customfairytaledialog.cpp" line="136"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="159"/>
+        <location filename="../src/customfairytaledialog.cpp" line="158"/>
         <source>And if %1 did not die then %1 is still alive today.&lt;br/&gt;End</source>
         <translation>Und wenn %1 nicht gestorben ist, dann lebt %1 noch heute.&lt;br/&gt;Ende</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="168"/>
+        <location filename="../src/customfairytaledialog.cpp" line="167"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation>Aber niemand weiß, was als Nächstes passierte.&lt;br/&gt;Ende</translation>
     </message>
@@ -1019,15 +1019,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="403"/>
-        <location filename="../src/fairytale.cpp" line="1276"/>
+        <location filename="../src/fairytale.cpp" line="1286"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="404"/>
         <location filename="../src/fairytale.cpp" line="405"/>
-        <location filename="../src/fairytale.cpp" line="1277"/>
-        <location filename="../src/fairytale.cpp" line="1278"/>
+        <location filename="../src/fairytale.cpp" line="1287"/>
+        <location filename="../src/fairytale.cpp" line="1288"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
@@ -1047,112 +1047,112 @@ p, li { white-space: pre-wrap; }
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="985"/>
+        <location filename="../src/fairytale.cpp" line="995"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="985"/>
+        <location filename="../src/fairytale.cpp" line="995"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="991"/>
+        <location filename="../src/fairytale.cpp" line="1001"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="991"/>
+        <location filename="../src/fairytale.cpp" line="1001"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="996"/>
+        <location filename="../src/fairytale.cpp" line="1006"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="996"/>
+        <location filename="../src/fairytale.cpp" line="1006"/>
         <source>Custom Clip Package is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1147"/>
+        <location filename="../src/fairytale.cpp" line="1157"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1195"/>
+        <location filename="../src/fairytale.cpp" line="1205"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1195"/>
+        <location filename="../src/fairytale.cpp" line="1205"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation>Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1251"/>
+        <location filename="../src/fairytale.cpp" line="1261"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1252"/>
-        <location filename="../src/fairytale.cpp" line="1253"/>
+        <location filename="../src/fairytale.cpp" line="1262"/>
+        <location filename="../src/fairytale.cpp" line="1263"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1395"/>
+        <location filename="../src/fairytale.cpp" line="1405"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1423"/>
-        <location filename="../src/fairytale.cpp" line="1475"/>
+        <location filename="../src/fairytale.cpp" line="1433"/>
+        <location filename="../src/fairytale.cpp" line="1485"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1423"/>
-        <location filename="../src/fairytale.cpp" line="1475"/>
+        <location filename="../src/fairytale.cpp" line="1433"/>
+        <location filename="../src/fairytale.cpp" line="1485"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1768"/>
+        <location filename="../src/fairytale.cpp" line="1778"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1796"/>
-        <location filename="../src/fairytale.cpp" line="1830"/>
+        <location filename="../src/fairytale.cpp" line="1806"/>
+        <location filename="../src/fairytale.cpp" line="1840"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1800"/>
-        <location filename="../src/fairytale.cpp" line="1834"/>
+        <location filename="../src/fairytale.cpp" line="1810"/>
+        <location filename="../src/fairytale.cpp" line="1844"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1807"/>
+        <location filename="../src/fairytale.cpp" line="1817"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1811"/>
+        <location filename="../src/fairytale.cpp" line="1821"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1818"/>
+        <location filename="../src/fairytale.cpp" line="1828"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1822"/>
+        <location filename="../src/fairytale.cpp" line="1832"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>
