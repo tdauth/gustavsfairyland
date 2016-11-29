@@ -27,33 +27,34 @@ void SettingsDialog::restoreDefaults()
 	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
-	if (this->m_app->loadDefaultClipPackage())
+	// TODO unload only on apply!
+	// Remove all clip packages.
+	for (ClipPackages::iterator iterator = this->m_clipPackages.begin(); iterator != this->m_clipPackages.end(); )
 	{
-		// Remove all clip packages.
-		for (ClipPackages::iterator iterator = this->m_clipPackages.begin(); iterator != this->m_clipPackages.end(); )
+		QTreeWidgetItem *item = iterator.key();
+		ClipPackage *package = iterator.value();
+
+		qDebug() << "Before removing package";
+		this->m_app->removeClipPackage(package);
+
+		qDebug() << "Before erasing item";
+		// erase package entry
+		iterator = this->m_clipPackages.erase(iterator);
+
+		// drop all children from the map
+		for (int i = 0; i < item->childCount(); ++i)
 		{
-			QTreeWidgetItem *item = iterator.key();
-			ClipPackage *package = iterator.value();
-
-			qDebug() << "Before removing package";
-			this->m_app->removeClipPackage(package);
-
-			qDebug() << "Before erasing item";
-			// erase package entry
-			iterator = this->m_clipPackages.erase(iterator);
-
-			// drop all children from the map
-			for (int i = 0; i < item->childCount(); ++i)
-			{
-				this->m_clips.remove(item->child(i));
-			}
-
-			// delete top level widget
-			delete item;
-			// Remove clip package from memory.
-			delete package;
+			this->m_clips.remove(item->child(i));
 		}
 
+		// delete top level widget
+		delete item;
+		// Remove clip package from memory.
+		delete package;
+	}
+
+	if (this->m_app->loadDefaultClipPackage())
+	{
 		Q_ASSERT(!m_app->clipPackages().isEmpty());
 		this->fill(m_app->clipPackages());
 	}

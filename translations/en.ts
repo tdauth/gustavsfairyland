@@ -514,137 +514,142 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="297"/>
+        <location filename="../build/ui_mainwindow.h" line="304"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="298"/>
+        <location filename="../build/ui_mainwindow.h" line="305"/>
         <source>&amp;New Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="299"/>
+        <location filename="../build/ui_mainwindow.h" line="306"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="300"/>
+        <location filename="../build/ui_mainwindow.h" line="307"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="301"/>
+        <location filename="../build/ui_mainwindow.h" line="308"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="302"/>
+        <location filename="../build/ui_mainwindow.h" line="309"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="303"/>
+        <location filename="../build/ui_mainwindow.h" line="310"/>
         <source>&amp;Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="304"/>
+        <location filename="../build/ui_mainwindow.h" line="311"/>
         <source>&amp;Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="305"/>
+        <location filename="../build/ui_mainwindow.h" line="312"/>
         <source>&amp;Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="306"/>
+        <location filename="../build/ui_mainwindow.h" line="313"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="307"/>
+        <location filename="../build/ui_mainwindow.h" line="314"/>
         <source>&amp;Cancel Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="308"/>
+        <location filename="../build/ui_mainwindow.h" line="315"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="309"/>
+        <location filename="../build/ui_mainwindow.h" line="316"/>
         <source>&amp;Highscores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="310"/>
+        <location filename="../build/ui_mainwindow.h" line="317"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="312"/>
+        <location filename="../build/ui_mainwindow.h" line="319"/>
         <source>Let&apos;s Go!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="313"/>
+        <location filename="../build/ui_mainwindow.h" line="320"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="311"/>
+        <location filename="../build/ui_mainwindow.h" line="318"/>
         <source>High Scores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="314"/>
+        <location filename="../build/ui_mainwindow.h" line="321"/>
         <source>Custom Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="315"/>
+        <location filename="../build/ui_mainwindow.h" line="322"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="319"/>
+        <location filename="../build/ui_mainwindow.h" line="327"/>
         <source>Cancel Game (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="318"/>
+        <location filename="../build/ui_mainwindow.h" line="326"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="320"/>
+        <location filename="../build/ui_mainwindow.h" line="323"/>
+        <source>Record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="328"/>
         <source>Fi&amp;le</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="321"/>
+        <location filename="../build/ui_mainwindow.h" line="329"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="322"/>
+        <location filename="../build/ui_mainwindow.h" line="330"/>
         <source>Setti&amp;ngs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="323"/>
+        <location filename="../build/ui_mainwindow.h" line="331"/>
         <source>&amp;Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="324"/>
+        <location filename="../build/ui_mainwindow.h" line="332"/>
         <source>Lan&amp;guage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="325"/>
+        <location filename="../build/ui_mainwindow.h" line="333"/>
         <source>&amp;Custom Fairytales</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,185 +759,185 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="280"/>
+        <location filename="../build/ui_settings.h" line="279"/>
         <source>Choose Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="279"/>
+        <location filename="../build/ui_settings.h" line="278"/>
         <source>Clips Directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="273"/>
+        <location filename="../build/ui_settings.h" line="272"/>
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="260"/>
+        <location filename="../build/ui_settings.h" line="259"/>
         <source>Possible Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="261"/>
+        <location filename="../build/ui_settings.h" line="260"/>
         <source>Number of Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="262"/>
+        <location filename="../build/ui_settings.h" line="261"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="267"/>
+        <location filename="../build/ui_settings.h" line="266"/>
         <source>Custom Fairytales:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="268"/>
+        <location filename="../build/ui_settings.h" line="267"/>
         <source>Copy to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="269"/>
+        <location filename="../build/ui_settings.h" line="268"/>
         <source>Import from clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="271"/>
+        <location filename="../build/ui_settings.h" line="270"/>
         <source>Clear All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="272"/>
+        <location filename="../build/ui_settings.h" line="271"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="274"/>
+        <location filename="../build/ui_settings.h" line="273"/>
         <source>Music Volume:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="275"/>
+        <location filename="../build/ui_settings.h" line="274"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="277"/>
+        <location filename="../build/ui_settings.h" line="276"/>
         <source>Click Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="263"/>
+        <location filename="../build/ui_settings.h" line="262"/>
         <source>Add File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="264"/>
+        <location filename="../build/ui_settings.h" line="263"/>
         <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="265"/>
-        <location filename="../build/ui_settings.h" line="270"/>
+        <location filename="../build/ui_settings.h" line="264"/>
+        <location filename="../build/ui_settings.h" line="269"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="266"/>
+        <location filename="../build/ui_settings.h" line="265"/>
         <source>Download New Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="64"/>
-        <location filename="../src/settingsdialog.cpp" line="218"/>
+        <location filename="../src/settingsdialog.cpp" line="65"/>
+        <location filename="../src/settingsdialog.cpp" line="219"/>
         <source>Clips Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="90"/>
-        <location filename="../src/settingsdialog.cpp" line="95"/>
-        <location filename="../src/settingsdialog.cpp" line="172"/>
-        <location filename="../src/settingsdialog.cpp" line="177"/>
+        <location filename="../src/settingsdialog.cpp" line="91"/>
+        <location filename="../src/settingsdialog.cpp" line="96"/>
+        <location filename="../src/settingsdialog.cpp" line="173"/>
+        <location filename="../src/settingsdialog.cpp" line="178"/>
         <source>Game mode is missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="90"/>
-        <location filename="../src/settingsdialog.cpp" line="95"/>
-        <location filename="../src/settingsdialog.cpp" line="172"/>
-        <location filename="../src/settingsdialog.cpp" line="177"/>
+        <location filename="../src/settingsdialog.cpp" line="91"/>
+        <location filename="../src/settingsdialog.cpp" line="96"/>
+        <location filename="../src/settingsdialog.cpp" line="173"/>
+        <location filename="../src/settingsdialog.cpp" line="178"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="198"/>
+        <location filename="../src/settingsdialog.cpp" line="199"/>
         <source>Add Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="198"/>
+        <location filename="../src/settingsdialog.cpp" line="199"/>
         <source>Clip Files (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="253"/>
+        <location filename="../src/settingsdialog.cpp" line="254"/>
         <source>Missing Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="253"/>
+        <location filename="../src/settingsdialog.cpp" line="254"/>
         <source>Missing clips in the directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="322"/>
+        <location filename="../src/settingsdialog.cpp" line="323"/>
         <source>Custom Fairytale Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="322"/>
+        <location filename="../src/settingsdialog.cpp" line="323"/>
         <source>Name of custom fairytale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="329"/>
+        <location filename="../src/settingsdialog.cpp" line="330"/>
         <source>Overwrite existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="329"/>
+        <location filename="../src/settingsdialog.cpp" line="330"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="434"/>
+        <location filename="../src/settingsdialog.cpp" line="435"/>
         <source>Persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="436"/>
+        <location filename="../src/settingsdialog.cpp" line="437"/>
         <source>Acts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="439"/>
+        <location filename="../src/settingsdialog.cpp" line="440"/>
         <source>Intro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="445"/>
+        <location filename="../src/settingsdialog.cpp" line="446"/>
         <source>Outros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="459"/>
+        <location filename="../src/settingsdialog.cpp" line="460"/>
         <source>Bonuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="278"/>
+        <location filename="../build/ui_settings.h" line="277"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -953,121 +958,151 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../src/fairytale.cpp" line="98"/>
+        <location filename="../src/fairytale.cpp" line="99"/>
         <source>Cancel Game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="98"/>
+        <location filename="../src/fairytale.cpp" line="99"/>
         <source>Do you want to cancel the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="402"/>
-        <location filename="../src/fairytale.cpp" line="1194"/>
+        <location filename="../src/fairytale.cpp" line="403"/>
+        <location filename="../src/fairytale.cpp" line="1276"/>
         <source>Pause Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="403"/>
         <location filename="../src/fairytale.cpp" line="404"/>
-        <location filename="../src/fairytale.cpp" line="1195"/>
-        <location filename="../src/fairytale.cpp" line="1196"/>
+        <location filename="../src/fairytale.cpp" line="405"/>
+        <location filename="../src/fairytale.cpp" line="1277"/>
+        <location filename="../src/fairytale.cpp" line="1278"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="429"/>
+        <location filename="../src/fairytale.cpp" line="430"/>
         <source>Intro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="523"/>
+        <location filename="../src/fairytale.cpp" line="525"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="527"/>
+        <location filename="../src/fairytale.cpp" line="529"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1065"/>
+        <location filename="../src/fairytale.cpp" line="985"/>
+        <source>Error on Saving Custom Clips Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="985"/>
+        <source>Error on Saving Custom Clips Package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="991"/>
+        <source>Missing Custom Clip Dir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="991"/>
+        <source>Custom Clip Dir is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="996"/>
+        <source>Missing Custom Clip Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="996"/>
+        <source>Custom Clip Package is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="1147"/>
         <source>Outro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1113"/>
+        <location filename="../src/fairytale.cpp" line="1195"/>
         <source>Unlocked Bonus Clip!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1113"/>
+        <location filename="../src/fairytale.cpp" line="1195"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1169"/>
+        <location filename="../src/fairytale.cpp" line="1251"/>
         <source>Continue Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1170"/>
-        <location filename="../src/fairytale.cpp" line="1171"/>
+        <location filename="../src/fairytale.cpp" line="1252"/>
+        <location filename="../src/fairytale.cpp" line="1253"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1313"/>
+        <location filename="../src/fairytale.cpp" line="1395"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1341"/>
-        <location filename="../src/fairytale.cpp" line="1393"/>
+        <location filename="../src/fairytale.cpp" line="1423"/>
+        <location filename="../src/fairytale.cpp" line="1475"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1341"/>
-        <location filename="../src/fairytale.cpp" line="1393"/>
+        <location filename="../src/fairytale.cpp" line="1423"/>
+        <location filename="../src/fairytale.cpp" line="1475"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1686"/>
+        <location filename="../src/fairytale.cpp" line="1768"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1714"/>
-        <location filename="../src/fairytale.cpp" line="1748"/>
+        <location filename="../src/fairytale.cpp" line="1796"/>
+        <location filename="../src/fairytale.cpp" line="1830"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1718"/>
-        <location filename="../src/fairytale.cpp" line="1752"/>
+        <location filename="../src/fairytale.cpp" line="1800"/>
+        <location filename="../src/fairytale.cpp" line="1834"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1725"/>
+        <location filename="../src/fairytale.cpp" line="1807"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1729"/>
+        <location filename="../src/fairytale.cpp" line="1811"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1736"/>
+        <location filename="../src/fairytale.cpp" line="1818"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1740"/>
+        <location filename="../src/fairytale.cpp" line="1822"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

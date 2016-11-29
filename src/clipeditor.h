@@ -22,8 +22,6 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 	Q_OBJECT
 
 	public slots:
-		void clipIdChanged(const QString &text);
-		void setIsPerson(bool isAPerson);
 		void chooseImage();
 		void captureImage();
 		void chooseVideo();
@@ -61,7 +59,32 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 */
 		Clip* clip(QObject *parent);
 
+		/**
+		 * Moves all files of the clip to the current clips directory and makes their URLs relative to
+		 * the application clips directory.
+		 *
+		 * This helps using the clip at different machines and separting it from the temporarily recorded data.
+		 *
+		 * \param parentDir The newly used parent directory of the clip's own directory.
+		 * \param dirName The directory in \p parentDir into which the clip's files are moved.
+		 */
+		bool moveFilesToCurrentClipIdDir(const QDir parentDir, const QString dirName);
+
+		/**
+		 * The directory where a subdirectory with the clip's ID is created into which all the clip's files are moved.
+		 *
+		 * \{
+		 */
+		void setTargetClipsDirectory(const QDir &dir);
+		QDir targetClipsDirectory() const;
+		/**
+		 * \}
+		 */
+
 	private slots:
+		void clipIdChanged(const QString &text);
+		void setIsPerson(bool isAPerson);
+
 		void imageSaved(int id, const QString &fileName);
 		void videoRecorderStateChanged(QMediaRecorder::State state);
 		void audioRecorderStateChanged(QMediaRecorder::State state);
@@ -85,19 +108,17 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		QDir currentClipDirectory() const;
 
 		bool clipIdIsAlreadyUsed() const;
-		bool moveFileToCurrentClipDir(const QUrl &oldUrl, QUrl &newUrl);
-		/**
-		 * Moves all files of the clip to the current clips directory and makes their URLs relative to
-		 * the application clips directory.
-		 *
-		 * This helps using the clip at different machines and separting it from the temporarily recorded data.
-		 */
-		bool moveFilesToCurrentClipIdDir();
+		bool moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldUrl, QUrl &newUrl);
 
 		fairytale *m_app;
 		Clip *m_clip;
 		LanguageDialog *m_languageDialog;
 		QString m_dir;
+
+		/**
+		 * The directory where the file is moved to when the dialog is accepted.
+		 */
+		QDir m_targetClipsDirectory;
 
 		Recorder *m_recorder;
 		QString m_recordedFile;
@@ -107,5 +128,15 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 */
 		QString m_language;
 };
+
+inline void ClipEditor::setTargetClipsDirectory(const QDir &dir)
+{
+	this->m_targetClipsDirectory = dir;
+}
+
+inline QDir ClipEditor::targetClipsDirectory() const
+{
+	return this->m_targetClipsDirectory;
+}
 
 #endif // CLIPEDITOR_H

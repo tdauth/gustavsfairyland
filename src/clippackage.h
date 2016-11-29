@@ -50,6 +50,11 @@ class ClipPackage : public QObject
 		bool saveClipsToFile(const QString &file);
 
 		/**
+		 * Uses the currently set file path.
+		 */
+		bool saveClipsToFile();
+
+		/**
 		 * Clears all clips from the package.
 		 */
 		void clear();

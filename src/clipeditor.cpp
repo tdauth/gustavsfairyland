@@ -240,7 +240,7 @@ void ClipEditor::onFinish(int result)
 {
 	if (result == QDialog::Accepted && checkForValidFields())
 	{
-		moveFilesToCurrentClipIdDir();
+		moveFilesToCurrentClipIdDir(targetClipsDirectory(), this->m_clip->id());
 	}
 	// TODO delete temporary stuff?!
 	else
@@ -398,6 +398,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();
+
+	// Default target dir:
+	m_targetClipsDirectory = clipsDirectory();
 }
 
 ClipEditor::~ClipEditor()
@@ -500,18 +503,17 @@ bool ClipEditor::clipIdIsAlreadyUsed() const
 	return fileInfo.exists();
 }
 
-bool ClipEditor::moveFileToCurrentClipDir(const QUrl &oldUrl, QUrl &newUrl)
+bool ClipEditor::moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldUrl, QUrl &newUrl)
 {
-	const QDir dir = currentClipDirectory();
 	const QString oldImageFilePath = this->m_app->resolveClipUrl(oldUrl).toLocalFile();
 	const QFileInfo oldImageFile(oldImageFilePath);
-	bool result = true;
+	bool result = oldImageFile.exists();
 
-	if (oldImageFile.exists())
+	if (result)
 	{
-		qDebug() << "New clips dir still is" << dir;
+		qDebug() << "New clips dir still is" << parentDir;
 		qDebug() << "image file name is" << oldImageFile.fileName();
-		const QString target = dir.filePath(oldImageFile.fileName());
+		const QString target = parentDir.filePath(oldImageFile.fileName());
 
 		qDebug() << "Has old file and copying it to " << target;
 
@@ -526,38 +528,40 @@ bool ClipEditor::moveFileToCurrentClipDir(const QUrl &oldUrl, QUrl &newUrl)
 		 */
 		else
 		{
-			newUrl = QUrl("./tmp/" + this->m_clip->id() + "/" + oldImageFile.fileName());
+			// TODO use relative path of parentDir from the clips dir
+			newUrl = QUrl::fromLocalFile(target);
 			qDebug() << "New image URL" << newUrl;
 
 			// TODO delete old file oldImageFile
 		}
 	}
+	else
+	{
+		qDebug() << "File " << oldImageFile.absoluteFilePath() << " does not even exist.";
+	}
 
 	return result;
 }
 
-bool ClipEditor::moveFilesToCurrentClipIdDir()
+bool ClipEditor::moveFilesToCurrentClipIdDir(const QDir parentDir, const QString dirName)
 {
-	const QDir clipsDir = QDir(this->m_app->clipsDir().toLocalFile());
+	qDebug() << "New clips dir" << parentDir;
+	const QDir newDir = parentDir.filePath(dirName);
 
-	const QDir dir = currentClipDirectory();
-
-	if (!dir.exists())
+	if (!newDir.exists())
 	{
-		if (!clipsDirectory().mkdir(dir.dirName()))
+		if (!parentDir.mkdir(dirName))
 		{
-			qDebug() << "Error on creating sub directory" << dir.dirName();
+			qDebug() << "Error on creating sub directory" << dirName;
 
 			return false;
 		}
 	}
 
-	qDebug() << "New clips dir" << dir;
-
 	bool result = true;
 	QUrl newImageUrl;
 
-	if (moveFileToCurrentClipDir(this->m_clip->imageUrl(), newImageUrl))
+	if (moveFileToCurrentClipDir(newDir, this->m_clip->imageUrl(), newImageUrl))
 	{
 		m_clip->setImageUrl(newImageUrl);
 	}
@@ -568,7 +572,7 @@ bool ClipEditor::moveFilesToCurrentClipIdDir()
 
 	QUrl newVideoUrl;
 
-	if (moveFileToCurrentClipDir(this->m_clip->videoUrl(), newVideoUrl))
+	if (moveFileToCurrentClipDir(newDir, this->m_clip->videoUrl(), newVideoUrl))
 	{
 		m_clip->setVideoUrl(newVideoUrl);
 	}
@@ -585,7 +589,7 @@ bool ClipEditor::moveFilesToCurrentClipIdDir()
 		const QUrl url = narratorUrls[language];
 		QUrl newSoundUrl;
 
-		if (moveFileToCurrentClipDir(url, newSoundUrl))
+		if (moveFileToCurrentClipDir(newDir, url, newSoundUrl))
 		{
 			newNarratorUrls.insert(language, newSoundUrl);
 		}

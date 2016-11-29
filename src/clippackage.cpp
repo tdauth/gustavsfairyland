@@ -859,6 +859,18 @@ bool ClipPackage::saveClipsToFile(const QString& file)
 	return true;
 }
 
+bool ClipPackage::saveClipsToFile()
+{
+	const QFileInfo fileInfo(m_filePath);
+
+	if (!fileInfo.isWritable())
+	{
+		return false;
+	}
+
+	return saveClipsToFile(fileInfo.absoluteFilePath());
+}
+
 int ClipPackage::rounds() const
 {
 	int persons = 0;

@@ -27,6 +27,7 @@
 #include "gameoverdialog.h"
 #include "highscores.h"
 #include "customfairytale.h"
+#include "clipeditor.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
@@ -503,6 +504,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(quickGamePushButton, &QPushButton::clicked, this, &fairytale::quickGame);
 	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
+	connect(recordPushButton, &QPushButton::clicked, this, &fairytale::record);
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
@@ -677,6 +679,31 @@ QString fairytale::defaultClipsDirectory() const
 #else
 	return QString("/usr/share/gustavsfairyland/clips");
 #endif
+}
+
+bool fairytale::ensureCustomClipsDirectoryExistence()
+{
+	const QDir customClipsDir = QDir(customClipsDirectory());
+
+	if (!customClipsDir.exists())
+	{
+		if (!QDir(QDir::homePath()).mkdir(".gustavsfairyland"))
+		{
+			qDebug() << "Error on creating custom.xml dir";
+
+			return false;
+		}
+	}
+
+	return true;
+}
+
+QString fairytale::customClipsDirectory() const
+{
+	const QString subDir = ".gustavsfairyland";
+	QDir customClipsDir = QDir(QDir::homePath()).filePath(subDir);
+
+	return customClipsDir.absolutePath();
 }
 
 void fairytale::playFinalClip(int index)
@@ -911,6 +938,58 @@ void fairytale::showHighScores()
 	}
 
 	execInCentralWidgetIfNecessary(this->highScores());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
+}
+
+void fairytale::record()
+{
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
+	if (customClipPackage() != nullptr)
+	{
+		Clip clip(this);
+		const QString id = QDateTime::currentDateTime().toString(Qt::ISODate);
+		clip.setId(id);
+		ClipEditor clipEditor(this, this);
+		clipEditor.fill(&clip);
+
+		if (ensureCustomClipsDirectoryExistence())
+		{
+			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
+
+			if (execInCentralWidgetIfNecessary(&clipEditor) == QDialog::Accepted)
+			{
+				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
+				this->customClipPackage()->addClip(clipOfCustomPackage);
+
+				/*
+				* The custom clips file has to be in the home directory to be writable and unique for the user.
+				*/
+				if (!this->customClipPackage()->saveClipsToFile())
+				{
+					QMessageBox::critical(this, tr("Error on Saving Custom Clips Package"), tr("Error on Saving Custom Clips Package."));
+				}
+			}
+		}
+		else
+		{
+			QMessageBox::critical(this, tr("Missing Custom Clip Dir"), tr("Custom Clip Dir is missing."));
+		}
+	}
+	else
+	{
+		QMessageBox::critical(this, tr("Missing Custom Clip Package"), tr("Custom Clip Package is missing."));
+	}
 
 	// continue game
 	if (pausedGame)
@@ -2098,59 +2177,115 @@ ClipPackage* fairytale::defaultClipPackage() const
 	return this->clipPackages().first();
 }
 
+ClipPackage* fairytale::customClipPackage() const
+{
+	ClipPackages::const_iterator iterator = this->clipPackages().find("custom");
+
+	if (iterator != this->clipPackages().end())
+	{
+		return iterator.value();
+	}
+
+	return nullptr;
+}
+
 bool fairytale::loadDefaultClipPackage()
 {
-#ifndef Q_OS_ANDROID
-	const QDir defaultClipsDir(this->defaultClipsDirectory());
-	const QString filePath = defaultClipsDir.filePath("gustav.xml");
-	const QFileInfo fileInfo(filePath);
+	QList<QDir> dirs;
+	dirs.push_back(this->defaultClipsDirectory());
 
-	std::cerr << "Loading default clip package from: " << filePath.toStdString() << std::endl;
-
-	if (fileInfo.exists() && fileInfo.isReadable())
+	/*
+	 * Copy the custom.xml file to the local home directory.
+	 * This is necessary since the file has to be writable and different per user.
+	 */
+	if (!ensureCustomClipsDirectoryExistence())
 	{
-		ClipPackage *package = new ClipPackage(this);
+		return false;
+	}
 
-		if (package->loadClipsFromFile(filePath))
+	dirs.push_back(customClipsDirectory());
+
+	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
+
+	if (currentCustomFileInfo.exists())
+	{
+		QFile file(currentCustomFileInfo.absoluteFilePath());
+
+		if (!file.remove())
 		{
-			this->addClipPackage(package);
+			qDebug() << "Error on removing old custom.xml file.";
 
-			return true;
+			return false;
+		}
+	}
+
+	const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
+
+	if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
+	{
+		qDebug() << "Error on copying custom.xml file.";
+
+		return false;
+	}
+
+	QStringList defaultClipPackages;
+	defaultClipPackages.push_back("gustav.xml");
+	defaultClipPackages.push_back("custom.xml");
+
+	int i = 0;
+
+	foreach (const QString &defaultClipPackage, defaultClipPackages)
+	{
+#ifndef Q_OS_ANDROID
+		const QString filePath = dirs[i].filePath(defaultClipPackage);
+		const QFileInfo fileInfo(filePath);
+
+		std::cerr << "Loading default clip package from: " << filePath.toStdString() << std::endl;
+
+		if (fileInfo.exists() && fileInfo.isReadable())
+		{
+			ClipPackage *package = new ClipPackage(this);
+
+			if (package->loadClipsFromFile(filePath))
+			{
+				this->addClipPackage(package);
+			}
+			else
+			{
+				delete package;
+				package = nullptr;
+
+				qDebug() << "Error on loading clip package:" << fileInfo.absoluteFilePath();
+			}
 		}
 		else
 		{
+			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
+		}
+#else
+		ClipPackage *package = new ClipPackage(this);
+
+		const QString fileName("assets:/clips/" + defaultClipPackage);
+
+		qDebug() << "Opening package:" << fileName;
+
+		if (package->loadClipsFromFile(fileName))
+		{
+			this->addClipPackage(package);
+
+			qDebug() << "Successfully loaded";
+		}
+		else
+		{
+			qDebug() << "Error on opening";
 			delete package;
 			package = nullptr;
 		}
-	}
-	else
-	{
-		qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
-	}
-#else
-	ClipPackage *package = new ClipPackage(this);
-
-	const QString fileName("assets:/clips/gustav.xml");
-
-	qDebug() << "Opening package:" << fileName;
-
-	if (package->loadClipsFromFile(fileName))
-	{
-		this->addClipPackage(package);
-
-		qDebug() << "Successfully loaded";
-
-		return true;
-	}
-	else
-	{
-		qDebug() << "Error on opening";
-		delete package;
-		package = nullptr;
-	}
 #endif
+		++i;
+	}
 
-	return false;
+	return !this->clipPackages().isEmpty();
 }
 
 void fairytale::playCustomFairytaleSlot()

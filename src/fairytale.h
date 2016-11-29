@@ -84,6 +84,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void settings();
 		void openEditor();
 		void showHighScores();
+		/**
+		 * Allows creating one custom clip which can be used in the game.
+		 */
+		void record();
 		void about();
 
 		/**
@@ -194,6 +198,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns the directory where the clips are stored by default.
 		 */
 		QString defaultClipsDirectory() const;
+		bool ensureCustomClipsDirectoryExistence();
+		QString customClipsDirectory() const;
 
 		/**
 		 * Event handler which is called by the current game mode.
@@ -235,6 +241,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		const ClipPackages& clipPackages() const;
 		ClipPackage* defaultClipPackage() const;
+		ClipPackage* customClipPackage() const;
 
 		/**
 		 * Resolves the URL of a clip using the configured clips directory if necessary.

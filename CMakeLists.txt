@@ -30,10 +30,11 @@ if (XMLLINT_PATH)
 	message(STATUS "Validating XML files.")
 	set(XML_FILES
 		"${CMAKE_SOURCE_DIR}/clips/gustav.xml"
+		"${CMAKE_SOURCE_DIR}/clips/custom.xml"
 		"${CMAKE_SOURCE_DIR}/src/test/clips.xml"
 	)
 	# TODO check against an XML schema as well
-	add_custom_target(ValidateXMLFiles ALL ${XMLLINT_PATH} --noout "${CMAKE_SOURCE_DIR}/clips/gustav.xml" "${CMAKE_SOURCE_DIR}/src/test/clips.xml" SOURCES ${XML_FILES})
+	add_custom_target(ValidateXMLFiles ALL ${XMLLINT_PATH} --noout ${XML_FILES} SOURCES ${XML_FILES})
 endif ()
 
 # Find includes in corresponding build directories
@@ -218,7 +219,7 @@ configure_file(doc/doxygen.conf doc/doxygen.conf)
 
 if (ANDROID)
 	# This custom target is referenced by all install commands for Android.
-	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml)
+	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_SOURCE_DIR}/clips/custom.xml)
 
 	foreach (f ${fairytale_QM_FILES})
 		get_filename_component(fileName "${f}" NAME)
@@ -269,6 +270,7 @@ endif ()
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
 if (ANDROID)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/custom.xml ${CMAKE_BINARY_DIR}/assets/clips/custom.xml)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/res/drawable/logo.jpg)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/bin/res/drawable/logo.jpg)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values/fairylandstrings.xml)
@@ -276,7 +278,7 @@ if (ANDROID)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values-de/fairylandstrings-de.xml)
 	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values-de/fairylandstrings-de.xml)
 else ()
-	install(FILES clips/gustav.xml DESTINATION share/gustavsfairyland/clips)
+	install(FILES clips/gustav.xml clips/custom.xml DESTINATION share/gustavsfairyland/clips)
 endif ()
 message(STATUS "Compressed files: ${COMPRESSED_FILES}")
 file(GLOB_RECURSE IMAGE_FILES_JPG "${CMAKE_SOURCE_DIR}/clips/*/*.jpg")
