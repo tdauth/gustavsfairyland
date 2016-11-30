@@ -32,7 +32,7 @@
 		</clip>
 		<clip id="werewolf">
 			<image>./werewolf/werewolf.jpg</image>
-			<video>./werewolf/werwolf.avi</video>
+			<video>./werewolf/werewolf.avi</video>
 			<narrator>.
 				<en>./werewolf/werewolf_en.wav</en>
 				<de>./werewolf/werewolf_de.wav</de>
