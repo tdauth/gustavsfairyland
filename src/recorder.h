@@ -43,8 +43,8 @@ class Recorder : public QDialog, protected Ui::Recorder
 		void stopRecordingAudio();
 		void stopAllRecording();
 
-		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage);
-		int showAudioRecorder();
+		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage, bool startRecording = false);
+		int showAudioRecorder(bool startRecording = false);
 
 	public:
 		enum Mode

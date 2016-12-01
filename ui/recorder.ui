@@ -175,6 +175,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>okPushButton</tabstop>
+  <tabstop>stopPushButton</tabstop>
+  <tabstop>recordVideoPushButton</tabstop>
+  <tabstop>recordAudioPushButton</tabstop>
+  <tabstop>photoPushButton</tabstop>
+  <tabstop>cancelPushButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>

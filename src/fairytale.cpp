@@ -886,7 +886,7 @@ void fairytale::showWidgetsInMainWindow(Widgets widgets)
 	}
 }
 
-int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
+int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda)
 {
 	// TODO disable and enable all menu bar actions as well as long as the widget is shown
 	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
@@ -918,6 +918,7 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	m_centralDialogResult = -1;
 	connect(dialog, &QDialog::finished, this, &fairytale::finishCentralDialog);
 	dialog->show();
+	lambda(dialog);
 
 	/*
 	 * This event loop is usually done by dialog->exec() but since we don't want to use exec() it has to be emulated.
@@ -943,6 +944,11 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	showWidgetsInMainWindow(hiddenWidgets);
 
 	return result;
+}
+
+int fairytale::execInCentralWidgetIfNecessary(QDialog* dialog)
+{
+	return execInCentralWidgetIfNecessaryEx(dialog, [](QDialog *dialog) { });
 }
 
 ClipPackage* fairytale::getClipPackageById(const QString &packageId)
@@ -1048,7 +1054,7 @@ void fairytale::record()
 		{
 			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
 
-			if (execInCentralWidgetIfNecessary(&clipEditor) == QDialog::Accepted)
+			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) { ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog); clipEditor->recordVideo(); }) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
 				qDebug() << "Custom clip is person:" << clipOfCustomPackage->isPerson();

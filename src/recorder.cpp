@@ -91,7 +91,7 @@ void Recorder::stopAllRecording()
 	stopRecordingAudio();
 }
 
-int Recorder::showCameraFinder(QCamera::CaptureMode captureMode)
+int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecording)
 {
 	// The result must not be Accepted!
 	setResult(QDialog::Rejected);
@@ -114,10 +114,22 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode)
 
 	this->showFullScreen();
 
+	if (startRecording)
+	{
+		if (captureMode == QCamera::CaptureVideo)
+		{
+			recordVideo();
+		}
+		else
+		{
+			captureImage();
+		}
+	}
+
 	return this->exec();
 }
 
-int Recorder::showAudioRecorder()
+int Recorder::showAudioRecorder(bool startRecording)
 {
 	// The result must not be Accepted!
 	setResult(QDialog::Rejected);
@@ -132,6 +144,11 @@ int Recorder::showAudioRecorder()
 	m_mode = RecordAudio;
 
 	this->showFullScreen();
+
+	if (startRecording)
+	{
+		recordAudio();
+	}
 
 	return this->exec();
 }

@@ -1,6 +1,8 @@
 #ifndef fairytale_H
 #define fairytale_H
 
+#include <functional>
+
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
 #include <QtCore/QTimer>
@@ -412,8 +414,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Otherwise the dialog is executed normally.
 		 *
 		 * \param dialog The dialog for which exec() is called but which is placed in the central widget if necessary.
+		 * \param lambda This function is called after the dialog is shown but before the event loop and waiting for execution starts.
 		 * \return Returns the result of the dialog's exec() call.
 		 */
+		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda);
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
 		ClipPackage* getClipPackageById(const QString &packageId);

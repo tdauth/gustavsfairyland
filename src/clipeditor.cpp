@@ -100,7 +100,7 @@ void ClipEditor::recordVideo()
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absolutePath());
 
-	if (m_recorder->showCameraFinder(QCamera::CaptureVideo) == QDialog::Accepted)
+	if (m_recorder->showCameraFinder(QCamera::CaptureVideo, true) == QDialog::Accepted)
 	{
 		updateClipVideo();
 	}
@@ -191,6 +191,8 @@ void ClipEditor::updateClipImage()
 
 void ClipEditor::updateClipVideo()
 {
+	qDebug() << "Updating video clip";
+
 	// Use temporary file.
 	const QString fileName = m_recordedFile;
 
@@ -245,6 +247,36 @@ void ClipEditor::updateClipNarratingSound()
 
 			checkForValidFields();
 		}
+	}
+}
+
+void ClipEditor::updateClipNarratingSoundForAllLanguages()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	const QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->audioRecorder()->error();
+
+	if (fileInfo.exists())
+	{
+		Clip::Urls narratorUrls = this->m_clip->narratorUrls();
+		// TODO all languages
+		narratorUrls.insert("de", QUrl::fromLocalFile(fileName));
+		narratorUrls.insert("en", QUrl::fromLocalFile(fileName));
+		this->m_clip->setNarratorUrls(narratorUrls);
+
+		updateNarratingSoundsWidget(m_clip);
+
+		// Dont delete the old file. TODO leaks afterwards when removed.
+		m_recordedFile.clear();
+
+		checkForValidFields();
 	}
 }
 
@@ -309,6 +341,24 @@ void ClipEditor::recordNarratingSound()
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
+void ClipEditor::recordNarratingSoundSimple()
+{
+	const QFileInfo fileInfo = clipsDirectory().filePath("audio_all");
+	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
+
+	if (m_recorder->showAudioRecorder(true) == QDialog::Accepted)
+	{
+		updateClipNarratingSoundForAllLanguages();
+	}
+	else
+	{
+		deleteRecordedFile();
+	}
+
+	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+}
+
 void ClipEditor::playNarratingSound()
 {
 	if (!narratingSoundsListWidget->selectedItems().isEmpty())
@@ -318,6 +368,11 @@ void ClipEditor::playNarratingSound()
 
 		m_player->playSound(m_app, m_clip->narratorUrls()[language], m_clip->description(), QUrl(), false, false);
 	}
+}
+
+void ClipEditor::playNarratingSoundSimple()
+{
+	m_player->playSound(m_app, m_clip->narratorUrl(), m_clip->description(), QUrl(), false, false);
 }
 
 void ClipEditor::removeNarratingSound()
@@ -413,7 +468,9 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
 	connect(this->recordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSound);
+	connect(this->simpleRecordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSoundSimple);
 	connect(this->playNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::playNarratingSound);
+	connect(this->simplePlayNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::playNarratingSoundSimple);
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
@@ -425,6 +482,8 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
 	connect(this->m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
 	connect(this->m_recorder->audioRecorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::audioRecorderStateChanged);
+
+	this->advancedGroupBox->hide();
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();
@@ -479,6 +538,7 @@ bool ClipEditor::checkForValidFields()
 
 	showImageButton->setEnabled(!this->m_clip->imageUrl().isEmpty());
 	playVideoPushButton->setEnabled(!this->m_clip->videoUrl().isEmpty());
+	simplePlayNarratingSoundPushButton->setEnabled(!this->m_clip->narratorUrl().isEmpty());
 
 	return result;
 }

@@ -11,6 +11,7 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 	this->setupUi(this);
 
 	connect(this->gameModesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ClipPackageDialog::currentGameModeIndexChanged);
+	this->advancedGroupBox->hide();
 }
 
 void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)

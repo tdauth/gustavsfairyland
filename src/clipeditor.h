@@ -31,7 +31,12 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void playVideo();
 		void addNarratingSound();
 		void recordNarratingSound();
+		/**
+		 * Uses the narrating sound for all languages.
+		 */
+		void recordNarratingSoundSimple();
 		void playNarratingSound();
+		void playNarratingSoundSimple();
 		void removeNarratingSound();
 		void addDescription();
 		void removeDescription();
@@ -96,6 +101,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void updateClipImage();
 		void updateClipVideo();
 		void updateClipNarratingSound();
+		void updateClipNarratingSoundForAllLanguages();
 
 		void onFinish(int result);
 
