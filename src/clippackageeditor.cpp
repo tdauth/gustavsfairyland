@@ -21,6 +21,13 @@ void ClipPackageEditor::idChanged(const QString &text)
 
 void ClipPackageEditor::loadCustomClipsPackage()
 {
+	if (m_app->customClipPackage() == nullptr)
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Custom clip package does not exist. Try to restore default settings."));
+
+		return;
+	}
+
 	const QFileInfo fileInfo(m_app->customClipPackage()->filePath());
 
 	if (!fileInfo.exists() || !fileInfo.isReadable())
