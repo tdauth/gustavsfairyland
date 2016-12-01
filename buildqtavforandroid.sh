@@ -61,6 +61,7 @@ fi
 git clone https://github.com/wang-bin/QtAV.git ./qtav
 cd ./qtav
 git submodule update --init
+git checkout tags/v1.11.0
 
 # The user.conf file can have user defined values.
 cp -f "$PROJECT_DIR/user.conf" ./
@@ -69,7 +70,7 @@ cp -f "$PROJECT_DIR/user.conf" ./
 cd ..
 
 # Always clean the build directory to avoid old stuff.
-if [ ! -d ./buildqtav ]; then
+if [ -d ./buildqtav ]; then
 	rm -rf ./buildqtav
 fi
 
@@ -78,8 +79,9 @@ cd ./buildqtav
 
 #export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
 #export LIBRARY_PATH="$PROJECT_DIR/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
-export CPATH="$FFMPEG_PREFIX/include/:$CPATH"
+export FFMPEG_INCLUDE_DIR="$FFMPEG_PREFIX/include"
 export FFMPEG_LIB_DIR="$FFMPEG_PREFIX/lib"
+export CPATH="$FFMPEG_INCLUDE_DIR/:$CPATH"
 export LIBRARY_PATH="$FFMPEG_LIB_DIR:$LIBRARY_PATH"
 export LD_LIBRARY_PATH="$FFMPEG_LIB_DIR:$LD_LIBRARY_PATH"
 export ANDROID_NDK_ROOT="$NDK_ROOT"
@@ -116,5 +118,5 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # If the error "Error: libavresample or libswresample is required" appears, use this:
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
-"$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" ../qtav/QtAV.pro
+"$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" ../qtav/QtAV.pro
 make -j4

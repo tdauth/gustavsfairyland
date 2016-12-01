@@ -20,7 +20,9 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
+#ifndef Q_OS_ANDROID
 #include "gamemodestory.h"
+#endif
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -564,8 +566,11 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
+
+#ifndef Q_OS_ANDROID
 	GameModeStory *gameModeStory = new GameModeStory(this);
 	m_gameModes.insert(gameModeStory->id(), gameModeStory);
+#endif
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -883,9 +888,6 @@ void fairytale::showWidgetsInMainWindow(Widgets widgets)
 
 int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 {
-//#ifndef Q_OS_ANDROID
-	//return dialog->exec();
-//#else
 	// TODO disable and enable all menu bar actions as well as long as the widget is shown
 	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
 
@@ -909,7 +911,6 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	 */
 	applyStyleRecursively(dialog);
 
-	//const int result = dialog->exec(); // TODO on Linux this slows down everything and does not update the main GUI or react to button clicks in the dialog.
 	/*
 	 * exec() cannot be used since it makes the dialog modal and on Linux the main window is not updated properly anymore.
 	 * Therefore the result of the dialog has to be waited for and stored manually.
@@ -942,7 +943,6 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	showWidgetsInMainWindow(hiddenWidgets);
 
 	return result;
-//#endif
 }
 
 ClipPackage* fairytale::getClipPackageById(const QString &packageId)
@@ -1051,6 +1051,7 @@ void fairytale::record()
 			if (execInCentralWidgetIfNecessary(&clipEditor) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
+				qDebug() << "Custom clip is person:" << clipOfCustomPackage->isPerson();
 				this->customClipPackage()->addClip(clipOfCustomPackage);
 
 				/*
@@ -1806,13 +1807,6 @@ void fairytale::startMusic()
 	// TODO add to package XML file, each package can have its own background music
 	QList<QUrl> urls;
 	urls.push_back(QUrl("./music/01.PSO020103-Mahler-5-I.mp3"));
-	/*
-	urls.push_back(QUrl("./music/02.PSO020103-Mahler-5-II.mp3"));
-	urls.push_back(QUrl("./music/03.PSO020103-Mahler-5-III.mp3"));
-	urls.push_back(QUrl("./music/04.PSO020103-Mahler-5-IV.mp3"));
-	urls.push_back(QUrl("./music/05.PSO020103-Mahler-5-V.mp3"));
-	urls.push_back(QUrl("./music/MahlerPianoQuartet_64kb.mp3"));
-	*/
 	const QUrl url = urls.front(); //urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
 	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;
@@ -1834,7 +1828,6 @@ void fairytale::finishMusic(QMediaPlayer::State state)
 void fairytale::timerTick()
 {
 	const QTimer *sender = dynamic_cast<QTimer*>(QObject::sender());
-	//qDebug() << "Tick";
 	this->m_remainingTime -= sender->interval();
 	this->updateTimeLabel();
 
@@ -1951,7 +1944,6 @@ void fairytale::changeEvent(QEvent* event)
 		{
 			std::cerr << "Retranslate UI" << std::endl;
 			this->retranslateUi(this);
-			//this->aboutDialog()->retranslateUi(this->aboutDialog());
 
 			break;
 		}
@@ -2185,7 +2177,7 @@ void fairytale::changeLanguage()
 {
 	QAction *action = dynamic_cast<QAction*>(sender());
 
-	std::cerr << "Change language to: " << action->text().toStdString() << std::endl;
+	qDebug() << "Change language to:" << action->text();
 
 	TranslationFileNames::const_iterator iterator = m_translationFileNames.find(action);
 
@@ -2212,7 +2204,7 @@ void fairytale::changeLanguage()
 	}
 }
 
-void fairytale::removeClipPackage(ClipPackage* package)
+void fairytale::removeClipPackage(ClipPackage *package)
 {
 	this->m_clipPackages.remove(package->id());
 }

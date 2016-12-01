@@ -68,7 +68,10 @@ Player::Player(QWidget *parent, fairytale *app)
 	connect(this->skipAllPushButton, &QPushButton::clicked, this, &Player::skipAll);
 	connect(this->pausePushButton, &QPushButton::clicked, app, &fairytale::pauseGameAction);
 	connect(this->cancelPushButton, &QPushButton::clicked, app, &fairytale::cancelGame);
-	connect(this, SIGNAL(rejected()), this, SLOT(skip()));
+
+#ifndef Q_OS_ANDROID
+	connect(this, &QDialog::rejected, this, &Player::skip);
+#endif
 
 	// Global shortcuts in the widget are required since the push buttons would have to be in focus to work with shortcuts.
 	QShortcut *shortcut = new QShortcut(QKeySequence(tr("SPACE")), this);

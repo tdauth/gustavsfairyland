@@ -33,6 +33,9 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fair
 		const ClipPackage *clipPackage = iterator.value();
 		//this->packagesComboBox->addItem(clipPackage->name(), clipPackage->id());
 		QCheckBox *checkBox = new QCheckBox(this);
+		QFont font = checkBox->font();
+		font.setPointSize(15);
+		checkBox->setFont(font);
 		checkBox->setText(clipPackage->name());
 		clipPackagesWidget->layout()->addWidget(checkBox);
 

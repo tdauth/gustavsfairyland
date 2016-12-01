@@ -4,46 +4,46 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="93"/>
+        <location filename="../build/ui_aboutdialog.h" line="97"/>
         <source>About Gustav&apos;s Faryland</source>
         <translation>Über Gustavs Märchenwelt</translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="96"/>
+        <location filename="../build/ui_aboutdialog.h" line="100"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Programming: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vampire: Anne&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Werewolf: Carsten Thomas&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plague Doctor: Jannis&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fairy: Johanna&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Princess: Klara&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jedi: Mats&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wood texture: &lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Icon: &lt;/span&gt;&lt;a href=&quot; https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mahlers Piano Quartett: &lt;a href=&quot;https://archive.org/details/MahlerPianoQuartetInAMinor&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;;&quot;&gt;Custom Font: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Oxygen Icons: &lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clip Icons: Several External Sources&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Programming: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Vampire: Anne&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Werewolf: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Plague Doctor: Jannis&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Fairy: Johanna&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Princess: Klara&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Jedi: Mats&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Wood texture: &lt;/span&gt;&lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt;&quot;&gt;Icon: &lt;/span&gt;&lt;a href=&quot; https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahlers Piano Quartett: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/MahlerPianoQuartetInAMinor&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#2980b9;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt;&quot;&gt;Custom Font: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Oxygen Icons: &lt;/span&gt;&lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip Icons: Several External Sources&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="126"/>
+        <location filename="../build/ui_aboutdialog.h" line="131"/>
         <source>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</source>
         <translation>Dieses Spiel wurde von Tamino Dauth und Carsten Thomas erstellt. Es ist das beste Spiel, das Sie je spielen werden!</translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="95"/>
+        <location filename="../build/ui_aboutdialog.h" line="99"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation>Gustavs Märchenwelt</translation>
     </message>
@@ -129,67 +129,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="145"/>
+        <location filename="../build/ui_clippackagedialog.h" line="158"/>
         <source>Select Clip Package</source>
         <translation>Clip-Paket auswählen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="157"/>
+        <location filename="../build/ui_clippackagedialog.h" line="170"/>
         <source>Use Max Rounds</source>
         <translation>Verwende maximale Rundenanzahl</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="152"/>
+        <location filename="../build/ui_clippackagedialog.h" line="165"/>
         <source>Easy</source>
         <translation>Leicht</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="147"/>
+        <location filename="../build/ui_clippackagedialog.h" line="160"/>
         <source>Game Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="148"/>
+        <location filename="../build/ui_clippackagedialog.h" line="161"/>
         <source>Clip Packages:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="149"/>
+        <location filename="../build/ui_clippackagedialog.h" line="162"/>
         <source>Difficulty:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="153"/>
+        <location filename="../build/ui_clippackagedialog.h" line="166"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="154"/>
+        <location filename="../build/ui_clippackagedialog.h" line="167"/>
         <source>Hard</source>
         <translation>Schwer</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="155"/>
+        <location filename="../build/ui_clippackagedialog.h" line="168"/>
         <source>Mahlerisch</source>
         <translation>Mahlerisch</translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="142"/>
+        <location filename="../src/clippackagedialog.cpp" line="145"/>
         <source>No game modes available.</source>
         <translation>Keine Spielmodi verfügbar.</translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="146"/>
+        <location filename="../src/clippackagedialog.cpp" line="149"/>
         <source>No clip packages available.</source>
         <translation>Keine Clip-Pakete verfügbar.</translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="150"/>
+        <location filename="../src/clippackagedialog.cpp" line="153"/>
         <source>Clip Packages have not enough clips.</source>
         <translation>Clip-Pakete haben nicht genügend Clips.</translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="153"/>
+        <location filename="../src/clippackagedialog.cpp" line="156"/>
         <source>Error: %1</source>
         <translation>Fehler: %1</translation>
     </message>
@@ -484,7 +484,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameOverDialog</name>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="71"/>
+        <location filename="../build/ui_gameoverdialog.h" line="83"/>
         <source>Game Over</source>
         <translation>Spiel verloren</translation>
     </message>
@@ -497,7 +497,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Nochmal versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="73"/>
+        <location filename="../build/ui_gameoverdialog.h" line="84"/>
         <source>Game Over!!!</source>
         <translation>Spiel verloren!!!</translation>
     </message>
@@ -801,17 +801,17 @@ p, li { white-space: pre-wrap; }
         <translation>Alle überspringen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="74"/>
+        <location filename="../src/player.cpp" line="77"/>
         <source>SPACE</source>
         <translation>SPACE</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="78"/>
+        <location filename="../src/player.cpp" line="81"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="81"/>
+        <location filename="../src/player.cpp" line="84"/>
         <source>C</source>
         <translation>C</translation>
     </message>
@@ -1064,12 +1064,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WonDialog</name>
     <message>
-        <location filename="../build/ui_wondialog.h" line="83"/>
+        <location filename="../build/ui_wondialog.h" line="88"/>
         <source>Won</source>
         <translation>Gewonnen</translation>
     </message>
     <message>
-        <location filename="../build/ui_wondialog.h" line="85"/>
+        <location filename="../build/ui_wondialog.h" line="90"/>
         <source>Won!!!</source>
         <translation>Gewonnen!!!</translation>
     </message>
@@ -1077,41 +1077,41 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../src/fairytale.cpp" line="99"/>
+        <location filename="../src/fairytale.cpp" line="101"/>
         <source>Cancel Game?</source>
         <translation>Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="99"/>
+        <location filename="../src/fairytale.cpp" line="101"/>
         <source>Do you want to cancel the game?</source>
         <translation>Wollen Sie das Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="403"/>
+        <location filename="../src/fairytale.cpp" line="405"/>
         <location filename="../src/fairytale.cpp" line="1358"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="404"/>
-        <location filename="../src/fairytale.cpp" line="405"/>
+        <location filename="../src/fairytale.cpp" line="406"/>
+        <location filename="../src/fairytale.cpp" line="407"/>
         <location filename="../src/fairytale.cpp" line="1359"/>
         <location filename="../src/fairytale.cpp" line="1360"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="430"/>
+        <location filename="../src/fairytale.cpp" line="432"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="523"/>
+        <location filename="../src/fairytale.cpp" line="525"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="527"/>
+        <location filename="../src/fairytale.cpp" line="529"/>
         <source>C</source>
         <translation>C</translation>
     </message>
@@ -1189,39 +1189,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1852"/>
+        <location filename="../src/fairytale.cpp" line="1844"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1873"/>
-        <location filename="../src/fairytale.cpp" line="1907"/>
+        <location filename="../src/fairytale.cpp" line="1865"/>
+        <location filename="../src/fairytale.cpp" line="1899"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1877"/>
-        <location filename="../src/fairytale.cpp" line="1911"/>
+        <location filename="../src/fairytale.cpp" line="1869"/>
+        <location filename="../src/fairytale.cpp" line="1903"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1884"/>
+        <location filename="../src/fairytale.cpp" line="1876"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1888"/>
+        <location filename="../src/fairytale.cpp" line="1880"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1895"/>
+        <location filename="../src/fairytale.cpp" line="1887"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1899"/>
+        <location filename="../src/fairytale.cpp" line="1891"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

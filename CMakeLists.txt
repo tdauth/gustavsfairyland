@@ -89,7 +89,6 @@ set(fairyland_HEADERS
 	src/languagedialog.h
 	src/clickanimation.h
 	src/recorder.h
-	src/gamemodestory.h
 )
 
 set(fairyland_SRCS
@@ -121,8 +120,12 @@ set(fairyland_SRCS
 	src/languagedialog.cpp
 	src/clickanimation.cpp
 	src/recorder.cpp
-	src/gamemodestory.cpp
 )
+
+if (NOT ANDROID)
+	set(fairyland_HEADERS ${fairyland_HEADERS} src/gamemodestory.h)
+	set(fairyland_SRCS ${fairyland_SRCS} src/gamemodestory.cpp)
+endif ()
 
 set(fairyland_UI
 	ui/aboutdialog.ui
@@ -169,7 +172,7 @@ if (ANDROID)
 		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libswscale.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
-		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQmlAV.so"
+		#"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQmlAV.so"
 	)
 
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
