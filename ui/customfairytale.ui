@@ -51,7 +51,13 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="6">
-    <widget class="QTextBrowser" name="textBrowser"/>
+    <widget class="QTextBrowser" name="textBrowser">
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" colspan="6">
     <widget class="QScrollArea" name="scrollArea">

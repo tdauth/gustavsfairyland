@@ -63,6 +63,7 @@ QFont fairytale::gameFont()
 	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
 	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
 	QFont result(qApp->font());
+	result.setPointSize(20);
 	result.setFamily(family);
 
 	return result;
@@ -1604,8 +1605,6 @@ void fairytale::onFinishTurn()
 		this->m_startPerson = this->gameMode()->solution();
 	}
 
-	addCurrentSolution();
-
 	switch (this->gameMode()->state())
 	{
 		case GameMode::State::Won:
@@ -1624,6 +1623,8 @@ void fairytale::onFinishTurn()
 
 		case GameMode::State::Running:
 		{
+			addCurrentSolution();
+
 			this->nextTurn();
 
 			break;
