@@ -19,12 +19,13 @@ void SettingsDialog::restoreDefaults()
 
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
+	// We need file:/ on other systems.
+	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
 #else
 	fullScreenCheckBox->setChecked(false);
-#endif
-
 	// Dont prepend file:/ on Android!
 	m_clipsDir = QUrl(m_app->defaultClipsDirectory());
+#endif
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
 	// TODO unload only on apply!
