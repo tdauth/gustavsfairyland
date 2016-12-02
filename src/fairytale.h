@@ -140,6 +140,18 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QPair<QString, QString> ClipKey;
 
 		/**
+		 * Default game style which is applied in the beginning to qApp.
+		 *
+		 * \{
+		 */
+		static QPalette gameColorPalette();
+		static QString gameStyleSheet();
+		static QFont gameFont();
+		/**
+		 * \}
+		 */
+
+		/**
 		 * \return Returns true if the user has a touch device to press at the floating clips.
 		 */
 		static bool hasTouchDevice();
@@ -181,17 +193,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns a human readable string representation of the locale.
 		 */
 		static QString localeToName(const QString &locale);
-
-		/**
-		 * Applies the custom style of the game to \p widget which means updating the background color
-		 * and the font.
-		 * \param widget The Widget of which the style is being updated.
-		 */
-		static void applyStyle(QWidget *widget);
-		/**
-		 * Applies the custom style to \p widget and all of its children widgets recursively.
-		 */
-		static void applyStyleRecursively(QWidget *widget);
 
 		/**
 		 * Starts a new game using all specified parameters.

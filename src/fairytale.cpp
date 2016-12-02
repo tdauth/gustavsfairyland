@@ -33,6 +33,41 @@
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
+QPalette fairytale::gameColorPalette()
+{
+	// set black background
+	QPalette palette = qApp->palette();
+	palette.setColor(QPalette::Background, QColor(0xCEA66B));
+	palette.setColor(QPalette::Button, QColor(0xCEA69E));
+	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
+	palette.setColor(QPalette::Highlight, QColor(0xC05800));
+	palette.setColor(QPalette::Link, QColor(0xC05800));
+	palette.setColor(QPalette::WindowText, Qt::black);
+
+	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
+	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
+
+	return palette;
+}
+
+QString fairytale::gameStyleSheet()
+{
+	return QString("QWidget { selection-background-color: #C05800; selection-color: black; }");
+}
+
+QFont fairytale::gameFont()
+{
+	/*
+	 * Use a custom font.
+	 */
+	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
+	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+	QFont result(qApp->font());
+	result.setFamily(family);
+
+	return result;
+}
+
 void fairytale::newGame()
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -50,7 +85,6 @@ void fairytale::newGame()
 	if (this->m_clipPackageDialog == nullptr)
 	{
 		this->m_clipPackageDialog = new ClipPackageDialog(this);
-		applyStyleRecursively(m_clipPackageDialog);
 	}
 
 	this->m_clipPackageDialog->fill(this->clipPackages(), this->gameModes(), this);
@@ -335,58 +369,6 @@ QString fairytale::localeToName(const QString &locale)
 	return locale;
 }
 
-void fairytale::applyStyle(QWidget *widget)
-{
-	/*
-	 * Use a custom font.
-	 */
-	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
-	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-	QFont monospace(widget->font());
-	monospace.setFamily(family);
-	widget->setFont(monospace);
-
-	// set black background
-	QPalette palette = qApp->palette();
-	palette.setColor(QPalette::Background, QColor(0xCEA66B));
-	palette.setColor(QPalette::Button, QColor(0xCEA69E));
-	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
-	palette.setColor(QPalette::Highlight, QColor(0xC05800));
-	palette.setColor(QPalette::Link, QColor(0xC05800));
-	palette.setColor(QPalette::WindowText, Qt::black);
-
-	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
-	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
-
-	widget->setPalette(palette);
-
-	//widget->setStyleSheet("QWidget { selection-background-color: #C05800; selection-color: black; }");
-	//widget->setAutoFillBackground(true); // TODO performance is weak
-}
-
-void fairytale::applyStyleRecursively(QWidget *widget)
-{
-	QStack<QObject*> children;
-	children.push_back(widget);
-
-	while (!children.isEmpty())
-	{
-		QObject *child = children.pop();
-
-		foreach (QObject *childObject, child->children())
-		{
-			children.push(childObject);
-		}
-
-		QWidget *childWidget = dynamic_cast<QWidget*>(child);
-
-		if (childWidget != nullptr)
-		{
-			applyStyle(childWidget);
-		}
-	}
-}
-
 void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -481,8 +463,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->m_player->hide();
 
 	setupUi(this);
-
-	applyStyleRecursively(this);
 
 	this->m_currentScreen = qApp->primaryScreen();
 	changePrimaryScreen(this->m_currentScreen);
@@ -926,11 +906,6 @@ int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<v
 	gridLayout->addWidget(dialog, 0, 0, -1, -1);
 	dialog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	this->centralWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	/*
-	 * Make sure the style is set correctly before showing it.
-	 */
-	applyStyleRecursively(dialog);
 
 	/*
 	 * exec() cannot be used since it makes the dialog modal and on Linux the main window is not updated properly anymore.
@@ -2181,7 +2156,6 @@ SettingsDialog* fairytale::settingsDialog()
 	if (m_settingsDialog == nullptr)
 	{
 		m_settingsDialog = new SettingsDialog(this, this);
-		applyStyle(m_settingsDialog);
 	}
 
 	return m_settingsDialog;
@@ -2192,7 +2166,6 @@ CustomFairytaleDialog* fairytale::customFairytaleDialog()
 	if (this->m_customFairytaleDialog == nullptr)
 	{
 		this->m_customFairytaleDialog = new CustomFairytaleDialog(this, this);
-		applyStyle(m_customFairytaleDialog);
 	}
 
 	return this->m_customFairytaleDialog;
@@ -2203,7 +2176,6 @@ AboutDialog* fairytale::aboutDialog()
 	if (this->m_aboutDialog == nullptr)
 	{
 		this->m_aboutDialog = new AboutDialog(this, this);
-		applyStyle(m_aboutDialog);
 	}
 
 	return this->m_aboutDialog;
@@ -2214,7 +2186,6 @@ WonDialog* fairytale::wonDialog()
 	if (this->m_wonDialog == nullptr)
 	{
 		this->m_wonDialog = new WonDialog(this, this);
-		applyStyle(m_wonDialog);
 	}
 
 	return this->m_wonDialog;
@@ -2225,7 +2196,6 @@ GameOverDialog* fairytale::gameOverDialog()
 	if (this->m_gameOverDialog == nullptr)
 	{
 		this->m_gameOverDialog = new GameOverDialog(this, this);
-		applyStyle(m_gameOverDialog);
 	}
 
 	return this->m_gameOverDialog;
