@@ -15,6 +15,8 @@
 #include <QtCore/QDir>
 #include <QShortcut>
 #include <QHash>
+#include <QAudioOutputSelectorControl>
+#include <QAudioInputSelectorControl>
 
 #include "ui_mainwindow.h"
 
@@ -446,6 +448,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Then the minimum number of the number of persons and the number of acts is the maximum of rounds.
 		 */
 		int maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages);
+
+		QAudioOutputSelectorControl* audioOutputSelectorControl() const;
+		QAudioInputSelectorControl* audioInputSelectorControl() const;
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;

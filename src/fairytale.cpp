@@ -934,8 +934,13 @@ int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<v
 	 * Therefore the result of the dialog has to be waited for and stored manually.
 	 */
 	m_centralDialogResult = -1;
+
 	connect(dialog, &QDialog::finished, this, &fairytale::finishCentralDialog);
 	dialog->show();
+
+	/*
+	 * Might execute several other central widget dialogs recursively.
+	 */
 	lambda(dialog);
 
 	/*
@@ -948,9 +953,9 @@ int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<v
 	while (m_centralDialogResult == -1)
 	{
 		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
-		//qDebug() << "Result is " << m_centralDialogResult;
 	}
 
+	qDebug() << "Result is " << m_centralDialogResult << " for widget " << dialog->objectName();
 	eventLoop.quit();
 
 	const int result = m_centralDialogResult;
@@ -1030,6 +1035,48 @@ int fairytale::maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages)
 	return qMin(personClips - 1, actClips);
 }
 
+QAudioOutputSelectorControl* fairytale::audioOutputSelectorControl() const
+{
+	QMediaService *svc = m_musicPlayer->service();
+
+	if (svc != nullptr)
+	{
+		QAudioOutputSelectorControl *out = reinterpret_cast<QAudioOutputSelectorControl*>(svc->requestControl(QAudioOutputSelectorControl_iid));
+
+		qDebug() << "Audio output selector control " << out;
+
+		if (out != nullptr)
+		{
+			qDebug() << "Audio output selector control default output " << out->defaultOutput();
+
+			return out;
+		}
+	}
+
+	return nullptr;
+}
+
+QAudioInputSelectorControl* fairytale::audioInputSelectorControl() const
+{
+	QMediaService *svc = m_musicPlayer->service();
+
+	if (svc != nullptr)
+	{
+		QAudioInputSelectorControl *in = reinterpret_cast<QAudioInputSelectorControl*>(svc->requestControl(QAudioInputSelectorControl_iid));
+
+		qDebug() << "Audio input selector control " << in;
+
+		if (in != nullptr)
+		{
+			qDebug() << "Audio input selector control default output " << in->defaultInput();
+
+			return in;
+		}
+	}
+
+	return nullptr;
+}
+
 void fairytale::showHighScores()
 {
 	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
@@ -1075,7 +1122,6 @@ void fairytale::record()
 			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) { ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog); clipEditor->recordVideo(); }) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
-				qDebug() << "Custom clip is person:" << clipOfCustomPackage->isPerson();
 				this->customClipPackage()->addClip(clipOfCustomPackage);
 
 				/*

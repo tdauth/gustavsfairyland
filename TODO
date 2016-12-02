@@ -1,14 +1,15 @@
 Finale TODOS:
-- Icons
+- DONE: Icons
 - Sounds: Wind, Fenster, Turm, Schloss
 - Logo-Erstellung
-- Credits optimieren
-- Clip-Editor
-- Eigener Märchenschriftzug: „Medival“
+- DONE: Credits optimieren
+- DONE: Clip-Editor
+- DONE: Eigener Märchenschriftzug: „Medival“
 - Letzter Clip kommt zweimal.
 - About Bild größer, Schriftart
 - Aufnahmemodus viel einfacher machen
 - Fenstersound einbauen.
+- Ab und zu Crash während Pages On The Ground.
 
 Werbekampagne
 Soziale Kanäle
@@ -24,10 +25,10 @@ Usability:
 - Button-Layout für Android nutzbar machen - Platz für Buttons nutzen, Buttons groß genug machen.
 
 Eigene Clips:
-- Dateimanagement mit relativen Pfaden fixen.
-- Einzelne Clips können beschrieben werden, durch ein kleines XML-File.
-- Einzelne Clips können verpackt werden (XML-Datei + Video + Bild + Audiodateien).
-- Neuer Spielmodus: "Geschichten schreiben"
+- DONE: Dateimanagement mit relativen Pfaden fixen.
+- DEPRECATED: Einzelne Clips können beschrieben werden, durch ein kleines XML-File.
+- DEPRECATED: Einzelne Clips können verpackt werden (XML-Datei + Video + Bild + Audiodateien).
+- Optinal: Neuer Spielmodus: "Geschichten schreiben"
 	- Der Spieler muss selbst Clips aufnehmen und Bilder dazu machen.
 	- Die Handlungen und Figuren werden zufällig vorgegeben.
 	- Multiplayer: Man gibt den anderen Spielern etwas vor und weiß aber nicht, was alle anderen Spieler machen oder alternativ man denkt sich selbst was aus.
@@ -48,7 +49,7 @@ Weitere TODOs:
 - Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
 - Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
 - Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.
-- lost.mkv abspielen wenn man verloren hat!
+- DONE: lost.mkv abspielen wenn man verloren hat!
 - kein PNG-Format verwenden, immer mit JPEG komprimiren.
 - Musik reduzieren und komprimieren.
 - resources/paper.eps ist sehr groß. Wird es überhaupt verwendet?

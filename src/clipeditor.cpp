@@ -102,10 +102,17 @@ void ClipEditor::recordVideo()
 
 	if (m_recorder->showCameraFinder(QCamera::CaptureVideo, true) == QDialog::Accepted)
 	{
+		qDebug() << "Accepted";
 		updateClipVideo();
+
+		if (m_recorder->recorder()->error() != QMediaRecorder::NoError)
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Error code %1 on recording a video.").arg(m_recorder->recorder()->error()));
+		}
 	}
 	else
 	{
+		qDebug() << "Rejected, delete.";
 		deleteRecordedFile();
 	}
 
@@ -201,6 +208,8 @@ void ClipEditor::updateClipVideo()
 	 */
 	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
 	{
+		qDebug() << "File does not exist" << fileName << "or result is not accepted" << m_recorder->result();
+
 		return;
 	}
 
@@ -278,6 +287,19 @@ void ClipEditor::updateClipNarratingSoundForAllLanguages()
 
 		checkForValidFields();
 	}
+}
+
+void ClipEditor::updateAllDescriptions(const QString& description)
+{
+	Clip::Descriptions descriptions = this->m_clip->descriptions();
+	// TODO all languages
+	descriptions.insert("de", description);
+	descriptions.insert("en", description);
+	this->m_clip->setDescriptions(descriptions);
+
+	updateDescriptionWidget(m_clip);
+
+	checkForValidFields();
 }
 
 void ClipEditor::onFinish(int result)
@@ -474,6 +496,8 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
+
+	connect(this->descriptionLineEdit, &QLineEdit::textChanged, this, &ClipEditor::updateAllDescriptions);
 
 	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipEditor::accept);
 	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipEditor::reject);

@@ -12,7 +12,9 @@ void Recorder::recordVideo()
 	qDebug() << "capture mode supported 2: " << m_camera->isCaptureModeSupported(QCamera::CaptureVideo);
 
 	qDebug() << "Recording from:" << m_recorder->mediaObject();
+	qDebug() << "Output file location:" << outputFile();
 	m_recorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
+	m_finshedRecording = false;
 	m_recorder->record();
 	m_isRecording = true;
 
@@ -40,11 +42,13 @@ void Recorder::captureImage()
 
 	//on shutter button released
 	m_camera->unlock();
+	m_finshedRecording = true;
 }
 
 void Recorder::recordAudio()
 {
 	m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
+	m_finshedRecording = false;
 	m_audioRecorder->record();
 	m_isRecording = true;
 
@@ -71,6 +75,7 @@ void Recorder::pauseRecordingAudio()
 
 void Recorder::stopRecordingVideo()
 {
+	qDebug() << "Stop recording video";
 	m_recorder->stop();
 	m_isRecording = false;
 
@@ -116,6 +121,12 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 
 	if (startRecording)
 	{
+		/*
+		 * Make sure that recording from the camera or capturing an image is working and does not produce any
+		 * error by waiting for the camera to become ready.
+		 */
+		waitUntilCameraIsReady();
+
 		if (captureMode == QCamera::CaptureVideo)
 		{
 			recordVideo();
@@ -126,7 +137,20 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 		}
 	}
 
-	return this->exec();
+	const int result = this->exec();
+
+	if (result == QDialog::Accepted)
+	{
+		qDebug() << "Waiting for recorded file";
+		// Make absolutely sure the file exists, when this method returns.
+		waitForRecordedFile(captureMode == QCamera::CaptureVideo);
+	}
+
+	stopAllRecording();
+	// Stop the camera when everything is done.
+	m_camera->stop();
+
+	return result;
 }
 
 int Recorder::showAudioRecorder(bool startRecording)
@@ -150,10 +174,21 @@ int Recorder::showAudioRecorder(bool startRecording)
 		recordAudio();
 	}
 
-	return this->exec();
+	const int result = this->exec();
+
+	if (result == QDialog::Accepted)
+	{
+		qDebug() << "Waiting for recorded audio";
+		// Make absolutely sure the file exists, when this method returns.
+		waitForRecordedFile(true);
+	}
+
+	stopAllRecording();
+
+	return result;
 }
 
-Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this)), m_isRecording(false)
+Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this)), m_finshedRecording(false), m_isRecording(false)
 {
 	const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
 
@@ -235,11 +270,14 @@ void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
 
 void Recorder::videoRecorderStateChanged(QMediaRecorder::State state)
 {
+	qDebug() << "Video recorder state changed in recorder";
+
 	switch (state)
 	{
 		case QMediaRecorder::StoppedState:
 		{
 			m_isRecording = false;
+			m_finshedRecording = true;
 
 			break;
 		}
@@ -269,6 +307,7 @@ void Recorder::audioRecorderStateChanged(QMediaRecorder::State state)
 		case QMediaRecorder::StoppedState:
 		{
 			m_isRecording = false;
+			m_finshedRecording = true;
 
 			break;
 		}
@@ -330,10 +369,35 @@ void Recorder::pressStopRecording()
 
 void Recorder::hideEvent(QHideEvent *event)
 {
-	qDebug() << "Stopping all recorders";
-	this->stopAllRecording();
-	m_camera->stop();
 	QDialog::hideEvent(event);
+}
+
+void Recorder::waitUntilCameraIsReady()
+{
+	QEventLoop eventLoop(this);
+
+	while (m_camera->status() != QCamera::ActiveStatus)
+	{
+		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
+	}
+
+	qDebug() << "Camera status is " << m_camera->status();
+	eventLoop.quit();
+}
+
+void Recorder::waitForRecordedFile(bool videoOrAudio)
+{
+	QEventLoop eventLoop(this);
+
+	while (!m_finshedRecording && ((videoOrAudio && m_recorder->error() == QMediaRecorder::NoError) || !videoOrAudio))
+	{
+		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
+	}
+
+	qDebug() << "Recorded file is " << m_finshedRecording << "and error is " << m_recorder->error() << "and status is" << m_recorder->status();
+	eventLoop.quit();
+
+	m_finshedRecording = false;
 }
 
 #include "moc_recorder.cpp"

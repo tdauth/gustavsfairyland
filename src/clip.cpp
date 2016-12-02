@@ -6,7 +6,7 @@
 #include "clip.moc"
 
 
-Clip::Clip(fairytale *app, QObject *parent): QObject(parent), m_app(app)
+Clip::Clip(fairytale *app, QObject *parent): QObject(parent), m_app(app), m_isPerson(false)
 {
 }
 

@@ -103,6 +103,8 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void updateClipNarratingSound();
 		void updateClipNarratingSoundForAllLanguages();
 
+		void updateAllDescriptions(const QString &description);
+
 		void onFinish(int result);
 
 	private:
