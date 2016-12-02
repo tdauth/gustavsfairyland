@@ -1,4 +1,4 @@
-#include <iostream>
+#include <QDebug>
 
 #include "wondialog.h"
 
@@ -16,7 +16,7 @@ void WonDialog::changeEvent(QEvent *event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of won dialog" << std::endl;
+			qDebug() << "Retranslate UI of won dialog";
 			this->retranslateUi(this);
 
 			break;

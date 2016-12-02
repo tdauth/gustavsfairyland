@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
@@ -20,7 +18,9 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
+#ifndef Q_OS_ANDROID
 #include "gamemodestory.h"
+#endif
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -30,6 +30,42 @@
 #include "clipeditor.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
+
+QPalette fairytale::gameColorPalette()
+{
+	// set black background
+	QPalette palette = qApp->palette();
+	palette.setColor(QPalette::Background, QColor(0xCEA66B));
+	palette.setColor(QPalette::Button, QColor(0xCEA69E));
+	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
+	palette.setColor(QPalette::Highlight, QColor(0xC05800));
+	palette.setColor(QPalette::Link, QColor(0xC05800));
+	palette.setColor(QPalette::WindowText, Qt::black);
+
+	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
+	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
+
+	return palette;
+}
+
+QString fairytale::gameStyleSheet()
+{
+	return QString("QWidget { selection-background-color: #C05800; selection-color: black; }");
+}
+
+QFont fairytale::gameFont()
+{
+	/*
+	 * Use a custom font.
+	 */
+	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
+	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+	QFont result(qApp->font());
+	result.setPointSize(20);
+	result.setFamily(family);
+
+	return result;
+}
 
 void fairytale::newGame()
 {
@@ -48,7 +84,6 @@ void fairytale::newGame()
 	if (this->m_clipPackageDialog == nullptr)
 	{
 		this->m_clipPackageDialog = new ClipPackageDialog(this);
-		applyStyleRecursively(m_clipPackageDialog);
 	}
 
 	this->m_clipPackageDialog->fill(this->clipPackages(), this->gameModes(), this);
@@ -333,58 +368,6 @@ QString fairytale::localeToName(const QString &locale)
 	return locale;
 }
 
-void fairytale::applyStyle(QWidget *widget)
-{
-	/*
-	 * Use a custom font.
-	 */
-	const int id = QFontDatabase::addApplicationFont(":/resources/RINGM___.TTF");
-	const QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-	QFont monospace(widget->font());
-	monospace.setFamily(family);
-	widget->setFont(monospace);
-
-	// set black background
-	QPalette palette = qApp->palette();
-	palette.setColor(QPalette::Background, QColor(0xCEA66B));
-	palette.setColor(QPalette::Button, QColor(0xCEA69E));
-	palette.setColor(QPalette::Base, QColor(0xCEA66B)); // text input background
-	palette.setColor(QPalette::Highlight, QColor(0xC05800));
-	palette.setColor(QPalette::Link, QColor(0xC05800));
-	palette.setColor(QPalette::WindowText, Qt::black);
-
-	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
-	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
-
-	widget->setPalette(palette);
-
-	//widget->setStyleSheet("QWidget { selection-background-color: #C05800; selection-color: black; }");
-	//widget->setAutoFillBackground(true); // TODO performance is weak
-}
-
-void fairytale::applyStyleRecursively(QWidget *widget)
-{
-	QStack<QObject*> children;
-	children.push_back(widget);
-
-	while (!children.isEmpty())
-	{
-		QObject *child = children.pop();
-
-		foreach (QObject *childObject, child->children())
-		{
-			children.push(childObject);
-		}
-
-		QWidget *childWidget = dynamic_cast<QWidget*>(child);
-
-		if (childWidget != nullptr)
-		{
-			applyStyle(childWidget);
-		}
-	}
-}
-
 void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds)
 {
 	if (this->gameMode() != nullptr && this->isGameRunning())
@@ -448,6 +431,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_requiresPerson(true)
 , m_playIntro(false)
 , m_playOutroWin(false)
+, m_playOutroLose(false)
 , m_completeSolutionIndex(0)
 , m_playCompleteSolution(false)
 , m_paused(false)
@@ -478,8 +462,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->m_player->hide();
 
 	setupUi(this);
-
-	applyStyleRecursively(this);
 
 	this->m_currentScreen = qApp->primaryScreen();
 	changePrimaryScreen(this->m_currentScreen);
@@ -564,8 +546,11 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
+
+#ifndef Q_OS_ANDROID
 	GameModeStory *gameModeStory = new GameModeStory(this);
 	m_gameModes.insert(gameModeStory->id(), gameModeStory);
+#endif
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -684,15 +669,34 @@ QString fairytale::defaultClipsDirectory() const
 #endif
 }
 
-bool fairytale::ensureCustomClipsDirectoryExistence()
+bool fairytale::ensureCustomClipsExistence()
 {
 	const QDir customClipsDir = QDir(customClipsDirectory());
 
 	if (!customClipsDir.exists())
 	{
-		if (!QDir(QDir::homePath()).mkdir(".gustavsfairyland"))
+		const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+		if (!dataLocation.mkpath("customclips"))
 		{
 			qDebug() << "Error on creating custom.xml dir";
+
+			return false;
+		}
+	}
+
+	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
+
+	/*
+	 * If the custom file does not exist in the home directory, copy the default file there.
+	 */
+	if (!currentCustomFileInfo.exists())
+	{
+		const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
+
+		if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
+		{
+			qDebug() << "Error on copying custom.xml file.";
 
 			return false;
 		}
@@ -703,8 +707,9 @@ bool fairytale::ensureCustomClipsDirectoryExistence()
 
 QString fairytale::customClipsDirectory() const
 {
-	const QString subDir = ".gustavsfairyland";
-	QDir customClipsDir = QDir(QDir::homePath()).filePath(subDir);
+	const QString subDir = "customclips";
+	const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+	const QDir customClipsDir = dataLocation.filePath(subDir);
 
 	return customClipsDir.absolutePath();
 }
@@ -881,11 +886,8 @@ void fairytale::showWidgetsInMainWindow(Widgets widgets)
 	}
 }
 
-int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
+int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda)
 {
-//#ifndef Q_OS_ANDROID
-	//return dialog->exec();
-//#else
 	// TODO disable and enable all menu bar actions as well as long as the widget is shown
 	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
 
@@ -905,18 +907,18 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	this->centralWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	/*
-	 * Make sure the style is set correctly before showing it.
-	 */
-	applyStyleRecursively(dialog);
-
-	//const int result = dialog->exec(); // TODO on Linux this slows down everything and does not update the main GUI or react to button clicks in the dialog.
-	/*
 	 * exec() cannot be used since it makes the dialog modal and on Linux the main window is not updated properly anymore.
 	 * Therefore the result of the dialog has to be waited for and stored manually.
 	 */
 	m_centralDialogResult = -1;
+
 	connect(dialog, &QDialog::finished, this, &fairytale::finishCentralDialog);
 	dialog->show();
+
+	/*
+	 * Might execute several other central widget dialogs recursively.
+	 */
+	lambda(dialog);
 
 	/*
 	 * This event loop is usually done by dialog->exec() but since we don't want to use exec() it has to be emulated.
@@ -928,9 +930,9 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	while (m_centralDialogResult == -1)
 	{
 		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
-		//qDebug() << "Result is " << m_centralDialogResult;
 	}
 
+	qDebug() << "Result is " << m_centralDialogResult << " for widget " << dialog->objectName();
 	eventLoop.quit();
 
 	const int result = m_centralDialogResult;
@@ -942,7 +944,11 @@ int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 	showWidgetsInMainWindow(hiddenWidgets);
 
 	return result;
-//#endif
+}
+
+int fairytale::execInCentralWidgetIfNecessary(QDialog* dialog)
+{
+	return execInCentralWidgetIfNecessaryEx(dialog, [](QDialog *dialog) { });
 }
 
 ClipPackage* fairytale::getClipPackageById(const QString &packageId)
@@ -1006,6 +1012,48 @@ int fairytale::maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages)
 	return qMin(personClips - 1, actClips);
 }
 
+QAudioOutputSelectorControl* fairytale::audioOutputSelectorControl() const
+{
+	QMediaService *svc = m_musicPlayer->service();
+
+	if (svc != nullptr)
+	{
+		QAudioOutputSelectorControl *out = reinterpret_cast<QAudioOutputSelectorControl*>(svc->requestControl(QAudioOutputSelectorControl_iid));
+
+		qDebug() << "Audio output selector control " << out;
+
+		if (out != nullptr)
+		{
+			qDebug() << "Audio output selector control default output " << out->defaultOutput();
+
+			return out;
+		}
+	}
+
+	return nullptr;
+}
+
+QAudioInputSelectorControl* fairytale::audioInputSelectorControl() const
+{
+	QMediaService *svc = m_musicPlayer->service();
+
+	if (svc != nullptr)
+	{
+		QAudioInputSelectorControl *in = reinterpret_cast<QAudioInputSelectorControl*>(svc->requestControl(QAudioInputSelectorControl_iid));
+
+		qDebug() << "Audio input selector control " << in;
+
+		if (in != nullptr)
+		{
+			qDebug() << "Audio input selector control default output " << in->defaultInput();
+
+			return in;
+		}
+	}
+
+	return nullptr;
+}
+
 void fairytale::showHighScores()
 {
 	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
@@ -1044,11 +1092,32 @@ void fairytale::record()
 		ClipEditor clipEditor(this, this);
 		clipEditor.fill(&clip);
 
-		if (ensureCustomClipsDirectoryExistence())
+		if (ensureCustomClipsExistence())
 		{
 			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
 
-			if (execInCentralWidgetIfNecessary(&clipEditor) == QDialog::Accepted)
+			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) {
+				/*
+				 * Let the user record a video, a narrating sound and capture an image immediately.
+				 * This makes it much faster to create custom clips.
+				 */
+				ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog);
+
+				if (clipEditor->recordVideo() == QDialog::Rejected)
+				{
+					return;
+				}
+
+				if (clipEditor->recordNarratingSoundSimple() == QDialog::Rejected)
+				{
+					return;
+				}
+
+				if (clipEditor->captureImage() == QDialog::Rejected)
+				{
+					return;
+				}
+			}) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
 				this->customClipPackage()->addClip(clipOfCustomPackage);
@@ -1188,6 +1257,23 @@ void fairytale::gameOver()
 	// make sure execInCentralWidgetIfNecessary() has not to hide them
 	hideGameWidgets();
 
+	const QUrl outroUrl = this->defaultClipPackage()->outros().size() > (int)ClipPackage::Outro::Lost ? this->resolveClipUrl(this->defaultClipPackage()->outros().at((int)ClipPackage::Outro::Lost)) : QUrl();
+
+	qDebug() << "Outro URL:" << outroUrl;
+
+	if (!outroUrl.isEmpty() && this->gameMode()->playOutro())
+	{
+		this->m_playOutroLose = true;
+		this->m_player->playVideo(this, outroUrl, tr("Outro"));
+	}
+	else
+	{
+		this->afterOutroGameOver();
+	}
+}
+
+void fairytale::afterOutroGameOver()
+{
 	execInCentralWidgetIfNecessary(this->gameOverDialog());
 
 	// Show the custom fairytale dialog which allows the loser to watch his created fairytale.
@@ -1528,8 +1614,6 @@ void fairytale::onFinishTurn()
 		this->m_startPerson = this->gameMode()->solution();
 	}
 
-	addCurrentSolution();
-
 	switch (this->gameMode()->state())
 	{
 		case GameMode::State::Won:
@@ -1548,6 +1632,8 @@ void fairytale::onFinishTurn()
 
 		case GameMode::State::Running:
 		{
+			addCurrentSolution();
+
 			this->nextTurn();
 
 			break;
@@ -1698,6 +1784,14 @@ void fairytale::onFinishVideoAndSounds()
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
 			afterOutroWin();
 		}
+		// played outro lose
+		else if (this->m_playOutroLose)
+		{
+			this->m_playOutroLose = false;
+			this->m_player->stop();
+			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+			afterOutroGameOver();
+		}
 		// played narrator stuff
 		else if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
 		{
@@ -1806,20 +1900,13 @@ void fairytale::startMusic()
 	// TODO add to package XML file, each package can have its own background music
 	QList<QUrl> urls;
 	urls.push_back(QUrl("./music/01.PSO020103-Mahler-5-I.mp3"));
-	/*
-	urls.push_back(QUrl("./music/02.PSO020103-Mahler-5-II.mp3"));
-	urls.push_back(QUrl("./music/03.PSO020103-Mahler-5-III.mp3"));
-	urls.push_back(QUrl("./music/04.PSO020103-Mahler-5-IV.mp3"));
-	urls.push_back(QUrl("./music/05.PSO020103-Mahler-5-V.mp3"));
-	urls.push_back(QUrl("./music/MahlerPianoQuartet_64kb.mp3"));
-	*/
 	const QUrl url = urls.front(); //urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
-	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;
+	qDebug() << "Play music:" << musicUrl;
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
 	// Music should not be annoyingly loud.
-	m_musicPlayer->setVolume(30);
+	m_musicPlayer->setVolume(10);
 }
 
 void fairytale::finishMusic(QMediaPlayer::State state)
@@ -1834,7 +1921,6 @@ void fairytale::finishMusic(QMediaPlayer::State state)
 void fairytale::timerTick()
 {
 	const QTimer *sender = dynamic_cast<QTimer*>(QObject::sender());
-	//qDebug() << "Tick";
 	this->m_remainingTime -= sender->interval();
 	this->updateTimeLabel();
 
@@ -1949,9 +2035,8 @@ void fairytale::changeEvent(QEvent* event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI" << std::endl;
+			qDebug() << "Retranslate UI";
 			this->retranslateUi(this);
-			//this->aboutDialog()->retranslateUi(this->aboutDialog());
 
 			break;
 		}
@@ -1999,6 +2084,7 @@ void fairytale::cleanupGame()
 	this->m_pausedMediaPlayer = false;
 	this->m_playIntro = false;
 	this->m_playOutroWin = false;
+	this->m_playOutroLose = false;
 
 	// Note: Make sure this has no effect in its connected slots!
 	this->m_player->stop();
@@ -2080,7 +2166,6 @@ SettingsDialog* fairytale::settingsDialog()
 	if (m_settingsDialog == nullptr)
 	{
 		m_settingsDialog = new SettingsDialog(this, this);
-		applyStyle(m_settingsDialog);
 	}
 
 	return m_settingsDialog;
@@ -2091,7 +2176,6 @@ CustomFairytaleDialog* fairytale::customFairytaleDialog()
 	if (this->m_customFairytaleDialog == nullptr)
 	{
 		this->m_customFairytaleDialog = new CustomFairytaleDialog(this, this);
-		applyStyle(m_customFairytaleDialog);
 	}
 
 	return this->m_customFairytaleDialog;
@@ -2102,7 +2186,6 @@ AboutDialog* fairytale::aboutDialog()
 	if (this->m_aboutDialog == nullptr)
 	{
 		this->m_aboutDialog = new AboutDialog(this, this);
-		applyStyle(m_aboutDialog);
 	}
 
 	return this->m_aboutDialog;
@@ -2113,7 +2196,6 @@ WonDialog* fairytale::wonDialog()
 	if (this->m_wonDialog == nullptr)
 	{
 		this->m_wonDialog = new WonDialog(this, this);
-		applyStyle(m_wonDialog);
 	}
 
 	return this->m_wonDialog;
@@ -2124,7 +2206,6 @@ GameOverDialog* fairytale::gameOverDialog()
 	if (this->m_gameOverDialog == nullptr)
 	{
 		this->m_gameOverDialog = new GameOverDialog(this, this);
-		applyStyle(m_gameOverDialog);
 	}
 
 	return this->m_gameOverDialog;
@@ -2185,7 +2266,7 @@ void fairytale::changeLanguage()
 {
 	QAction *action = dynamic_cast<QAction*>(sender());
 
-	std::cerr << "Change language to: " << action->text().toStdString() << std::endl;
+	qDebug() << "Change language to:" << action->text();
 
 	TranslationFileNames::const_iterator iterator = m_translationFileNames.find(action);
 
@@ -2212,7 +2293,7 @@ void fairytale::changeLanguage()
 	}
 }
 
-void fairytale::removeClipPackage(ClipPackage* package)
+void fairytale::removeClipPackage(ClipPackage *package)
 {
 	this->m_clipPackages.remove(package->id());
 }
@@ -2291,38 +2372,17 @@ bool fairytale::loadDefaultClipPackage()
 	dirs.push_back(this->defaultClipsDirectory());
 
 	/*
-	 * Copy the custom.xml file to the local home directory.
+	 * Copy the custom.xml file to the local home directory if it does not exist already.
 	 * This is necessary since the file has to be writable and different per user.
 	 */
-	if (!ensureCustomClipsDirectoryExistence())
+	if (!ensureCustomClipsExistence())
 	{
+		qDebug() << "Custom Clips do not exist.";
+
 		return false;
 	}
 
 	dirs.push_back(customClipsDirectory());
-
-	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
-
-	if (currentCustomFileInfo.exists())
-	{
-		QFile file(currentCustomFileInfo.absoluteFilePath());
-
-		if (!file.remove())
-		{
-			qDebug() << "Error on removing old custom.xml file.";
-
-			return false;
-		}
-	}
-
-	const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
-
-	if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
-	{
-		qDebug() << "Error on copying custom.xml file.";
-
-		return false;
-	}
 
 	QStringList defaultClipPackages;
 	defaultClipPackages.push_back("gustav.xml");
@@ -2332,11 +2392,10 @@ bool fairytale::loadDefaultClipPackage()
 
 	foreach (const QString &defaultClipPackage, defaultClipPackages)
 	{
-#ifndef Q_OS_ANDROID
 		const QString filePath = dirs[i].filePath(defaultClipPackage);
 		const QFileInfo fileInfo(filePath);
 
-		std::cerr << "Loading default clip package from: " << filePath.toStdString() << std::endl;
+		qDebug() << "Loading default clip package from: " << filePath;
 
 		if (fileInfo.exists() && fileInfo.isReadable())
 		{
@@ -2358,26 +2417,7 @@ bool fairytale::loadDefaultClipPackage()
 		{
 			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
 		}
-#else
-		ClipPackage *package = new ClipPackage(this);
 
-		const QString fileName("assets:/clips/" + defaultClipPackage);
-
-		qDebug() << "Opening package:" << fileName;
-
-		if (package->loadClipsFromFile(fileName))
-		{
-			this->addClipPackage(package);
-
-			qDebug() << "Successfully loaded";
-		}
-		else
-		{
-			qDebug() << "Error on opening";
-			delete package;
-			package = nullptr;
-		}
-#endif
 		++i;
 	}
 

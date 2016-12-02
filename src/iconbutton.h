@@ -1,10 +1,10 @@
 #ifndef ICONBUTTON_H
 #define ICONBUTTON_H
 
-#include <QtWidgets/QPushButton>
+#include <QPushButton>
 
 /**
- * @brief A button which shows the icon for example of the image of a clip and resizes the icon automatically.
+ * \brief A button which shows the icon for example of the image of a clip and resizes the icon automatically.
  *
  * Whenever the button is resized the shown image is resized automatically. This allows the image to grow with the button.
  */

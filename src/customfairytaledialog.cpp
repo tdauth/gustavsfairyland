@@ -1,8 +1,5 @@
-#include <iostream>
-
 #include <QtGui>
-#include <QInputDialog>
-#include <QMessageBox>
+#include <QtWidgets>
 
 #include "customfairytaledialog.h"
 #include "fairytale.h"
@@ -53,7 +50,9 @@ void CustomFairytaleDialog::addClip(const CustomFairytale::ClipKey &clipKey)
 	this->m_clipLabels.push_back(label);
 	label->setAlignment(Qt::AlignCenter);
 	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	label->setMaximumSize(QSize(64, 64));
+	const QSize iconSize = QSize(128, 128);
+	label->setMinimumSize(iconSize);
+	label->setMaximumSize(iconSize);
 
 	const Clip *clip = m_app->getClipByKey(clipKey);
 
@@ -100,14 +99,14 @@ void CustomFairytaleDialog::clear()
 	qDebug() << "After the rest";
 }
 
-void CustomFairytaleDialog::changeEvent(QEvent* event)
+void CustomFairytaleDialog::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of custom fairytale dialog" << std::endl;
+			qDebug() << "Retranslate UI of custom fairytale dialog";
 			this->retranslateUi(this);
 
 			break;
@@ -133,6 +132,7 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(firstClip->description());
 		int i = 0;
+		QStringList descriptionOfAllInvolved;
 
 		foreach (fairytale::ClipKey clipKey, m_clips)
 		{
@@ -150,12 +150,20 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 				text += "<br/>";
 			}
 
+			if (clip->isPerson())
+			{
+				QString description;
+				description += clip->description();
+				descriptionOfAllInvolved.push_back(description);
+			}
+
 			++i;
 		}
 
 		if (this->m_app->gameMode()->state() == GameMode::State::Won)
 		{
-			text += tr("And if %1 did not die then %1 is still alive today.<br/>End").arg(firstClip->description());
+			const QString formattedDescription = descriptionOfAllInvolved.join(tr(" and "));
+			text += tr("And if %1 did not die then %2 %3 still alive today.<br/>End").arg(formattedDescription).arg(formattedDescription).arg((descriptionOfAllInvolved.size() > 1 ? tr("are") : tr("is")));
 		}
 		else
 		{

@@ -1,8 +1,5 @@
-#include <iostream>
-
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QMessageBox>
-#include <QSettings>
+#include <QtWidgets>
+#include <QtCore>
 
 #include "clippackageeditor.h"
 #include "clipeditor.h"
@@ -63,7 +60,7 @@ void ClipPackageEditor::addClip()
 		item->setText(0, clip->description());
 		treeWidget->addTopLevelItem(item);
 
-		std::cerr << "Adding clip to tree widget with description " << clip->description().toUtf8().constData() << std::endl;
+		qDebug() << "Adding clip to tree widget with description " << clip->description();
 	}
 }
 
@@ -221,7 +218,6 @@ void ClipPackageEditor::changedCurrentItem(QTreeWidgetItem *current, QTreeWidget
 ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(parent), m_app(app), m_clipEditor(nullptr), m_clipPackage(new ClipPackage(app, this))
 {
 	setupUi(this);
-	fairytale::applyStyleRecursively(this);
 
 	connect(this->idLineEdit, &QLineEdit::textChanged, this, &ClipPackageEditor::idChanged);
 	connect(this->loadCustomClipsPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::loadCustomClipsPackage);
@@ -256,7 +252,6 @@ ClipEditor* ClipPackageEditor::clipEditor()
 	if (this->m_clipEditor == nullptr)
 	{
 		this->m_clipEditor = new ClipEditor(m_app, this);
-		fairytale::applyStyleRecursively(m_clipEditor);
 	}
 
 	return this->m_clipEditor;

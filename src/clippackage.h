@@ -3,13 +3,13 @@
 
 #include <cstdint>
 
-#include <QtCore/QObject>
-#include <QtCore/QMap>
-#include <QtCore/QList>
-#include <QtCore/QFile>
-#include <QtCore/QMap>
-#include <QtCore/QVector>
-#include <QtCore/QUrl>
+#include <QObject>
+#include <QMap>
+#include <QList>
+#include <QFile>
+#include <QString>
+#include <QVector>
+#include <QUrl>
 
 class Clip;
 class BonusClip;
@@ -88,6 +88,16 @@ class ClipPackage : public QObject
 		const BonusClips& bonusClips() const;
 		void setIntro(const QUrl &video);
 		QUrl intro() const;
+
+		enum class Outro
+		{
+			Easy = 0,
+			Normal = 1,
+			Hard = 2,
+			Mahlerisch = 3,
+			Lost = 4
+		};
+
 		/**
 		 * Sets the outro video for the difficulty \p index.
 		 */

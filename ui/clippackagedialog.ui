@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>407</width>
-    <height>422</height>
+    <width>417</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,11 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="errorLabel">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -29,38 +34,32 @@
       </item>
       <item>
        <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Game Mode:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="gameModesComboBox"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Clip Packages:</string>
+       <widget class="QComboBox" name="gameModesComboBox">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="clipPackagesWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2"/>
-         </item>
-        </layout>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_3">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Difficulty:</string>
         </property>
@@ -68,6 +67,11 @@
       </item>
       <item>
        <widget class="QComboBox" name="difficultyComboBox">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
         <item>
          <property name="text">
           <string>Easy</string>
@@ -91,20 +95,86 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="useMaxRoundsCheckBox">
+       <widget class="QCheckBox" name="advancedCheckBox">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
         <property name="text">
-         <string>Use Max Rounds</string>
+         <string>Advanced</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="maxRoundsSpinBox">
+       <widget class="QGroupBox" name="advancedGroupBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
-        <property name="minimum">
-         <number>1</number>
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
         </property>
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <pointsize>25</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Clip Packages:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="clipPackagesWidget" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_2"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="useMaxRoundsCheckBox">
+           <property name="font">
+            <font>
+             <pointsize>25</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Use Max Rounds</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="maxRoundsSpinBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>25</pointsize>
+            </font>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -122,6 +192,11 @@
       </item>
       <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
        <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
         <property name="standardButtons">
          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
         </property>
@@ -141,8 +216,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>149</y>
+     <x>324</x>
+     <y>547</y>
     </hint>
     <hint type="destinationlabel">
      <x>200</x>
@@ -157,8 +232,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>149</y>
+     <x>324</x>
+     <y>547</y>
     </hint>
     <hint type="destinationlabel">
      <x>248</x>
@@ -173,12 +248,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>42</x>
-     <y>103</y>
+     <x>100</x>
+     <y>447</y>
     </hint>
     <hint type="destinationlabel">
-     <x>202</x>
-     <y>104</y>
+     <x>260</x>
+     <y>488</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>advancedCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>advancedGroupBox</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>216</x>
+     <y>265</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>106</x>
+     <y>329</y>
     </hint>
    </hints>
   </connection>

@@ -43,8 +43,18 @@ class Recorder : public QDialog, protected Ui::Recorder
 		void stopRecordingAudio();
 		void stopAllRecording();
 
-		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage);
-		int showAudioRecorder();
+		/**
+		 * Shows a camera finder widget which has the image of the currently recording camera.
+		 * This is a blocking method returning when the dialog is closed and the file is recorded (if accepted).
+		 * \param captureMode The capture mode which is used for the camera.
+		 * \param startRecording If this value is true the recording starts immediately. Otherwise the user has to press the record button.
+		 * \return Returns the result of exec().
+		 */
+		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage, bool startRecording = false);
+		/**
+		 * \return Returns the result of exec().
+		 */
+		int showAudioRecorder(bool startRecording = false);
 
 	public:
 		enum Mode
@@ -75,6 +85,9 @@ class Recorder : public QDialog, protected Ui::Recorder
 		virtual void hideEvent(QHideEvent *event) override;
 
 	private:
+		void waitUntilCameraIsReady();
+		void waitForRecordedFile(bool videoOrAudio);
+
 		QCamera *m_camera;
 		QMediaRecorder *m_recorder;
 		QCameraImageCapture *m_imageCapture;
@@ -82,6 +95,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		QCameraViewfinder *m_cameraViewFinder;
 		QString m_outputFile;
 
+		bool m_finshedRecording;
 		bool m_isRecording;
 		Mode m_mode;
 };

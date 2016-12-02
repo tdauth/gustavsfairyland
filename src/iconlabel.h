@@ -1,7 +1,7 @@
 #ifndef ICONLABEL_H
 #define ICONLABEL_H
 
-#include <QtWidgets/QLabel>
+#include <QLabel>
 
 /**
  * \brief A label which shows the icon for example of the image of a clip and resizes the icon automatically.

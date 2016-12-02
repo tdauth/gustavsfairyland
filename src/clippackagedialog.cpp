@@ -11,6 +11,7 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 	this->setupUi(this);
 
 	connect(this->gameModesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ClipPackageDialog::currentGameModeIndexChanged);
+	this->advancedGroupBox->hide();
 }
 
 void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)
@@ -33,6 +34,9 @@ void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fair
 		const ClipPackage *clipPackage = iterator.value();
 		//this->packagesComboBox->addItem(clipPackage->name(), clipPackage->id());
 		QCheckBox *checkBox = new QCheckBox(this);
+		QFont font = checkBox->font();
+		font.setPointSize(15);
+		checkBox->setFont(font);
 		checkBox->setText(clipPackage->name());
 		clipPackagesWidget->layout()->addWidget(checkBox);
 

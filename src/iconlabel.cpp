@@ -1,4 +1,4 @@
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "iconlabel.h"
 
@@ -27,7 +27,7 @@ void IconLabel::updateIcon()
 	}
 }
 
-void IconLabel::resizeEvent(QResizeEvent* e)
+void IconLabel::resizeEvent(QResizeEvent *e)
 {
 	QLabel::resizeEvent(e);
 

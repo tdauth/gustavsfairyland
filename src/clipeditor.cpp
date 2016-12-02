@@ -33,20 +33,21 @@ void ClipEditor::chooseImage()
 		const QUrl url = QUrl::fromLocalFile(filePath);
 		this->m_clip->setImageUrl(url);
 		QPixmap pixmap(filePath);
-		this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+		this->imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 		this->imageLabel->setText(this->m_clip->imageUrl().toString());
 
 		checkForValidFields();
 	}
 }
 
-void ClipEditor::captureImage()
+int ClipEditor::captureImage()
 {
 	const QFileInfo fileInfo = clipsDirectory().filePath("image");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
+	const int result = m_recorder->showCameraFinder(QCamera::CaptureStillImage);
 
-	if (m_recorder->showCameraFinder(QCamera::CaptureStillImage) == QDialog::Accepted)
+	if (result == QDialog::Accepted)
 	{
 		updateClipImage();
 	}
@@ -56,6 +57,8 @@ void ClipEditor::captureImage()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
 }
 
 void ClipEditor::showImage()
@@ -94,22 +97,32 @@ void ClipEditor::chooseVideo()
 	}
 }
 
-void ClipEditor::recordVideo()
+int ClipEditor::recordVideo()
 {
 	const QFileInfo fileInfo = clipsDirectory().filePath("video");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absolutePath());
+	const int result = m_recorder->showCameraFinder(QCamera::CaptureVideo, true);
 
-	if (m_recorder->showCameraFinder(QCamera::CaptureVideo) == QDialog::Accepted)
+	if (result == QDialog::Accepted)
 	{
+		qDebug() << "Accepted";
 		updateClipVideo();
+
+		if (m_recorder->recorder()->error() != QMediaRecorder::NoError)
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Error code %1 on recording a video.").arg(m_recorder->recorder()->error()));
+		}
 	}
 	else
 	{
+		qDebug() << "Rejected, delete.";
 		deleteRecordedFile();
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
 }
 
 void ClipEditor::playVideo()
@@ -178,7 +191,7 @@ void ClipEditor::updateClipImage()
 	{
 		const QPixmap pixmap(fileName);
 		qDebug() << "Pixmap:" << pixmap.size();
-		imageLabel->setPixmap(pixmap.scaled(64, 64));
+		imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 		imagePathLabel->setText(fileName);
 		m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
 
@@ -191,6 +204,8 @@ void ClipEditor::updateClipImage()
 
 void ClipEditor::updateClipVideo()
 {
+	qDebug() << "Updating video clip";
+
 	// Use temporary file.
 	const QString fileName = m_recordedFile;
 
@@ -199,6 +214,8 @@ void ClipEditor::updateClipVideo()
 	 */
 	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
 	{
+		qDebug() << "File does not exist" << fileName << "or result is not accepted" << m_recorder->result();
+
 		return;
 	}
 
@@ -246,6 +263,49 @@ void ClipEditor::updateClipNarratingSound()
 			checkForValidFields();
 		}
 	}
+}
+
+void ClipEditor::updateClipNarratingSoundForAllLanguages()
+{
+	// Use temporary file.
+	const QString fileName = m_recordedFile;
+
+	if (fileName.isEmpty() || m_recorder->result() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	const QFileInfo fileInfo(fileName);
+	qDebug() << "Using file" << fileName << "with size" << fileInfo.size() << "exists:" << fileInfo.exists() << " and capture error state" << m_recorder->audioRecorder()->error();
+
+	if (fileInfo.exists())
+	{
+		Clip::Urls narratorUrls = this->m_clip->narratorUrls();
+		// TODO all languages
+		narratorUrls.insert("de", QUrl::fromLocalFile(fileName));
+		narratorUrls.insert("en", QUrl::fromLocalFile(fileName));
+		this->m_clip->setNarratorUrls(narratorUrls);
+
+		updateNarratingSoundsWidget(m_clip);
+
+		// Dont delete the old file. TODO leaks afterwards when removed.
+		m_recordedFile.clear();
+
+		checkForValidFields();
+	}
+}
+
+void ClipEditor::updateAllDescriptions(const QString& description)
+{
+	Clip::Descriptions descriptions = this->m_clip->descriptions();
+	// TODO all languages
+	descriptions.insert("de", description);
+	descriptions.insert("en", description);
+	this->m_clip->setDescriptions(descriptions);
+
+	updateDescriptionWidget(m_clip);
+
+	checkForValidFields();
 }
 
 void ClipEditor::onFinish(int result)
@@ -309,6 +369,27 @@ void ClipEditor::recordNarratingSound()
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
+int ClipEditor::recordNarratingSoundSimple()
+{
+	const QFileInfo fileInfo = clipsDirectory().filePath("audio_all");
+	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
+	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
+	const int result = m_recorder->showAudioRecorder(true);
+
+	if (result == QDialog::Accepted)
+	{
+		updateClipNarratingSoundForAllLanguages();
+	}
+	else
+	{
+		deleteRecordedFile();
+	}
+
+	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
+}
+
 void ClipEditor::playNarratingSound()
 {
 	if (!narratingSoundsListWidget->selectedItems().isEmpty())
@@ -318,6 +399,11 @@ void ClipEditor::playNarratingSound()
 
 		m_player->playSound(m_app, m_clip->narratorUrls()[language], m_clip->description(), QUrl(), false, false);
 	}
+}
+
+void ClipEditor::playNarratingSoundSimple()
+{
+	m_player->playSound(m_app, m_clip->narratorUrl(), m_clip->description(), QUrl(), false, false);
 }
 
 void ClipEditor::removeNarratingSound()
@@ -413,10 +499,14 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	connect(this->addNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::addNarratingSound);
 	connect(this->recordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSound);
+	connect(this->simpleRecordNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::recordNarratingSoundSimple);
 	connect(this->playNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::playNarratingSound);
+	connect(this->simplePlayNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::playNarratingSoundSimple);
 	connect(this->removeNarratingSoundPushButton, &QPushButton::clicked, this, &ClipEditor::removeNarratingSound);
 	connect(this->addDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::addDescription);
 	connect(this->removeDescriptionPushButton, &QPushButton::clicked, this, &ClipEditor::removeDescription);
+
+	connect(this->descriptionLineEdit, &QLineEdit::textChanged, this, &ClipEditor::updateAllDescriptions);
 
 	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipEditor::accept);
 	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipEditor::reject);
@@ -425,6 +515,8 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
 	connect(this->m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
 	connect(this->m_recorder->audioRecorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::audioRecorderStateChanged);
+
+	this->advancedGroupBox->hide();
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();
@@ -444,7 +536,7 @@ void ClipEditor::fill(Clip *clip)
 	this->clipIdLineEdit->setText(clip->id());
 	this->isAPersonCheckBox->setChecked(clip->isPerson());
 	QPixmap pixmap(clip->imageUrl().toLocalFile());
-	this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+	this->imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 	this->imagePathLabel->setText(clip->imageUrl().toString());
 	this->videoLabel->setText(clip->videoUrl().toString());
 
@@ -479,6 +571,7 @@ bool ClipEditor::checkForValidFields()
 
 	showImageButton->setEnabled(!this->m_clip->imageUrl().isEmpty());
 	playVideoPushButton->setEnabled(!this->m_clip->videoUrl().isEmpty());
+	simplePlayNarratingSoundPushButton->setEnabled(!this->m_clip->narratorUrl().isEmpty());
 
 	return result;
 }
@@ -546,11 +639,11 @@ bool ClipEditor::moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldU
 		 */
 		else
 		{
-			// TODO use relative path of parentDir from the clips dir
 			newUrl = QUrl::fromLocalFile(target);
 			qDebug() << "New image URL" << newUrl;
 
-			// TODO delete old file oldImageFile
+			// Delete the old file to safe space.
+			QFile::remove(oldImageFile.absoluteFilePath());
 		}
 	}
 	else

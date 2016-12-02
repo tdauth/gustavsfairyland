@@ -1,18 +1,22 @@
 #ifndef fairytale_H
 #define fairytale_H
 
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QWidget>
-#include <QtCore/QTimer>
-#include <QtCore/QVector>
-#include <QtCore/QList>
-#include <QtCore/QQueue>
-#include <QtWidgets/QPushButton>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtCore/QTranslator>
-#include <QtCore/QDir>
+#include <functional>
+
+#include <QMainWindow>
+#include <QWidget>
+#include <QTimer>
+#include <QVector>
+#include <QList>
+#include <QQueue>
+#include <QPushButton>
+#include <QMediaPlayer>
+#include <QTranslator>
+#include <QDir>
 #include <QShortcut>
 #include <QHash>
+#include <QAudioOutputSelectorControl>
+#include <QAudioInputSelectorControl>
 
 #include "ui_mainwindow.h"
 
@@ -136,6 +140,18 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		typedef QPair<QString, QString> ClipKey;
 
 		/**
+		 * Default game style which is applied in the beginning to qApp.
+		 *
+		 * \{
+		 */
+		static QPalette gameColorPalette();
+		static QString gameStyleSheet();
+		static QFont gameFont();
+		/**
+		 * \}
+		 */
+
+		/**
 		 * \return Returns true if the user has a touch device to press at the floating clips.
 		 */
 		static bool hasTouchDevice();
@@ -179,17 +195,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		static QString localeToName(const QString &locale);
 
 		/**
-		 * Applies the custom style of the game to \p widget which means updating the background color
-		 * and the font.
-		 * \param widget The Widget of which the style is being updated.
-		 */
-		static void applyStyle(QWidget *widget);
-		/**
-		 * Applies the custom style to \p widget and all of its children widgets recursively.
-		 */
-		static void applyStyleRecursively(QWidget *widget);
-
-		/**
 		 * Starts a new game using all specified parameters.
 		 */
 		void startNewGame(const ClipPackages &clipPackages, GameMode *gameMode, Difficulty difficulty, bool useMaxRounds, int maxRounds);
@@ -204,7 +209,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns the directory where the clips are stored by default.
 		 */
 		QString defaultClipsDirectory() const;
-		bool ensureCustomClipsDirectoryExistence();
+		/**
+		 * Ensures that the user has a file in QStandardPaths::AppDataLocation/.gustavsfairyland called "custom.xml" which is used for all
+		 * custom clips.
+		 * \return Returns true if the file exists or has been created by this function. Otherwise it returns false.
+		 */
+		bool ensureCustomClipsExistence();
 		QString customClipsDirectory() const;
 
 		/**
@@ -219,6 +229,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void playFinalClip(int index);
 
 		void gameOver();
+		void afterOutroGameOver();
 		void win();
 		void afterOutroWin();
 
@@ -412,11 +423,23 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Otherwise the dialog is executed normally.
 		 *
 		 * \param dialog The dialog for which exec() is called but which is placed in the central widget if necessary.
+		 * \param lambda This function is called after the dialog is shown but before the event loop and waiting for execution starts.
 		 * \return Returns the result of the dialog's exec() call.
 		 */
+		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda);
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
+		/**
+		 * Gets a clip package by its unique ID.
+		 * \param packageId The unique package ID.
+		 * \return Returns the clip package if it is loaded. Otherwise it returns nullptr.
+		 */
 		ClipPackage* getClipPackageById(const QString &packageId);
+		/**
+		 * Gets a clip by its unique package and its unique clip ID.
+		 * \param clipKey The unique clip key.
+		 * \return Returns the clip if the package is loaded and the clip is found. Otherwise it returns nullptr.
+		 */
 		Clip* getClipByKey(const ClipKey &clipKey);
 
 		/**
@@ -426,6 +449,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Then the minimum number of the number of persons and the number of acts is the maximum of rounds.
 		 */
 		int maxRoundsByMultipleClipPackages(const ClipPackages &clipPackages);
+
+		QAudioOutputSelectorControl* audioOutputSelectorControl() const;
+		QAudioInputSelectorControl* audioInputSelectorControl() const;
 
 	protected:
 		virtual void changeEvent(QEvent *event) override;
@@ -531,9 +557,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		bool m_playIntro;
 		/**
-		 * State flag which indicates that the outro for winning the came is currently played if its value is true.
+		 * State flag which indicates that the outro for winning the game is currently played if its value is true.
 		 */
 		bool m_playOutroWin;
+		/**
+		 * State flag which indicates that the outro for losing the game is currently played if its value is true.
+		 */
+		bool m_playOutroLose;
 
 		CompleteSolution m_completeSolution;
 		int m_completeSolutionIndex;

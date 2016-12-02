@@ -1,15 +1,8 @@
 #include <iostream>
 #include <cassert>
 
-#include <QtCore/QFile>
-#include <QtCore/QDebug>
-#include <QTemporaryFile>
-
-#include <QtCore/QXmlStreamReader>
-
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
-#include <QtCore/qdir.h>
+#include <QtCore>
+#include <QtXml>
 
 #include "clippackage.h"
 #include "clip.h"
@@ -640,6 +633,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		this->setOutro(1, QUrl(node.firstChildElement("normal").text()));
 		this->setOutro(2, QUrl(node.firstChildElement("hard").text()));
 		this->setOutro(3, QUrl(node.firstChildElement("mahlerisch").text()));
+		this->setOutro(4, QUrl(node.firstChildElement("lost").text()));
 	}
 
 	const QDomNodeList bonusClipNodes = root.elementsByTagName("bonusClip");

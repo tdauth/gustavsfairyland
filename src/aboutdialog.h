@@ -1,7 +1,7 @@
 #ifndef ABOUTDIALOG_H
 #define ABOUTDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 #include "ui_aboutdialog.h"
 #include "fairytale.h"

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QList>
 #include <QStringList>
 
 /**

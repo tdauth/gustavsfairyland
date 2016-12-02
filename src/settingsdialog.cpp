@@ -1,7 +1,6 @@
-#include <iostream>
-
+#include <QtCore>
 #include <QtWidgets>
-#include <QDir>
+#include <QtMultimedia>
 
 #include "settingsdialog.h"
 #include "clippackage.h"
@@ -20,11 +19,13 @@ void SettingsDialog::restoreDefaults()
 
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
+	// We need file:/ on other systems.
+	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
 #else
 	fullScreenCheckBox->setChecked(false);
+	// Dont prepend file:/ on Android!
+	m_clipsDir = QUrl(m_app->defaultClipsDirectory());
 #endif
-
-	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
 	// TODO unload only on apply!
@@ -157,6 +158,39 @@ void SettingsDialog::update()
 {
 	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
 	musicVolumeSpinBox->setValue(this->m_app->musicVolume());
+
+	int i = 0;
+
+	foreach (QAudioDeviceInfo device, QAudioDeviceInfo::availableDevices(QAudio::AudioOutput))
+	{
+		audioOutputDeviceComboBox->addItem(device.deviceName(), device.deviceName());
+
+		if (m_app->audioOutputSelectorControl() != nullptr && m_app->audioOutputSelectorControl()->activeOutput() == device.deviceName())
+		{
+			audioOutputDeviceComboBox->setCurrentIndex(i);
+		}
+
+		++i;
+	}
+
+	audioOutputDeviceComboBox->setEnabled(m_app->audioOutputSelectorControl() != nullptr);
+
+	i = 0;
+
+	foreach (QAudioDeviceInfo device, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+	{
+		audioInputDeviceComboBox->addItem(device.deviceName(), device.deviceName());
+
+		if (m_app->audioInputSelectorControl() != nullptr && m_app->audioInputSelectorControl()->activeInput() == device.deviceName())
+		{
+			audioInputDeviceComboBox->setCurrentIndex(i);
+		}
+
+		++i;
+	}
+
+	audioInputDeviceComboBox->setEnabled(m_app->audioInputSelectorControl() != nullptr);
+
 
 	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
 
@@ -309,7 +343,7 @@ void SettingsDialog::importCustomFairytale()
 	QClipboard *clipboard = QApplication::clipboard();
 	const QString importText = clipboard->text();
 
-	std::cerr << "Importing: " << importText.toStdString() << std::endl;
+	qDebug() << "Importing: " << importText;
 
 	if (!importText.isEmpty())
 	{
@@ -340,7 +374,7 @@ void SettingsDialog::importCustomFairytaleEx(const QString &importText)
 
 		if (customFairytale != nullptr)
 		{
-			std::cerr << "Is not null, adding it!" << std::endl;
+			qDebug() << "Is not null, adding it!";
 
 			m_app->addCustomFairytale(customFairytale);
 
@@ -409,6 +443,9 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	connect(this->copyCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::copyCustomFairytale);
 	connect(this->importCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::importCustomFairytale);
 	connect(this->removeCustomFairytalePushButton, &QPushButton::clicked, this, &SettingsDialog::removeCustomFairytale);
+
+	this->clipsGroupBox->hide();
+	this->customFairytalesGroupBox->hide();
 }
 
 void SettingsDialog::fill(const fairytale::ClipPackages &packages)
@@ -618,7 +655,7 @@ void SettingsDialog::changeEvent(QEvent *event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of about dialog" << std::endl;
+			qDebug() << "Retranslate UI of about dialog";
 			this->retranslateUi(this);
 
 			break;

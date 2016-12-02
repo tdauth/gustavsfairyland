@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>527</height>
+    <width>589</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,24 +47,18 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="3" column="0">
-        <widget class="QPushButton" name="highScoresPushButton">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
+        <widget class="QPushButton" name="customGamePushButton">
          <property name="font">
           <font>
-           <pointsize>18</pointsize>
+           <pointsize>25</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>High Scores</string>
+          <string>Custom Game</string>
          </property>
          <property name="icon">
           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
+           <normaloff>:/themes/oxygen/32x32/actions/games-solve.png</normaloff>:/themes/oxygen/32x32/actions/games-solve.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -96,7 +90,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>18</pointsize>
+           <pointsize>25</pointsize>
           </font>
          </property>
          <property name="layoutDirection">
@@ -120,8 +114,8 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <spacer name="verticalSpacer">
+       <item row="0" column="0">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -134,66 +128,10 @@
         </spacer>
        </item>
        <item row="6" column="0">
-        <widget class="QPushButton" name="quitPushButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Quit</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="customGamePushButton">
-         <property name="font">
-          <font>
-           <pointsize>18</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Custom Game</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/games-solve.png</normaloff>:/themes/oxygen/32x32/actions/games-solve.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
         <widget class="QPushButton" name="settingsPushButton">
          <property name="font">
           <font>
-           <pointsize>18</pointsize>
+           <pointsize>25</pointsize>
           </font>
          </property>
          <property name="text">
@@ -211,8 +149,42 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <spacer name="verticalSpacer_2">
+       <item row="7" column="0">
+        <widget class="QPushButton" name="quitPushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>25</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Quit</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -225,10 +197,38 @@
         </spacer>
        </item>
        <item row="4" column="0">
+        <widget class="QPushButton" name="highScoresPushButton">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>25</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>High Scores</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QPushButton" name="recordPushButton">
          <property name="font">
           <font>
-           <pointsize>18</pointsize>
+           <pointsize>25</pointsize>
           </font>
          </property>
          <property name="text">
@@ -350,7 +350,7 @@
          </property>
          <property name="icon">
           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</iconset>
+           <normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -383,8 +383,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>698</width>
-     <height>21</height>
+     <width>589</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -412,8 +412,14 @@
     <addaction name="actionEditor"/>
    </widget>
    <widget class="QMenu" name="menuAchievements">
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>&amp;Achievements</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
     </property>
     <addaction name="actionHighScores"/>
    </widget>
@@ -535,12 +541,13 @@
  </widget>
  <tabstops>
   <tabstop>quickGamePushButton</tabstop>
+  <tabstop>recordPushButton</tabstop>
   <tabstop>customGamePushButton</tabstop>
   <tabstop>highScoresPushButton</tabstop>
   <tabstop>settingsPushButton</tabstop>
   <tabstop>quitPushButton</tabstop>
-  <tabstop>pauseGamePushButton</tabstop>
   <tabstop>cancelGamePushButton</tabstop>
+  <tabstop>pauseGamePushButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resource.qrc"/>

@@ -2,7 +2,6 @@
 #define CLIPEDITOR_H
 
 #include <QDialog>
-#include <QTemporaryFile>
 #include <QDir>
 
 #include "recorder.h"
@@ -24,14 +23,19 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 
 	public slots:
 		void chooseImage();
-		void captureImage();
+		int captureImage();
 		void showImage();
 		void chooseVideo();
-		void recordVideo();
+		int recordVideo();
 		void playVideo();
 		void addNarratingSound();
 		void recordNarratingSound();
+		/**
+		 * Uses the narrating sound for all languages.
+		 */
+		int recordNarratingSoundSimple();
 		void playNarratingSound();
+		void playNarratingSoundSimple();
 		void removeNarratingSound();
 		void addDescription();
 		void removeDescription();
@@ -96,6 +100,9 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		void updateClipImage();
 		void updateClipVideo();
 		void updateClipNarratingSound();
+		void updateClipNarratingSoundForAllLanguages();
+
+		void updateAllDescriptions(const QString &description);
 
 		void onFinish(int result);
 

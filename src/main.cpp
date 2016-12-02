@@ -12,6 +12,10 @@ int main(int argc, char** argv)
 
 	QApplication app(argc, argv);
 
+	qApp->setPalette(fairytale::gameColorPalette());
+	qApp->setStyleSheet(fairytale::gameStyleSheet());
+	qApp->setFont(fairytale::gameFont());
+
 	// Create seed for the random
 	// That is needed only once on application startup
 	QTime time = QTime::currentTime();

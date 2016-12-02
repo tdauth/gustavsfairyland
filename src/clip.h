@@ -1,9 +1,10 @@
 #ifndef CLIP_H
 #define CLIP_H
 
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
-#include <QtCore/QMap>
+#include <QObject>
+#include <QUrl>
+#include <QMap>
+#include <QString>
 
 class fairytale;
 

@@ -4,9 +4,9 @@
 #include <random>
 
 #include <QOpenGLWidget>
-#include <QtCore/QTimer>
-#include <QtCore/QElapsedTimer>
-#include <QtMultimedia/QSoundEffect>
+#include <QTimer>
+#include <QElapsedTimer>
+#include <QSoundEffect>
 #include <QSvgRenderer>
 
 #include "fairytale.h"
