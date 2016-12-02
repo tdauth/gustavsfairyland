@@ -226,6 +226,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void playFinalClip(int index);
 
 		void gameOver();
+		void afterOutroGameOver();
 		void win();
 		void afterOutroWin();
 
@@ -550,9 +551,13 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		bool m_playIntro;
 		/**
-		 * State flag which indicates that the outro for winning the came is currently played if its value is true.
+		 * State flag which indicates that the outro for winning the game is currently played if its value is true.
 		 */
 		bool m_playOutroWin;
+		/**
+		 * State flag which indicates that the outro for losing the game is currently played if its value is true.
+		 */
+		bool m_playOutroLose;
 
 		CompleteSolution m_completeSolution;
 		int m_completeSolutionIndex;

@@ -450,6 +450,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_requiresPerson(true)
 , m_playIntro(false)
 , m_playOutroWin(false)
+, m_playOutroLose(false)
 , m_completeSolutionIndex(0)
 , m_playCompleteSolution(false)
 , m_paused(false)
@@ -1212,6 +1213,23 @@ void fairytale::gameOver()
 	// make sure execInCentralWidgetIfNecessary() has not to hide them
 	hideGameWidgets();
 
+	const QUrl outroUrl = this->defaultClipPackage()->outros().size() > (int)ClipPackage::Outro::Lost ? this->resolveClipUrl(this->defaultClipPackage()->outros().at((int)ClipPackage::Outro::Lost)) : QUrl();
+
+	qDebug() << "Outro URL:" << outroUrl;
+
+	if (!outroUrl.isEmpty() && this->gameMode()->playOutro())
+	{
+		this->m_playOutroLose = true;
+		this->m_player->playVideo(this, outroUrl, tr("Outro"));
+	}
+	else
+	{
+		this->afterOutroGameOver();
+	}
+}
+
+void fairytale::afterOutroGameOver()
+{
 	execInCentralWidgetIfNecessary(this->gameOverDialog());
 
 	// Show the custom fairytale dialog which allows the loser to watch his created fairytale.
@@ -1722,6 +1740,14 @@ void fairytale::onFinishVideoAndSounds()
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
 			afterOutroWin();
 		}
+		// played outro lose
+		else if (this->m_playOutroLose)
+		{
+			this->m_playOutroLose = false;
+			this->m_player->stop();
+			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+			afterOutroGameOver();
+		}
 		// played narrator stuff
 		else if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
 		{
@@ -2014,6 +2040,7 @@ void fairytale::cleanupGame()
 	this->m_pausedMediaPlayer = false;
 	this->m_playIntro = false;
 	this->m_playOutroWin = false;
+	this->m_playOutroLose = false;
 
 	// Note: Make sure this has no effect in its connected slots!
 	this->m_player->stop();

@@ -72,6 +72,16 @@ class ClipPackage : public QObject
 		const BonusClips& bonusClips() const;
 		void setIntro(const QUrl &video);
 		QUrl intro() const;
+
+		enum class Outro
+		{
+			Easy = 0,
+			Normal = 1,
+			Hard = 2,
+			Mahlerisch = 3,
+			Lost = 4
+		};
+
 		/**
 		 * Sets the outro video for the difficulty \p index.
 		 */

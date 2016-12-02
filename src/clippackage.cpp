@@ -640,6 +640,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 		this->setOutro(1, QUrl(node.firstChildElement("normal").text()));
 		this->setOutro(2, QUrl(node.firstChildElement("hard").text()));
 		this->setOutro(3, QUrl(node.firstChildElement("mahlerisch").text()));
+		this->setOutro(4, QUrl(node.firstChildElement("lost").text()));
 	}
 
 	const QDomNodeList bonusClipNodes = root.elementsByTagName("bonusClip");
