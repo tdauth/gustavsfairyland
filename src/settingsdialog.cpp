@@ -401,8 +401,8 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 
 	connect(this->clipsDirectoryPushButton, &QPushButton::clicked, this, &SettingsDialog::changeClipsDirectory);
 
-	connect(this->addFilePushButton, SIGNAL(clicked()), this, SLOT(addFile()));
-	connect(this->addDirectoryPushButton, SIGNAL(clicked()), this, SLOT(addDirectory()));
+	connect(this->addFilePushButton, &QPushButton::clicked, this, &SettingsDialog::addFile);
+	connect(this->addDirectoryPushButton, &QPushButton::clicked, this, &SettingsDialog::addDirectory);
 	connect(this->removePushButton, &QPushButton::clicked, this, &SettingsDialog::removeSelected);
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &SettingsDialog::itemDoubleClicked);
 
@@ -611,7 +611,7 @@ void SettingsDialog::save(QSettings &settings)
 	settings.endGroup();
 }
 
-void SettingsDialog::changeEvent(QEvent* event)
+void SettingsDialog::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
