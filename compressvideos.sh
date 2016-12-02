@@ -32,6 +32,7 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	# / 2
 	#RESOLUTION="960x540" # Keep the ratio of the original videos!
 	RESOLUTION="1440x810"
+	BITRATE_LIMIT="2m"
 
 	# Make sure the codec is supported on Android:
 	# https://developer.android.com/guide/appendix/media-formats.html
@@ -41,12 +42,12 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	# mp3 cant be used with h264 and mp4. It leads to the following error: MPEG4Extractor: MP3 track in MP4/3GPP file is not supported
 	# -strict -2 is required to enforce encoding support for aac.
 	# Although it ends with .mkv or .avi to use the same filenames as specified in the XML file, it actually uses always mp4 since this is supported by Android.
-	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b 512k -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameUnix"
+	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameUnix"
 
 	# .wmv for Windows. QtMultimedia uses a different backend on Windows 10 which does not support h264.
-	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b 512k -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
+	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
 
 	# Deinterlaced for Android
 	# http://video.stackexchange.com/questions/17396/how-to-deinterlacing-with-ffmpeg
-	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b 512k -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameAndroid"
+	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameAndroid"
 done
