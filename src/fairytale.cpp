@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
@@ -1104,10 +1102,21 @@ void fairytale::record()
 				 * This makes it much faster to create custom clips.
 				 */
 				ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog);
-				clipEditor->recordVideo();
-				clipEditor->recordNarratingSoundSimple();
-				clipEditor->captureImage();
 
+				if (clipEditor->recordVideo() == QDialog::Rejected)
+				{
+					return;
+				}
+
+				if (clipEditor->recordNarratingSoundSimple() == QDialog::Rejected)
+				{
+					return;
+				}
+
+				if (clipEditor->captureImage() == QDialog::Rejected)
+				{
+					return;
+				}
 			}) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
@@ -1893,7 +1902,7 @@ void fairytale::startMusic()
 	urls.push_back(QUrl("./music/01.PSO020103-Mahler-5-I.mp3"));
 	const QUrl url = urls.front(); //urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
-	std::cerr << "Play music:" << musicUrl.toString().toStdString() << std::endl;
+	qDebug() << "Play music:" << musicUrl;
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
 	// Music should not be annoyingly loud.
@@ -2026,7 +2035,7 @@ void fairytale::changeEvent(QEvent* event)
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI" << std::endl;
+			qDebug() << "Retranslate UI";
 			this->retranslateUi(this);
 
 			break;

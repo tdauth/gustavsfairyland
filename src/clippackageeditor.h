@@ -1,7 +1,7 @@
 #ifndef CLIPPACKAGEEDITOR_H
 #define CLIPPACKAGEEDITOR_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 #include <QTemporaryDir>
 
 #include "ui_clippackageeditor.h"

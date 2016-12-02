@@ -3,13 +3,13 @@
 
 #include <cstdint>
 
-#include <QtCore/QObject>
-#include <QtCore/QMap>
-#include <QtCore/QList>
-#include <QtCore/QFile>
-#include <QtCore/QMap>
-#include <QtCore/QVector>
-#include <QtCore/QUrl>
+#include <QObject>
+#include <QMap>
+#include <QList>
+#include <QFile>
+#include <QString>
+#include <QVector>
+#include <QUrl>
 
 class Clip;
 class BonusClip;

@@ -33,20 +33,21 @@ void ClipEditor::chooseImage()
 		const QUrl url = QUrl::fromLocalFile(filePath);
 		this->m_clip->setImageUrl(url);
 		QPixmap pixmap(filePath);
-		this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+		this->imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 		this->imageLabel->setText(this->m_clip->imageUrl().toString());
 
 		checkForValidFields();
 	}
 }
 
-void ClipEditor::captureImage()
+int ClipEditor::captureImage()
 {
 	const QFileInfo fileInfo = clipsDirectory().filePath("image");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
+	const int result = m_recorder->showCameraFinder(QCamera::CaptureStillImage);
 
-	if (m_recorder->showCameraFinder(QCamera::CaptureStillImage) == QDialog::Accepted)
+	if (result == QDialog::Accepted)
 	{
 		updateClipImage();
 	}
@@ -56,6 +57,8 @@ void ClipEditor::captureImage()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
 }
 
 void ClipEditor::showImage()
@@ -94,13 +97,14 @@ void ClipEditor::chooseVideo()
 	}
 }
 
-void ClipEditor::recordVideo()
+int ClipEditor::recordVideo()
 {
 	const QFileInfo fileInfo = clipsDirectory().filePath("video");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absolutePath());
+	const int result = m_recorder->showCameraFinder(QCamera::CaptureVideo, true);
 
-	if (m_recorder->showCameraFinder(QCamera::CaptureVideo, true) == QDialog::Accepted)
+	if (result == QDialog::Accepted)
 	{
 		qDebug() << "Accepted";
 		updateClipVideo();
@@ -117,6 +121,8 @@ void ClipEditor::recordVideo()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
 }
 
 void ClipEditor::playVideo()
@@ -185,7 +191,7 @@ void ClipEditor::updateClipImage()
 	{
 		const QPixmap pixmap(fileName);
 		qDebug() << "Pixmap:" << pixmap.size();
-		imageLabel->setPixmap(pixmap.scaled(64, 64));
+		imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 		imagePathLabel->setText(fileName);
 		m_clip->setImageUrl(QUrl::fromLocalFile(fileName));
 
@@ -363,13 +369,14 @@ void ClipEditor::recordNarratingSound()
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
 }
 
-void ClipEditor::recordNarratingSoundSimple()
+int ClipEditor::recordNarratingSoundSimple()
 {
 	const QFileInfo fileInfo = clipsDirectory().filePath("audio_all");
 	qDebug() << "Recording to file" << fileInfo.absoluteFilePath();
 	m_recorder->setOutputFile(fileInfo.absoluteFilePath());
+	const int result = m_recorder->showAudioRecorder(true);
 
-	if (m_recorder->showAudioRecorder(true) == QDialog::Accepted)
+	if (result == QDialog::Accepted)
 	{
 		updateClipNarratingSoundForAllLanguages();
 	}
@@ -379,6 +386,8 @@ void ClipEditor::recordNarratingSoundSimple()
 	}
 
 	qDebug() << "capture error state" << m_recorder->imageCapture()->error();
+
+	return result;
 }
 
 void ClipEditor::playNarratingSound()
@@ -527,7 +536,7 @@ void ClipEditor::fill(Clip *clip)
 	this->clipIdLineEdit->setText(clip->id());
 	this->isAPersonCheckBox->setChecked(clip->isPerson());
 	QPixmap pixmap(clip->imageUrl().toLocalFile());
-	this->imageLabel->setPixmap(pixmap.scaled(64, 64));
+	this->imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 	this->imagePathLabel->setText(clip->imageUrl().toString());
 	this->videoLabel->setText(clip->videoUrl().toString());
 

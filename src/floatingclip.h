@@ -1,10 +1,9 @@
 #ifndef FLOATINGCLIP_H
 #define FLOATINGCLIP_H
 
-#include <QtCore/QObject>
-#include <QtCore/QPoint>
-#include <QtCore/QTimer>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QPoint>
+#include <QWidget>
 
 #include "speed.h"
 #include "fairytale.h"

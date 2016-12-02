@@ -1,8 +1,5 @@
-#include <iostream>
-
 #include <QtGui>
-#include <QInputDialog>
-#include <QMessageBox>
+#include <QtWidgets>
 
 #include "customfairytaledialog.h"
 #include "fairytale.h"
@@ -100,14 +97,14 @@ void CustomFairytaleDialog::clear()
 	qDebug() << "After the rest";
 }
 
-void CustomFairytaleDialog::changeEvent(QEvent* event)
+void CustomFairytaleDialog::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of custom fairytale dialog" << std::endl;
+			qDebug() << "Retranslate UI of custom fairytale dialog";
 			this->retranslateUi(this);
 
 			break;

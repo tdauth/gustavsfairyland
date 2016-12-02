@@ -1,8 +1,9 @@
 #ifndef GAMEMODEONEOUTOFFOUR_H
 #define GAMEMODEONEOUTOFFOUR_H
 
-#include <QtCore/QVector>
-#include <QtWidgets/QPushButton>
+#include <QList>
+#include <QVector>
+#include <QPushButton>
 
 #include "gamemode.h"
 

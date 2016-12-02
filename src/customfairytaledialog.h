@@ -30,6 +30,9 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		CustomFairytaleDialog(fairytale *app, QWidget *parent);
 
 		void clear();
+		/**
+		 * \return If this returns try it indicates that the user wants to retry the game with the same parameters as before.
+		 */
 		bool clickedRetry() const;
 
 	protected:

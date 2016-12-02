@@ -1,6 +1,5 @@
 #include <QtGui>
-#include <QtMultimedia/QMultimedia>
-#include <QShortcut>
+#include <QMultimedia>
 
 #include "player.h"
 #include "fairytale.h"

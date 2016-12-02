@@ -1,8 +1,5 @@
-#include <iostream>
-
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QMessageBox>
-#include <QSettings>
+#include <QtWidgets>
+#include <QtCore>
 
 #include "clippackageeditor.h"
 #include "clipeditor.h"
@@ -63,7 +60,7 @@ void ClipPackageEditor::addClip()
 		item->setText(0, clip->description());
 		treeWidget->addTopLevelItem(item);
 
-		std::cerr << "Adding clip to tree widget with description " << clip->description().toUtf8().constData() << std::endl;
+		qDebug() << "Adding clip to tree widget with description " << clip->description();
 	}
 }
 

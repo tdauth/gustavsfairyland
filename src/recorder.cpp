@@ -111,10 +111,12 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 	if (captureMode == QCamera::CaptureVideo)
 	{
 		m_mode = RecordVideo;
+		okPushButton->setFocus();
 	}
 	else
 	{
 		m_mode = CaptureImage;
+		photoPushButton->setFocus();
 	}
 
 	this->showFullScreen();
@@ -164,6 +166,8 @@ int Recorder::showAudioRecorder(bool startRecording)
 	photoPushButton->hide();
 	recordVideoPushButton->hide();
 	recordAudioPushButton->show();
+
+	okPushButton->setFocus();
 
 	m_mode = RecordAudio;
 

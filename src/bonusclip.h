@@ -2,6 +2,8 @@
 #define BONUSCLIP_H
 
 #include <QObject>
+#include <QMap>
+#include <QString>
 #include <QUrl>
 #include <QLocale>
 

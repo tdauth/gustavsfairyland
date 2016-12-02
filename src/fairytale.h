@@ -3,16 +3,16 @@
 
 #include <functional>
 
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QWidget>
-#include <QtCore/QTimer>
-#include <QtCore/QVector>
-#include <QtCore/QList>
-#include <QtCore/QQueue>
-#include <QtWidgets/QPushButton>
-#include <QtMultimedia/QMediaPlayer>
-#include <QtCore/QTranslator>
-#include <QtCore/QDir>
+#include <QMainWindow>
+#include <QWidget>
+#include <QTimer>
+#include <QVector>
+#include <QList>
+#include <QQueue>
+#include <QPushButton>
+#include <QMediaPlayer>
+#include <QTranslator>
+#include <QDir>
 #include <QShortcut>
 #include <QHash>
 #include <QAudioOutputSelectorControl>

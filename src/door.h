@@ -1,8 +1,9 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QPainter>
+#include <QWidget>
 
 class RoomWidget;
 

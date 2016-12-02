@@ -1,7 +1,7 @@
 #ifndef GAMEOVERDIALOG_H
 #define GAMEOVERDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 #include "ui_gameoverdialog.h"
 #include "fairytale.h"

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "gameoverdialog.h"
 #include "fairytale.h"
 
@@ -18,14 +16,14 @@ GameOverDialog::GameOverDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	//connect(retryPushButton, &QPushButton::clicked, this, &GameOverDialog::retry);
 }
 
-void GameOverDialog::changeEvent(QEvent* event)
+void GameOverDialog::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
 		// this event is send if a translator is loaded
 		case QEvent::LanguageChange:
 		{
-			std::cerr << "Retranslate UI of game over dialog" << std::endl;
+			qDebug() << "Retranslate UI of game over dialog";
 			this->retranslateUi(this);
 
 			break;

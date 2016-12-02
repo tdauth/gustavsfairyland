@@ -1,15 +1,8 @@
 #include <iostream>
 #include <cassert>
 
-#include <QtCore/QFile>
-#include <QtCore/QDebug>
-#include <QTemporaryFile>
-
-#include <QtCore/QXmlStreamReader>
-
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
-#include <QtCore/qdir.h>
+#include <QtCore>
+#include <QtXml>
 
 #include "clippackage.h"
 #include "clip.h"

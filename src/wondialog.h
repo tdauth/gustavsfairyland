@@ -1,7 +1,7 @@
 #ifndef WONDIALOG_H
 #define WONDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 #include "ui_wondialog.h"
 #include "fairytale.h"
