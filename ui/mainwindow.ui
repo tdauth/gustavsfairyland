@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>595</height>
+    <width>589</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -350,7 +350,7 @@
          </property>
          <property name="icon">
           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-stop.png</iconset>
+           <normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -383,7 +383,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>589</width>
      <height>27</height>
     </rect>
    </property>
@@ -412,8 +412,14 @@
     <addaction name="actionEditor"/>
    </widget>
    <widget class="QMenu" name="menuAchievements">
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>&amp;Achievements</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
     </property>
     <addaction name="actionHighScores"/>
    </widget>
