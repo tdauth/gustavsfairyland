@@ -698,7 +698,7 @@ bool fairytale::ensureCustomClipsExistence()
 	{
 		const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
-		if (!dataLocation.mkdir(".gustavsfairyland"))
+		if (!dataLocation.mkpath("customclips"))
 		{
 			qDebug() << "Error on creating custom.xml dir";
 
@@ -728,7 +728,7 @@ bool fairytale::ensureCustomClipsExistence()
 
 QString fairytale::customClipsDirectory() const
 {
-	const QString subDir = ".gustavsfairyland";
+	const QString subDir = "customclips";
 	const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 	const QDir customClipsDir = dataLocation.filePath(subDir);
 
@@ -1122,7 +1122,17 @@ void fairytale::record()
 		{
 			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
 
-			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) { ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog); clipEditor->recordVideo(); }) == QDialog::Accepted)
+			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) {
+				/*
+				 * Let the user record a video, a narrating sound and capture an image immediately.
+				 * This makes it much faster to create custom clips.
+				 */
+				ClipEditor *clipEditor = dynamic_cast<ClipEditor*>(dialog);
+				clipEditor->recordVideo();
+				clipEditor->recordNarratingSoundSimple();
+				clipEditor->captureImage();
+
+			}) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
 				this->customClipPackage()->addClip(clipOfCustomPackage);
@@ -2387,6 +2397,8 @@ bool fairytale::loadDefaultClipPackage()
 	 */
 	if (!ensureCustomClipsExistence())
 	{
+		qDebug() << "Custom Clips do not exist.";
+
 		return false;
 	}
 

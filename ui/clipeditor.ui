@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>437</width>
-    <height>983</height>
+    <height>1039</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,7 +76,7 @@
         <property name="title">
          <string/>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_8">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_10">
            <item alignment="Qt::AlignHCenter">
@@ -193,6 +193,71 @@
            </item>
           </layout>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <widget class="QPushButton" name="captureImagePushButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>
+              </iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="showImageButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+               <normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="imageLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
         </layout>
        </widget>
       </item>
@@ -273,47 +338,6 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QPushButton" name="captureImagePushButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>
-               </iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="showImageButton">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                <normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</normaloff>:/themes/oxygen/32x32/actions/edit-image-face-show.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="imagePushButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -334,26 +358,6 @@
                 <width>32</width>
                 <height>32</height>
                </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="imageLabel">
-              <property name="text">
-               <string/>
               </property>
              </widget>
             </item>
@@ -625,6 +629,28 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>descriptionLineEdit</tabstop>
+  <tabstop>isAPersonCheckBox</tabstop>
+  <tabstop>recordVideoPushButton</tabstop>
+  <tabstop>playVideoPushButton</tabstop>
+  <tabstop>simpleRecordNarratingSoundPushButton</tabstop>
+  <tabstop>simplePlayNarratingSoundPushButton</tabstop>
+  <tabstop>captureImagePushButton</tabstop>
+  <tabstop>showImageButton</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>videoPushButton</tabstop>
+  <tabstop>imagePushButton</tabstop>
+  <tabstop>clipIdLineEdit</tabstop>
+  <tabstop>recordNarratingSoundPushButton</tabstop>
+  <tabstop>playNarratingSoundPushButton</tabstop>
+  <tabstop>addNarratingSoundPushButton</tabstop>
+  <tabstop>removeNarratingSoundPushButton</tabstop>
+  <tabstop>addDescriptionPushButton</tabstop>
+  <tabstop>removeDescriptionPushButton</tabstop>
+  <tabstop>narratingSoundsListWidget</tabstop>
+  <tabstop>descriptionsListWidget</tabstop>
+ </tabstops>
  <resources>
   <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>

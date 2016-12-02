@@ -630,11 +630,11 @@ bool ClipEditor::moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldU
 		 */
 		else
 		{
-			// TODO use relative path of parentDir from the clips dir
 			newUrl = QUrl::fromLocalFile(target);
 			qDebug() << "New image URL" << newUrl;
 
-			// TODO delete old file oldImageFile
+			// Delete the old file to safe space.
+			QFile::remove(oldImageFile.absoluteFilePath());
 		}
 	}
 	else
