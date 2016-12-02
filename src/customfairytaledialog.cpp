@@ -50,7 +50,9 @@ void CustomFairytaleDialog::addClip(const CustomFairytale::ClipKey &clipKey)
 	this->m_clipLabels.push_back(label);
 	label->setAlignment(Qt::AlignCenter);
 	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	label->setMaximumSize(QSize(64, 64));
+	const QSize iconSize = QSize(128, 128);
+	label->setMinimumSize(iconSize);
+	label->setMaximumSize(iconSize);
 
 	const Clip *clip = m_app->getClipByKey(clipKey);
 
