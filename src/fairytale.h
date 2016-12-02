@@ -206,7 +206,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns the directory where the clips are stored by default.
 		 */
 		QString defaultClipsDirectory() const;
-		bool ensureCustomClipsDirectoryExistence();
+		/**
+		 * Ensures that the user has a file in $HOME/.gustavsfairyland called "custom.xml" which is used for all
+		 * custom clips.
+		 * \return Returns true if the file exists or has been created by this function. Otherwise it returns false.
+		 */
+		bool ensureCustomClipsExistence();
 		QString customClipsDirectory() const;
 
 		/**
@@ -420,7 +425,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda);
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
+		/**
+		 * Gets a clip package by its unique ID.
+		 * \param packageId The unique package ID.
+		 * \return Returns the clip package if it is loaded. Otherwise it returns nullptr.
+		 */
 		ClipPackage* getClipPackageById(const QString &packageId);
+		/**
+		 * Gets a clip by its unique package and its unique clip ID.
+		 * \param clipKey The unique clip key.
+		 * \return Returns the clip if the package is loaded and the clip is found. Otherwise it returns nullptr.
+		 */
 		Clip* getClipByKey(const ClipKey &clipKey);
 
 		/**

@@ -689,7 +689,7 @@ QString fairytale::defaultClipsDirectory() const
 #endif
 }
 
-bool fairytale::ensureCustomClipsDirectoryExistence()
+bool fairytale::ensureCustomClipsExistence()
 {
 	const QDir customClipsDir = QDir(customClipsDirectory());
 
@@ -698,6 +698,23 @@ bool fairytale::ensureCustomClipsDirectoryExistence()
 		if (!QDir(QDir::homePath()).mkdir(".gustavsfairyland"))
 		{
 			qDebug() << "Error on creating custom.xml dir";
+
+			return false;
+		}
+	}
+
+	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
+
+	/*
+	 * If the custom file does not exist in the home directory, copy the default file there.
+	 */
+	if (!currentCustomFileInfo.exists())
+	{
+		const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
+
+		if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
+		{
+			qDebug() << "Error on copying custom.xml file.";
 
 			return false;
 		}
@@ -1050,7 +1067,7 @@ void fairytale::record()
 		ClipEditor clipEditor(this, this);
 		clipEditor.fill(&clip);
 
-		if (ensureCustomClipsDirectoryExistence())
+		if (ensureCustomClipsExistence())
 		{
 			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
 
@@ -2289,38 +2306,15 @@ bool fairytale::loadDefaultClipPackage()
 	dirs.push_back(this->defaultClipsDirectory());
 
 	/*
-	 * Copy the custom.xml file to the local home directory.
+	 * Copy the custom.xml file to the local home directory if it does not exist already.
 	 * This is necessary since the file has to be writable and different per user.
 	 */
-	if (!ensureCustomClipsDirectoryExistence())
+	if (!ensureCustomClipsExistence())
 	{
 		return false;
 	}
 
 	dirs.push_back(customClipsDirectory());
-
-	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
-
-	if (currentCustomFileInfo.exists())
-	{
-		QFile file(currentCustomFileInfo.absoluteFilePath());
-
-		if (!file.remove())
-		{
-			qDebug() << "Error on removing old custom.xml file.";
-
-			return false;
-		}
-	}
-
-	const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
-
-	if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
-	{
-		qDebug() << "Error on copying custom.xml file.";
-
-		return false;
-	}
 
 	QStringList defaultClipPackages;
 	defaultClipPackages.push_back("gustav.xml");
