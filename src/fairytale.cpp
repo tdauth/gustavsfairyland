@@ -1906,7 +1906,7 @@ void fairytale::startMusic()
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
 	// Music should not be annoyingly loud.
-	m_musicPlayer->setVolume(30);
+	m_musicPlayer->setVolume(10);
 }
 
 void fairytale::finishMusic(QMediaPlayer::State state)
