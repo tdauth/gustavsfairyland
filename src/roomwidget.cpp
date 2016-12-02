@@ -163,7 +163,7 @@ int RoomWidget::floatingClipSpeed() const
 			break;
 		}
 
-		// This should not be able to win at all.
+		// It should not be possible to win with this difficulty at all.
 		case fairytale::Difficulty::Mahlerisch:
 		{
 			factor = 4.0;
@@ -363,11 +363,6 @@ void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 void RoomWidget::resizeEvent(QResizeEvent *event)
 {
 	// When resizeEvent() is called, the widget already has its new geometry.
-
-	//qDebug() << "New size: " << this->size() << " and size of parent widget " << this->parentWidget()->size() << " and main window " << this->gameMode()->app()->size();
-	//qDebug() << "New size again here: " << this->width() << "|" << this->height();
-	//qDebug() << "New size event: " << event->size();
-	//qDebug() << "Resize SVG";
 	// Render SVG image whenever it is necessary
 	const QSize newSize = event->size();
 	m_woodImage = QImage(newSize, QImage::Format_ARGB32);
