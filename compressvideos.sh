@@ -31,7 +31,7 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	# Original resolution: 1920x1080
 	# / 2
 	#RESOLUTION="960x540" # Keep the ratio of the original videos!
-	RESOLUTION="1200x675"
+	RESOLUTION="1440x810"
 
 	# Make sure the codec is supported on Android:
 	# https://developer.android.com/guide/appendix/media-formats.html
