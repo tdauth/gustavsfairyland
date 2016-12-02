@@ -22,24 +22,40 @@ class fairytale;
  * Packages of clips contain the clip information (meta data) as well as the clip file itself (data).
  * They can be compressed as well to reduce the file space.
  *
- * Besides they can be encrypted to prevent users from opening it.
+ * If a clip package is distributed as XML file only, the corresponding clip files have to be distributed manually and the URLs in the XML files have to be updated.
+ * It is a good idea to use relative URLs starting from the clips directory of the game.
  */
 class ClipPackage : public QObject
 {
 	Q_OBJECT
 
 	public:
+		/**
+		 * A map of all names in all supported languages.
+		 * The key is the locale of the language such as "de" or "en".
+		 * The value is the name of the clip package in the corresponding language.
+		 */
 		typedef QMap<QString, QString> Names;
 		/**
 		 * \brief A map of clips which every package stores. They key is the unique ID of a clip.
 		 */
 		typedef QMap<QString, Clip*> Clips;
+		/**
+		 * \brief A map of bonus clips which every package stores. They key is the unique ID of a bonus clip.
+		 */
 		typedef QMap<QString, BonusClip*> BonusClips;
 		typedef QVector<QUrl> Outros;
 
 		ClipPackage(fairytale *app, QObject *parent = nullptr);
 		virtual ~ClipPackage();
 
+		/**
+		 * Loads a compressed archive file which has to contain the meta data XML file and all the binary data of the clip files.
+		 * The content extracted into \p clipsDir.
+		 * \param file The compressed archive file which is loaded.
+		 * \param clipsDir The directory where all data is extracted to.
+		 * \return Returns true if the clips have been loaded successfully from the archive. Otherwise it returns false.
+		 */
 		bool loadClipsFromCompressedArchive(const QString &file, const QString &clipsDir);
 		bool saveClipsToCompressedArchive(const QString &file);
 
