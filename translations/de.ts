@@ -4,12 +4,12 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="97"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_aboutdialog.h" line="97"/>
         <source>About Gustav&apos;s Faryland</source>
         <translation>Über Gustavs Märchenwelt</translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="100"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_aboutdialog.h" line="100"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -38,12 +38,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="131"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_aboutdialog.h" line="131"/>
         <source>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</source>
         <translation>Dieses Spiel wurde von Tamino Dauth und Carsten Thomas erstellt. Es ist das beste Spiel, das Sie je spielen werden!</translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="99"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_aboutdialog.h" line="99"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation>Gustavs Märchenwelt</translation>
     </message>
@@ -51,17 +51,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipEditor</name>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="464"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="464"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="474"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="474"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="477"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="477"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
@@ -81,33 +81,33 @@ p, li { white-space: pre-wrap; }
         <translation>Alle Dateien (*);;Audio (*.wav)</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="465"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="465"/>
         <location filename="../src/clipeditor.cpp" line="424"/>
         <source>Description:</source>
         <translation>Beschreibung:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="466"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="466"/>
         <source>Is a Person</source>
         <translation>Ist eine Person</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="484"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="484"/>
         <source>Narrating Sounds</source>
         <translation>Erzähler-Sounds</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="489"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="489"/>
         <source>Descriptions</source>
         <translation>Beschreibungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="472"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="472"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="483"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clipeditor.h" line="483"/>
         <source>Clip ID:</source>
         <translation>Clip-ID:</translation>
     </message>
@@ -145,52 +145,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="178"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="178"/>
         <source>Select Clip Package</source>
         <translation>Clip-Paket auswählen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="192"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="192"/>
         <source>Use Max Rounds</source>
         <translation>Verwende maximale Rundenanzahl</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="184"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="184"/>
         <source>Easy</source>
         <translation>Leicht</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="180"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="180"/>
         <source>Game Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="189"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="189"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="191"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="191"/>
         <source>Clip Packages:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="181"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="181"/>
         <source>Difficulty:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="185"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="185"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="186"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="186"/>
         <source>Hard</source>
         <translation>Schwer</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="187"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackagedialog.h" line="187"/>
         <source>Mahlerisch</source>
         <translation>Mahlerisch</translation>
     </message>
@@ -218,57 +218,57 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageEditor</name>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="157"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="157"/>
         <source>Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="158"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="158"/>
         <source>Load Custom Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="159"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="159"/>
         <source>Add Clip</source>
         <translation type="unfinished">Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="160"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="160"/>
         <source>Edit Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="161"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="161"/>
         <source>Remove Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="162"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="162"/>
         <source>New Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="163"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="163"/>
         <source>Load Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="164"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="164"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="165"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="165"/>
         <source>Save</source>
         <translation type="unfinished">Speichern</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="166"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="166"/>
         <source>Close Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackageeditor.h" line="167"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_clippackageeditor.h" line="167"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -407,27 +407,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="119"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_customfairytale.h" line="119"/>
         <source>Custom Fairytale</source>
         <translation>Eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="121"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_customfairytale.h" line="121"/>
         <source>Play Custom Fairytale</source>
         <translation>Eigenes Märchen abspielen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="122"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_customfairytale.h" line="122"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="123"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_customfairytale.h" line="123"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="120"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_customfairytale.h" line="120"/>
         <source>Retry</source>
         <translation>Nochmal versuchen</translation>
     </message>
@@ -483,35 +483,30 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameModeStory</name>
     <message>
-        <location filename="../src/gamemodestory.cpp" line="30"/>
         <source>Continue</source>
-        <translation>Fortsetzen</translation>
+        <translation type="vanished">Fortsetzen</translation>
     </message>
     <message>
-        <location filename="../src/gamemodestory.cpp" line="34"/>
         <source>Complete</source>
-        <translation>Abschließen</translation>
+        <translation type="vanished">Abschließen</translation>
     </message>
     <message>
-        <location filename="../src/gamemodestory.cpp" line="89"/>
         <source>Writing Stories</source>
-        <translation>Geschichten schreiben</translation>
+        <translation type="vanished">Geschichten schreiben</translation>
     </message>
     <message>
-        <location filename="../src/gamemodestory.cpp" line="210"/>
         <source>No network!</source>
-        <translation>Kein Netzwerk!</translation>
+        <translation type="vanished">Kein Netzwerk!</translation>
     </message>
     <message>
-        <location filename="../src/gamemodestory.cpp" line="210"/>
         <source>Network is not available.</source>
-        <translation>Netzwerk ist nicht verfügbar.</translation>
+        <translation type="vanished">Netzwerk ist nicht verfügbar.</translation>
     </message>
 </context>
 <context>
     <name>GameOverDialog</name>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="83"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_gameoverdialog.h" line="83"/>
         <source>Game Over</source>
         <translation>Spiel verloren</translation>
     </message>
@@ -524,7 +519,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Nochmal versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_gameoverdialog.h" line="84"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_gameoverdialog.h" line="84"/>
         <source>Game Over!!!</source>
         <translation>Spiel verloren!!!</translation>
     </message>
@@ -532,33 +527,33 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HighScores</name>
     <message>
-        <location filename="../build/ui_highscores.h" line="133"/>
-        <location filename="../build/ui_highscores.h" line="148"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="134"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="149"/>
         <source>High Scores</source>
         <translation>High Scores</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="135"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="136"/>
         <source>Place</source>
         <translation>Platz</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="137"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="138"/>
         <source>Difficulty</source>
         <translation>Schwierigkeitsgrad</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="139"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="140"/>
         <source>Rounds</source>
         <translation>Runden</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="141"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="142"/>
         <source>Seconds</source>
         <translation>Sekunden</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="149"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="150"/>
         <source>Clear All</source>
         <translation>Alle löschen</translation>
     </message>
@@ -567,17 +562,17 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Zeit (ms)</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="143"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="144"/>
         <source>Game Mode</source>
         <translation>Spielmodus</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="145"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="146"/>
         <source>Package</source>
         <translation>Paket</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="147"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_highscores.h" line="148"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -630,17 +625,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LanguageDialog</name>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="57"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_languagedialog.h" line="57"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="60"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_languagedialog.h" line="60"/>
         <source>German</source>
         <translation>Deutsch</translation>
     </message>
     <message>
-        <location filename="../build/ui_languagedialog.h" line="61"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_languagedialog.h" line="61"/>
         <source>English</source>
         <translation>Englisch</translation>
     </message>
@@ -648,37 +643,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="352"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="352"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation>Gustavs Märchenwelt</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="353"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="353"/>
         <source>&amp;New Game</source>
         <translation>&amp;Neues Spiel</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="354"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="354"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="355"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="355"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="356"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="356"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="357"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="357"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="358"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="358"/>
         <source>&amp;Pause Game</source>
         <translation>Spiel &amp;anhalten</translation>
     </message>
@@ -687,22 +682,22 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">P</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="359"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="359"/>
         <source>&amp;Clips</source>
         <translation>&amp;Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="360"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="360"/>
         <source>&amp;Editor</source>
         <translation>&amp;Editor</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="361"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="361"/>
         <source>&amp;Show Custom Fairytale</source>
         <translation>&amp;Zeige eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="362"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="362"/>
         <source>&amp;Cancel Game</source>
         <translation>&amp;Spiel abbrechen</translation>
     </message>
@@ -711,57 +706,57 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">C</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="363"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="363"/>
         <source>&amp;Settings</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="364"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="364"/>
         <source>&amp;Highscores</source>
         <translation>&amp;Highscores</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="365"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="365"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="367"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="367"/>
         <source>Let&apos;s Go!</source>
         <translation>Los geht&apos;s!</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="368"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="368"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="366"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="366"/>
         <source>High Scores</source>
         <translation>High Scores</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="369"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="369"/>
         <source>Custom Game</source>
         <translation>Eigenes Spiel</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="370"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="370"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="371"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="371"/>
         <source>Record</source>
         <translation>Aufnehmen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="375"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="375"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="374"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="374"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
@@ -770,32 +765,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Spiel anhalten</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="376"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="376"/>
         <source>Fi&amp;le</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="377"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="377"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="378"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="378"/>
         <source>Setti&amp;ngs</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="379"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="379"/>
         <source>&amp;Achievements</source>
         <translation>E&amp;rfolge</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="380"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="380"/>
         <source>Lan&amp;guage</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="381"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_mainwindow.h" line="381"/>
         <source>&amp;Custom Fairytales</source>
         <translation>Eigene &amp;Märchen</translation>
     </message>
@@ -803,27 +798,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="175"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_player.h" line="175"/>
         <source>Player</source>
         <translation>Abspielprogramm</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="178"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_player.h" line="178"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="177"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_player.h" line="177"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="179"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_player.h" line="179"/>
         <source>Skip (Space)</source>
         <translation>Überspringen (Leertaste)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="180"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_player.h" line="180"/>
         <source>Skip All</source>
         <translation>Alle überspringen</translation>
     </message>
@@ -846,39 +841,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Recorder</name>
     <message>
-        <location filename="../build/ui_recorder.h" line="153"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="153"/>
         <source>Recorder View</source>
         <translation>Aufnahme-Ansicht</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="158"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="158"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="159"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="159"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="154"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="154"/>
         <location filename="../src/recorder.cpp" line="257"/>
         <source>Make Photo</source>
         <translation>Foto machen</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="155"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="155"/>
         <location filename="../src/recorder.cpp" line="90"/>
         <source>Record Audio</source>
         <translation>Ton aufnehmen</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="157"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="157"/>
         <source>Stop</source>
         <translation>Stoppen</translation>
     </message>
     <message>
-        <location filename="../build/ui_recorder.h" line="156"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_recorder.h" line="156"/>
         <location filename="../src/recorder.cpp" line="82"/>
         <location filename="../src/recorder.cpp" line="266"/>
         <source>Record Video</source>
@@ -900,210 +895,210 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../build/ui_settings.h" line="331"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="331"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="339"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="339"/>
         <source>Choose Directory</source>
         <translation>Wähle Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="334"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="334"/>
         <source>Clips Directory:</source>
         <translation>Clips-Verzeichnis:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="358"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="358"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="341"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="341"/>
         <source>Possible Rounds</source>
         <translation>Mögliche Runden</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="332"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="332"/>
         <source>Custom Fairytales</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="342"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="342"/>
         <source>Number of Clips</source>
         <translation>Anzahl der Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="343"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="343"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="345"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="345"/>
         <source>Clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="351"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="351"/>
         <source>Custom Fairytales:</source>
         <translation>Eigene Märchen:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="347"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="347"/>
         <source>Copy to Clipboard</source>
         <translation>In Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="348"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="348"/>
         <source>Import from clipboard</source>
         <translation>Aus Zwischenablage importieren</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="350"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="350"/>
         <source>Clear All</source>
         <translation>Alle löschen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="352"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="352"/>
         <source>Sound</source>
         <translation>Ton</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="355"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="355"/>
         <source>Music Volume:</source>
         <translation>Musik-Lautstärke:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="356"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="356"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="359"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="359"/>
         <source>Audio Input Device:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="353"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="353"/>
         <source>Click Sounds</source>
         <translation>Klick-Geräusche</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="354"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="354"/>
         <source>Audio Output Device:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="335"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="335"/>
         <source>Add File</source>
         <translation>Datei hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="336"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="336"/>
         <source>Add Directory</source>
         <translation>Verzeichnis hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="337"/>
-        <location filename="../build/ui_settings.h" line="349"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="337"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="349"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="338"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="338"/>
         <source>Download New Content</source>
         <translation>Neuen Inhalt herunterladen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="64"/>
-        <location filename="../src/settingsdialog.cpp" line="251"/>
+        <location filename="../src/settingsdialog.cpp" line="65"/>
+        <location filename="../src/settingsdialog.cpp" line="252"/>
         <source>Clips Directory</source>
         <translation>Clips-Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="90"/>
-        <location filename="../src/settingsdialog.cpp" line="95"/>
-        <location filename="../src/settingsdialog.cpp" line="205"/>
-        <location filename="../src/settingsdialog.cpp" line="210"/>
+        <location filename="../src/settingsdialog.cpp" line="91"/>
+        <location filename="../src/settingsdialog.cpp" line="96"/>
+        <location filename="../src/settingsdialog.cpp" line="206"/>
+        <location filename="../src/settingsdialog.cpp" line="211"/>
         <source>Game mode is missing</source>
         <translation>Spielmodus fehlt</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="90"/>
-        <location filename="../src/settingsdialog.cpp" line="95"/>
-        <location filename="../src/settingsdialog.cpp" line="205"/>
-        <location filename="../src/settingsdialog.cpp" line="210"/>
+        <location filename="../src/settingsdialog.cpp" line="91"/>
+        <location filename="../src/settingsdialog.cpp" line="96"/>
+        <location filename="../src/settingsdialog.cpp" line="206"/>
+        <location filename="../src/settingsdialog.cpp" line="211"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
         <translation>Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Eine Option hat keine Auswirkungen.</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="231"/>
+        <location filename="../src/settingsdialog.cpp" line="232"/>
         <source>Add Clip</source>
         <translation>Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="231"/>
+        <location filename="../src/settingsdialog.cpp" line="232"/>
         <source>Clip Files (*.xml)</source>
         <translation>Clip-Dateien (*.xml)</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="286"/>
+        <location filename="../src/settingsdialog.cpp" line="287"/>
         <source>Missing Clips</source>
         <translation>Fehlende Clips</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="286"/>
+        <location filename="../src/settingsdialog.cpp" line="287"/>
         <source>Missing clips in the directory.</source>
         <translation>Clips im Verzeichnis fehlen.</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="355"/>
+        <location filename="../src/settingsdialog.cpp" line="356"/>
         <source>Custom Fairytale Name</source>
         <translation>Name des eigenen Märchens</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="355"/>
+        <location filename="../src/settingsdialog.cpp" line="356"/>
         <source>Name of custom fairytale:</source>
         <translation>Name des eigenen Märchens:</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="362"/>
+        <location filename="../src/settingsdialog.cpp" line="363"/>
         <source>Overwrite existing custom fairytale?</source>
         <translation>Bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="362"/>
+        <location filename="../src/settingsdialog.cpp" line="363"/>
         <source>Do you want to overwrite the existing custom fairytale?</source>
         <translation>Wollen Sie das bestehende eigene Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="470"/>
+        <location filename="../src/settingsdialog.cpp" line="471"/>
         <source>Persons</source>
         <translation>Personen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="472"/>
+        <location filename="../src/settingsdialog.cpp" line="473"/>
         <source>Acts</source>
         <translation>Handlungen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="475"/>
+        <location filename="../src/settingsdialog.cpp" line="476"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="481"/>
+        <location filename="../src/settingsdialog.cpp" line="482"/>
         <source>Outros</source>
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="495"/>
+        <location filename="../src/settingsdialog.cpp" line="496"/>
         <source>Bonuses</source>
         <translation>Boni</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="360"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_settings.h" line="360"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
@@ -1111,12 +1106,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WonDialog</name>
     <message>
-        <location filename="../build/ui_wondialog.h" line="88"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_wondialog.h" line="88"/>
         <source>Won</source>
         <translation>Gewonnen</translation>
     </message>
     <message>
-        <location filename="../build/ui_wondialog.h" line="90"/>
+        <location filename="../buildandroidarmeabi-v7a/ui_wondialog.h" line="90"/>
         <source>Won!!!</source>
         <translation>Gewonnen!!!</translation>
     </message>
@@ -1135,15 +1130,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="405"/>
-        <location filename="../src/fairytale.cpp" line="1445"/>
+        <location filename="../src/fairytale.cpp" line="1448"/>
         <source>Pause Game</source>
         <translation>Spiel anhalten</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="406"/>
         <location filename="../src/fairytale.cpp" line="407"/>
-        <location filename="../src/fairytale.cpp" line="1446"/>
-        <location filename="../src/fairytale.cpp" line="1447"/>
+        <location filename="../src/fairytale.cpp" line="1449"/>
+        <location filename="../src/fairytale.cpp" line="1450"/>
         <source>Pause Game (P)</source>
         <translation>Spiel pausieren (P)</translation>
     </message>
@@ -1163,113 +1158,113 @@ p, li { white-space: pre-wrap; }
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1132"/>
+        <location filename="../src/fairytale.cpp" line="1135"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1132"/>
+        <location filename="../src/fairytale.cpp" line="1135"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1138"/>
+        <location filename="../src/fairytale.cpp" line="1141"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1138"/>
+        <location filename="../src/fairytale.cpp" line="1141"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1143"/>
+        <location filename="../src/fairytale.cpp" line="1146"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1143"/>
+        <location filename="../src/fairytale.cpp" line="1146"/>
         <source>Custom Clip Package is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1269"/>
-        <location filename="../src/fairytale.cpp" line="1311"/>
+        <location filename="../src/fairytale.cpp" line="1272"/>
+        <location filename="../src/fairytale.cpp" line="1314"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1364"/>
+        <location filename="../src/fairytale.cpp" line="1367"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1364"/>
+        <location filename="../src/fairytale.cpp" line="1367"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation>Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1420"/>
+        <location filename="../src/fairytale.cpp" line="1423"/>
         <source>Continue Game</source>
         <translation>Spiel fortsetzen</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1421"/>
-        <location filename="../src/fairytale.cpp" line="1422"/>
+        <location filename="../src/fairytale.cpp" line="1424"/>
+        <location filename="../src/fairytale.cpp" line="1425"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1566"/>
+        <location filename="../src/fairytale.cpp" line="1569"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1594"/>
-        <location filename="../src/fairytale.cpp" line="1646"/>
+        <location filename="../src/fairytale.cpp" line="1597"/>
+        <location filename="../src/fairytale.cpp" line="1649"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1594"/>
-        <location filename="../src/fairytale.cpp" line="1646"/>
+        <location filename="../src/fairytale.cpp" line="1597"/>
+        <location filename="../src/fairytale.cpp" line="1649"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1939"/>
+        <location filename="../src/fairytale.cpp" line="1942"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1960"/>
-        <location filename="../src/fairytale.cpp" line="1994"/>
+        <location filename="../src/fairytale.cpp" line="1963"/>
+        <location filename="../src/fairytale.cpp" line="1997"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1964"/>
-        <location filename="../src/fairytale.cpp" line="1998"/>
+        <location filename="../src/fairytale.cpp" line="1967"/>
+        <location filename="../src/fairytale.cpp" line="2001"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1971"/>
+        <location filename="../src/fairytale.cpp" line="1974"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1975"/>
+        <location filename="../src/fairytale.cpp" line="1978"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1982"/>
+        <location filename="../src/fairytale.cpp" line="1985"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1986"/>
+        <location filename="../src/fairytale.cpp" line="1989"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

@@ -54,11 +54,11 @@ cd ./build_ffmpeg
 cd ..
 
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
-if [ -d ./qtav ]; then
-	rm -rf ./qtav
+if [ ! -d ./qtav ]; then
+	#rm -rf ./qtav
+	git clone https://github.com/wang-bin/QtAV.git ./qtav
 fi
 
-git clone https://github.com/wang-bin/QtAV.git ./qtav
 cd ./qtav
 git submodule update --init
 git checkout tags/v1.11.0
@@ -70,11 +70,11 @@ cp -f "$PROJECT_DIR/user.conf" ./
 cd ..
 
 # Always clean the build directory to avoid old stuff.
-if [ -d ./buildqtav ]; then
-	rm -rf ./buildqtav
+if [ ! -d ./buildqtav ]; then
+	#rm -rf ./buildqtav
+	mkdir ./buildqtav
 fi
 
-mkdir ./buildqtav
 cd ./buildqtav
 
 #export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH

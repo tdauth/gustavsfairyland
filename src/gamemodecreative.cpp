@@ -76,7 +76,7 @@ void GameModeCreative::afterNarrator()
 			button->show(); // first show and resize
 			button->updateGeometry();
 
-			if ((counter + 1) % 4 == 0)
+			if ((counter + 1) % clipsPerRow == 0)
 			{
 				++row;
 				column = 0;
@@ -92,7 +92,7 @@ void GameModeCreative::afterNarrator()
 
 	m_finishButton = new QPushButton(this->app());
 	m_finishButton->setText(tr("Complete Fairytale"));
-	this->app()->gameAreaLayout()->addWidget(m_finishButton, row + 1, 0, 1, 4, Qt::AlignCenter);
+	this->app()->gameAreaLayout()->addWidget(m_finishButton, row + 1, 0, 1, clipsPerRow, Qt::AlignCenter);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
 
 	// now show buttons

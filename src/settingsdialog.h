@@ -20,9 +20,21 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 	Q_OBJECT
 
 	public slots:
+		/**
+		 * Restores the default settings but does not apply them.
+		 */
 		void restoreDefaults();
+		/**
+		 * Shows a file dialog to change the clips directory.
+		 */
 		void changeClipsDirectory();
+		/**
+		 * Applies the settings.
+		 */
 		void apply();
+		/**
+		 * Updates all GUI elements from the settings dialog with the current settings of the game.
+		 */
 		void update();
 
 		/**

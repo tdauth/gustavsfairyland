@@ -209,7 +209,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		QString defaultClipsDirectory() const;
 		/**
-		 * Ensures that the user has a file in $HOME/.gustavsfairyland called "custom.xml" which is used for all
+		 * Ensures that the user has a file in QStandardPaths::AppDataLocation/.gustavsfairyland called "custom.xml" which is used for all
 		 * custom clips.
 		 * \return Returns true if the file exists or has been created by this function. Otherwise it returns false.
 		 */

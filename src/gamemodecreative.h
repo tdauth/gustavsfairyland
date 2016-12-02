@@ -43,6 +43,12 @@ class GameModeCreative : public GameMode
 		virtual bool addToHighScores() override;
 
 	private:
+#ifdef Q_OS_ANDROID
+		static const int clipsPerRow = 2;
+#else
+		static const int clipsPerRow = 4;
+#endif
+
 		class ClipButton : public QWidget
 		{
 			public:

@@ -172,7 +172,6 @@ if (ANDROID)
 		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libswscale.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
-		#"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQmlAV.so"
 	)
 
 	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.

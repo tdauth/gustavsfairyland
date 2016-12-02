@@ -696,7 +696,9 @@ bool fairytale::ensureCustomClipsExistence()
 
 	if (!customClipsDir.exists())
 	{
-		if (!QDir(QDir::homePath()).mkdir(".gustavsfairyland"))
+		const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+		if (!dataLocation.mkdir(".gustavsfairyland"))
 		{
 			qDebug() << "Error on creating custom.xml dir";
 
@@ -727,7 +729,8 @@ bool fairytale::ensureCustomClipsExistence()
 QString fairytale::customClipsDirectory() const
 {
 	const QString subDir = ".gustavsfairyland";
-	QDir customClipsDir = QDir(QDir::homePath()).filePath(subDir);
+	const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+	const QDir customClipsDir = dataLocation.filePath(subDir);
 
 	return customClipsDir.absolutePath();
 }
@@ -2397,11 +2400,10 @@ bool fairytale::loadDefaultClipPackage()
 
 	foreach (const QString &defaultClipPackage, defaultClipPackages)
 	{
-#ifndef Q_OS_ANDROID
 		const QString filePath = dirs[i].filePath(defaultClipPackage);
 		const QFileInfo fileInfo(filePath);
 
-		std::cerr << "Loading default clip package from: " << filePath.toStdString() << std::endl;
+		qDebug() << "Loading default clip package from: " << filePath;
 
 		if (fileInfo.exists() && fileInfo.isReadable())
 		{
@@ -2423,26 +2425,7 @@ bool fairytale::loadDefaultClipPackage()
 		{
 			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
 		}
-#else
-		ClipPackage *package = new ClipPackage(this);
 
-		const QString fileName("assets:/clips/" + defaultClipPackage);
-
-		qDebug() << "Opening package:" << fileName;
-
-		if (package->loadClipsFromFile(fileName))
-		{
-			this->addClipPackage(package);
-
-			qDebug() << "Successfully loaded";
-		}
-		else
-		{
-			qDebug() << "Error on opening";
-			delete package;
-			package = nullptr;
-		}
-#endif
 		++i;
 	}
 
