@@ -215,6 +215,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns true if the file exists or has been created by this function. Otherwise it returns false.
 		 */
 		bool ensureCustomClipsExistence();
+		QString customClipsParentDirectory() const;
 		QString customClipsDirectory() const;
 
 		/**
@@ -370,6 +371,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void queuePlayerSound(const PlayerSoundData &soundData);
 
+		static QString systemLocale();
 		/**
 		 * \return Returns the directory which stores all translation files of this application.
 		 */

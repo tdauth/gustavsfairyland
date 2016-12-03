@@ -514,8 +514,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	const QDir dir(translationsDir());
 
 	// Try to load the current locale. If no translation file exists it will remain English.
-	QString locale = QLocale::system().name();
-	locale.truncate(locale.lastIndexOf('_'));
+	const QString locale = systemLocale();
 
 	QAction *currentLocaleAction = nullptr;
 
@@ -675,7 +674,9 @@ bool fairytale::ensureCustomClipsExistence()
 
 	if (!customClipsDir.exists())
 	{
-		const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+		const QDir dataLocation = customClipsParentDirectory();
+
+		qDebug() << "Creating \"customclips\" dir in" << dataLocation.absolutePath();
 
 		if (!dataLocation.mkpath("customclips"))
 		{
@@ -684,8 +685,12 @@ bool fairytale::ensureCustomClipsExistence()
 			return false;
 		}
 	}
+	else
+	{
+		qDebug() << "Custom clips dir exists:" << customClipsDir.absolutePath();
+	}
 
-	const QFileInfo currentCustomFileInfo(QDir(customClipsDirectory()).filePath("custom.xml"));
+	const QFileInfo currentCustomFileInfo(customClipsDir.filePath("custom.xml"));
 
 	/*
 	 * If the custom file does not exist in the home directory, copy the default file there.
@@ -694,9 +699,16 @@ bool fairytale::ensureCustomClipsExistence()
 	{
 		const QFileInfo customFileInfo(this->defaultClipsDirectory() + "/custom.xml");
 
+		if (!customFileInfo.exists())
+		{
+			qDebug() << "Custom clips file does not exist:" << customFileInfo.absoluteFilePath();
+
+			return false;
+		}
+
 		if (!QFile::copy(customFileInfo.absoluteFilePath(), currentCustomFileInfo.absoluteFilePath()))
 		{
-			qDebug() << "Error on copying custom.xml file.";
+			qDebug() << "Error on copying custom.xml file from" << customFileInfo.absoluteFilePath() << "to" << currentCustomFileInfo.absoluteFilePath();
 
 			return false;
 		}
@@ -705,10 +717,17 @@ bool fairytale::ensureCustomClipsExistence()
 	return true;
 }
 
+QString fairytale::customClipsParentDirectory() const
+{
+	const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+	return dataLocation.absolutePath();
+}
+
 QString fairytale::customClipsDirectory() const
 {
 	const QString subDir = "customclips";
-	const QDir dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+	const QDir dataLocation = customClipsParentDirectory();
 	const QDir customClipsDir = dataLocation.filePath(subDir);
 
 	return customClipsDir.absolutePath();
@@ -1201,6 +1220,15 @@ void fairytale::retry()
 	const int maxRounds = this->maxRounds();
 
 	this->startNewGame(clipPackages, gameMode, difficulty, useMaxRounds, maxRounds);
+}
+
+QString fairytale::systemLocale()
+{
+	// Try to load the current locale. If no translation file exists it will remain English.
+	QString locale = QLocale::system().name();
+	locale.truncate(locale.lastIndexOf('_'));
+
+	return locale;
 }
 
 QDir fairytale::translationsDir() const
