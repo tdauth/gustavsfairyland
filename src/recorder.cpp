@@ -98,6 +98,13 @@ void Recorder::stopAllRecording()
 
 int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecording)
 {
+	if (!m_camera->isCaptureModeSupported(captureMode))
+	{
+		QMessageBox::critical(this, tr("Camera Error"), tr("Capture mode %1 is not supporetd on this system.").arg(captureMode));
+
+		return QDialog::Rejected;
+	}
+
 	// The result must not be Accepted!
 	setResult(QDialog::Rejected);
 	m_camera->setCaptureMode(captureMode);
@@ -274,7 +281,7 @@ void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
 
 void Recorder::videoRecorderStateChanged(QMediaRecorder::State state)
 {
-	qDebug() << "Video recorder state changed in recorder";
+	qDebug() << "Video recorder state changed in recorder" << state;
 
 	switch (state)
 	{
