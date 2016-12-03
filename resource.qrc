@@ -17,5 +17,7 @@
         <file>resources/splashscreen.jpg</file>
         <file>resources/logo.jpg</file>
         <file>resources/RINGM___.TTF</file>
+        <file>resources/splashde.jpg</file>
+        <file>resources/splashen.jpg</file>
     </qresource>
 </RCC>
