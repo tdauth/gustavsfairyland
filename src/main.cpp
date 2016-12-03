@@ -24,7 +24,13 @@ int main(int argc, char** argv)
 // Dont use splash screen: https://forum.qt.io/topic/60795/qt-qml-android-black-screen-when-i-run-app-on-device
 #ifndef Q_OS_ANDROID
 	QSplashScreen splash;
-	splash.setPixmap(QPixmap(":/resources/splashscreen.jpg").scaled(256, 256, Qt::KeepAspectRatio));
+	const QFileInfo fileInfoSplashScreen(":/resources/splash" + fairytale::systemLocale() + ".jpg");
+	const QFileInfo fileInfoSplashScreenEn(":/resources/splashen.jpg");
+	qDebug() << "File Info 0:" << fileInfoSplashScreen.exists() << fileInfoSplashScreen.absoluteFilePath();
+	qDebug() << "File Info 1:" << fileInfoSplashScreenEn.exists() << fileInfoSplashScreenEn.absoluteFilePath();
+	const QString filePathSplash = fileInfoSplashScreen.exists() ? fileInfoSplashScreen.absoluteFilePath() : fileInfoSplashScreenEn.absoluteFilePath();
+	qDebug() << "File Path:" << filePathSplash;
+	splash.setPixmap(QPixmap(filePathSplash).scaled(256, 256, Qt::KeepAspectRatio));
 	splash.show();
 	app.processEvents();
 #endif
