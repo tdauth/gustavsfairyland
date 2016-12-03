@@ -43,14 +43,16 @@ QPalette fairytale::gameColorPalette()
 	palette.setColor(QPalette::WindowText, Qt::black);
 
 	palette.setColor(QPalette::Light, QColor(0xC05800)); // button selection?
-	//palette.setColor(QPalette::ButtonText, QColor(0xC05800));
 
 	return palette;
 }
 
 QString fairytale::gameStyleSheet()
 {
-	return QString("QWidget { selection-background-color: #C05800; selection-color: black; }");
+	return QString(
+	"QComboBox, QPushButton, QMenuBar { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
+	"QFrame, QLabel, QToolTip, QGroupBox { border: 2px solid #C05800; }"
+	);
 }
 
 QFont fairytale::gameFont()
