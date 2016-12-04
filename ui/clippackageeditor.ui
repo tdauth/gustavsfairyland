@@ -14,7 +14,7 @@
    <string>Clip Package</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="1" colspan="2">
+   <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

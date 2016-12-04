@@ -373,7 +373,7 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" alignment="Qt::AlignHCenter">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
