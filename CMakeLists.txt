@@ -90,6 +90,7 @@ set(fairyland_HEADERS
 	src/clickanimation.h
 	src/recorder.h
 	src/bonusclipsdialog.h
+	src/fairytalesdialog.h
 )
 
 set(fairyland_SRCS
@@ -122,6 +123,7 @@ set(fairyland_SRCS
 	src/clickanimation.cpp
 	src/recorder.cpp
 	src/bonusclipsdialog.cpp
+	src/fairytalesdialog.cpp
 )
 
 if (NOT ANDROID)
@@ -144,6 +146,7 @@ set(fairyland_UI
 	ui/languagedialog.ui
 	ui/recorder.ui
 	ui/bonusclipsdialog.ui
+	ui/fairytalesdialog.ui
 )
 
 qt5_wrap_ui(fairyland_UI_HEADERS ${fairyland_UI})

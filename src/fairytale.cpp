@@ -29,6 +29,7 @@
 #include "customfairytale.h"
 #include "clipeditor.h"
 #include "bonusclipsdialog.h"
+#include "fairytalesdialog.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
@@ -472,22 +473,14 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
+	this->advancedGroupBox->setChecked(false);
+	this->advancedGroupBoxWidget->hide();
+
 	this->m_currentScreen = qApp->primaryScreen();
 	changePrimaryScreen(this->m_currentScreen);
 	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
 
 	connect(&this->m_timer, &QTimer::timeout, this, &fairytale::timerTick);
-
-	connect(actionNewGame, &QAction::triggered, this, &fairytale::newGame);
-	connect(actionPauseGame, &QAction::triggered, this, &fairytale::pauseGameAction);
-	connect(actionCancelGame, &QAction::triggered, this, &fairytale::cancelGame);
-	connect(actionShowCustomFairytale, &QAction::triggered, this, &fairytale::showCustomFairytale);
-	connect(actionQuit, &QAction::triggered, this, &fairytale::close);
-	connect(actionSettings, &QAction::triggered, this, &fairytale::settings);
-	connect(actionEditor, &QAction::triggered, this, &fairytale::openEditor);
-	connect(actionHighScores, &QAction::triggered, this, &fairytale::showHighScores);
-	connect(actionAbout, &QAction::triggered, this, &fairytale::about);
-	connect(actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
 	connect(pauseGamePushButton, &QPushButton::clicked, this, &fairytale::pauseGameAction);
 	connect(cancelGamePushButton, &QPushButton::clicked, this, &fairytale::cancelGame);
@@ -498,6 +491,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(recordPushButton, &QPushButton::clicked, this, &fairytale::record);
 
 	connect(bonusClipsPushButton, &QPushButton::clicked, this, &fairytale::showBonusClipsDialog);
+	connect(fairytalesPushButton, &QPushButton::clicked, this, &fairytale::showFairytalesDialog);
+	connect(editorPushButton, &QPushButton::clicked, this, &fairytale::openEditor);
+	connect(creditsPushButton, &QPushButton::clicked, this, &fairytale::about);
 
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
@@ -864,7 +860,6 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 	if (!customFairytale->clipIds().isEmpty())
 	{
 		this->m_playingCustomFairytale = customFairytale;
-		this->setCustomFairytaleButtonsEnabled(true);
 		this->playCustomFairytaleClip(0);
 	}
 }
@@ -1701,17 +1696,6 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	actionShowCustomFairytale->setEnabled(enabled);
 }
 
-void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
-{
-	actionNewGame->setEnabled(!enabled);
-	quickGamePushButton->setEnabled(!enabled);
-
-	foreach (QAction *action, this->m_customFairytaleActions.keys())
-	{
-		action->setEnabled(!enabled);
-	}
-}
-
 #ifdef Q_OS_ANDROID
 void fairytale::finishNarratorAndroid()
 {
@@ -2018,7 +2002,7 @@ void fairytale::queuePlayerSound(const PlayerSoundData &data)
 	}
 }
 
-void fairytale::changeEvent(QEvent* event)
+void fairytale::changeEvent(QEvent *event)
 {
 	switch(event->type())
 	{
@@ -2110,7 +2094,6 @@ void fairytale::finishPlayingCustomFairytale()
 	qDebug() << "Finished custom fairytale clips";
 	this->m_playingCustomFairytale = nullptr;
 	this->m_customFairytaleIndex = 0;
-	setCustomFairytaleButtonsEnabled(false);
 }
 
 QUrl fairytale::narratorSoundUrl() const
@@ -2388,18 +2371,6 @@ bool fairytale::loadDefaultClipPackage()
 	return !this->clipPackages().isEmpty();
 }
 
-void fairytale::playCustomFairytaleSlot()
-{
-	QAction *action = dynamic_cast<QAction*>(sender());
-
-	CustomFairytaleActions::iterator iterator = this->m_customFairytaleActions.find(action);
-
-	if (iterator != this->m_customFairytaleActions.end())
-	{
-		this->playCustomFairytale(iterator.value());
-	}
-}
-
 void fairytale::changePrimaryScreen(QScreen *screen)
 {
 	if (m_currentScreen != nullptr)
@@ -2440,11 +2411,6 @@ void fairytale::addCustomFairytale(CustomFairytale *customFairytale)
 	}
 
 	this->m_customFairytales.insert(customFairytale->name(), customFairytale);
-
-	QAction *action = new QAction(customFairytale->name(), menuCustomFairytales);
-	connect(action, &QAction::triggered, this, &fairytale::playCustomFairytaleSlot);
-	menuCustomFairytales->addAction(action);
-	m_customFairytaleActions.insert(action, customFairytale);
 }
 
 void fairytale::removeCustomFairytale(CustomFairytale *customFairytale)
@@ -2454,20 +2420,6 @@ void fairytale::removeCustomFairytale(CustomFairytale *customFairytale)
 	if (iterator != this->m_customFairytales.end())
 	{
 		this->m_customFairytales.erase(iterator);
-
-		// TODO linear time
-		for (CustomFairytaleActions::iterator actionIterator = m_customFairytaleActions.begin(); actionIterator != m_customFairytaleActions.end(); ++actionIterator)
-		{
-			if (actionIterator.value() == customFairytale)
-			{
-				QAction *action = actionIterator.key();
-				m_customFairytaleActions.erase(actionIterator);
-				delete action;
-
-				break;
-			}
-		}
-
 		delete customFairytale;
 	}
 }
@@ -2508,5 +2460,19 @@ void fairytale::showBonusClipsDialog()
 	this->execInCentralWidgetIfNecessary(bonusClipsDialog());
 }
 
+FairytalesDialog* fairytale::fairytalesDialog()
+{
+	if (this->m_fairytalesDialog == nullptr)
+	{
+		this->m_fairytalesDialog = new FairytalesDialog(this);
+	}
+
+	return this->m_fairytalesDialog;
+}
+
+void fairytale::showFairytalesDialog()
+{
+	this->execInCentralWidgetIfNecessary(fairytalesDialog());
+}
 
 #include "fairytale.moc"

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BonusClipsDialog</class>
- <widget class="QWidget" name="BonusClipsDialog">
+ <class>FairytalesDialog</class>
+ <widget class="QWidget" name="FairytalesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
-    <height>332</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Bonus Clips</string>
+   <string>Fairytales</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
     <widget class="QWidget" name="widget" native="true">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0" alignment="Qt::AlignHCenter">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
@@ -25,7 +25,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Bonus Clips</string>
+         <string>Fairytales</string>
         </property>
         <property name="pixmap">
          <pixmap resource="../oxygen-icons-png-master/oxygen.qrc">:/themes/oxygen/32x32/actions/games-achievements.png</pixmap>
@@ -38,7 +38,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item>
        <widget class="QScrollArea" name="scrollArea">
         <property name="widgetResizable">
          <bool>true</bool>
@@ -48,8 +48,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>388</width>
-           <height>222</height>
+           <width>372</width>
+           <height>190</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -57,7 +57,7 @@
            <widget class="QWidget" name="contentWidget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <spacer name="verticalSpacer_2">
+              <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -76,7 +76,7 @@
         </widget>
        </widget>
       </item>
-      <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+      <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
        <widget class="QPushButton" name="backPushButton">
         <property name="text">
          <string>Back</string>
@@ -89,7 +89,6 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resource.qrc"/>
   <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>

@@ -42,6 +42,8 @@ void BonusClipsDialog::update()
 
 	m_buttons.clear();
 
+	int i = 0;
+
 	for (fairytale::BonusClipUnlocks::const_iterator iterator = m_app->bonusClipUnlocks().begin(); iterator != m_app->bonusClipUnlocks().end(); ++iterator)
 	{
 		if (iterator.value())
@@ -53,9 +55,13 @@ void BonusClipsDialog::update()
 				QPushButton *pushButton = new QPushButton(bonusClip->description(), this);
 				pushButton->setIconSize(QSize(32, 32));
 				pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
-				verticalLayout->insertWidget(1, pushButton, 0, Qt::AlignCenter);
+
+				QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
+				layout->insertWidget(i, pushButton, 0, Qt::AlignCenter);
 				connect(pushButton, &QPushButton::clicked, this, &BonusClipsDialog::playBonusClip);
 				m_buttons.insert(pushButton, new Button(iterator.key(), pushButton, this));
+
+				++i;
 			}
 			else
 			{

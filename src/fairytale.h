@@ -37,6 +37,7 @@ class GameOverDialog;
 class HighScores;
 class CustomFairytale;
 class BonusClipsDialog;
+class FairytalesDialog;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -68,12 +69,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \param enabled If this value is true the buttons and actions will be enabled. Otherwise they will be disabled.
 		 */
 		void setGameButtonsEnabled(bool enabled);
-		/**
-		 * Enables or disables menu actions and buttons which are only enabled or disabled during playing a custom fairytale.
-		 * This prevents the player from starting a new game before skipping the custom fairytale.
-		 * \param enabled If this value is true the buttons and actions for a custom fairytale will be enabled and others will be disabled. Otherwise it is the other way around.
-		 */
-		void setCustomFairytaleButtonsEnabled(bool enabled);
 
 		void playFinalVideo();
 
@@ -464,6 +459,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void showBonusClipsDialog();
 		void playBonusClip(const fairytale::ClipKey &clipKey);
 
+		FairytalesDialog* fairytalesDialog();
+		void showFairytalesDialog();
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
@@ -478,8 +476,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishMusic(QMediaPlayer::State state);
 		void timerTick();
 		void changeLanguage();
-
-		void playCustomFairytaleSlot();
 
 		void changePrimaryScreen(QScreen *screen);
 		void changeAvailableGeometry(const QRect &geometry);
@@ -621,8 +617,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QString m_currentTranslation;
 
 		CustomFairytales m_customFairytales;
-		typedef QMap<QAction*, CustomFairytale*> CustomFairytaleActions;
-		CustomFairytaleActions m_customFairytaleActions;
 
 		CustomFairytale *m_playingCustomFairytale;
 		int m_customFairytaleIndex;
@@ -635,6 +629,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		int m_centralDialogResult;
 
 		BonusClipsDialog *m_bonusClipsDialog = nullptr;
+
+		FairytalesDialog *m_fairytalesDialog = nullptr;
 
 		/**
 		 * \brief Size data for a widget which can be stored.

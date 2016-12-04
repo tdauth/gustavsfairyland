@@ -247,21 +247,21 @@
         </widget>
        </item>
        <item row="7" column="0">
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="advancedGroupBox">
          <property name="font">
           <font>
            <pointsize>25</pointsize>
           </font>
          </property>
          <property name="title">
-          <string>Advanced</string>
+          <string>Advan&amp;ced</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="advancedGroupBoxWidget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
               <widget class="QPushButton" name="settingsPushButton">
@@ -286,7 +286,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="languagePushButton">
                <property name="text">
                 <string>Language</string>
                </property>
@@ -303,7 +303,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="creditsPushButton">
                <property name="text">
                 <string>Credits</string>
                </property>
@@ -320,7 +320,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="editorPushButton">
                <property name="text">
                 <string>Editor</string>
                </property>
@@ -343,7 +343,7 @@
         </widget>
        </item>
        <item row="6" column="0">
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="fairytalesPushButton">
          <property name="font">
           <font>
            <pointsize>25</pointsize>
@@ -505,58 +505,12 @@
      <height>27</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>Fi&amp;le</string>
-    </property>
-    <addaction name="actionNewGame"/>
-    <addaction name="actionPauseGame"/>
-    <addaction name="actionCancelGame"/>
-    <addaction name="actionShowCustomFairytale"/>
-    <addaction name="actionQuit"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-    <addaction name="actionAboutQt"/>
-   </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Setti&amp;ngs</string>
-    </property>
-    <addaction name="actionSettings"/>
-    <addaction name="actionEditor"/>
-   </widget>
-   <widget class="QMenu" name="menuAchievements">
-    <property name="tearOffEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="title">
-     <string>&amp;Achievements</string>
-    </property>
-    <property name="separatorsCollapsible">
-     <bool>false</bool>
-    </property>
-    <addaction name="actionHighScores"/>
-   </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">
      <string>Lan&amp;guage</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuCustomFairytales">
-    <property name="title">
-     <string>&amp;Custom Fairytales</string>
-    </property>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuCustomFairytales"/>
-   <addaction name="menuAchievements"/>
    <addaction name="menuLanguage"/>
-   <addaction name="menuSettings"/>
-   <addaction name="menuHelp"/>
   </widget>
   <action name="actionNewGame">
    <property name="icon">
@@ -672,9 +626,9 @@
  </resources>
  <connections>
   <connection>
-   <sender>groupBox</sender>
+   <sender>advancedGroupBox</sender>
    <signal>clicked(bool)</signal>
-   <receiver>widget</receiver>
+   <receiver>advancedGroupBoxWidget</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
