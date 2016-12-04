@@ -85,9 +85,7 @@ void FairytalesDialog::update()
 
 	m_fairytales.clear();
 
-	int i = 0;
-
-	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().begin(); iterator != m_app->customFairytales().end(); ++iterator, ++i)
+	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().begin(); iterator != m_app->customFairytales().end(); ++iterator)
 	{
 		CustomFairytale *customFairytale = iterator.value();
 		QScrollArea *scrollArea = new QScrollArea(); // dont use this as parent since it is deleted automatically when fairytale is deleted
@@ -139,7 +137,7 @@ void FairytalesDialog::update()
 
 		scrollArea->setWidget(widget);
 		QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
-		layout->insertWidget(i, scrollArea);
+		layout->addWidget(scrollArea);
 		m_fairytales.insert(widget, new Fairytale(customFairytale->name(), scrollArea, this));
 	}
 }
