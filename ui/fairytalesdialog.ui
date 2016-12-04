@@ -25,7 +25,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Fairytales</string>
+         <string/>
         </property>
         <property name="pixmap">
          <pixmap resource="../oxygen-icons-png-master/oxygen.qrc">:/themes/oxygen/32x32/actions/games-achievements.png</pixmap>
@@ -49,11 +49,11 @@
            <x>0</x>
            <y>0</y>
            <width>372</width>
-           <height>190</height>
+           <height>197</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
+          <item alignment="Qt::AlignTop">
            <widget class="QWidget" name="contentWidget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>

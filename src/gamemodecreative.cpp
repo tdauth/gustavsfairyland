@@ -1,3 +1,6 @@
+#include <QtGui>
+#include <QtWidgets>
+
 #include "gamemodecreative.h"
 #include "fairytale.h"
 #include "clippackage.h"
@@ -49,6 +52,10 @@ long int GameModeCreative::time()
 
 void GameModeCreative::afterNarrator()
 {
+	m_widget = new QWidget();
+	QGridLayout *gridLayout = new QGridLayout();
+	m_widget->setLayout(gridLayout);
+
 	int row = 0;
 	int column = 0;
 	int counter = 0;
@@ -72,7 +79,7 @@ void GameModeCreative::afterNarrator()
 			ClipButton *button = new ClipButton(this->app(), clipKey);
 
 			this->m_buttons.push_back(button);
-			this->app()->gameAreaLayout()->addWidget(button, row, column);
+			gridLayout->addWidget(button, row, column);
 			button->show(); // first show and resize
 			button->updateGeometry();
 
@@ -89,11 +96,6 @@ void GameModeCreative::afterNarrator()
 			++counter;
 		}
 	}
-
-	m_finishButton = new QPushButton(this->app());
-	m_finishButton->setText(tr("Complete Fairytale"));
-	this->app()->gameAreaLayout()->addWidget(m_finishButton, row + 1, 0, 1, clipsPerRow, Qt::AlignCenter);
-	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
 
 	// now show buttons
 	for (int i = 0; i < m_buttons.size(); ++i)
@@ -113,7 +115,18 @@ void GameModeCreative::afterNarrator()
 		button->show();
 	}
 
-	// TODO this->app()->onFinishTurn(); when solution is clicked
+	m_scrollArea = new QScrollArea();
+	m_scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	m_scrollArea->setWidget(m_widget);
+	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	this->app()->gameAreaLayout()->addWidget(m_scrollArea);
+	this->app()->gameAreaLayout()->setAlignment(m_scrollArea, Qt::AlignCenter);
+
+	m_finishButton = new QPushButton(this->app());
+	m_finishButton->setText(tr("Complete Fairytale"));
+	app()->gameAreaLayout()->addWidget(m_finishButton);
+	app()->gameAreaLayout()->setAlignment(m_finishButton, Qt::AlignCenter);
+	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
 }
 
 void GameModeCreative::nextTurn()
@@ -131,6 +144,18 @@ void GameModeCreative::nextTurn()
 		m_finishButton = nullptr;
 	}
 
+	if (m_widget != nullptr)
+	{
+		delete m_widget;
+		m_widget = nullptr;
+	}
+
+	if (m_scrollArea != nullptr)
+	{
+		delete m_scrollArea;
+		m_scrollArea = nullptr;
+	}
+
 	setState(State::Running);
 }
 
@@ -140,6 +165,8 @@ void GameModeCreative::resume()
 	{
 		button->setEnabled(true);
 	}
+
+	m_finishButton->setEnabled(true);
 }
 
 void GameModeCreative::pause()
@@ -148,6 +175,8 @@ void GameModeCreative::pause()
 	{
 		button->setEnabled(false);
 	}
+
+	m_finishButton->setEnabled(false);
 }
 
 void GameModeCreative::end()

@@ -73,6 +73,9 @@ class GameModeCreative : public GameMode
 		 */
 		QVector<ClipButton*> m_buttons;
 		QPushButton *m_finishButton;
+
+		QScrollArea *m_scrollArea = nullptr;
+		QWidget *m_widget = nullptr;
 };
 
 inline fairytale::ClipKey GameModeCreative::ClipButton::clip() const
