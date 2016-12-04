@@ -50,8 +50,14 @@ QPalette fairytale::gameColorPalette()
 QString fairytale::gameStyleSheet()
 {
 	return QString(
-	"QComboBox, QPushButton, QMenuBar { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
-	"QFrame, QLabel, QToolTip, QGroupBox { border: 2px solid #C05800; }"
+	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QMessageBox { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
+	"QFrame, QLabel, QToolTip, QGroupBox { border: black; }"
+	"QGroupBox {"
+	"background-color: #C05800;"
+	"border: 4px solid black;"
+	"border-radius: 8px;"
+	"margin-top: 5ex; /* leave space at the top for the title */"
+	"}"
 	);
 }
 
