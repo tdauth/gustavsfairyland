@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>589</width>
-    <height>975</height>
+    <height>1038</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -140,68 +140,6 @@
          </property>
         </spacer>
        </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="quitPushButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>25</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Quit</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="highScoresPushButton">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>25</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>High Scores</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="recordPushButton">
          <property name="font">
@@ -215,28 +153,6 @@
          <property name="icon">
           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
            <normaloff>:/themes/oxygen/32x32/devices/camera-web.png</normaloff>:/themes/oxygen/32x32/devices/camera-web.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="bonusClipsPushButton">
-         <property name="font">
-          <font>
-           <pointsize>25</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Bonus Clips</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -343,18 +259,125 @@
         </widget>
        </item>
        <item row="6" column="0">
-        <widget class="QPushButton" name="fairytalesPushButton">
+        <widget class="QGroupBox" name="achievementsGroupBox">
+         <property name="font">
+          <font>
+           <pointsize>25</pointsize>
+          </font>
+         </property>
+         <property name="title">
+          <string>Achievements</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QWidget" name="achievementsWidget" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="highScoresPushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>25</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>High Scores</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                 <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bonusClipsPushButton">
+               <property name="font">
+                <font>
+                 <pointsize>25</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Bonus Clips</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                 <normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="fairytalesPushButton">
+               <property name="font">
+                <font>
+                 <pointsize>25</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Fairytales</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                 <normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="quitPushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>25</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Fairytales</string>
+          <string>Quit</string>
          </property>
          <property name="icon">
           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</iconset>
+           <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -615,8 +638,6 @@
   <tabstop>quickGamePushButton</tabstop>
   <tabstop>recordPushButton</tabstop>
   <tabstop>customGamePushButton</tabstop>
-  <tabstop>highScoresPushButton</tabstop>
-  <tabstop>quitPushButton</tabstop>
   <tabstop>cancelGamePushButton</tabstop>
   <tabstop>pauseGamePushButton</tabstop>
  </tabstops>
@@ -633,11 +654,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>259</x>
-     <y>318</y>
+     <y>576</y>
     </hint>
     <hint type="destinationlabel">
      <x>254</x>
-     <y>349</y>
+     <y>607</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>achievementsGroupBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>achievementsWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>304</x>
+     <y>320</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>325</x>
+     <y>348</y>
     </hint>
    </hints>
   </connection>

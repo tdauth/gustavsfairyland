@@ -473,6 +473,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
+	achievementsGroupBox->setChecked(false);
+	achievementsWidget->hide();
+
 	this->advancedGroupBox->setChecked(false);
 	this->advancedGroupBoxWidget->hide();
 
@@ -555,8 +558,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
 
 #ifndef Q_OS_ANDROID
-	GameModeStory *gameModeStory = new GameModeStory(this);
-	m_gameModes.insert(gameModeStory->id(), gameModeStory);
+	//GameModeStory *gameModeStory = new GameModeStory(this);
+	//m_gameModes.insert(gameModeStory->id(), gameModeStory);
 #endif
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
