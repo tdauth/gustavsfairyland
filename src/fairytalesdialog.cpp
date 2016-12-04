@@ -139,7 +139,7 @@ void FairytalesDialog::update()
 
 		scrollArea->setWidget(widget);
 		QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
-		layout->insertWidget(i, scrollArea, 0, Qt::AlignCenter);
+		layout->insertWidget(i, scrollArea);
 		m_fairytales.insert(widget, new Fairytale(customFairytale->name(), scrollArea, this));
 	}
 }
