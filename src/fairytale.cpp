@@ -28,6 +28,7 @@
 #include "highscores.h"
 #include "customfairytale.h"
 #include "clipeditor.h"
+#include "bonusclipsdialog.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
@@ -495,6 +496,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(customGamePushButton, &QPushButton::clicked, this, &fairytale::newGame);
 	connect(highScoresPushButton, &QPushButton::clicked, this, &fairytale::showHighScores);
 	connect(recordPushButton, &QPushButton::clicked, this, &fairytale::record);
+
+	connect(bonusClipsPushButton, &QPushButton::clicked, this, &fairytale::showBonusClipsDialog);
+
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
@@ -1396,15 +1400,6 @@ void fairytale::afterOutroWin()
 		{
 			// TODO play it
 			QMessageBox::information(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip %1!").arg(bonusClip->description()));
-
-			// enable action
-			for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
-			{
-				if (iterator.value() == bonusClipKey)
-				{
-					iterator.key()->setEnabled(true);
-				}
-			}
 		}
 	}
 
@@ -1704,30 +1699,6 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	actionPauseGame->setEnabled(enabled);
 	actionCancelGame->setEnabled(enabled);
 	actionShowCustomFairytale->setEnabled(enabled);
-
-	// TODO weak performance, too many loops
-	foreach (ClipPackage *package, this->m_clipPackages)
-	{
-		for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
-		{
-			const QString clipId = iterator.key();
-			const ClipKey bonusClipKey = ClipKey(package->id(), clipId);
-
-			if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
-			{
-				for (BonusClipActions::const_iterator actionIterator = this->m_bonusClipActions.begin(); actionIterator != this->m_bonusClipActions.end(); ++actionIterator)
-				{
-					if (actionIterator.value() == bonusClipKey)
-					{
-						QAction *action = actionIterator.key();
-						action->setEnabled(!enabled);
-
-						break;
-					}
-				}
-			}
-		}
-	}
 }
 
 void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
@@ -1738,23 +1709,6 @@ void fairytale::setCustomFairytaleButtonsEnabled(bool enabled)
 	foreach (QAction *action, this->m_customFairytaleActions.keys())
 	{
 		action->setEnabled(!enabled);
-	}
-
-	/*
-	 * Do not allow playing bonus clips during a custom fairytale.
-	 */
-	for (BonusClipActions::iterator iterator = this->m_bonusClipActions.begin(); iterator != this->m_bonusClipActions.end(); ++iterator)
-	{
-		QAction *action = iterator.key();
-		ClipKey key = iterator.value();
-
-		BonusClipUnlocks::const_iterator unlockIterator = this->m_bonusClipUnlocks.find(key);
-
-		// only disable/enable unlocked bonus clips
-		if (unlockIterator != this->m_bonusClipUnlocks.end() && unlockIterator.value())
-		{
-			action->setEnabled(!enabled);
-		}
 	}
 }
 
@@ -2250,51 +2204,25 @@ GameOverDialog* fairytale::gameOverDialog()
 void fairytale::addClipPackage(ClipPackage *package)
 {
 	this->m_clipPackages.insert(package->id(), package);
-
-	for (ClipPackage::BonusClips::const_iterator iterator = package->bonusClips().constBegin(); iterator != package->bonusClips().constEnd(); ++iterator)
-	{
-		const QString clipId = iterator.key();
-		BonusClip *bonusClip = iterator.value();
-		QAction *action = menuAchievements->addAction(bonusClip->description());
-		connect(action, &QAction::triggered, this, &fairytale::playBonusClip);
-		const ClipKey bonusClipKey(package->id(), clipId);
-		this->m_bonusClipActions.insert(action, bonusClipKey);
-
-		if (m_bonusClipUnlocks.find(bonusClipKey) != m_bonusClipUnlocks.end())
-		{
-			action->setEnabled(true);
-		}
-		else
-		{
-			action->setEnabled(false);
-		}
-	}
 }
 
-void fairytale::playBonusClip()
+void fairytale::playBonusClip(const fairytale::ClipKey &clipKey)
 {
 	if (m_playingBonusClip || this->isGameRunning())
 	{
 		return;
 	}
 
-	QAction *action = dynamic_cast<QAction*>(sender());
+	BonusClip *bonusClip = this->getBonusClipByKey(clipKey);
 
-	BonusClipActions::iterator iterator = this->m_bonusClipActions.find(action);
-
-	if (iterator != this->m_bonusClipActions.end())
+	if (bonusClip != nullptr)
 	{
-		BonusClip *bonusClip = this->getBonusClipByKey(iterator.value());
-
-		if (bonusClip != nullptr)
-		{
-			this->m_playingBonusClip = true;
-			this->m_player->playBonusVideo(this, bonusClip->videoUrl(), bonusClip->description());
-		}
-		else
-		{
-			qDebug() << "Missing Bonus Clip" << iterator.value();
-		}
+		this->m_playingBonusClip = true;
+		this->m_player->playBonusVideo(this, bonusClip->videoUrl(), bonusClip->description());
+	}
+	else
+	{
+		qDebug() << "Missing Bonus Clip" << clipKey;
 	}
 }
 
@@ -2563,6 +2491,21 @@ BonusClip* fairytale::getBonusClipByKey(const ClipKey &key)
 	}
 
 	return bonusClipIterator.value();
+}
+
+BonusClipsDialog* fairytale::bonusClipsDialog()
+{
+	if (this->m_bonusClipsDialog == nullptr)
+	{
+		this->m_bonusClipsDialog = new BonusClipsDialog(this);
+	}
+
+	return this->m_bonusClipsDialog;
+}
+
+void fairytale::showBonusClipsDialog()
+{
+	this->execInCentralWidgetIfNecessary(bonusClipsDialog());
 }
 
 

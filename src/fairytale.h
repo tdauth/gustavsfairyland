@@ -36,6 +36,7 @@ class WonDialog;
 class GameOverDialog;
 class HighScores;
 class CustomFairytale;
+class BonusClipsDialog;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -455,6 +456,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QAudioOutputSelectorControl* audioOutputSelectorControl() const;
 		QAudioInputSelectorControl* audioInputSelectorControl() const;
 
+		BonusClip* getBonusClipByKey(const ClipKey &key);
+		typedef QMap<ClipKey, bool> BonusClipUnlocks;
+		const BonusClipUnlocks& bonusClipUnlocks() const;
+
+		BonusClipsDialog* bonusClipsDialog();
+		void showBonusClipsDialog();
+		void playBonusClip(const fairytale::ClipKey &clipKey);
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
@@ -468,7 +477,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishAudio(QMediaPlayer::State state);
 		void finishMusic(QMediaPlayer::State state);
 		void timerTick();
-		void playBonusClip();
 		void changeLanguage();
 
 		void playCustomFairytaleSlot();
@@ -603,12 +611,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		HighScores *m_highScores;
 
-		BonusClip* getBonusClipByKey(const ClipKey &key);
-
-		typedef QMap<ClipKey, bool> BonusClipUnlocks;
 		BonusClipUnlocks m_bonusClipUnlocks;
-		typedef QMap<QAction*, ClipKey> BonusClipActions;
-		BonusClipActions m_bonusClipActions;
+
 		bool m_playingBonusClip;
 
 		QTranslator m_translator;
@@ -629,6 +633,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QScreen *m_currentScreen;
 
 		int m_centralDialogResult;
+
+		BonusClipsDialog *m_bonusClipsDialog = nullptr;
 
 		/**
 		 * \brief Size data for a widget which can be stored.
@@ -662,12 +668,6 @@ inline bool fairytale::isMediaPlayerPlaying() const
 
 inline void fairytale::setClipPackages(const fairytale::ClipPackages& packages)
 {
-	foreach (QAction *action, this->m_bonusClipActions.keys())
-	{
-		delete action;
-	}
-
-	this->m_bonusClipActions.clear();
 	this->m_clipPackages.clear();
 
 	for (ClipPackages::const_iterator iterator = packages.constBegin(); iterator != packages.constEnd(); ++iterator)
@@ -794,6 +794,11 @@ inline int fairytale::musicVolume() const
 inline const fairytale::CustomFairytales& fairytale::customFairytales() const
 {
 	return this->m_customFairytales;
+}
+
+inline const fairytale::BonusClipUnlocks& fairytale::bonusClipUnlocks() const
+{
+	return this->m_bonusClipUnlocks;
 }
 
 #endif // fairytale_H
