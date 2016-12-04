@@ -25,10 +25,7 @@
          </font>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../oxygen-icons-png-master/oxygen.qrc">:/themes/oxygen/32x32/actions/games-achievements.png</pixmap>
+         <string>Fairytales</string>
         </property>
         <property name="scaledContents">
          <bool>false</bool>
@@ -49,7 +46,7 @@
            <x>0</x>
            <y>0</y>
            <width>372</width>
-           <height>197</height>
+           <height>190</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
