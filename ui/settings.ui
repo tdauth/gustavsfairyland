@@ -29,13 +29,6 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="7" column="0">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string>Custom Fairytales</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0" colspan="2">
         <widget class="QGroupBox" name="clipsGroupBox">
          <property name="title">
@@ -161,13 +154,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string>Clips</string>
-         </property>
         </widget>
        </item>
        <item row="9" column="0" colspan="2">
@@ -349,13 +335,6 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="fullScreenCheckBox">
-         <property name="text">
-          <string>Full Screen</string>
-         </property>
-        </widget>
-       </item>
        <item row="8" column="0">
         <spacer name="verticalSpacer_3">
          <property name="orientation">
@@ -368,6 +347,27 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QCheckBox" name="fullScreenCheckBox">
+         <property name="text">
+          <string>Full Screen</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>Clips</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Custom Fairytales</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
