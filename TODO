@@ -13,6 +13,7 @@ Finale TODOS:
 - Ab und zu Crash während Pages On The Ground.
 - Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
 - Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
+- Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
 
 Werbekampagne
 Soziale Kanäle

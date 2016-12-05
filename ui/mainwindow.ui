@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>589</width>
-    <height>1038</height>
+    <height>1050</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -266,7 +266,7 @@
           </font>
          </property>
          <property name="title">
-          <string>Achievements</string>
+          <string>Achievemen&amp;ts</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -353,7 +353,7 @@
          </layout>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="8" column="0">
         <widget class="QPushButton" name="quitPushButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -518,22 +518,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>589</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuLanguage">
-    <property name="title">
-     <string>Lan&amp;guage</string>
-    </property>
-   </widget>
-   <addaction name="menuLanguage"/>
   </widget>
   <action name="actionNewGame">
    <property name="icon">

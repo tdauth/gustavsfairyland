@@ -30,6 +30,7 @@
 #include "clipeditor.h"
 #include "bonusclipsdialog.h"
 #include "fairytalesdialog.h"
+#include "localedialog.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
@@ -428,6 +429,20 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	}
 }
 
+QStringList fairytale::languages() const
+{
+	const QDir dir(translationsDir());
+
+	QStringList result;
+
+	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
+	{
+		result <<  languageFile.baseName();
+	}
+
+	return result;
+}
+
 fairytale::fairytale(Qt::WindowFlags flags)
 : QMainWindow(0, flags)
 , m_turns(0)
@@ -498,6 +513,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(editorPushButton, &QPushButton::clicked, this, &fairytale::openEditor);
 	connect(creditsPushButton, &QPushButton::clicked, this, &fairytale::about);
 
+	connect(languagePushButton, &QPushButton::clicked, this, &fairytale::showLocaleDialog);
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
@@ -521,27 +537,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_cancelGameShortcut->setContext(Qt::ApplicationShortcut);
 	connect(m_cancelGameShortcut, &QShortcut::activated, this, &fairytale::cancelGame);
 	connect(m_cancelGameShortcut, &QShortcut::activatedAmbiguously, this, &fairytale::cancelGame); // TEST
-
-	const QDir dir(translationsDir());
-
-	// Try to load the current locale. If no translation file exists it will remain English.
-	const QString locale = systemLocale();
-
-	QAction *currentLocaleAction = nullptr;
-
-	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
-	{
-		QAction *action = new QAction(localeToName(languageFile.baseName()), this);
-		action->setCheckable(true);
-		connect(action, &QAction::triggered, this, &fairytale::changeLanguage);
-		menuLanguage->addAction(action);
-		m_translationFileNames.insert(action, languageFile.baseName());
-
-		if (languageFile.baseName() == locale)
-		{
-			currentLocaleAction = action;
-		}
-	}
 
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
 	m_audioPlayer->setVolume(100);
@@ -595,12 +590,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	qApp->installTranslator(&m_translator);
 
+	// Try to load the current locale. If no translation file exists it will remain English.
+	const QString locale = systemLocale();
 	loadLanguage(locale);
-
-	if (currentLocaleAction != nullptr)
-	{
-		currentLocaleAction->setChecked(true);
-	}
 
 	// Initial cleanup.
 	cleanupGame();
@@ -1265,24 +1257,26 @@ QDir fairytale::translationsDir() const
 
 bool fairytale::loadLanguage(const QString &language)
 {
-	qDebug() << "Translation directory: " << translationsDir().path();
-	qDebug() << "Translation: " << language;
+	const QString translationsDirPath = translationsDir().path();
+	const QString fileName = language + ".qm";
+	qDebug() << "Translation directory: " << translationsDirPath;
+	qDebug() << "Translation: " << fileName;
 
-	if (m_translator.load(language, translationsDir().path()))
+	if (m_translator.load(fileName, translationsDirPath))
 	{
 		qDebug() << "Loaded file!";
-		qDebug() << "File loaded:" << language;
-
-		// Update to this language only if the translation file is valid.
-		m_currentTranslation = language;
+		qDebug() << "File loaded:" << fileName;
 
 		return true;
 	}
 	else
 	{
-		qDebug() << "Did not load file: " << language;
+		qDebug() << "Did not load file: " << fileName << " from dir " << translationsDirPath;
 		qWarning() << "File not loaded";
 	}
+
+	// Do always update since the file might be empty (for English).
+	m_currentTranslation = language;
 
 	return false;
 }
@@ -2476,6 +2470,21 @@ FairytalesDialog* fairytale::fairytalesDialog()
 void fairytale::showFairytalesDialog()
 {
 	this->execInCentralWidgetIfNecessary(fairytalesDialog());
+}
+
+LocaleDialog* fairytale::localeDialog()
+{
+	if (this->m_localeDialog == nullptr)
+	{
+		this->m_localeDialog = new LocaleDialog(this);
+	}
+
+	return this->m_localeDialog;
+}
+
+void fairytale::showLocaleDialog()
+{
+	this->execInCentralWidgetIfNecessary(localeDialog());
 }
 
 #include "fairytale.moc"

@@ -38,6 +38,7 @@ class HighScores;
 class CustomFairytale;
 class BonusClipsDialog;
 class FairytalesDialog;
+class LocaleDialog;
 
 /**
  * \brief The fairytale application which provdes a main window and the basic logic of the game.
@@ -100,6 +101,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void retry();
 
+		QStringList languages() const;
+
+		void showLocaleDialog();
 		/**
 		 * Updates the language of the application by applying a new translation file.
 		 *
@@ -288,6 +292,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns the current number of rounds.
 		 */
 		int rounds() const;
+
+
+		LocaleDialog* localeDialog();
 
 		SettingsDialog* settingsDialog();
 		CustomFairytaleDialog* customFairytaleDialog();
@@ -631,6 +638,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		BonusClipsDialog *m_bonusClipsDialog = nullptr;
 
 		FairytalesDialog *m_fairytalesDialog = nullptr;
+
+		LocaleDialog *m_localeDialog = nullptr;
 
 		/**
 		 * \brief Size data for a widget which can be stored.
