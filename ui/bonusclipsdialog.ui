@@ -27,9 +27,6 @@
         <property name="text">
          <string>Bonus Clips</string>
         </property>
-        <property name="pixmap">
-         <pixmap resource="../oxygen-icons-png-master/oxygen.qrc">:/themes/oxygen/32x32/actions/games-achievements.png</pixmap>
-        </property>
         <property name="scaledContents">
          <bool>false</bool>
         </property>
