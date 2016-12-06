@@ -27,7 +27,7 @@ void RecordTest::cleanup()
 
 void RecordTest::testRecordVideo()
 {
-	Recorder recorder;
+	gustav::Recorder recorder;
 	recorder.setOutputFile("video");
 	recorder.recordVideo();
 
@@ -48,7 +48,7 @@ void RecordTest::testRecordVideo()
 
 void RecordTest::testCaptureImage()
 {
-	Recorder recorder;
+	gustav::Recorder recorder;
 	recorder.setOutputFile("image");
 	recorder.captureImage();
 
@@ -68,7 +68,7 @@ void RecordTest::testCaptureImage()
 
 void RecordTest::testRecordAudio()
 {
-	Recorder recorder;
+	gustav::Recorder recorder;
 	recorder.setOutputFile("audio");
 	recorder.recordAudio();
 

@@ -4,6 +4,9 @@
 
 #include "recorder.h"
 
+namespace gustav
+{
+
 void Recorder::recordVideo()
 {
 	qDebug() << "Camera:" << m_camera;
@@ -199,7 +202,13 @@ int Recorder::showAudioRecorder(bool startRecording)
 	return result;
 }
 
-Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this)), m_finshedRecording(false), m_isRecording(false)
+Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_recorder(nullptr), m_cameraViewFinder(new QCameraViewfinder(this))
+#ifdef USE_QTMEL
+, m_cameraGrabber(new CameraGrabber(this))
+, m_audioGrabber(new AudioGrabber(this))
+, m_qtmelRecorder(new QtMELRecorder(this))
+#endif
+, m_finshedRecording(false), m_isRecording(false)
 {
 	const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
 
@@ -212,6 +221,59 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 
 		qDebug() << "Info:" << cameraInfo << "Camera:" << m_camera;
 	}
+
+#ifdef USE_QTMEL
+	// setup the camera grabber
+	m_cameraGrabber->setLatency(65);
+	m_qtmelRecorder->setImageGrabber(m_cameraGrabber);
+
+	// setup the audio grabber
+	AudioFormat format;
+	format.setChannelCount(2);
+	format.setSampleRate(44100);
+	format.setFormat(AudioFormat::SignedInt16);
+
+	m_audioGrabber->setDeviceIndex(0);
+	m_audioGrabber->setFormat(format);
+	m_qtmelRecorder->setAudioGrabber(m_audioGrabber);
+
+	//x264 loseless fast preset
+	VideoCodecSettings settings;
+	settings.setCoderType(EncoderGlobal::Vlc);
+	settings.setFlags(EncoderGlobal::LoopFilter);
+	settings.setMotionEstimationComparison(1);
+	// TODO FIXME
+	//settings.setPartitions(EncoderGlobal::I4x4 | EncoderGlobal::P8x8);
+	settings.setMotionEstimationMethod(EncoderGlobal::Hex);
+	settings.setSubpixelMotionEstimationQuality(3);
+	settings.setMotionEstimationRange(16);
+	settings.setGopSize(250);
+	settings.setMinimumKeyframeInterval(25);
+	settings.setSceneChangeThreshold(40);
+	settings.setIQuantFactor(0.71f);
+	settings.setBFrameStrategy(1);
+	settings.setQuantizerCurveCompressionFactor(0.6f);
+	settings.setMinimumQuantizer(0);
+	settings.setMaximumQuantizer(69);
+	settings.setMaximumQuantizerDifference(4);
+	settings.setDirectMvPredictionMode(EncoderGlobal::SpatialMode);
+	settings.setFlags2(EncoderGlobal::FastPSkip);
+	settings.setConstantQuantizerMode(0);
+	settings.setPFramePredictionAnalysisMethod(EncoderGlobal::NoWpm);
+
+	m_qtmelRecorder->encoder()->setVideoCodecSettings(settings);
+
+	AudioGrabber *m_audioGrabber;
+	AudioCodecSettings audioSettings;
+	audioSettings.setSampleRate(m_audioGrabber->format().sampleRate());
+	audioSettings.setChannelCount(m_audioGrabber->format().channelCount());
+	audioSettings.setSampleFormat(EncoderGlobal::Signed16);
+
+	m_qtmelRecorder->encoder()->setAudioCodecSettings(audioSettings);
+	m_qtmelRecorder->encoder()->setVideoCodec(EncoderGlobal::H264);
+	m_qtmelRecorder->encoder()->setAudioCodec(EncoderGlobal::MP3);
+	m_qtmelRecorder->encoder()->setOutputPixelFormat(EncoderGlobal::YUV420P);
+#endif
 
 	m_recorder = new QMediaRecorder(m_camera);
 	m_imageCapture = new QCameraImageCapture(m_camera);
@@ -409,6 +471,8 @@ void Recorder::waitForRecordedFile(bool videoOrAudio)
 	eventLoop.quit();
 
 	m_finshedRecording = false;
+}
+
 }
 
 #include "moc_recorder.cpp"

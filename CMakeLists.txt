@@ -21,7 +21,11 @@ endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
-option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos." FALSE)
+option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
+option(USE_QTMEL "Enable this option to use QtMEL for recording video files." TRUE)
+
+configure_file(config.h.in config.h)
+include_directories("${CMAKE_BINARY_DIR}")
 
 # Validate XML files if possible
 find_program(XMLLINT_PATH xmllint)
@@ -58,6 +62,39 @@ find_package(Qt5LinguistTools REQUIRED)
 if (ANDROID)
 	find_package(Qt5OpenGL REQUIRED) # Required by QtAV
 	find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
+endif ()
+
+# On Windows recording with the webcam is not supported yet by QtMultimedia. Therefore we need an alternative library.
+if (USE_QTMEL)
+	include(ExternalProject)
+
+	find_package(OpenCV REQUIRED)
+	find_package(ZLIB REQUIRED)
+	find_path(AV_INCLUDE libavcodec/avcodec.h PATHS /usr/include/ffmpeg/)
+
+	if (NOT AV_INCLUDE)
+		message(FATAL_ERROR "avcodec.h not found")
+	else ()
+		message(STATUS "Found avcodec.h in: ${AV_INCLUDE}")
+	endif ()
+
+	add_custom_target(ffmpegQtMEL ALL bash buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES ${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2 buildffmpeg_qtmel.sh)
+	set(AV_INCLUDE "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/include/")
+	set(AV_LIBRARY_DIR "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/lib/")
+
+	# Pass $$(FFMPEG_INCLUDE_PATH) $$(OPENCV_INCLUDE_PATH)
+	ExternalProject_Add(QtMEL
+		DEPENDS ffmpegQtMEL
+		GIT_REPOSITORY https://github.com/kibsoft/QtMEL.git
+		CONFIGURE_COMMAND FFMPEG_INCLUDE_PATH=${AV_INCLUDE} qmake -Wall "INCLUDEPATH += ${AV_INCLUDE}" "${CMAKE_BINARY_DIR}/QtMEL-prefix/src/QtMEL/qtmel.pro"
+		BUILD_COMMAND make
+		INSTALL_COMMAND ""
+	)
+
+	set(AV_LIBRARIES "libavcodec.a" "libavdevice.a" "libavfilter.a" "libavformat.a" "libavutil.a" "libswresample.a" "libswscale.a" "pthread")
+	set(QT_MEL_LIBRARIES "${CMAKE_BINARY_DIR}/QtMEL-prefix/src/QtMEL/libsQt5/libqtmel.so")
+	include_directories("${CMAKE_BINARY_DIR}/QtMEL-prefix/src/QtMEL/include/")
+	link_directories("${AV_LIBRARY_DIR}")
 endif ()
 
 set(fairyland_HEADERS
@@ -191,6 +228,10 @@ add_subdirectory(src)
 
 add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
 target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+
+if (USE_QTMEL)
+	target_link_libraries(gustavsfairylandlib "${QT_MEL_LIBRARIES}" ${AV_LIBRARIES} ${OpenCV_LIBRARIES} ${ZLIB_LIBRARIES})
+endif ()
 
 if (ANDROID)
 	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})

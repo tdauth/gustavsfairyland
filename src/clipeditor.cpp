@@ -482,7 +482,7 @@ QString ClipEditor::execLanguageDialog()
 	return QString();
 }
 
-ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recorder(new Recorder(this)), m_player(new Player(this, app))
+ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_clip(new Clip(m_app, this)), m_languageDialog(nullptr), m_recorder(new gustav::Recorder(this)), m_player(new Player(this, app))
 {
 	setupUi(this);
 

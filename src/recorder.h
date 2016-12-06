@@ -1,5 +1,5 @@
-#ifndef RECORDER_H
-#define RECORDER_H
+#ifndef GUSTAV_RECORDER_H
+#define GUSTAV_RECORDER_H
 
 #include <QDialog>
 #include <QCamera>
@@ -8,7 +8,23 @@
 #include <QAudioRecorder>
 #include <QCameraViewfinder>
 
+#include "config.h"
+
+#ifdef USE_QTMEL
+#include <CameraGrabber>
+#include <AudioGrabber>
+#include <AudioCodecSettings>
+#include <VideoCodecSettings>
+#include <Encoder>
+#include <Recorder>
+#endif
+
 #include "ui_recorder.h"
+
+typedef Recorder QtMELRecorder;
+
+namespace gustav
+{
 
 /**
  * \brief The Recorder class allows recording videos or images.
@@ -95,6 +111,12 @@ class Recorder : public QDialog, protected Ui::Recorder
 		QCameraViewfinder *m_cameraViewFinder;
 		QString m_outputFile;
 
+#ifdef USE_QTMEL
+		CameraGrabber *m_cameraGrabber;
+		AudioGrabber *m_audioGrabber;
+		QtMELRecorder *m_qtmelRecorder;
+#endif
+
 		bool m_finshedRecording;
 		bool m_isRecording;
 		Mode m_mode;
@@ -140,4 +162,6 @@ inline Recorder::Mode Recorder::mode() const
 	return this->m_mode;
 }
 
-#endif // RECORDER_H
+}
+
+#endif // GUSTAV_RECORDER_H

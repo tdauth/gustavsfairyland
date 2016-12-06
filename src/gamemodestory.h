@@ -58,7 +58,7 @@ class GameModeStory : public GameMode
 
 		State m_state;
 		fairytale::ClipKey m_currentSolution;
-		Recorder *m_recorder;
+		gustav::Recorder *m_recorder;
 
 		QNetworkAccessManager *m_networkAccessManager;
 

@@ -134,7 +134,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 */
 		QDir m_targetClipsDirectory;
 
-		Recorder *m_recorder;
+		gustav::Recorder *m_recorder;
 		QString m_recordedFile;
 
 		Player *m_player;

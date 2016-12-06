@@ -7,7 +7,7 @@
 #include "clippackage.h"
 #include "clip.h"
 
-GameModeStory::GameModeStory(fairytale *app) : GameMode(app), m_state(State::None), m_recorder(new Recorder(app)), m_networkAccessManager(new QNetworkAccessManager(this))
+GameModeStory::GameModeStory(fairytale *app) : GameMode(app), m_state(State::None), m_recorder(new gustav::Recorder(app)), m_networkAccessManager(new QNetworkAccessManager(this))
 {
 	connect(m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &GameModeStory::onVideoRecorderStateChanged);
 	connect(m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &GameModeStory::onImageCaptured);
