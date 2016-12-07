@@ -537,7 +537,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(m_cancelGameShortcut, &QShortcut::activatedAmbiguously, this, &fairytale::cancelGame); // TEST
 
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
-	m_audioPlayer->setVolume(100);
+	m_audioPlayer->setVolume(50);
 	connect(this->m_audioPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishAudio);
 
 	m_musicPlayer->setAudioRole(QAudio::GameRole);
@@ -1973,13 +1973,16 @@ bool fairytale::playSound(const QUrl &url)
 {
 	if (m_playNewSound)
 	{
+		qDebug() << "Play sound" << url << "because none is playing";
+
 		m_playNewSound = false;
 		m_audioPlayer->setMedia(url);
-		m_audioPlayer->setVolume(50);
 		m_audioPlayer->play();
 
 		return true;
 	}
+
+	qDebug() << "Dont play sound" << url << "because one is playing";
 
 	return false;
 }
