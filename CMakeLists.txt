@@ -22,7 +22,7 @@ endif ()
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
-option(USE_QTMEL "Enable this option to use QtMEL for recording video files." TRUE)
+option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 
 configure_file(config.h.in config.h)
 include_directories("${CMAKE_BINARY_DIR}")
@@ -78,7 +78,7 @@ if (USE_QTMEL)
 		message(STATUS "Found avcodec.h in: ${AV_INCLUDE}")
 	endif ()
 
-	add_custom_target(ffmpegQtMEL ALL bash buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES ${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2 buildffmpeg_qtmel.sh)
+	add_custom_target(ffmpegQtMEL ALL bash buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_SOURCE_DIR}/buildffmpeg_qtmel.sh")
 	set(AV_INCLUDE "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/include/")
 	set(AV_LIBRARY_DIR "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/lib/")
 

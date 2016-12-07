@@ -55,6 +55,7 @@ QString fairytale::gameStyleSheet()
 	return QString(
 	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QMessageBox { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
 	"QFrame, QLabel, QToolTip { border: black; }"
+	"QGroupBox { background-color: #C05800; QButton { background-color: #CEA66B; } }"
 	/*
 	QGroupBox
 	"QGroupBox {"
@@ -487,9 +488,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->m_player->hide();
 
 	setupUi(this);
-
-	achievementsGroupBox->setChecked(false);
-	achievementsWidget->hide();
 
 	this->advancedGroupBox->setChecked(false);
 	this->advancedGroupBoxWidget->hide();

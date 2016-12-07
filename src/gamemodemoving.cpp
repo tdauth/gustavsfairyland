@@ -166,7 +166,9 @@ void GameModeMoving::end()
 	this->m_roomWidget->hide();
 
 	this->m_remainingClips.clear();
-	setState(State::None);
+
+	// Dont clear the state for the custom fairy tale dialog
+	//setState(State::None);
 }
 
 void GameModeMoving::start()

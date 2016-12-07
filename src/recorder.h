@@ -21,8 +21,6 @@
 
 #include "ui_recorder.h"
 
-typedef Recorder QtMELRecorder;
-
 namespace gustav
 {
 
