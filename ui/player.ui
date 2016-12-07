@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>519</height>
+    <width>624</width>
+    <height>504</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -100,6 +100,12 @@
                   <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
                    <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
                  </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
                 </widget>
                </item>
                <item alignment="Qt::AlignHCenter">
@@ -117,6 +123,10 @@
                  </property>
                  <property name="text">
                   <string>Cancel Game (C)</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                   <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -142,6 +152,16 @@
                  <property name="text">
                   <string>Skip (Space)</string>
                  </property>
+                 <property name="icon">
+                  <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                   <normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
                 </widget>
                </item>
                <item alignment="Qt::AlignHCenter">
@@ -159,6 +179,16 @@
                  </property>
                  <property name="text">
                   <string>Skip All</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                   <normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
                  </property>
                 </widget>
                </item>
