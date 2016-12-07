@@ -599,8 +599,17 @@
   <tabstop>quickGamePushButton</tabstop>
   <tabstop>recordPushButton</tabstop>
   <tabstop>customGamePushButton</tabstop>
-  <tabstop>cancelGamePushButton</tabstop>
+  <tabstop>highScoresPushButton</tabstop>
+  <tabstop>bonusClipsPushButton</tabstop>
+  <tabstop>fairytalesPushButton</tabstop>
+  <tabstop>advancedGroupBox</tabstop>
+  <tabstop>quitPushButton</tabstop>
+  <tabstop>settingsPushButton</tabstop>
+  <tabstop>languagePushButton</tabstop>
+  <tabstop>creditsPushButton</tabstop>
+  <tabstop>editorPushButton</tabstop>
   <tabstop>pauseGamePushButton</tabstop>
+  <tabstop>cancelGamePushButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resource.qrc"/>
