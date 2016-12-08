@@ -40,7 +40,29 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="videoPlayerLayout"/>
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>707</width>
+            <height>167</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <layout class="QHBoxLayout" name="videoPlayerLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="buttonsHorizontalLayout">
@@ -72,8 +94,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>685</width>
-                    <height>78</height>
+                    <width>669</width>
+                    <height>69</height>
                    </rect>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -107,7 +129,7 @@
                       <string>Pause Game (P)</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                        <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -135,7 +157,7 @@
                       <string>Cancel Game (C)</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                        <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -163,7 +185,7 @@
                       <string>Skip All</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                        <normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -191,7 +213,7 @@
                       <string>Skip (Space)</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                        <normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</normaloff>:/themes/oxygen/32x32/actions/media-skip-forward.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -241,7 +263,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
  </resources>
  <connections/>
 </ui>
