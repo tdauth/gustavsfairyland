@@ -193,6 +193,12 @@ void GameModeCreative::end()
 		delete m_finishButton;
 		m_finishButton = nullptr;
 	}
+
+	if (m_scrollArea != nullptr)
+	{
+		delete m_scrollArea;
+		m_scrollArea = nullptr;
+	}
 }
 
 void GameModeCreative::start()
