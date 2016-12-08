@@ -402,7 +402,7 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	this->m_requiresPerson = true;
 	this->m_turns = 0;
 	this->m_totalElapsedTime = 0;
-	this->menuButtonsWidget->hide();
+	this->scrollArea->hide();
 	this->gameAreaWidget()->show();
 	this->descriptionLabel->show();
 	this->timeLabel->show();
@@ -2032,7 +2032,7 @@ void fairytale::showEvent(QShowEvent *event)
 {
 	QMainWindow::showEvent(event);
 
-	this->updateSize(menuButtonsWidget);
+	this->updateSize(scrollArea);
 	this->updateSize(gameButtonsWidget);
 }
 
@@ -2069,7 +2069,7 @@ void fairytale::cleanupAfterOneGame()
 
 	hideGameWidgets();
 
-	this->menuButtonsWidget->show();
+	this->scrollArea->show();
 	// Make sure all paint stuff from the game mode disappears.
 	this->repaint();
 }
