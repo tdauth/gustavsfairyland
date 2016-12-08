@@ -132,7 +132,6 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 		QString text = tr("Once Upon a time there lived %1 and the following happened:<br/>").arg(firstClip->description());
 		int i = 0;
-		QStringList descriptionOfAllInvolved;
 
 		foreach (fairytale::ClipKey clipKey, m_clips)
 		{
@@ -150,20 +149,12 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 				text += "<br/>";
 			}
 
-			if (clip->isPerson())
-			{
-				QString description;
-				description += clip->description();
-				descriptionOfAllInvolved.push_back(description);
-			}
-
 			++i;
 		}
 
 		if (this->m_app->gameMode()->state() == GameMode::State::Won)
 		{
-			const QString formattedDescription = descriptionOfAllInvolved.join(tr(" and "));
-			text += tr("And if %1 did not die then %2 %3 still alive today.<br/>End").arg(formattedDescription).arg(formattedDescription).arg((descriptionOfAllInvolved.size() > 1 ? tr("are") : tr("is")));
+			text += tr("And if %1 did not die then %2 is still alive today.<br/>End").arg(firstClip->description()).arg(firstClip->description());
 		}
 		else
 		{
