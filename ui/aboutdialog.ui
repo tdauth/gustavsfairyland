@@ -20,6 +20,46 @@
    <string>About Gustav's Faryland</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../resource.qrc">:/resources/splashen.jpg</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QTextBrowser" name="textBrowser">
      <property name="font">
@@ -59,53 +99,20 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
-     </property>
-     <property name="centerButtons">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="3" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QPushButton" name="okPushButton">
      <property name="text">
-      <string/>
+      <string>OK</string>
      </property>
-     <property name="pixmap">
-      <pixmap resource="../resource.qrc">:/resources/splashen.jpg</pixmap>
+     <property name="icon">
+      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+       <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>This game has been created by Tamino Dauth and Carsten Thomas. It is the best game you will ever play!</string>
-     </property>
-     <property name="scaledContents">
-      <bool>false</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -113,6 +120,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="../resource.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>
 </ui>

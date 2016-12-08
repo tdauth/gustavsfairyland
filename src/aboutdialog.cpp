@@ -6,7 +6,7 @@ AboutDialog::AboutDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_a
 {
 	setupUi(this);
 
-	connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 
 void AboutDialog::changeEvent(QEvent *event)

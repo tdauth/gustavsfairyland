@@ -12,6 +12,9 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 
 	connect(this->gameModesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ClipPackageDialog::currentGameModeIndexChanged);
 	this->advancedGroupBox->hide();
+
+	connect(this->okPushButton, &QPushButton::clicked, this, &QDialog::accept);
+	connect(this->cancelPushButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 void ClipPackageDialog::fill(const fairytale::ClipPackages &packages, const fairytale::GameModes &gameModes, fairytale *app)
@@ -157,5 +160,5 @@ void ClipPackageDialog::validate()
 	errorLabel->setText(tr("Error: %1").arg(message));
 	errorLabel->setVisible(!message.isEmpty());
 
-	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!gameModesAreEmpty && !packagesAreEmpty && !maxRoundsNotBiggerThanZero);
+	okPushButton->setEnabled(!gameModesAreEmpty && !packagesAreEmpty && !maxRoundsNotBiggerThanZero);
 }

@@ -30,7 +30,7 @@ HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	this->setModal(true);
 
-	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 	connect(this->clearPushButton, &QPushButton::clicked, this, &HighScores::clearAll);
 }
 

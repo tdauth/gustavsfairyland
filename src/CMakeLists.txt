@@ -3,5 +3,3 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	message(STATUS "Adding test directory.")
 	add_subdirectory(test)
 endif ()
-
-add_subdirectory(server)

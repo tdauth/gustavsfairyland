@@ -165,11 +165,6 @@ set(fairyland_SRCS
 	src/localedialog.cpp
 )
 
-if (NOT ANDROID)
-	set(fairyland_HEADERS ${fairyland_HEADERS} src/gamemodestory.h)
-	set(fairyland_SRCS ${fairyland_SRCS} src/gamemodestory.cpp)
-endif ()
-
 set(fairyland_UI
 	ui/aboutdialog.ui
 	ui/mainwindow.ui
@@ -255,12 +250,6 @@ if (ANDROID)
 else ()
 	add_executable(gustavsfairyland src/main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
 	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
-
-	if (NOT WIN32)
-	    add_executable(gustavsfairylandserver src/server/server.cpp src/server/httpserver.cpp src/server/requesthandler.cpp)
-	    target_link_libraries(gustavsfairylandserver gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
-	    install(TARGETS gustavsfairylandserver RUNTIME DESTINATION bin)
-	endif ()
 endif()
 
 target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)

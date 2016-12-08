@@ -18,9 +18,6 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
-#ifndef Q_OS_ANDROID
-#include "gamemodestory.h"
-#endif
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -53,15 +50,12 @@ QPalette fairytale::gameColorPalette()
 QString fairytale::gameStyleSheet()
 {
 	return QString(
-	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QMessageBox { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
+	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QTreeView, QHeaderView, QMessageBox { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
 	"QFrame, QLabel, QToolTip { border: black; }"
-	"QGroupBox { background-color: #C05800; QButton { background-color: #CEA66B; } }"
-	/*
-	QGroupBox
-	"QGroupBox {"
-	"background-color: #C05800;"
-	"}"
-	*/
+	"QGroupBox { background-color: #C05800; margin-top: 2ex; border: 2px solid black; } QGroupBox QPushButton { background-color: #CEA66B; }"
+	"QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; /* position at the left center */ padding: 0 3px; background-color: #C05800; border: 2px solid black; }"
+	"QHeaderView::section { background-color: #CEA66B; }"
+	"QComboBox QAbstractItemView { selection-background-color: #CEA66B; background-color: #CEA66B; border: 2px solid black; }"
 	);
 }
 
@@ -548,11 +542,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
-
-#ifndef Q_OS_ANDROID
-	//GameModeStory *gameModeStory = new GameModeStory(this);
-	//m_gameModes.insert(gameModeStory->id(), gameModeStory);
-#endif
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 

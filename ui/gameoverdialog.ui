@@ -14,21 +14,6 @@
    <string>Game Over</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-    <widget class="QLabel" name="label_3">
-     <property name="font">
-      <font>
-       <pointsize>21</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Game Over!!!</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
     <widget class="QLabel" name="label">
      <property name="maximumSize">
@@ -51,13 +36,31 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+   <item row="4" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="centerButtons">
-      <bool>true</bool>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+    <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <pointsize>21</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Game Over!!!</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -74,23 +77,28 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="0">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="3" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QPushButton" name="okPushButton">
+     <property name="text">
+      <string>OK</string>
      </property>
-     <property name="sizeHint" stdset="0">
+     <property name="icon">
+      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+       <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
+     </property>
+     <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>32</width>
+       <height>32</height>
       </size>
      </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>
  <resources>
   <include location="../resource.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>
 </ui>

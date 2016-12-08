@@ -11,7 +11,7 @@ FairytalesDialog::FairytalesDialog(fairytale *app, QWidget *parent, Qt::WindowFl
 {
 	setupUi(this);
 
-	connect(backPushButton, &QPushButton::clicked, this, &QDialog::reject);
+	connect(okPushButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 FairytalesDialog::~FairytalesDialog()

@@ -228,12 +228,12 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 
 	updateSounds();
 
-	connect(this->m_windTimer, SIGNAL(timeout()), this, SLOT(changeWind()));
+	connect(this->m_windTimer, &QTimer::timeout, this, &RoomWidget::changeWind);
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
-	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
+	connect(this->m_paintTimer, &QTimer::timeout, this, &RoomWidget::updatePaint);
 
 	m_windSoundPlayer->setAudioRole(QAudio::GameRole);
-	m_windSoundPlayer->setVolume(10);
+	m_windSoundPlayer->setVolume(5);
 
 	connect(m_windSoundPlayer, &QMediaPlayer::stateChanged, this, &RoomWidget::windSoundStateChanged);
 

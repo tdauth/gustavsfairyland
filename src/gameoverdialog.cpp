@@ -12,7 +12,7 @@ GameOverDialog::GameOverDialog(fairytale *app, QWidget *parent) : QDialog(parent
 {
 	setupUi(this);
 
-	connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 	//connect(retryPushButton, &QPushButton::clicked, this, &GameOverDialog::retry);
 }
 

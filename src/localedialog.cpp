@@ -6,8 +6,7 @@ LocaleDialog::LocaleDialog(fairytale *app, QWidget *parent, Qt::WindowFlags f) :
 {
 	setupUi(this);
 
-	connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-	connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 
 void LocaleDialog::changeLocale()

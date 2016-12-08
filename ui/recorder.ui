@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
+    <width>752</width>
     <height>141</height>
    </rect>
   </property>
@@ -110,7 +110,7 @@
           </property>
           <property name="icon">
            <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-            <normaloff>:/themes/oxygen/32x32/actions/dialog-cancel.png</normaloff>:/themes/oxygen/32x32/actions/dialog-cancel.png</iconset>
+            <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -127,7 +127,7 @@
           </property>
           <property name="icon">
            <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-            <normaloff>:/themes/oxygen/32x32/actions/dialog-ok.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok.png</iconset>
+            <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
           </property>
           <property name="iconSize">
            <size>
