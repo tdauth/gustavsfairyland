@@ -162,3 +162,25 @@ void ClipPackageDialog::validate()
 
 	okPushButton->setEnabled(!gameModesAreEmpty && !packagesAreEmpty && !maxRoundsNotBiggerThanZero);
 }
+
+void ClipPackageDialog::changeEvent(QEvent *event)
+{
+	switch(event->type())
+	{
+		// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+		{
+			qDebug() << "Retranslate UI of clip package dialog";
+			this->retranslateUi(this);
+
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+
+	QDialog::changeEvent(event);
+}

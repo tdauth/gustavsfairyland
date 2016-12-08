@@ -19,6 +19,7 @@ class LocaleDialog : public QDialog, protected Ui::LocaleDialog
 
 	protected:
 		virtual void showEvent(QShowEvent *event);
+		virtual void changeEvent(QEvent *event) override;
 
 	private:
 		class Button : public QObject

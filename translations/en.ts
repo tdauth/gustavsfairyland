@@ -477,12 +477,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="108"/>
+        <location filename="../src/fairytalesdialog.cpp" line="130"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="114"/>
+        <location filename="../src/fairytalesdialog.cpp" line="136"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1186,7 +1186,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/recorder.cpp" line="127"/>
-        <source>Capture mode %1 is not supporetd on this system.</source>
+        <source>Capture mode %1 is not supported on this system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

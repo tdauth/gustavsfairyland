@@ -19,7 +19,8 @@ class BonusClipsDialog : public QDialog, protected Ui::BonusClipsDialog
 		void playBonusClip();
 
 	protected:
-		virtual void showEvent(QShowEvent *event);
+		virtual void showEvent(QShowEvent *event) override;
+		virtual void changeEvent(QEvent *event) override;
 
 	private:
 		class Button : public QObject

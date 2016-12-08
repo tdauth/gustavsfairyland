@@ -38,6 +38,28 @@ void BonusClipsDialog::showEvent(QShowEvent *event)
 	update();
 }
 
+void BonusClipsDialog::changeEvent(QEvent *event)
+{
+	switch(event->type())
+	{
+		// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+		{
+			qDebug() << "Retranslate UI of bonus clips dialog";
+			this->retranslateUi(this);
+
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+
+	QDialog::changeEvent(event);
+}
+
 void BonusClipsDialog::clearButtons()
 {
 	foreach (Button *button, m_buttons.values())

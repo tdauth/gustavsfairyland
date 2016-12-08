@@ -124,7 +124,7 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 #ifndef USE_QTMEL
 	if (!m_camera->isCaptureModeSupported(captureMode))
 	{
-		QMessageBox::critical(this, tr("Camera Error"), tr("Capture mode %1 is not supporetd on this system.").arg(captureMode));
+		QMessageBox::critical(this, tr("Camera Error"), tr("Capture mode %1 is not supported on this system.").arg(captureMode));
 
 		return QDialog::Rejected;
 	}

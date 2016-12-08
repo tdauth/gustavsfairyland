@@ -1,10 +1,12 @@
-#include <iostream>
+#include <QDebug>
 
 #include "aboutdialog.h"
 
 AboutDialog::AboutDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
 {
 	setupUi(this);
+
+	updatePixmap();
 
 	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 }
@@ -18,20 +20,9 @@ void AboutDialog::changeEvent(QEvent *event)
 		{
 			this->retranslateUi(this);
 			// Try to load the current locale. If no translation file exists it will remain English.
-			QString locale = QLocale::system().name();
-			locale.truncate(locale.lastIndexOf('_'));
-			qDebug() << "Retranslate UI of about dialog with locale" << locale;
+			qDebug() << "Retranslate UI of about dialog with locale" << m_app->currentTranslation();
 
-			const QFileInfo fileInfo(":/resources/splash" + locale + ".jpg");
-
-			if (fileInfo.exists())
-			{
-				label->setPixmap(QPixmap(fileInfo.absoluteFilePath()));
-			}
-			else
-			{
-				qDebug() << fileInfo.absoluteFilePath() << "does not exist!";
-			}
+			updatePixmap();
 
 			break;
 		}
@@ -43,4 +34,18 @@ void AboutDialog::changeEvent(QEvent *event)
 	}
 
 	QDialog::changeEvent(event);
+}
+
+void AboutDialog::updatePixmap()
+{
+	const QFileInfo fileInfo(":/resources/splash" + m_app->currentTranslation() + ".jpg");
+
+	if (fileInfo.exists())
+	{
+		label->setPixmap(QPixmap(fileInfo.absoluteFilePath()));
+	}
+	else
+	{
+		qDebug() << fileInfo.absoluteFilePath() << "does not exist!";
+	}
 }

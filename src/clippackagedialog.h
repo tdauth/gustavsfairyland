@@ -38,6 +38,9 @@ class ClipPackageDialog : public QDialog, protected Ui::ClipPackageDialog
 		void currentGameModeIndexChanged(int index);
 		void validate();
 
+	protected:
+		virtual void changeEvent(QEvent *event) override;
+
 	private:
 		fairytale *m_app;
 		fairytale::ClipPackages m_packages;

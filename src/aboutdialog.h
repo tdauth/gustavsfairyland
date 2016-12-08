@@ -15,6 +15,8 @@ class AboutDialog : public QDialog, protected Ui::AboutDialog
 		virtual void changeEvent(QEvent *event) override;
 
 	private:
+		void updatePixmap();
+
 		fairytale *m_app;
 };
 

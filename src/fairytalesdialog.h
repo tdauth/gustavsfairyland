@@ -20,6 +20,7 @@ class FairytalesDialog : public QDialog, protected Ui::FairytalesDialog
 
 	protected:
 		virtual void showEvent(QShowEvent *event);
+		virtual void changeEvent(QEvent *event) override;
 
 	private:
 		class Fairytale : public QObject
