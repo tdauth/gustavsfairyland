@@ -1262,6 +1262,22 @@ bool fairytale::loadLanguage(const QString &language)
 		qWarning() << "File not loaded";
 	}
 
+#ifdef Q_OS_WIN
+	const QString qtTranslationsDirPath = QDir::current().filePath("translations");
+	const QString qtFileName = QString("qt_") + language + ".qm";
+
+	if (m_translator.load(fileName, qtTranslationsDirPath))
+	{
+		qDebug() << "Loaded Qt file!";
+		qDebug() << "Qt File loaded:" << qtFileName;
+	}
+	else
+	{
+		qDebug() << "Did not load file: " << qtFileName << " from dir " << qtTranslationsDirPath;
+		qWarning() << "File not loaded";
+	}
+#endif
+
 	// Do always update since the file might be empty (for English).
 	m_currentTranslation = language;
 	qDebug() << "Current translation:" << language;
