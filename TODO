@@ -12,6 +12,7 @@ Finale TODOS:
 - DONE: Fenstersound einbauen.
 - Princess and Grandpa Jott have not equal width and height for their image.
 - Edit the font and support the character ß by using two s characters.
+- Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
 - FIXED: Windows Menu Title is Fareland.
 - Ab und zu Crash während Pages On The Ground.
 - Always use the relative path as clips dir, easier to use when reinstalling the game!
