@@ -59,6 +59,11 @@
      </column>
      <column>
       <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Difficulty</string>
       </property>
      </column>
@@ -79,12 +84,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Package</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Name</string>
+       <string>Packages</string>
       </property>
      </column>
     </widget>

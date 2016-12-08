@@ -292,7 +292,7 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
-#ifdef Q_OS_ANDROID
+#if 1 == 0 //def Q_OS_ANDROID
 	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
 	if (dynamic_cast<QPushButton*>(widget) != nullptr)
 	{
@@ -395,7 +395,6 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	clearSolution();
 
 	this->m_paused = false;
-	this->actionPauseGame->setText(tr("Pause Game"));
 	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 
@@ -1255,6 +1254,7 @@ QDir fairytale::translationsDir() const
 
 bool fairytale::loadLanguage(const QString &language)
 {
+	bool result = false;
 	const QString translationsDirPath = translationsDir().path();
 	const QString fileName = language + ".qm";
 	qDebug() << "Translation directory: " << translationsDirPath;
@@ -1265,7 +1265,7 @@ bool fairytale::loadLanguage(const QString &language)
 		qDebug() << "Loaded file!";
 		qDebug() << "File loaded:" << fileName;
 
-		return true;
+		result = true;
 	}
 	else
 	{
@@ -1275,6 +1275,7 @@ bool fairytale::loadLanguage(const QString &language)
 
 	// Do always update since the file might be empty (for English).
 	m_currentTranslation = language;
+	qDebug() << "Current translation:" << language;
 
 	return false;
 }
@@ -1436,7 +1437,6 @@ void fairytale::pauseGame()
 		return;
 	}
 
-	this->actionPauseGame->setText(tr("Continue Game"));
 	this->pauseGamePushButton->setText(tr("Continue Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
 	this->m_paused = true;
@@ -1461,7 +1461,6 @@ void fairytale::resumeGame()
 		return;
 	}
 
-	this->actionPauseGame->setText(tr("Pause Game"));
 	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
 	this->m_paused = false;
@@ -1686,9 +1685,6 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	m_cancelGameShortcut->setEnabled(enabled);
 	gameButtonsWidget->setEnabled(enabled);
 	gameButtonsWidget->setVisible(enabled);
-	actionPauseGame->setEnabled(enabled);
-	actionCancelGame->setEnabled(enabled);
-	actionShowCustomFairytale->setEnabled(enabled);
 }
 
 #ifdef Q_OS_ANDROID

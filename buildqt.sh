@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# This script builds Qt5 for Android. It requires Java, the Android NDK and the Android SDK.
+
 if [ -d "./buildqt5" ] ; then
 	rm -rf "./buildqt5"
 fi

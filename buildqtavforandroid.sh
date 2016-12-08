@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# This script builds the project QtAV for Android which requires ffmpeg as well. Therefore ffmpeg has to be build as well.
+# To build both projects for Android, the Android NDK is required as well as a binary Qt version for Android.
+
 QT_DIR="$1"
 ANDROID_PREFIX="$2"
 ANDROID_TARGET="$3"
+BUILD_TYPE="$4"
 
 export HOME_TAMINO="/home/tamino"
 
@@ -19,6 +23,11 @@ fi
 if [ -z "$ANDROID_TARGET" ] ; then
 	echo "Setting ANDROID_TARGET automatically"
 	ANDROID_TARGET="armv7" # x86
+fi
+
+if [ -z "$BUILD_TYPE" ] ; then
+	echo "Define BUILD_TYPE as argument 4 (Debug or Release)"
+	exit 1
 fi
 
 export NDK_ROOT="$HOME_TAMINO/android-ndk-r12b"
@@ -61,10 +70,13 @@ fi
 
 cd ./qtav
 git submodule update --init
-git checkout tags/v1.11.0
+#git checkout tags/v1.11.0
 
 # The user.conf file can have user defined values.
 cp -f "$PROJECT_DIR/user.conf" ./
+# Add debug and release targets if available.
+echo "" >> ./user.conf
+echo "CONFIG += debug_and_release" >> ./user.conf
 
 # Change back to the project dir
 cd ..
@@ -86,19 +98,6 @@ export LIBRARY_PATH="$FFMPEG_LIB_DIR:$LIBRARY_PATH"
 export LD_LIBRARY_PATH="$FFMPEG_LIB_DIR:$LD_LIBRARY_PATH"
 export ANDROID_NDK_ROOT="$NDK_ROOT"
 
-# Create symbolic links in the Qt directory. This is a bad idea since other users like Jenkins don't have the permissions.
-# for f in "$FFMPEG_PREFIX/include/"* ; do
-# 	target="$QT_PATH/include"
-# 	echo "Creating link for $f to $target"
-# 	ln -fs "$f" "$target"
-# done
-#
-# for f in "$FFMPEG_LIB_DIR/"* ; do
-# 	target="$QT_PATH/lib"
-# 	echo "Creating link for $f to $target"
-# 	ln -fs "$f" "$target"
-# done
-
 echo "LIBRARY_PATH: $LIBRARY_PATH"
 echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 echo "ls -lha $FFMPEG_LIB_DIR/:"
@@ -119,4 +118,4 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
 "$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" ../qtav/QtAV.pro
-make -j4
+make -j4 # "${BUILD_TYPE,,}" TODO debug target does not exist

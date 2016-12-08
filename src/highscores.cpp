@@ -144,21 +144,27 @@ void HighScores::showEvent(QShowEvent *event)
 
 			newItem = new QTableWidgetItem(tr("%1.").arg(row + 1));
 			tableWidget->setItem(row, 0, newItem);
-			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
-			tableWidget->setItem(row, 1, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
-			tableWidget->setItem(row, 2, newItem);
-			newItem = new QTableWidgetItem(QString::number(highScore.time() / 1000)); // show time in seconds
-			tableWidget->setItem(row, 3, newItem);
-			newItem = new QTableWidgetItem(gameModeName);
-			tableWidget->setItem(row, 4, newItem);
-			newItem = new QTableWidgetItem(packagesText);
-			tableWidget->setItem(row, 5, newItem);
 			newItem = new QTableWidgetItem(highScore.name());
+			tableWidget->setItem(row, 1, newItem);
+			newItem = new QTableWidgetItem(difficultyToString(highScore.difficulty()));
+			tableWidget->setItem(row, 2, newItem);
+			newItem = new QTableWidgetItem(QString::number(highScore.rounds()));
+			tableWidget->setItem(row, 3, newItem);
+			newItem = new QTableWidgetItem(QString::number(highScore.time() / 1000)); // show time in seconds
+			tableWidget->setItem(row, 4, newItem);
+			newItem = new QTableWidgetItem(gameModeName);
+			tableWidget->setItem(row, 5, newItem);
+			newItem = new QTableWidgetItem(packagesText);
 			tableWidget->setItem(row, 6, newItem);
 
 			++row;
 		}
+	}
+
+	// Stretch the last column.
+	for (int i = 0; i < 6; ++i)
+	{
+		tableWidget->resizeColumnToContents(i);
 	}
 
 	tableWidget->resizeRowsToContents();

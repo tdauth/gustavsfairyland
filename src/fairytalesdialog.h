@@ -12,6 +12,7 @@ class FairytalesDialog : public QDialog, protected Ui::FairytalesDialog
 
 	public:
 		explicit FairytalesDialog(fairytale *app, QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+		virtual ~FairytalesDialog();
 
 	private slots:
 		void playFairytale();
@@ -34,6 +35,7 @@ class FairytalesDialog : public QDialog, protected Ui::FairytalesDialog
 				QWidget *m_widget;
 		};
 
+		void clearFairytales();
 		void update();
 
 		fairytale *m_app;

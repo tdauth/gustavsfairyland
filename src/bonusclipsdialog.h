@@ -12,6 +12,8 @@ class BonusClipsDialog : public QDialog, protected Ui::BonusClipsDialog
 
 	public:
 		explicit BonusClipsDialog(fairytale *app, QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+		virtual ~BonusClipsDialog();
+
 
 	private slots:
 		void playBonusClip();
@@ -33,6 +35,7 @@ class BonusClipsDialog : public QDialog, protected Ui::BonusClipsDialog
 				QPushButton *m_button;
 		};
 
+		void clearButtons();
 		void update();
 
 		fairytale *m_app;

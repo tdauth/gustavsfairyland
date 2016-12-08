@@ -1,19 +1,20 @@
 Finale TODOS:
 - DONE: Icons
-- Sounds: Wind, Fenster, Turm, Schloss
-- Logo-Erstellung
+- DONE: Sounds: Wind, Fenster, Turm, Schloss
+- DONE: Logo-Erstellung
 - DONE: Credits optimieren
 - DONE: Clip-Editor
 - DONE: Eigener Märchenschriftzug: „Medival“
 - FIXED: Letzter Clip kommt zweimal.
-- About Bild größer, Schriftart
-- Aufnahmemodus viel einfacher machen
+- DONE: About Bild größer, Schriftart
+- DONE: Aufnahmemodus viel einfacher machen
 - Extract a video frame if possible as default image.
 - Fenstersound einbauen.
 - Ab und zu Crash während Pages On The Ground.
 - Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
 - Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
 - Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
+- Android Crash: https://github.com/wang-bin/QtAV/issues/138
 
 Werbekampagne
 Soziale Kanäle
@@ -21,10 +22,10 @@ gamesnarrative
 
 Usability:
 - Icons anstatt von Texten für Buttons verwenden. Erhöht vor allem die Usability auf Android: http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org.1.html
-- Videos und Audio im Editor direkt aufnehmen.
+- DONE: Videos und Audio im Editor direkt aufnehmen.
 - Fenster besser erkennbar machen von oben?
-- Anstatt kleinen Bildern - Symbole.
-- Logo/Splash Screen.
+- DONE: Anstatt kleinen Bildern - Symbole.
+- DONE: Logo/Splash Screen.
 - Weniger Buttons.
 - Button-Layout für Android nutzbar machen - Platz für Buttons nutzen, Buttons groß genug machen.
 

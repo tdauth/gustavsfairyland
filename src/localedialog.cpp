@@ -51,6 +51,7 @@ void LocaleDialog::update()
 		pushButton->setIconSize(QSize(32, 32));
 		// TODO set locale icon
 		//pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+		qDebug() << "Locale" << locale << "Current translation" << m_app->currentTranslation();
 
 		if (locale == m_app->currentTranslation())
 		{

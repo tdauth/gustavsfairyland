@@ -9,6 +9,11 @@ BonusClipsDialog::BonusClipsDialog(fairytale *app, QWidget *parent, Qt::WindowFl
 	connect(backPushButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
+BonusClipsDialog::~BonusClipsDialog()
+{
+	clearButtons();
+}
+
 void BonusClipsDialog::playBonusClip()
 {
 	QPushButton *button = dynamic_cast<QPushButton*>(QObject::sender());
@@ -33,7 +38,7 @@ void BonusClipsDialog::showEvent(QShowEvent *event)
 	update();
 }
 
-void BonusClipsDialog::update()
+void BonusClipsDialog::clearButtons()
 {
 	foreach (Button *button, m_buttons.values())
 	{
@@ -41,6 +46,11 @@ void BonusClipsDialog::update()
 	}
 
 	m_buttons.clear();
+}
+
+void BonusClipsDialog::update()
+{
+	clearButtons();
 
 	int i = 0;
 
@@ -52,7 +62,7 @@ void BonusClipsDialog::update()
 
 			if (bonusClip != nullptr)
 			{
-				QPushButton *pushButton = new QPushButton(bonusClip->description(), this);
+				QPushButton *pushButton = new QPushButton(bonusClip->description());
 				pushButton->setIconSize(QSize(32, 32));
 				pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
 

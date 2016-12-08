@@ -214,7 +214,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
 
-	m_windSoundEffect.setSource(QUrl::fromLocalFile(":/resources/wind.wav"));
+	m_windSoundEffect.setSource(QUrl("qrc:/resources/wind.wav"));
 	m_windSoundEffect.setLoopCount(QSoundEffect::Infinite);
 	m_windSoundEffect.setVolume(0.5f);
 	connect(&m_windSoundEffect, &QSoundEffect::playingChanged, this, &RoomWidget::finishWindAudio);

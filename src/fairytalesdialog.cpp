@@ -14,6 +14,11 @@ FairytalesDialog::FairytalesDialog(fairytale *app, QWidget *parent, Qt::WindowFl
 	connect(backPushButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
+FairytalesDialog::~FairytalesDialog()
+{
+	clearFairytales();
+}
+
 void FairytalesDialog::playFairytale()
 {
 	QPushButton *button = dynamic_cast<QPushButton*>(QObject::sender());
@@ -76,7 +81,7 @@ void FairytalesDialog::showEvent(QShowEvent *event)
 	update();
 }
 
-void FairytalesDialog::update()
+void FairytalesDialog::clearFairytales()
 {
 	foreach (Fairytale *fairytale, m_fairytales.values())
 	{
@@ -84,6 +89,11 @@ void FairytalesDialog::update()
 	}
 
 	m_fairytales.clear();
+}
+
+void FairytalesDialog::update()
+{
+	clearFairytales();
 
 	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().begin(); iterator != m_app->customFairytales().end(); ++iterator)
 	{
@@ -98,12 +108,14 @@ void FairytalesDialog::update()
 		QPushButton *pushButton = new QPushButton(tr("Play"), widget);
 		widget->layout()->addWidget(pushButton);
 		connect(pushButton, &QPushButton::clicked, this, &FairytalesDialog::playFairytale);
-		//pushButton->setIconSize(QSize(32, 32));
-		//pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+		pushButton->setIconSize(QSize(32, 32));
+		pushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-start.png"));
 
 		QPushButton *deletePushButton = new QPushButton(tr("Delete"), widget);
 		widget->layout()->addWidget(deletePushButton);
 		connect(deletePushButton, &QPushButton::clicked, this, &FairytalesDialog::deleteFairytale);
+		deletePushButton->setIconSize(QSize(32, 32));
+		deletePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/dialog-close.png"));
 
 		QLabel *label = new QLabel(customFairytale->name(), widget);
 		widget->layout()->addWidget(label);
