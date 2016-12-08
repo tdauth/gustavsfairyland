@@ -8,6 +8,12 @@ ClickAnimation::ClickAnimation(RoomWidget *parent, const QPoint &position) : QOb
 
 }
 
+int ClickAnimation::radius() const
+{
+	const int availableWidth = qMax(m_roomWidget->rect().height(), m_roomWidget->rect().width());
+
+	return this->m_totalInterval * availableWidth / 10000;
+}
 
 void ClickAnimation::paint(QPainter *painter, QWidget *area)
 {
@@ -23,7 +29,7 @@ void ClickAnimation::paint(QPainter *painter, QWidget *area)
 	pen.setStyle(Qt::SolidLine);
 	painter->setPen(pen);
 
-	const int radius = this->m_totalInterval / 8;
+	const int radius = this->radius();
 
 	painter->drawPoint(m_position);
 	painter->drawEllipse(m_position, radius, radius);

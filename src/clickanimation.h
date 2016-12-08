@@ -25,9 +25,17 @@ class ClickAnimation : public QObject
 
 		bool isDone() const;
 
+		/**
+		 * \return Returns the current radius of the animation which depends on the elapsed time and size of the room widget.
+		 */
+		int radius() const;
+
 	private:
 		RoomWidget *m_roomWidget;
 		QPoint m_position;
+		/*
+		 * Total elapsed interval in MS.
+		 */
 		qint64 m_totalInterval;
 };
 
