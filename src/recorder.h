@@ -95,6 +95,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		};
 
 		Recorder(QWidget *parent = nullptr);
+		virtual ~Recorder();
 
 		QMediaRecorder::State state() const;
 
@@ -116,7 +117,11 @@ class Recorder : public QDialog, protected Ui::Recorder
 
 	private:
 		void waitUntilCameraIsReady();
-		void waitForRecordedFile(bool videoOrAudio);
+		/**
+		 * Blocks until the file is recorded or the recording is stopped manually or due to an error.
+		 * \return Returns true if no error occured. Otherwise it returns false.
+		 */
+		bool waitForRecordedFile(Mode mode);
 
 		QCamera *m_camera;
 		QMediaRecorder *m_recorder;
@@ -135,6 +140,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		bool m_finshedRecording;
 		bool m_isRecording;
 		Mode m_mode;
+		QString m_error;
 };
 
 inline QMediaRecorder::State Recorder::state() const

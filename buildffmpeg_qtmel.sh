@@ -12,5 +12,6 @@ if [ ! -e "$BUILD_DIR" ] ; then
 fi
 
 cd "$BUILD_DIR/ffmpeg-git-14d94a1"
-./configure --prefix="$BUILD_DIR"/install
+# Enable all necessary recording formats here.
+./configure --prefix="$BUILD_DIR"/install --enable-muxer=mp4 --enable-libx264 --enable-avisynth
 make -j4 install

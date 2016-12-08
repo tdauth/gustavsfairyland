@@ -48,7 +48,7 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 
 	public:
 		ClipEditor(fairytale *app, QWidget *parent);
-		~ClipEditor();
+		virtual ~ClipEditor();
 
 		/**
 		 * Fills the dialog GUI elements with data from \p clip.

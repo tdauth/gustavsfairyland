@@ -13,6 +13,12 @@ void Recorder::recordVideo()
 	m_cameraGrabber->setDeviceIndex(0);
 	m_qtmelRecorder->encoder()->setVideoSize(CameraGrabber::maximumFrameSize(m_cameraGrabber->deviceIndex()));
 
+	m_qtmelRecorder->encoder()->setFilePath(outputFile() + "video.avi");
+	qDebug() << "Encoder file path:" << m_qtmelRecorder->encoder()->filePath();
+
+	connect(m_cameraGrabber, &CameraGrabber::frameAvailable, this, &Recorder::showFrame);
+
+	//m_qtmelRecorder->encoder()->start(); // has to be called before but is done automatically in m_qtmelRecorder->start()
 	m_qtmelRecorder->start();
 	qDebug() << "Starting QtMEL video recording";
 #else
@@ -91,7 +97,8 @@ void Recorder::stopRecordingVideo()
 #ifndef USE_QTMEL
 	m_recorder->stop();
 #else
-	 m_qtmelRecorder->stop();
+	m_qtmelRecorder->stop();
+	disconnect(m_cameraGrabber, &CameraGrabber::frameAvailable, this, &Recorder::showFrame);
 #endif
 	m_isRecording = false;
 
@@ -177,7 +184,12 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 	{
 		qDebug() << "Waiting for recorded file";
 		// Make absolutely sure the file exists, when this method returns.
-		waitForRecordedFile(captureMode == QCamera::CaptureVideo);
+		if (!waitForRecordedFile(m_mode))
+		{
+			QMessageBox::critical(this, tr("Error"), m_error);
+
+			return QDialog::Rejected;
+		}
 	}
 
 	stopAllRecording();
@@ -218,7 +230,12 @@ int Recorder::showAudioRecorder(bool startRecording)
 	{
 		qDebug() << "Waiting for recorded audio";
 		// Make absolutely sure the file exists, when this method returns.
-		waitForRecordedFile(true);
+		if (!waitForRecordedFile(m_mode))
+		{
+			QMessageBox::critical(this, tr("Error"), m_error);
+
+			return QDialog::Rejected;
+		}
 	}
 
 	stopAllRecording();
@@ -263,7 +280,7 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	m_audioGrabber->setFormat(format);
 	m_qtmelRecorder->setAudioGrabber(m_audioGrabber);
 
-	//x264 loseless fast preset
+	// x264 loseless fast preset
 	VideoCodecSettings settings;
 	settings.setCoderType(EncoderGlobal::Vlc);
 	settings.setFlags(EncoderGlobal::LoopFilter);
@@ -302,17 +319,17 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	blackImage.fill(Qt::black);
 
 	m_frameLabel = new QLabel(this);
+	m_frameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_frameLabel->setPixmap(QPixmap::fromImage(blackImage));
-	verticalLayout->addWidget(m_frameLabel);
+	verticalLayout->insertWidget(0, m_frameLabel);
+	verticalLayout->setAlignment(m_frameLabel, Qt::AlignCenter);
 	m_frameLabel->repaint();
-
-	connect(m_cameraGrabber, &CameraGrabber::frameAvailable, this, &Recorder::showFrame);
 
 	connect(m_qtmelRecorder, &QtMELRecorder::stateChanged, this, &Recorder::videoRecorderStateChangedQtMEL);
 
-	//connect(m_qtmelRecorder->encoder(), &Encoder::error, this, &Recorder::onEncoderError);
-	//connect(m_cameraGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
-	//connect(m_audioGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
+	connect(m_qtmelRecorder->encoder(), SIGNAL(error(Encoder::Error)), this, SLOT(onEncoderError(Encoder::Error)));
+	connect(m_cameraGrabber, SIGNAL(AbstractGrabber::error(AbstractGrabber::Error)), this, SLOT(onGrabberError(AbstractGrabber::Error)));
+	connect(m_audioGrabber, SIGNAL(AbstractGrabber::error(AbstractGrabber::Error)), this, SLOT(onGrabberError(AbstractGrabber::Error)));
 #endif
 
 	m_recorder = new QMediaRecorder(m_camera);
@@ -357,6 +374,23 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	 * Make sure that all recording is finished after setting the state to rejected or accepted.
 	 */
 	connect(this, &QDialog::finished, this, &Recorder::stopAllRecording);
+}
+
+Recorder::~Recorder()
+{
+#ifdef USE_QTMEL
+	delete m_frameLabel;
+	m_frameLabel = nullptr;
+
+	delete m_cameraGrabber;
+	m_cameraGrabber = nullptr;
+
+	delete m_audioGrabber;
+	m_audioGrabber = nullptr;
+
+	delete m_qtmelRecorder;
+	m_qtmelRecorder = nullptr;
+#endif
 }
 
 void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
@@ -412,16 +446,13 @@ void Recorder::videoRecorderStateChangedQtMEL(QtMELRecorder::State state)
 
 void Recorder::onEncoderError(Encoder::Error error)
 {
-    Q_UNUSED(error)
-
-    qDebug()<<"Encoder's error number: "<<error;
+	qDebug() << "Encoder's error number: " << error;
+	qDebug() << "Encoder's error: " << m_qtmelRecorder->encoder()->errorString();
 }
 
 void Recorder::onGrabberError(AbstractGrabber::Error error)
 {
-    Q_UNUSED(error)
-
-    qDebug()<<"Grabber's error number: "<<error;
+	qDebug()<<"Grabber's error number: "<<error;
 }
 #endif
 
@@ -547,19 +578,64 @@ void Recorder::waitUntilCameraIsReady()
 	eventLoop.quit();
 }
 
-void Recorder::waitForRecordedFile(bool videoOrAudio)
+bool Recorder::waitForRecordedFile(Mode mode)
 {
 	QEventLoop eventLoop(this);
 
-	while (!m_finshedRecording && ((videoOrAudio && m_recorder->error() == QMediaRecorder::NoError) || !videoOrAudio))
+	while (!m_finshedRecording && (
+		((mode == Mode::RecordVideo || mode == Mode::RecordAudio) && (
+#ifndef USE_QTMEL
+			m_recorder->error() == QMediaRecorder::NoError
+#else
+			/*
+			 * If it is recording a video, check for the error states.
+			 */
+			(mode == Mode::RecordVideo &&
+			(
+				m_qtmelRecorder->encoder()->error() == Encoder::NoError
+				&& m_qtmelRecorder->imageGrabber()->error() == AbstractGrabber::NoError
+			))
+			|| mode != Mode::RecordVideo
+#endif
+		)
+		)
+		|| mode == Mode::CaptureImage
+	))
 	{
+		/*
+		 * Check every second for the conditions to end the blocking.
+		 * Handle all GUI events (stop buttons etc.) during the blocking.
+		 */
 		eventLoop.processEvents(QEventLoop::AllEvents, 1000);
 	}
 
+#ifndef USE_QTMEL
 	qDebug() << "Recorded file is " << m_finshedRecording << "and error is " << m_recorder->error() << "and status is" << m_recorder->status();
+
+	if (m_recorder->error() != QMediaRecorder::NoError)
+	{
+		m_error = m_recorder->error();
+
+		return false;
+	}
+#else
+	qDebug() << "Recorded file is " << m_finshedRecording << "and encoder error is " << m_qtmelRecorder->encoder()->error() << "and recorder error is" << m_qtmelRecorder->imageGrabber()->error() << "and state is" << m_qtmelRecorder->state();
+
+	if (mode == Mode::RecordVideo && (
+		m_qtmelRecorder->encoder()->error() != Encoder::NoError
+		|| m_qtmelRecorder->imageGrabber()->error() != AbstractGrabber::NoError))
+	{
+		m_error = tr("Encoder error code %1: %2. Image grabber error code %3: %4.").arg(m_qtmelRecorder->encoder()->error()).arg(m_qtmelRecorder->encoder()->errorString()).arg(m_qtmelRecorder->imageGrabber()->error()).arg(m_qtmelRecorder->imageGrabber()->errorString());
+
+		return false;
+	}
+#endif
+
 	eventLoop.quit();
 
 	m_finshedRecording = false;
+
+	return true;
 }
 
 }
