@@ -45,7 +45,8 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameUnix"
 
 	# .wmv for Windows. QtMultimedia uses a different backend on Windows 10 which does not support h264.
-	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -qscale 5 -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
+	# Use qscale, otherwise the quality is shit!
+	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -qscale:v 6 -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
 
 	# Deinterlaced for Android
 	# http://video.stackexchange.com/questions/17396/how-to-deinterlacing-with-ffmpeg
