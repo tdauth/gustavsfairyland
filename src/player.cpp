@@ -43,9 +43,7 @@ Player::Player(QWidget *parent, fairytale *app)
 	this->m_videoWidget->show();
 #endif
 
-	volumeSlider->setValue(100);
-	connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
-	this->setVolume(volumeSlider->value());
+	this->setVolume(100);
 
 	this->m_parallelSoundsMediaPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_parallelSoundsMediaPlayer, &QMediaPlayer::stateChanged, this, &Player::onChangeStateParallelSoundPlayer);
@@ -288,8 +286,6 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 		this->skipPushButton->setFocus();
 	}
 
-	this->volumeSlider->show();
-
 	this->descriptionLabel->setText(description);
 	const QUrl resolvedUrl = app->resolveClipUrl(url);
 
@@ -360,7 +356,6 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->skipPushButton->setFocus();
 	this->cancelPushButton->setVisible(duringGame);
 	this->pausePushButton->setVisible(duringGame);
-	this->volumeSlider->show();
 	this->skipAllPushButton->setVisible(prefix);
 
 	this->descriptionLabel->setText(description);
@@ -422,7 +417,6 @@ void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &desc
 	this->skipAllPushButton->hide();
 	this->cancelPushButton->hide();
 	this->pausePushButton->hide();
-	this->volumeSlider->hide();
 
 	this->descriptionLabel->setText(description);
 }

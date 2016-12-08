@@ -25,18 +25,22 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <layout class="QHBoxLayout" name="videoPlayerLayout">
-         <item>
-          <widget class="QSlider" name="volumeSlider">
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="descriptionLabel">
+         <property name="font">
+          <font>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="videoPlayerLayout"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="buttonsHorizontalLayout">
@@ -68,8 +72,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>663</width>
-                    <height>70</height>
+                    <width>685</width>
+                    <height>78</height>
                    </rect>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -223,19 +227,6 @@
          </item>
         </layout>
        </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
      <item>
@@ -247,26 +238,8 @@
      </item>
     </layout>
    </item>
-   <item>
-    <widget class="QLabel" name="descriptionLabel">
-     <property name="font">
-      <font>
-       <pointsize>24</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>volumeSlider</tabstop>
- </tabstops>
  <resources>
   <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
