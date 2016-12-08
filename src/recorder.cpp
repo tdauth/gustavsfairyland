@@ -555,10 +555,12 @@ void Recorder::pressStopRecording()
 	stopAllRecording();
 }
 
+#ifdef USE_QTMEL
 void Recorder::showFrame(const QImage &frame)
 {
 	m_frameLabel->setPixmap(QPixmap::fromImage(frame));
 }
+#endif
 
 void Recorder::hideEvent(QHideEvent *event)
 {
