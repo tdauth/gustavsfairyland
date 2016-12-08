@@ -65,6 +65,7 @@ class GameModeCreative : public GameMode
 		};
 
 		void setState(State state);
+		void clearAll();
 
 		State m_state;
 		fairytale::ClipKey m_currentSolution;

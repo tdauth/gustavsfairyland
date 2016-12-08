@@ -9,8 +9,11 @@ Finale TODOS:
 - DONE: About Bild größer, Schriftart
 - DONE: Aufnahmemodus viel einfacher machen
 - Extract a video frame if possible as default image.
-- Fenstersound einbauen.
+- DONE: Fenstersound einbauen.
 - Ab und zu Crash während Pages On The Ground.
+- Crash when ending the game (sometimes).
+- FIXED: Crash when retrying after creative mode.
+- FIXED: Complete fairytale button is misplaced after another round.
 - Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
 - Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
 - Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html

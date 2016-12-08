@@ -52,6 +52,8 @@ long int GameModeCreative::time()
 
 void GameModeCreative::afterNarrator()
 {
+	clearAll();
+
 	m_widget = new QWidget();
 	QGridLayout *gridLayout = new QGridLayout();
 	m_widget->setLayout(gridLayout);
@@ -131,30 +133,7 @@ void GameModeCreative::afterNarrator()
 
 void GameModeCreative::nextTurn()
 {
-	foreach (ClipButton *button, this->m_buttons)
-	{
-		delete button;
-	}
-
-	this->m_buttons.clear();
-
-	if (m_finishButton != nullptr)
-	{
-		delete m_finishButton;
-		m_finishButton = nullptr;
-	}
-
-	if (m_widget != nullptr)
-	{
-		delete m_widget;
-		m_widget = nullptr;
-	}
-
-	if (m_scrollArea != nullptr)
-	{
-		delete m_scrollArea;
-		m_scrollArea = nullptr;
-	}
+	clearAll();
 
 	setState(State::Running);
 }
@@ -181,24 +160,7 @@ void GameModeCreative::pause()
 
 void GameModeCreative::end()
 {
-	foreach (ClipButton *button, this->m_buttons)
-	{
-		delete button;
-	}
-
-	this->m_buttons.clear();
-
-	if (m_finishButton != nullptr)
-	{
-		delete m_finishButton;
-		m_finishButton = nullptr;
-	}
-
-	if (m_scrollArea != nullptr)
-	{
-		delete m_scrollArea;
-		m_scrollArea = nullptr;
-	}
+	clearAll();
 }
 
 void GameModeCreative::start()
@@ -218,6 +180,34 @@ QString GameModeCreative::id() const
 void GameModeCreative::setState(State state)
 {
 	this->m_state = state;
+}
+
+void GameModeCreative::clearAll()
+{
+	foreach (ClipButton *button, this->m_buttons)
+	{
+		delete button;
+	}
+
+	this->m_buttons.clear();
+
+	if (m_finishButton != nullptr)
+	{
+		delete m_finishButton;
+		m_finishButton = nullptr;
+	}
+
+	if (m_widget != nullptr)
+	{
+		delete m_widget;
+		m_widget = nullptr;
+	}
+
+	if (m_scrollArea != nullptr)
+	{
+		delete m_scrollArea;
+		m_scrollArea = nullptr;
+	}
 }
 
 bool GameModeCreative::hasToChooseTheSolution()
