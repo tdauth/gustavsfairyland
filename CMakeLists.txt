@@ -404,6 +404,7 @@ endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
