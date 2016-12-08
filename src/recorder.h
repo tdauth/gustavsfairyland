@@ -11,6 +11,8 @@
 #include "config.h"
 
 #ifdef USE_QTMEL
+#include <QLabel>
+
 #include <CameraGrabber>
 #include <AudioGrabber>
 #include <AudioCodecSettings>
@@ -20,6 +22,10 @@
 #endif
 
 #include "ui_recorder.h"
+
+#ifdef USE_QTMEL
+typedef Recorder QtMELRecorder;
+#endif
 
 namespace gustav
 {
@@ -36,6 +42,12 @@ class Recorder : public QDialog, protected Ui::Recorder
 	Q_OBJECT
 
 	private slots:
+#ifdef USE_QTMEL
+		void videoRecorderStateChangedQtMEL(QtMELRecorder::State state);
+
+		void onEncoderError(Encoder::Error error);
+		void onGrabberError(AbstractGrabber::Error error);
+#endif
 		void videoRecorderStateChanged(QMediaRecorder::State state);
 		void audioRecorderStateChanged(QMediaRecorder::State state);
 
@@ -46,6 +58,10 @@ class Recorder : public QDialog, protected Ui::Recorder
 		void pressRecordVideo();
 		void pressRecordAudio();
 		void pressStopRecording();
+
+#ifdef USE_QTMEL
+		void showFrame(const QImage &frame);
+#endif
 
 	public slots:
 		void recordVideo();
@@ -113,6 +129,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 		CameraGrabber *m_cameraGrabber;
 		AudioGrabber *m_audioGrabber;
 		QtMELRecorder *m_qtmelRecorder;
+		QLabel *m_frameLabel;
 #endif
 
 		bool m_finshedRecording;

@@ -9,6 +9,13 @@ namespace gustav
 
 void Recorder::recordVideo()
 {
+#ifdef USE_QTMEL
+	m_cameraGrabber->setDeviceIndex(0);
+	m_qtmelRecorder->encoder()->setVideoSize(CameraGrabber::maximumFrameSize(m_cameraGrabber->deviceIndex()));
+
+	m_qtmelRecorder->start();
+	qDebug() << "Starting QtMEL video recording";
+#else
 	qDebug() << "Camera:" << m_camera;
 	qDebug() << "capture mode supported: " << m_camera->isCaptureModeSupported(QCamera::CaptureVideo);
 	m_camera->start();
@@ -17,8 +24,10 @@ void Recorder::recordVideo()
 	qDebug() << "Recording from:" << m_recorder->mediaObject();
 	qDebug() << "Output file location:" << outputFile();
 	m_recorder->setOutputLocation(QUrl::fromLocalFile(outputFile()));
-	m_finshedRecording = false;
 	m_recorder->record();
+#endif
+
+	m_finshedRecording = false;
 	m_isRecording = true;
 
 	recordVideoPushButton->setText(tr("Pause Recording"));
@@ -79,7 +88,11 @@ void Recorder::pauseRecordingAudio()
 void Recorder::stopRecordingVideo()
 {
 	qDebug() << "Stop recording video";
+#ifndef USE_QTMEL
 	m_recorder->stop();
+#else
+	 m_qtmelRecorder->stop();
+#endif
 	m_isRecording = false;
 
 	recordVideoPushButton->setText(tr("Record Video"));
@@ -101,19 +114,26 @@ void Recorder::stopAllRecording()
 
 int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecording)
 {
+#ifndef USE_QTMEL
 	if (!m_camera->isCaptureModeSupported(captureMode))
 	{
 		QMessageBox::critical(this, tr("Camera Error"), tr("Capture mode %1 is not supporetd on this system.").arg(captureMode));
 
 		return QDialog::Rejected;
 	}
+#endif
 
 	// The result must not be Accepted!
 	setResult(QDialog::Rejected);
+
+#ifndef USE_QTMEL
 	m_camera->setCaptureMode(captureMode);
 	m_camera->start();
 
 	m_cameraViewFinder->show();
+#else
+	m_cameraViewFinder->hide();
+#endif
 	recordAudioPushButton->hide();
 
 	setCameraCaptureMode(captureMode);
@@ -137,7 +157,9 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 		 * Make sure that recording from the camera or capturing an image is working and does not produce any
 		 * error by waiting for the camera to become ready.
 		 */
+#ifndef USE_QTMEL
 		waitUntilCameraIsReady();
+#endif
 
 		if (captureMode == QCamera::CaptureVideo)
 		{
@@ -160,7 +182,9 @@ int Recorder::showCameraFinder(QCamera::CaptureMode captureMode, bool startRecor
 
 	stopAllRecording();
 	// Stop the camera when everything is done.
+#ifndef USE_QTMEL
 	m_camera->stop();
+#endif
 
 	return result;
 }
@@ -210,6 +234,8 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 #endif
 , m_finshedRecording(false), m_isRecording(false)
 {
+	setupUi(this);
+
 	const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
 
 	foreach (const QCameraInfo &cameraInfo, cameras)
@@ -242,8 +268,7 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	settings.setCoderType(EncoderGlobal::Vlc);
 	settings.setFlags(EncoderGlobal::LoopFilter);
 	settings.setMotionEstimationComparison(1);
-	// TODO FIXME
-	//settings.setPartitions(EncoderGlobal::I4x4 | EncoderGlobal::P8x8);
+	settings.setPartitions(EncoderGlobal::I4x4 | EncoderGlobal::P8x8);
 	settings.setMotionEstimationMethod(EncoderGlobal::Hex);
 	settings.setSubpixelMotionEstimationQuality(3);
 	settings.setMotionEstimationRange(16);
@@ -263,7 +288,6 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 
 	m_qtmelRecorder->encoder()->setVideoCodecSettings(settings);
 
-	AudioGrabber *m_audioGrabber;
 	AudioCodecSettings audioSettings;
 	audioSettings.setSampleRate(m_audioGrabber->format().sampleRate());
 	audioSettings.setChannelCount(m_audioGrabber->format().channelCount());
@@ -273,6 +297,22 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	m_qtmelRecorder->encoder()->setVideoCodec(EncoderGlobal::H264);
 	m_qtmelRecorder->encoder()->setAudioCodec(EncoderGlobal::MP3);
 	m_qtmelRecorder->encoder()->setOutputPixelFormat(EncoderGlobal::YUV420P);
+
+	QImage blackImage(640, 480, QImage::Format_RGB888);
+	blackImage.fill(Qt::black);
+
+	m_frameLabel = new QLabel(this);
+	m_frameLabel->setPixmap(QPixmap::fromImage(blackImage));
+	verticalLayout->addWidget(m_frameLabel);
+	m_frameLabel->repaint();
+
+	connect(m_cameraGrabber, &CameraGrabber::frameAvailable, this, &Recorder::showFrame);
+
+	connect(m_qtmelRecorder, &QtMELRecorder::stateChanged, this, &Recorder::videoRecorderStateChangedQtMEL);
+
+	//connect(m_qtmelRecorder->encoder(), &Encoder::error, this, &Recorder::onEncoderError);
+	//connect(m_cameraGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
+	//connect(m_audioGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
 #endif
 
 	m_recorder = new QMediaRecorder(m_camera);
@@ -299,8 +339,6 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	qDebug() << "Selected audio codec" << m_audioRecorder->audioSettings().codec();
 
 	m_camera->setViewfinder(m_cameraViewFinder);
-
-	setupUi(this);
 
 	verticalLayout->replaceWidget(cameraFinderWidget, m_cameraViewFinder);
 	m_cameraViewFinder->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -340,6 +378,52 @@ void Recorder::setCameraCaptureMode(QCamera::CaptureMode captureMode)
 		stopPushButton->show();
 	}
 }
+
+#ifdef USE_QTMEL
+void Recorder::videoRecorderStateChangedQtMEL(QtMELRecorder::State state)
+{
+	qDebug() << "Changed video recorder changed" << state;
+
+	switch (state)
+	{
+		case QtMELRecorder::StoppedState:
+		{
+			m_isRecording = false;
+			m_finshedRecording = true;
+
+			break;
+		}
+
+		case QtMELRecorder::SuspendedState:
+		{
+			m_isRecording = false;
+
+			break;
+		}
+
+		case QtMELRecorder::ActiveState:
+		{
+			m_isRecording = true;
+
+			break;
+		}
+	}
+}
+
+void Recorder::onEncoderError(Encoder::Error error)
+{
+    Q_UNUSED(error)
+
+    qDebug()<<"Encoder's error number: "<<error;
+}
+
+void Recorder::onGrabberError(AbstractGrabber::Error error)
+{
+    Q_UNUSED(error)
+
+    qDebug()<<"Grabber's error number: "<<error;
+}
+#endif
 
 void Recorder::videoRecorderStateChanged(QMediaRecorder::State state)
 {
@@ -438,6 +522,11 @@ void Recorder::pressRecordAudio()
 void Recorder::pressStopRecording()
 {
 	stopAllRecording();
+}
+
+void Recorder::showFrame(const QImage &frame)
+{
+	m_frameLabel->setPixmap(QPixmap::fromImage(frame));
 }
 
 void Recorder::hideEvent(QHideEvent *event)
