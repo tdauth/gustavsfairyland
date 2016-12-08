@@ -107,7 +107,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clipeditor.h" line="553"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Erweitert</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="555"/>
@@ -308,7 +308,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="165"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Speichern</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="166"/>
@@ -432,30 +432,31 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="133"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
-        <translation>Es war einmal vor langer Zeit da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
+        <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="165"/>
+        <location filename="../src/customfairytaledialog.cpp" line="157"/>
+        <source>And if %1 did not die then %2 is still alive today.&lt;br/&gt;End</source>
+        <translation>Und wenn %1 nicht gestorben ist, dann lebt %2 noch heute.&lt;br/&gt;Ende</translation>
+    </message>
+    <message>
         <source> and </source>
-        <translation> und </translation>
+        <translation type="vanished"> und </translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="166"/>
         <source>And if %1 did not die then %2 %3 still alive today.&lt;br/&gt;End</source>
-        <translation>Und wenn %1 nicht gestorben ist dann %2 %3 noch heute.&lt;br/&gt;Ende</translation>
+        <translation type="vanished">Und wenn %1 nicht gestorben ist dann %2 %3 noch heute.&lt;br/&gt;Ende</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="166"/>
         <source>are</source>
-        <translation>sind</translation>
+        <translation type="vanished">sind</translation>
+    </message>
+    <message>
+        <source>is</source>
+        <translation type="vanished">ist</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="166"/>
-        <source>is</source>
-        <translation>ist</translation>
-    </message>
-    <message>
-        <location filename="../src/customfairytaledialog.cpp" line="175"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation>Aber niemand weiß, was als Nächstes geschah.&lt;br/&gt;Ende</translation>
     </message>
@@ -840,37 +841,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_recorder.h" line="160"/>
         <source>Recorder View</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahmeansicht</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="161"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton aufnehmen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="162"/>
         <source>Record Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video aufnehmen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="163"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Anhalten</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="164"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="165"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../build/ui_recorder.h" line="166"/>
         <source>Make Photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Foto machen</translation>
     </message>
 </context>
 <context>
@@ -918,7 +919,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_settings.h" line="269"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Name</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="252"/>
@@ -1020,7 +1021,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/settingsdialog.cpp" line="356"/>
         <source>Intro</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Intro</translation>
     </message>
     <message>
         <location filename="../src/settingsdialog.cpp" line="362"/>

@@ -411,27 +411,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="165"/>
-        <source> and </source>
+        <location filename="../src/customfairytaledialog.cpp" line="157"/>
+        <source>And if %1 did not die then %2 is still alive today.&lt;br/&gt;End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="166"/>
-        <source>And if %1 did not die then %2 %3 still alive today.&lt;br/&gt;End</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/customfairytaledialog.cpp" line="166"/>
-        <source>are</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/customfairytaledialog.cpp" line="166"/>
-        <source>is</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/customfairytaledialog.cpp" line="175"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation type="unfinished"></translation>
     </message>
