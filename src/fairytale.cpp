@@ -1263,6 +1263,8 @@ bool fairytale::loadLanguage(const QString &language)
 	}
 
 #ifdef Q_OS_WIN
+	/*
+	TODO Seems to replace the old loaded file.
 	const QString qtTranslationsDirPath = QDir::current().filePath("translations");
 	const QString qtFileName = QString("qt_") + language + ".qm";
 
@@ -1276,6 +1278,7 @@ bool fairytale::loadLanguage(const QString &language)
 		qDebug() << "Did not load file: " << qtFileName << " from dir " << qtTranslationsDirPath;
 		qWarning() << "File not loaded";
 	}
+	*/
 #endif
 
 	// Do always update since the file might be empty (for English).
