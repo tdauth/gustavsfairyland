@@ -36,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>713</width>
-        <height>70</height>
+        <width>709</width>
+        <height>69</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -83,8 +83,8 @@
          <string>Retry</string>
         </property>
         <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-          <normaloff>:/themes/oxygen/48x48/actions/edit-redo.png</normaloff>:/themes/oxygen/48x48/actions/edit-redo.png</iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -100,8 +100,8 @@
          <string>Close</string>
         </property>
         <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-          <normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -117,8 +117,8 @@
          <string>Save</string>
         </property>
         <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-          <normaloff>:/themes/oxygen/48x48/actions/document-save.png</normaloff>:/themes/oxygen/48x48/actions/document-save.png</iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/document-save.png</normaloff>:/themes/oxygen/32x32/actions/document-save.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -137,8 +137,8 @@
          <string>Play Custom Fairytale</string>
         </property>
         <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-          <normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</iconset>
+         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -180,7 +180,7 @@
   <tabstop>textBrowser</tabstop>
  </tabstops>
  <resources>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
  </resources>
  <connections/>
 </ui>

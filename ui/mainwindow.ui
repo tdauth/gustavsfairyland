@@ -61,9 +61,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-420</y>
-         <width>488</width>
-         <height>776</height>
+         <y>-404</y>
+         <width>487</width>
+         <height>714</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -93,7 +93,7 @@
               <string>Custom Game</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                <normaloff>:/themes/oxygen/32x32/actions/games-solve.png</normaloff>:/themes/oxygen/32x32/actions/games-solve.png</iconset>
              </property>
              <property name="iconSize">
@@ -115,7 +115,7 @@
               <string>Bonus Clips</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                <normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</normaloff>:/themes/oxygen/32x32/actions/games-achievements.png</iconset>
              </property>
              <property name="iconSize">
@@ -137,7 +137,7 @@
               <string>Record</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                <normaloff>:/themes/oxygen/32x32/devices/camera-web.png</normaloff>:/themes/oxygen/32x32/devices/camera-web.png</iconset>
              </property>
              <property name="iconSize">
@@ -196,8 +196,8 @@
               <string>Let's Go!</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-               <normaloff>:/themes/oxygen/128x128/apps/preferences-desktop-gaming.png</normaloff>:/themes/oxygen/128x128/apps/preferences-desktop-gaming.png</iconset>
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+               <normaloff>:/themes/oxygen/32x32/apps/preferences-desktop-gaming.png</normaloff>:/themes/oxygen/32x32/apps/preferences-desktop-gaming.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -235,7 +235,7 @@
                     <string>Settings</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                    <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                      <normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</normaloff>:/themes/oxygen/32x32/actions/games-config-options.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -252,7 +252,7 @@
                     <string>Language</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                    <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                      <normaloff>:/themes/oxygen/32x32/categories/applications-education-language.png</normaloff>:/themes/oxygen/32x32/categories/applications-education-language.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -269,8 +269,8 @@
                     <string>Credits</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                     <normaloff>:/themes/oxygen/48x48/actions/help-about.png</normaloff>:/themes/oxygen/48x48/actions/help-about.png</iconset>
+                    <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                     <normaloff>:/themes/oxygen/32x32/actions/help-about.png</normaloff>:/themes/oxygen/32x32/actions/help-about.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -286,7 +286,7 @@
                     <string>Editor</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                    <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                      <normaloff>:/themes/oxygen/32x32/actions/games-config-background.png</normaloff>:/themes/oxygen/32x32/actions/games-config-background.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -320,8 +320,8 @@
               <string>High Scores</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-               <normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</normaloff>:/themes/oxygen/22x22/actions/games-highscores.png</iconset>
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+               <normaloff>:/themes/oxygen/32x32/actions/games-highscores.png</normaloff>:/themes/oxygen/32x32/actions/games-highscores.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -355,7 +355,7 @@
               <string>Saved Fairytales</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                <normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</normaloff>:/themes/oxygen/32x32/actions/tools-wizard.png</iconset>
              </property>
              <property name="iconSize">
@@ -389,7 +389,7 @@
               <string>Quit</string>
              </property>
              <property name="icon">
-              <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
              </property>
              <property name="iconSize">
@@ -429,7 +429,7 @@
           <string>Pause Game (P)</string>
          </property>
          <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+          <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
            <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -446,8 +446,8 @@
           <string>Cancel Game (C)</string>
          </property>
          <property name="icon">
-          <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-           <normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</normaloff>:/themes/oxygen/48x48/actions/dialog-close.png</iconset>
+          <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+           <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -534,7 +534,7 @@
  </tabstops>
  <resources>
   <include location="../resource.qrc"/>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
  </resources>
  <connections>
   <connection>

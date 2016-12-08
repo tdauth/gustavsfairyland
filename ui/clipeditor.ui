@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>384</width>
-        <height>1409</height>
+        <width>383</width>
+        <height>1310</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -123,7 +123,7 @@
                     </property>
                     <property name="icon">
                      <iconset>
-                      <normalon>:/themes/oxygen/128x128/devices/camera-web.png</normalon>
+                      <normalon>:/themes/oxygen/32x32/devices/camera-web.png</normalon>
                      </iconset>
                     </property>
                     <property name="iconSize">
@@ -140,8 +140,8 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                      <normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</iconset>
+                     <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                      <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -193,9 +193,9 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset>
-                      <normalon>:/themes/oxygen/128x128/devices/audio-input-microphone.png</normalon>
-                     </iconset>
+                     <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                      <normaloff>:/themes/oxygen/32x32/devices/audio-input-microphone.png</normaloff>
+                      <normalon>:/themes/oxygen/128x128/devices/audio-input-microphone.png</normalon>:/themes/oxygen/32x32/devices/audio-input-microphone.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -211,8 +211,8 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                      <normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</normaloff>:/themes/oxygen/48x48/actions/media-playback-start.png</iconset>
+                     <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                      <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -264,9 +264,9 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                      <normaloff>:/themes/oxygen/128x128/devices/camera-photo.png</normaloff>
-                      <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>:/themes/oxygen/128x128/devices/camera-photo.png</iconset>
+                     <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                      <normaloff>:/themes/oxygen/32x32/devices/camera-photo.png</normaloff>
+                      <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>:/themes/oxygen/32x32/devices/camera-photo.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -282,8 +282,8 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-                      <normaloff>:/themes/oxygen/48x48/actions/edit-image-face-recognize.png</normaloff>:/themes/oxygen/48x48/actions/edit-image-face-recognize.png</iconset>
+                     <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                      <normaloff>:/themes/oxygen/32x32/actions/edit-image-face-recognize.png</normaloff>:/themes/oxygen/32x32/actions/edit-image-face-recognize.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -377,9 +377,9 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>
-                   </iconset>
+                   <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                    <normaloff>:/themes/oxygen/32x32/places/folder-blue.png</normaloff>
+                    <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>:/themes/oxygen/32x32/places/folder-blue.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -429,9 +429,9 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>
-                   </iconset>
+                   <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                    <normaloff>:/themes/oxygen/32x32/places/folder-blue.png</normaloff>
+                    <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>:/themes/oxygen/32x32/places/folder-blue.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -516,9 +516,9 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normalon>:/themes/oxygen/128x128/devices/audio-input-microphone.png</normalon>
-                      </iconset>
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                       <normaloff>:/themes/oxygen/32x32/devices/audio-input-microphone.png</normaloff>
+                       <normalon>:/themes/oxygen/128x128/devices/audio-input-microphone.png</normalon>:/themes/oxygen/32x32/devices/audio-input-microphone.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -534,7 +534,7 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
                        <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -557,9 +557,9 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>
-                      </iconset>
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                       <normaloff>:/themes/oxygen/32x32/places/folder-blue.png</normaloff>
+                       <normalon>:/themes/oxygen/128x128/places/folder-blue.png</normalon>:/themes/oxygen/32x32/places/folder-blue.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -575,9 +575,9 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normalon>:/themes/oxygen/128x128/actions/application-exit.png</normalon>
-                      </iconset>
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                       <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>
+                       <normalon>:/themes/oxygen/128x128/actions/application-exit.png</normalon>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -645,9 +645,9 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normalon>:/themes/oxygen/128x128/actions/appointment-new.png</normalon>
-                      </iconset>
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                       <normaloff>:/themes/oxygen/32x32/actions/appointment-new.png</normaloff>
+                       <normalon>:/themes/oxygen/128x128/actions/appointment-new.png</normalon>:/themes/oxygen/32x32/actions/appointment-new.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -663,9 +663,9 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normalon>:/themes/oxygen/128x128/actions/application-exit.png</normalon>
-                      </iconset>
+                      <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+                       <normaloff>:/themes/oxygen/32x32/actions/application-exit.png</normaloff>
+                       <normalon>:/themes/oxygen/128x128/actions/application-exit.png</normalon>:/themes/oxygen/32x32/actions/application-exit.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -736,7 +736,7 @@
   <tabstop>descriptionsListWidget</tabstop>
  </tabstops>
  <resources>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
  </resources>
  <connections>
   <connection>

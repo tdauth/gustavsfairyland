@@ -57,8 +57,8 @@
            <string>Record Audio</string>
           </property>
           <property name="icon">
-           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
-            <normaloff>:/themes/oxygen/128x128/devices/audio-input-microphone.png</normaloff>:/themes/oxygen/128x128/devices/audio-input-microphone.png</iconset>
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+            <normaloff>:/themes/oxygen/32x32/devices/audio-input-microphone.png</normaloff>:/themes/oxygen/32x32/devices/audio-input-microphone.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -74,9 +74,9 @@
            <string>Record Video</string>
           </property>
           <property name="icon">
-           <iconset>
-            <normalon>:/themes/oxygen/128x128/devices/camera-web.png</normalon>
-           </iconset>
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+            <normaloff>:/themes/oxygen/32x32/devices/camera-web.png</normaloff>
+            <normalon>:/themes/oxygen/128x128/devices/camera-web.png</normalon>:/themes/oxygen/32x32/devices/camera-web.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -92,7 +92,7 @@
            <string>Stop</string>
           </property>
           <property name="icon">
-           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
             <normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-pause.png</iconset>
           </property>
           <property name="iconSize">
@@ -109,7 +109,7 @@
            <string>Cancel</string>
           </property>
           <property name="icon">
-           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
             <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
           </property>
           <property name="iconSize">
@@ -126,7 +126,7 @@
            <string>OK</string>
           </property>
           <property name="icon">
-           <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
             <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
           </property>
           <property name="iconSize">
@@ -152,9 +152,9 @@
            <string>Make Photo</string>
           </property>
           <property name="icon">
-           <iconset>
-            <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>
-           </iconset>
+           <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+            <normaloff>:/themes/oxygen/32x32/devices/camera-photo.png</normaloff>
+            <normalon>:/themes/oxygen/128x128/devices/camera-photo.png</normalon>:/themes/oxygen/32x32/devices/camera-photo.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -199,7 +199,7 @@
   <tabstop>recordAudioPushButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
  </resources>
  <connections/>
 </ui>

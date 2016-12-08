@@ -199,7 +199,7 @@ if (NOT WIN32)
     QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/oxygen.qrc)
 # There is an out of memory allocation on Windows with the Oxygen resources file.
 else ()
-    QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc)
+   QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/oxygen_windows.qrc)
 endif ()
 
 if (ANDROID)
