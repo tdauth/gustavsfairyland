@@ -6,7 +6,7 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <QElapsedTimer>
-#include <QSoundEffect>
+#include <QSound>
 #include <QSvgRenderer>
 
 #include "fairytale.h"
@@ -38,6 +38,7 @@ class RoomWidget : public RoomWidgetParent
 	public slots:
 		void changeWind();
 		void updatePaint();
+		void windSoundStateChanged(QMediaPlayer::State state);
 
 	public:
 		typedef QVector<Door*> Doors;
@@ -93,8 +94,6 @@ class RoomWidget : public RoomWidgetParent
 
 		virtual void changeEvent(QEvent *event) override;
 
-	private slots:
-		void finishWindAudio();
 	private:
 		/**
 		 * Only plays a random sound from the given list \p soundEffects if the last played sound did already finish.
@@ -119,7 +118,7 @@ class RoomWidget : public RoomWidgetParent
 		QSvgRenderer m_woodSvg;
 		QImage m_woodImage;
 		QImage m_woodImageDisabled;
-		QSoundEffect m_windSoundEffect;
+		QMediaPlayer *m_windSoundPlayer;
 		bool m_playWindSound = true;
 
 		ClickAnimations m_clickAnimations;

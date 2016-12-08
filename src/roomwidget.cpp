@@ -94,7 +94,8 @@ void RoomWidget::changeWind()
 	if (m_playWindSound)
 	{
 		m_playWindSound = false;
-		m_windSoundEffect.play();
+		m_windSoundPlayer->setMedia(QUrl("qrc:/resources/wind.wav"));
+		m_windSoundPlayer->play();
 	}
 }
 
@@ -133,6 +134,23 @@ void RoomWidget::updatePaint()
 
 	// Now get the duration it took to repaint the whole widget which might be longer than the timer interval.
 	m_paintTime = overrunTimer.elapsed();
+}
+
+void RoomWidget::windSoundStateChanged(QMediaPlayer::State state)
+{
+	if (state == QMediaPlayer::StoppedState)
+	{
+		// play loop
+		if (this->isEnabled())
+		{
+			m_windSoundPlayer->play();
+		}
+		// can play again
+		else
+		{
+			m_playWindSound = true;
+		}
+	}
 }
 
 int RoomWidget::floatingClipWidth() const
@@ -194,7 +212,7 @@ int RoomWidget::maxCollisionDistance() const
 	return availableWidth / 5;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_playWindSound(true)
+RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true)
 {
 	// The room widget is painted all the time directly.
 	//this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -214,10 +232,10 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 	this->m_paintTimer->setTimerType(Qt::PreciseTimer);
 	connect(this->m_paintTimer, SIGNAL(timeout()), this, SLOT(updatePaint()));
 
-	m_windSoundEffect.setSource(QUrl("qrc:/resources/wind.wav"));
-	m_windSoundEffect.setLoopCount(QSoundEffect::Infinite);
-	m_windSoundEffect.setVolume(0.5f);
-	connect(&m_windSoundEffect, &QSoundEffect::playingChanged, this, &RoomWidget::finishWindAudio);
+	m_windSoundPlayer->setAudioRole(QAudio::GameRole);
+	m_windSoundPlayer->setVolume(10);
+
+	connect(m_windSoundPlayer, &QMediaPlayer::stateChanged, this, &RoomWidget::windSoundStateChanged);
 
 //	qDebug() << "Current Context:" << this->format();
 }
@@ -254,8 +272,7 @@ void RoomWidget::pause()
 	this->gameMode()->app()->repaint(); // repaint the whole main window
 	this->repaint(); // repaint once disable
 
-	m_windSoundEffect.stop();
-	m_playWindSound = true;
+	m_windSoundPlayer->stop();
 }
 
 void RoomWidget::resume()
@@ -435,11 +452,6 @@ void RoomWidget::changeEvent(QEvent* event)
 	}
 
 	RoomWidgetParent::changeEvent(event);
-}
-
-void RoomWidget::finishWindAudio()
-{
-	m_playWindSound = !m_windSoundEffect.isPlaying();
 }
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
