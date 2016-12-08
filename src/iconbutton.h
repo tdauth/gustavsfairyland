@@ -23,12 +23,10 @@ class IconButton : public QPushButton
 
 		QString m_file;
 		QPixmap m_pixmap; // cache the pixmap for faster resizing
-		int m_timerId = 0;
 
 	protected:
 		/// Updates the size of the shown image automatically.
 		virtual void resizeEvent(QResizeEvent *e) override;
-		virtual void timerEvent(QTimerEvent *e) override;
 };
 
 inline void IconButton::setFile(const QString &file)

@@ -33,31 +33,5 @@ void IconButton::resizeEvent(QResizeEvent *e)
 {
 	QPushButton::resizeEvent(e);
 
-	/*
-	 * Kill running refreshes that there is only one single refresh.
-	 */
-	if (m_timerId)
-	{
-		killTimer(m_timerId);
-		m_timerId = 0;
-	}
-
-	/*
-	 * Instead of updating the size everytime the button is resized, only update it after
-	 * a certain amount of time.
-	 */
-	m_timerId = startTimer(1000 /*delay beetween ends of resize and your action*/);
-
-	//qDebug() << "button was resized!";
-}
-
-void IconButton::timerEvent(QTimerEvent *e)
-{
-	QPushButton::timerEvent(e);
-
 	updateIcon();
-
-	/* your actions here */
-	killTimer(e->timerId());
-	m_timerId = 0;
 }
