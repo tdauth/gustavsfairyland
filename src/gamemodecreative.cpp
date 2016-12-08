@@ -82,6 +82,7 @@ void GameModeCreative::afterNarrator()
 
 			this->m_buttons.push_back(button);
 			gridLayout->addWidget(button, row, column);
+			button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 			button->show(); // first show and resize
 			button->updateGeometry();
 
@@ -260,7 +261,18 @@ GameModeCreative::ClipButton::ClipButton(QWidget *parent, fairytale::ClipKey cli
 	QVBoxLayout *layout = new QVBoxLayout();
 	setLayout(layout);
 	layout->addWidget(m_iconButton);
+	layout->setAlignment(m_iconButton, Qt::AlignCenter);
+	m_iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	m_iconButton->setMaximumSize(QSize(128, 128));
+	m_iconButton->setMinimumSize(QSize(128, 128));
 	layout->addWidget(m_label);
 	layout->setAlignment(m_label, Qt::AlignCenter);
+	// Keep the font size small, otherwise the buttons become too big, too.
+	QFont font = m_label->font();
+	font.setPointSize(15);
+	m_label->setFont(font);
+	m_label->setScaledContents(true);
+	m_label->setWordWrap(true);
+	m_label->setAlignment(Qt::AlignCenter);
 }
 

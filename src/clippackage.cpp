@@ -884,7 +884,7 @@ int ClipPackage::rounds() const
 
 	if (acts > persons - 1)
 	{
-		return persons - 1;
+		return qMax(persons - 1, 0);
 	}
 
 	return acts;

@@ -401,7 +401,7 @@ set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "gustavsfairyland")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-set(CPACK_PACKAGE_EXECUTABLES "gustavsfairyland" "Gustav's Fairland")
+set(CPACK_PACKAGE_EXECUTABLES "gustavsfairyland" "Gustav's Fairyland")
 set(CPACK_CREATE_DESKTOP_LINKS "gustavsfairyland")
 set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
 

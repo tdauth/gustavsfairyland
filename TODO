@@ -10,10 +10,16 @@ Finale TODOS:
 - DONE: Aufnahmemodus viel einfacher machen
 - Extract a video frame if possible as default image.
 - DONE: Fenstersound einbauen.
+- Edit the font and support the character ß by using two s characters.
+- FIXED: Windows Menu Title is Fareland.
 - Ab und zu Crash während Pages On The Ground.
+- Always use the relative path as clips dir, easier to use when reinstalling the game!
+- DONE: Improve the layout (button size) for the creative mode.
+- Maybe show the current fairytale at the top.
 - Crash when ending the game (sometimes).
 - FIXED: Crash when retrying after creative mode.
 - FIXED: Complete fairytale button is misplaced after another round.
+- Make one abstract class which requires the method retranslateUi() and implements the language event.
 - Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
 - Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
 - Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
@@ -80,11 +86,11 @@ Weitere TODOs:
 - DONE: Geschwindigkeit erhöhen?
 - DONE: Highscores
 - DONE: kleines Icon
-- Titelschriftzug, Logo
+- DONE: Titelschriftzug, Logo
 - DONE: Holzboden
 - DONE: Fenster öffnen, anders darstellen
 - DONE: Erfolge, Bonusvideos werden freigeschaltet, z. B. Mahlervideos oder Zusatz von den Figuren (z. B. in bestimmter Zeit, viele Siege, mit andere Schwierigkeit, schneller)
-- Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
+- DONE: Bei Gewonnen Bild von mir als Mahler mit Daumen hoch in Dialog,
 - DONE: Bei Pause RoomWidget ausgrauen
 - DONE: Märchen während Spielanzeigen fixen (geht nur einmal)
 - Iconsymbol für Märchen: Frosch, Krone
