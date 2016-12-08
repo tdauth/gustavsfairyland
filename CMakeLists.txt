@@ -78,7 +78,7 @@ if (USE_QTMEL)
 		message(STATUS "Found avcodec.h in: ${AV_INCLUDE}")
 	endif ()
 
-	add_custom_target(ffmpegQtMEL ALL bash buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_SOURCE_DIR}/buildffmpeg_qtmel.sh")
+	add_custom_target(ffmpegQtMEL ALL bash -x buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_SOURCE_DIR}/buildffmpeg_qtmel.sh")
 	set(AV_INCLUDE "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/include/")
 	set(AV_LIBRARY_DIR "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/lib/")
 
