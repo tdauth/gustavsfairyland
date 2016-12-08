@@ -428,7 +428,7 @@ void SettingsDialog::load(QSettings &settings)
 	this->musicCheckBox->setChecked(settings.value("music", true).toBool());
 	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
 // showing maximized or fullscren leads to menu actions disappearing on a smartphone
-#ifndef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	const bool defaultShowFullScreen = false;
 #else
 	const bool defaultShowFullScreen = true;
