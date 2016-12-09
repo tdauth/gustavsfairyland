@@ -1266,7 +1266,7 @@ bool fairytale::loadLanguage(const QString &language)
 	}
 
 #ifdef Q_OS_WIN
-	const QString qtTranslationsDirPath = QDir::current().filePath("translations");
+	const QString qtTranslationsDirPath = QDir(QCoreApplication::applicationDirPath()).filePath("translations");
 	const QString qtFileName = QString("qt_") + language + ".qm";
 
 	if (m_qtTranslator.load(fileName, qtTranslationsDirPath))

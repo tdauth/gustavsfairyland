@@ -183,62 +183,62 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="200"/>
+        <location filename="../build/ui_clippackagedialog.h" line="202"/>
         <source>Select Clip Package</source>
         <translation>Clip-Paket auswählen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="202"/>
+        <location filename="../build/ui_clippackagedialog.h" line="204"/>
         <source>Game Mode:</source>
         <translation>Spielmodus:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="203"/>
+        <location filename="../build/ui_clippackagedialog.h" line="205"/>
         <source>Difficulty:</source>
         <translation>Schwierigkeitsgrad:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="206"/>
+        <location filename="../build/ui_clippackagedialog.h" line="208"/>
         <source>Easy</source>
         <translation>Leicht</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="207"/>
+        <location filename="../build/ui_clippackagedialog.h" line="209"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="208"/>
+        <location filename="../build/ui_clippackagedialog.h" line="210"/>
         <source>Hard</source>
         <translation>Schwer</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="209"/>
+        <location filename="../build/ui_clippackagedialog.h" line="211"/>
         <source>Mahlerisch</source>
         <translation>Mahlerisch</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="211"/>
+        <location filename="../build/ui_clippackagedialog.h" line="213"/>
         <source>Advanced</source>
         <translation>Erweitert</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="213"/>
+        <location filename="../build/ui_clippackagedialog.h" line="215"/>
         <source>Clip Packages:</source>
         <translation>Clip-Pakete:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="214"/>
+        <location filename="../build/ui_clippackagedialog.h" line="216"/>
         <source>Use Max Rounds</source>
         <translation>Maximale Rundenzahl verwenden</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="215"/>
+        <location filename="../build/ui_clippackagedialog.h" line="217"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="216"/>
+        <location filename="../build/ui_clippackagedialog.h" line="218"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>

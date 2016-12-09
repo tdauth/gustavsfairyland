@@ -71,6 +71,7 @@ void LocaleDialog::update()
 		QRadioButton *pushButton = new QRadioButton(fairytale::localeToName(locale), this);
 		pushButton->setIconSize(QSize(32, 32));
 		pushButton->setIcon(QIcon(QString(":/resources/") + locale + ".svg"));
+		pushButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		qDebug() << "Locale" << locale << "Current translation" << m_app->currentTranslation();
 
 		if (locale == m_app->currentTranslation())
