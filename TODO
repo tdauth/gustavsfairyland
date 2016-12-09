@@ -1,4 +1,4 @@
-Finale TODOS:
+Finale TODOS Version 1.0 (Windows und Linux):
 - DONE: Icons
 - DONE: Sounds: Wind, Fenster, Turm, Schloss
 - DONE: Logo-Erstellung
@@ -8,31 +8,23 @@ Finale TODOS:
 - FIXED: Letzter Clip kommt zweimal.
 - DONE: About Bild größer, Schriftart
 - DONE: Aufnahmemodus viel einfacher machen
-- Extract a video frame if possible as default image.
 - DONE: Fenstersound einbauen.
 - DONE: Flag Icons: https://github.com/lipis/flag-icon-css
 - FIXED: Princess and Grandpa Jott have not equal width and height for their image. Change this on Linux and redeploy the clip files.
 - FIXED: Edit the font and support the character ß by using two s characters.
-- Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
 - Qt translations are not changed on Windows when changing the language (on Linux, too?).
 - FIXED: Qt translations on Linux.
-- Qt translations on Android.
 - DONE: Add flag icons for languages please.
 - FIXED: Windows Menu Title is Fareland.
 - Ab und zu Crash während Pages On The Ground.
-- Always use the relative path as clips dir on Windows, easier to use when reinstalling the game!
+- DONE (via MessageBox): Always use the relative path as clips dir on Windows, easier to use when reinstalling the game!
 - DONE: Improve the layout (button size) for the creative mode.
-- Maybe show the current fairytale at the top in the creative mode.
 - Crash when ending the game (sometimes). Probably because of not clearing the buttons in dialogs such as LocaleDialog first before the widget is destroyed.
 - FIXED: Crash when retrying after creative mode.
 - FIXED: Complete fairytale button is misplaced after another round.
 - DONE: Make one abstract class which requires the method retranslateUi() and implements the language event.
-- Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
-- Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
-- Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
-- Android Crash: https://github.com/wang-bin/QtAV/issues/138
 
-Werbekampagne
+Werbekampagne:
 Soziale Kanäle
 gamesnarrative
 
@@ -42,7 +34,7 @@ Usability:
 - Fenster besser erkennbar machen von oben?
 - DONE: Anstatt kleinen Bildern - Symbole.
 - DONE: Logo/Splash Screen.
-- Weniger Buttons.
+- DONE: Weniger Buttons.
 - Button-Layout für Android nutzbar machen - Platz für Buttons nutzen, Buttons groß genug machen.
 
 Eigene Clips:
@@ -65,6 +57,14 @@ Version 1.1:
 	- Android Netzwerk: https://developer.android.com/training/connect-devices-wirelessly/nsd.html
 
 Weitere TODOs:
+- Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
+- Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
+- Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
+- Android Crash: https://github.com/wang-bin/QtAV/issues/138
+- Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
+- Extract a video frame if possible as default image.
+- Maybe show the current fairytale at the top in the creative mode.
+- Qt translations on Android.
 - FIXED (nur ein Musikstück): Größe der App vor allem für Android reduzieren: Bonusclips Mahler, Mahlers Musik sind sehr groß. Mahlers Musik macht fast die Hälfte der Größe aus!
 - zufälligen Bonusclip am Ende jedes Sieges abspielen
 - unfertige Märchen richtig als Text ausgeben

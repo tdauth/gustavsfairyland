@@ -28,6 +28,7 @@
 #include "bonusclipsdialog.h"
 #include "fairytalesdialog.h"
 #include "localedialog.h"
+#include "config.h"
 
 fairytale::WidgetSizes fairytale::m_widgetSizes;
 
@@ -601,6 +602,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	{
 		resetToDefaultClipPackages();
 	}
+	// Make sure both return absolute paths.
 	else if (this->defaultClipsDirectory() != this->clipsDir().toLocalFile())
 	{
 		if (QMessageBox::question(this, tr("Use default clip packages?"), tr("Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
@@ -666,14 +668,27 @@ fairytale::~fairytale()
 
 QString fairytale::defaultClipsDirectory() const
 {
-#ifdef Q_OS_WIN
+#ifdef DEBUG
+	/*
+	 * In debug mode we are in the directory "build", so we have to use a different relative path.
+	 */
+	const QDir dir(QCoreApplication::applicationDirPath() + "/../clips");
+
+	qDebug() << "Absolute dir path" << dir.absolutePath();
+
+	return dir.absolutePath(); // The absolute path is required for comparison at start since Settings uses the absolute path as well.
+#elif defined(Q_OS_WIN)
 	/*
 	 * The player usually starts the binary via a Desktop link which runs it in the directory:
 	 * "C:\Program Files (x86)\gustavsfairyland"
 	 * But the player can also directly start the .exe file in the bin folder.
 	 * Therefore one must get the file path to the binary file and not use QDir::currentPath().
 	 */
-	return QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips";
+	const QDir dir(QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips");
+
+	qDebug() << "Absolute dir path" << dir.absolutePath();
+
+	return dir.absolutePath(); // The absolute path is required for comparison at start since Settings uses the absolute path as well.
 #elif defined(Q_OS_ANDROID)
 	/*
 	 * Android uses the assets protocol for files which are deployed with an app.
@@ -1212,6 +1227,14 @@ void fairytale::quickGame()
 
 	// Start with the first available stuff.
 	ClipPackages clipPackages = this->defaultClipPackages();
+
+	if (this->maxRoundsByMultipleClipPackages(clipPackages) <= 0)
+	{
+		QMessageBox::critical(this, tr("Unable to start the game"), tr("Unable to start the game since clips are missing. Try to restore the default settings."));
+
+		return;
+	}
+
 	GameMode *gameMode = this->defaultGameMode();
 	const Difficulty difficulty = this->defaultDifficulty();
 	const bool useMaxRounds = this->defaultUseMaxRounds();
@@ -1916,7 +1939,7 @@ void fairytale::startMusic()
 	m_musicPlayer->setMedia(musicUrl);
 	m_musicPlayer->play();
 	// Music should not be annoyingly loud.
-	m_musicPlayer->setVolume(10);
+	m_musicPlayer->setVolume(20);
 }
 
 void fairytale::finishMusic(QMediaPlayer::State state)
@@ -2050,6 +2073,7 @@ void fairytale::changeEvent(QEvent *event)
 		{
 			qDebug() << "Retranslate UI";
 			this->retranslateUi(this);
+			this->updatePixmap();
 
 			break;
 		}
@@ -2079,6 +2103,7 @@ void fairytale::showEvent(QShowEvent *event)
 
 	this->updateSize(scrollArea);
 	this->updateSize(gameButtonsWidget);
+	this->updatePixmap();
 }
 
 void fairytale::cleanupGame()
@@ -2543,6 +2568,20 @@ LocaleDialog* fairytale::localeDialog()
 void fairytale::showLocaleDialog()
 {
 	this->execInCentralWidgetIfNecessary(localeDialog());
+}
+
+void fairytale::updatePixmap()
+{
+	const QFileInfo fileInfo(":/resources/splash" + this->currentTranslation() + ".jpg");
+
+	if (fileInfo.exists())
+	{
+		logoLabel->setPixmap(QPixmap(fileInfo.absoluteFilePath()));
+	}
+	else
+	{
+		qDebug() << fileInfo.absoluteFilePath() << "does not exist!";
+	}
 }
 
 #include "fairytale.moc"

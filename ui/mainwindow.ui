@@ -61,12 +61,22 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-404</y>
+         <y>0</y>
          <width>487</width>
-         <height>714</height>
+         <height>733</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="logoLabel">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
         <item alignment="Qt::AlignHCenter">
          <widget class="QWidget" name="menuButtonsWidget" native="true">
           <property name="sizePolicy">

@@ -162,27 +162,27 @@ int RoomWidget::floatingClipWidth() const
 
 int RoomWidget::floatingClipSpeed() const
 {
-	double factor = 1.0;
+	double factor = 0.3;
 
 	switch (this->gameMode()->app()->difficulty())
 	{
 		case fairytale::Difficulty::Easy:
 		{
-			factor = 0.5;
+			factor = 0.2;
 
 			break;
 		}
 
 		case fairytale::Difficulty::Normal:
 		{
-			factor = 1.0;
+			factor = 0.3;
 
 			break;
 		}
 
 		case fairytale::Difficulty::Hard:
 		{
-			factor = 1.5;
+			factor = 0.4;
 
 			break;
 		}
@@ -190,14 +190,14 @@ int RoomWidget::floatingClipSpeed() const
 		// It should not be possible to win with this difficulty at all.
 		case fairytale::Difficulty::Mahlerisch:
 		{
-			factor = 4.0;
+			factor = 0.5;
 
 			break;
 		}
 	}
 
 	const int availableWidth = qMax(rect().height(), rect().width());
-	const int result = (double)availableWidth / 2 * factor;
+	const int result = int(double(availableWidth) * factor);
 
 	qDebug() << "Result:" << result;
 
@@ -233,7 +233,7 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 	connect(this->m_paintTimer, &QTimer::timeout, this, &RoomWidget::updatePaint);
 
 	m_windSoundPlayer->setAudioRole(QAudio::GameRole);
-	m_windSoundPlayer->setVolume(5);
+	m_windSoundPlayer->setVolume(15);
 
 	connect(m_windSoundPlayer, &QMediaPlayer::stateChanged, this, &RoomWidget::windSoundStateChanged);
 

@@ -494,6 +494,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void finishCentralDialog(int result);
 
 	private:
+		void updatePixmap();
 		/**
 		 * Updates the text of the time label with the remaining time.
 		 */
