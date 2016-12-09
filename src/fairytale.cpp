@@ -587,6 +587,28 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	// start the background music from Mahler
 	startMusic();
+
+	/*
+	 * Make sure that at least the default clip packages are there.
+	 * If no clip packages have been loaded, the clip path is probably different from a previous installation.
+	 * Therefore reset to the default clips directory and try to load the default clip packages.
+	 *
+	 * If the clips directory is different from the default dir ask for resetting it to make it easier for normal players
+	 * to use the latest clip files.
+	 */
+	if (this->m_clipPackages.isEmpty())
+	{
+		resetToDefaultClipPackages();
+	}
+	else if (this->defaultClipsDirectory() != this->clipsDir().toLocalFile())
+	{
+		if (QMessageBox::question(this, tr("Use default clip packages?"), tr("Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+		{
+			resetToDefaultClipPackages();
+		}
+	}
+
+	qDebug() << "Compared clips dirs:" << this->defaultClipsDirectory() << "and" << this->clipsDir().toLocalFile();
 }
 
 fairytale::~fairytale()
@@ -2371,6 +2393,22 @@ bool fairytale::loadDefaultClipPackage()
 	}
 
 	return !this->clipPackages().isEmpty();
+}
+
+bool fairytale::resetToDefaultClipPackages()
+{
+	this->m_clipPackages.clear();
+
+#ifndef Q_OS_ANDROID
+	// We need file:/ on other systems.
+	const QUrl clipsDir = QUrl::fromLocalFile(this->defaultClipsDirectory());
+#else
+	// Dont prepend file:/ on Android!
+	const QUrl clipsDir = QUrl(this->defaultClipsDirectory());
+#endif
+	setClipsDir(clipsDir);
+
+	return loadDefaultClipPackage();
 }
 
 void fairytale::changePrimaryScreen(QScreen *screen)

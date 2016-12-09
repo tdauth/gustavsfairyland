@@ -398,6 +398,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Loads the default clip package and returns true if it exists and has successfully been loaded.
 		 */
 		bool loadDefaultClipPackage();
+		/**
+		 * Resets the clips directory to the default path and tries to load the default clip packages.
+		 */
+		bool resetToDefaultClipPackages();
 
 		/**
 		 * \note If the name is already used the current custom fairytale will be overwritten. The name must be a unique key.
