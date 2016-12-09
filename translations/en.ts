@@ -683,11 +683,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="366"/>
-        <source>Custom Game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../build/ui_mainwindow.h" line="369"/>
         <source>Let&apos;s Go!</source>
         <translation type="unfinished"></translation>
@@ -705,6 +700,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="368"/>
         <source>Record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="366"/>
+        <source>Game Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1142,39 +1142,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1970"/>
+        <location filename="../src/fairytale.cpp" line="1968"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1991"/>
-        <location filename="../src/fairytale.cpp" line="2025"/>
+        <location filename="../src/fairytale.cpp" line="1989"/>
+        <location filename="../src/fairytale.cpp" line="2023"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1995"/>
-        <location filename="../src/fairytale.cpp" line="2029"/>
+        <location filename="../src/fairytale.cpp" line="1993"/>
+        <location filename="../src/fairytale.cpp" line="2027"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2002"/>
+        <location filename="../src/fairytale.cpp" line="2000"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2006"/>
+        <location filename="../src/fairytale.cpp" line="2004"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2013"/>
+        <location filename="../src/fairytale.cpp" line="2011"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2017"/>
+        <location filename="../src/fairytale.cpp" line="2015"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

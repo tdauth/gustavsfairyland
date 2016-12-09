@@ -43,7 +43,7 @@ Player::Player(QWidget *parent, fairytale *app)
 	this->m_videoWidget->show();
 #endif
 
-	this->setVolume(100);
+	this->setVolume(50);
 
 	this->m_parallelSoundsMediaPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_parallelSoundsMediaPlayer, &QMediaPlayer::stateChanged, this, &Player::onChangeStateParallelSoundPlayer);

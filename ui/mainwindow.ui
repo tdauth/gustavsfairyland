@@ -100,7 +100,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Custom Game</string>
+              <string>Game Mode</string>
              </property>
              <property name="icon">
               <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">

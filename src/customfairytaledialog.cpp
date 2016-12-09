@@ -63,8 +63,8 @@ void CustomFairytaleDialog::addClip(const CustomFairytale::ClipKey &clipKey)
 #endif
 	label->setFile(imageFile);
 	label->setEnabled(true); // dont grey out the clip icon
-	this->playFinalVideoPushButton->setEnabled(true);
-	this->savePushButton->setEnabled(true);
+	this->playFinalVideoPushButton->show();
+	this->savePushButton->show();
 }
 
 CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false)
@@ -93,8 +93,8 @@ void CustomFairytaleDialog::clear()
 	qDebug() << "After deleting icon buttons";
 
 	this->m_clipLabels.clear();
-	this->playFinalVideoPushButton->setEnabled(false);
-	this->savePushButton->setEnabled(false);
+	this->playFinalVideoPushButton->hide();
+	this->savePushButton->hide();
 
 	qDebug() << "After the rest";
 }
@@ -174,6 +174,21 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 		textBlockFormat.setAlignment(Qt::AlignCenter);
 		cursor.mergeBlockFormat(textBlockFormat);
 		textBrowser->setTextCursor(cursor);
+	}
+
+	/*
+	 * If no clips exist allow fast retrying.
+	 */
+	if (m_clips.isEmpty())
+	{
+		retryPushButton->setFocus(Qt::TabFocusReason);
+	}
+	/*
+	 * Otherwise allow fast playing of the video.
+	 */
+	else
+	{
+		playFinalVideoPushButton->setFocus(Qt::TabFocusReason);
 	}
 
 	QWidget::showEvent(event);

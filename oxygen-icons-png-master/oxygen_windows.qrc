@@ -22,5 +22,6 @@
 		<file>oxygen/32x32/actions/games-config-background.png</file>
 		<file>oxygen/32x32/actions/games-highscores.png</file>
 		<file>oxygen/32x32/actions/tools-wizard.png</file>
+		<file>oxygen/32x32/places/folder-blue.png</file>
 	</qresource>
 </RCC>

@@ -431,6 +431,7 @@ void SettingsDialog::load(QSettings &settings)
 	m_clipsDir = QUrl(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
 #endif
 	this->musicCheckBox->setChecked(settings.value("music", true).toBool());
+	this->musicVolumeSpinBox->setValue(settings.value("musicVolume", 30).toInt());
 	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
 // showing maximized or fullscren leads to menu actions disappearing on a smartphone
 #ifdef Q_OS_ANDROID
@@ -500,6 +501,7 @@ void SettingsDialog::save(QSettings &settings)
 	settings.setValue("clipsDir", m_clipsDir.toString());
 #endif
 	settings.setValue("music", this->musicCheckBox->isChecked());
+	settings.setValue("musicVolume", this->musicVolumeSpinBox->value());
 	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
 	settings.setValue("fullscreen", this->fullScreenCheckBox->isChecked());
 
