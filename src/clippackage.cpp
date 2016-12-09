@@ -668,7 +668,7 @@ bool ClipPackage::loadClipsFromFile(const QString &file)
 				descriptions.insert(node.nodeName(), node.toElement().text());
 			}
 
-			m_bonusClips.insert(id, new BonusClip(id, image, video, descriptions, this));
+			m_bonusClips.insert(id, new BonusClip(id, image, video, descriptions, m_app, this));
 		}
 	}
 

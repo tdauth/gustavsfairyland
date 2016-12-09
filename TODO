@@ -1,4 +1,5 @@
 Finale TODOS Version 1.0 (Windows und Linux):
+- FIXED: Bonus Clips have always German descriptions.
 - DONE: Icons
 - DONE: Sounds: Wind, Fenster, Turm, Schloss
 - DONE: Logo-Erstellung
@@ -12,7 +13,7 @@ Finale TODOS Version 1.0 (Windows und Linux):
 - DONE: Flag Icons: https://github.com/lipis/flag-icon-css
 - FIXED: Princess and Grandpa Jott have not equal width and height for their image. Change this on Linux and redeploy the clip files.
 - FIXED: Edit the font and support the character ß by using two s characters.
-- Qt translations are not changed on Windows when changing the language (on Linux, too?).
+- FIXED: Qt translations are not changed on Windows when changing the language (on Linux, too?).
 - FIXED: Qt translations on Linux.
 - DONE: Add flag icons for languages please.
 - FIXED: Windows Menu Title is Fareland.

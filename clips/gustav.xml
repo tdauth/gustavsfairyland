@@ -305,6 +305,7 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/mahler.avi</video>
 		<description>
+			<en>Gustav Mahler on himself</en>
 			<de>Gustav Mahler über sich selbst</de>
 		</description>
 	</bonusClip>
@@ -313,6 +314,7 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/ueberalma.avi</video>
 		<description>
+			<en>Gustav Mahler on Alma</en>
 			<de>Gustav Mahler über Alma</de>
 		</description>
 	</bonusClip>

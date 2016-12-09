@@ -7,6 +7,8 @@
 #include <QUrl>
 #include <QLocale>
 
+class fairytale;
+
 /**
  * \brief A clip with additional content which has to be unlocked.
  */
@@ -15,9 +17,9 @@ class BonusClip : public QObject
 	public:
 		typedef QMap<QString,QString> Descriptions;
 
-		BonusClip(QObject *parent = nullptr);
+		BonusClip(fairytale *app, QObject *parent = nullptr);
 		BonusClip(const BonusClip &clip, QObject *parent = nullptr);
-		BonusClip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, QObject *parent = nullptr);
+		BonusClip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, fairytale *app, QObject *parent = nullptr);
 
 		void assign(const BonusClip &clip);
 
@@ -31,6 +33,7 @@ class BonusClip : public QObject
 		QString description() const;
 
 	private:
+		fairytale *m_app;
 		QString m_id;
 		QUrl m_imageUrl;
 		QUrl m_videoUrl;
@@ -70,24 +73,6 @@ inline QUrl BonusClip::videoUrl() const
 inline void BonusClip::setDescriptions(const Descriptions &descriptions)
 {
 	this->m_descriptions = descriptions;
-}
-
-inline QString BonusClip::description() const
-{
-	QString locale = QLocale::system().name();
-	locale.truncate(locale.lastIndexOf('_'));
-	const Descriptions::const_iterator iterator = this->m_descriptions.find(locale);
-
-	if (iterator != this->m_descriptions.end())
-	{
-		return iterator.value();
-	}
-	else if (!this->m_descriptions.empty())
-	{
-		return this->m_descriptions.first();
-	}
-
-	return "";
 }
 
 #endif // BONUSCLIP_H
