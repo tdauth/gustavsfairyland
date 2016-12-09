@@ -576,6 +576,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	// searched in reverse order
 	qApp->installTranslator(&m_qtTranslator);
+	qApp->installTranslator(&m_qtBaseTranslator);
 	qApp->installTranslator(&m_translator);
 
 	// Try to load the current locale. If no translation file exists it will remain English.
@@ -656,6 +657,7 @@ fairytale::~fairytale()
 	settings.endArray();
 
 	qApp->removeTranslator(&m_translator);
+	qApp->removeTranslator(&m_qtBaseTranslator);
 	qApp->removeTranslator(&m_qtTranslator);
 
 	// Prevent restarting on ending the app.
@@ -1287,21 +1289,34 @@ bool fairytale::loadLanguage(const QString &language)
 		qWarning() << "File not loaded";
 	}
 
-#ifdef Q_OS_WIN
-	const QString qtTranslationsDirPath = QDir(QCoreApplication::applicationDirPath()).filePath("translations");
-	const QString qtFileName = QString("qt_") + language + ".qm";
+	/*
+	 * Load Qt translations as well:
+	 * http://stackoverflow.com/a/31557808
+	 * On Fedora this requires the package qt5-qtranslations!
+	 */
+	const QString qtTranslationsDirPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 
-	if (m_qtTranslator.load(fileName, qtTranslationsDirPath))
+	if (m_qtTranslator.load(QString("qt_") + language, qtTranslationsDirPath))
 	{
 		qDebug() << "Loaded Qt file!";
-		qDebug() << "Qt File loaded:" << qtFileName;
+		qDebug() << "Qt File loaded:" << language;
 	}
 	else
 	{
-		qDebug() << "Did not load file: " << qtFileName << " from dir " << qtTranslationsDirPath;
+		qDebug() << "Did not load file: " << language << " from dir " << qtTranslationsDirPath;
 		qWarning() << "File not loaded";
 	}
-#endif
+
+	if (m_qtBaseTranslator.load(QString("qtbase_") + language, qtTranslationsDirPath))
+	{
+		qDebug() << "Loaded Qt base file!";
+		qDebug() << "Qt Base File loaded:" << QString("qtbase_") + language;
+	}
+	else
+	{
+		qDebug() << "Did not load file: " << QString("qtbase_") + language << " from dir " << qtTranslationsDirPath;
+		qWarning() << "File not loaded";
+	}
 
 	// Do always update since the file might be empty (for English).
 	m_currentTranslation = language;
