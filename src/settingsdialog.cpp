@@ -367,7 +367,7 @@ void SettingsDialog::fill(ClipPackage *package)
 		const QUrl outroUrl = m_app->resolveClipUrl(package->outros().at(i));
 		QTreeWidgetItem *outroItem = new QTreeWidgetItem(outrosItem);
 
-		const QString name = HighScores::difficultyToString(fairytale::Difficulty(i));
+		const QString name = i < 4 ? HighScores::difficultyToString(fairytale::Difficulty(i)) : tr("Lost");
 		outroItem->setText(0, name);
 		outroItem->setIcon(0, QIcon(outroUrl.toLocalFile()));
 	}
@@ -411,6 +411,11 @@ void SettingsDialog::fill(ClipPackage *package)
 	personsItem->setText(1, QString::number(persons));
 	actsItem->setText(1, QString::number(acts));
 	bonusesItem->setText(1, QString::number(bonuses));
+
+	for (int i = 0; i < this->treeWidget->columnCount(); ++i)
+	{
+		this->treeWidget->resizeColumnToContents(i);
+	}
 }
 
 void SettingsDialog::load(QSettings &settings)
