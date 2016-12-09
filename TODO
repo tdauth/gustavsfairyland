@@ -10,14 +10,17 @@ Finale TODOS:
 - DONE: Aufnahmemodus viel einfacher machen
 - Extract a video frame if possible as default image.
 - DONE: Fenstersound einbauen.
-- Princess and Grandpa Jott have not equal width and height for their image.
+- Flag Icons: https://github.com/lipis/flag-icon-css
+- Princess and Grandpa Jott have not equal width and height for their image. Change this on Linux and redeploy the clip files.
 - Edit the font and support the character ß by using two s characters.
 - Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
+- Qt translations are not changed on Windows when changing the language (on Linux, too?).
+- Add flag icons for languages please.
 - FIXED: Windows Menu Title is Fareland.
 - Ab und zu Crash während Pages On The Ground.
-- Always use the relative path as clips dir, easier to use when reinstalling the game!
+- Always use the relative path as clips dir on Windows, easier to use when reinstalling the game!
 - DONE: Improve the layout (button size) for the creative mode.
-- Maybe show the current fairytale at the top.
+- Maybe show the current fairytale at the top in the creative mode.
 - Crash when ending the game (sometimes).
 - FIXED: Crash when retrying after creative mode.
 - FIXED: Complete fairytale button is misplaced after another round.

@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0" alignment="Qt::AlignHCenter">
+      <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
@@ -46,7 +46,7 @@
            <x>0</x>
            <y>0</y>
            <width>362</width>
-           <height>169</height>
+           <height>170</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -108,8 +108,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

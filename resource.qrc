@@ -9,7 +9,7 @@
         <file>resources/success1_en.wav</file>
         <file>resources/and_de.wav</file>
         <file>resources/and_en.wav</file>
-	<file>resources/wind.wav</file>
+        <file>resources/wind.wav</file>
         <file>resources/won.jpg</file>
         <file>resources/lost.jpg</file>
         <file>resources/wood.svg</file>
@@ -19,5 +19,7 @@
         <file>resources/RINGM___.TTF</file>
         <file>resources/splashde.jpg</file>
         <file>resources/splashen.jpg</file>
+        <file>resources/de.svg</file>
+        <file>resources/en.svg</file>
     </qresource>
 </RCC>

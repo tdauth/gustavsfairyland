@@ -9,6 +9,11 @@ LocaleDialog::LocaleDialog(fairytale *app, QWidget *parent, Qt::WindowFlags f) :
 	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 
+LocaleDialog::~LocaleDialog()
+{
+	clearButtons();
+}
+
 void LocaleDialog::changeLocale()
 {
 	QRadioButton *button = dynamic_cast<QRadioButton*>(QObject::sender());
@@ -57,12 +62,7 @@ void LocaleDialog::changeEvent(QEvent *event)
 
 void LocaleDialog::update()
 {
-	foreach (Button *button, m_buttons.values())
-	{
-		delete button;
-	}
-
-	m_buttons.clear();
+	clearButtons();
 
 	int i = 0;
 
@@ -70,8 +70,7 @@ void LocaleDialog::update()
 	{
 		QRadioButton *pushButton = new QRadioButton(fairytale::localeToName(locale), this);
 		pushButton->setIconSize(QSize(32, 32));
-		// TODO set locale icon
-		//pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+		pushButton->setIcon(QIcon(QString(":/resources/") + locale + ".svg"));
 		qDebug() << "Locale" << locale << "Current translation" << m_app->currentTranslation();
 
 		if (locale == m_app->currentTranslation())
@@ -86,6 +85,16 @@ void LocaleDialog::update()
 
 		++i;
 	}
+}
+
+void LocaleDialog::clearButtons()
+{
+	foreach (Button *button, m_buttons.values())
+	{
+		delete button;
+	}
+
+	m_buttons.clear();
 }
 
 LocaleDialog::Button::Button(const QString &locale, QRadioButton *button, QObject *parent) : QObject(parent), m_locale(locale), m_button(button)

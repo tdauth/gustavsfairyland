@@ -129,6 +129,7 @@ set(fairyland_HEADERS
 	src/bonusclipsdialog.h
 	src/fairytalesdialog.h
 	src/localedialog.h
+	src/translatedwidget.h
 )
 
 set(fairyland_SRCS
@@ -163,6 +164,7 @@ set(fairyland_SRCS
 	src/bonusclipsdialog.cpp
 	src/fairytalesdialog.cpp
 	src/localedialog.cpp
+	src/translatedwidget.cpp
 )
 
 set(fairyland_UI

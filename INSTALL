@@ -9,15 +9,15 @@ Alternatively you can use one of the scripts:
 buildlinux_debug.sh
 buildlinux_release.sh
 
-For Linux:
+For Linux and Windows:
 Just use cpack in the build directory:
 cpack .
 
-It creates an RPM and a DEB package.
+It creates an RPM and a DEB package and for Windows a NSIS package.
 
 On Windows 7 the program has been compiled using the MinGW distributed with Qt.
 The shell path in CMake has to stay clear.
-Unfortunately there is only a 32 Bit compiler.
+Unfortunately there is only a 32 MinGW Bit compiler.
 Generator: Code Blocks - MinGW Makefiles
 CPack creates an NSIS based Windows installer.
 
@@ -53,7 +53,7 @@ https://wiki.qt.io/How-to-debug-Qt-applications-on-Android-device
 Add udev rules for the device:
 https://developer.android.com/studio/run/device.html
 
-Install app on the current device:
+Install app on the current device (this is done automatically by the CMake module on building):
 ./adb -d install -r /home/tamino/Downloads/gustavsfairyland.apk
 
 Make sure the codec is supported on Android:

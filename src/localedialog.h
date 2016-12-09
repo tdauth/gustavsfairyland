@@ -13,6 +13,7 @@ class LocaleDialog : public QDialog, protected Ui::LocaleDialog
 
 	public:
 		explicit LocaleDialog(fairytale *app, QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+		virtual ~LocaleDialog();
 
 	private slots:
 		void changeLocale();
@@ -36,6 +37,7 @@ class LocaleDialog : public QDialog, protected Ui::LocaleDialog
 		};
 
 		void update();
+		void clearButtons();
 
 		fairytale *m_app;
 		typedef QMap<QRadioButton*, Button*> Buttons;
