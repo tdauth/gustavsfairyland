@@ -2309,7 +2309,7 @@ bool fairytale::defaultUseMaxRounds() const
 
 int fairytale::defaultMaxRounds() const
 {
-	return 4;
+	return 3;
 }
 
 ClipPackage* fairytale::defaultClipPackage() const

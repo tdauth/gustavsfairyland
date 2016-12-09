@@ -10,11 +10,13 @@ Finale TODOS:
 - DONE: Aufnahmemodus viel einfacher machen
 - Extract a video frame if possible as default image.
 - DONE: Fenstersound einbauen.
-- Flag Icons: https://github.com/lipis/flag-icon-css
-- Princess and Grandpa Jott have not equal width and height for their image. Change this on Linux and redeploy the clip files.
+- DONE: Flag Icons: https://github.com/lipis/flag-icon-css
+- FIXED: Princess and Grandpa Jott have not equal width and height for their image. Change this on Linux and redeploy the clip files.
 - FIXED: Edit the font and support the character ß by using two s characters.
 - Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
 - Qt translations are not changed on Windows when changing the language (on Linux, too?).
+- FIXED: Qt translations on Linux.
+- Qt translations on Android.
 - DONE: Add flag icons for languages please.
 - FIXED: Windows Menu Title is Fareland.
 - Ab und zu Crash während Pages On The Ground.
