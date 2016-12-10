@@ -665,53 +665,53 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HighScores</name>
     <message>
-        <location filename="../build/ui_highscores.h" line="134"/>
-        <location filename="../build/ui_highscores.h" line="149"/>
+        <location filename="../build/ui_highscores.h" line="136"/>
+        <location filename="../build/ui_highscores.h" line="151"/>
         <source>High Scores</source>
         <translation>High Scores</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="136"/>
+        <location filename="../build/ui_highscores.h" line="138"/>
         <source>Place</source>
         <translation>Platz</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="140"/>
+        <location filename="../build/ui_highscores.h" line="142"/>
         <source>Difficulty</source>
         <translation>Schwierigkeitsgrad</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="142"/>
+        <location filename="../build/ui_highscores.h" line="144"/>
         <source>Rounds</source>
         <translation>Runden</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="144"/>
+        <location filename="../build/ui_highscores.h" line="146"/>
         <source>Seconds</source>
         <translation>Sekunden</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="146"/>
+        <location filename="../build/ui_highscores.h" line="148"/>
         <source>Game Mode</source>
         <translation>Spielmodus</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="151"/>
+        <location filename="../build/ui_highscores.h" line="153"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="138"/>
+        <location filename="../build/ui_highscores.h" line="140"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="148"/>
+        <location filename="../build/ui_highscores.h" line="150"/>
         <source>Packages</source>
         <translation>Pakete</translation>
     </message>
     <message>
-        <location filename="../build/ui_highscores.h" line="150"/>
+        <location filename="../build/ui_highscores.h" line="152"/>
         <source>Clear All</source>
         <translation>Alle löschen</translation>
     </message>
@@ -1181,7 +1181,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="487"/>
-        <location filename="../src/fairytale.cpp" line="2073"/>
+        <location filename="../src/fairytale.cpp" line="2082"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
@@ -1278,56 +1278,56 @@ p, li { white-space: pre-wrap; }
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1657"/>
+        <location filename="../src/fairytale.cpp" line="1661"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1685"/>
-        <location filename="../src/fairytale.cpp" line="1737"/>
+        <location filename="../src/fairytale.cpp" line="1689"/>
+        <location filename="../src/fairytale.cpp" line="1741"/>
         <source>Invalid gamemode</source>
         <translation>Ungültiger Spielmodus</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1685"/>
-        <location filename="../src/fairytale.cpp" line="1737"/>
+        <location filename="../src/fairytale.cpp" line="1689"/>
+        <location filename="../src/fairytale.cpp" line="1741"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation>Der Spielmodus hat weist ein ungültiges Verhalten auf.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1966"/>
+        <location filename="../src/fairytale.cpp" line="1975"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1987"/>
-        <location filename="../src/fairytale.cpp" line="2021"/>
+        <location filename="../src/fairytale.cpp" line="1996"/>
+        <location filename="../src/fairytale.cpp" line="2030"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1991"/>
-        <location filename="../src/fairytale.cpp" line="2025"/>
+        <location filename="../src/fairytale.cpp" line="2000"/>
+        <location filename="../src/fairytale.cpp" line="2034"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1998"/>
+        <location filename="../src/fairytale.cpp" line="2007"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2002"/>
+        <location filename="../src/fairytale.cpp" line="2011"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2009"/>
+        <location filename="../src/fairytale.cpp" line="2018"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2013"/>
+        <location filename="../src/fairytale.cpp" line="2022"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

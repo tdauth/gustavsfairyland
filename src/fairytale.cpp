@@ -1544,7 +1544,11 @@ void fairytale::resumeGame()
 	// Dont resume the timer and game mode if the complete solution is played!
 	else if (this->isGameRunning())
 	{
-		this->resumeTimer();
+		if (this->gameMode()->hasLimitedTime())
+		{
+			this->resumeTimer();
+		}
+
 		this->gameMode()->resume();
 	}
 }
@@ -1849,6 +1853,11 @@ void fairytale::onFinishVideoAndSounds()
 						this->m_isRunningTimer = true;
 						this->m_pausedTimer = false;
 						this->m_timer.start(1000);
+					}
+					else
+					{
+						this->m_isRunningTimer = false;
+						this->m_pausedTimer = false;
 					}
 				}
 				// played only the word "and" or the first person sound then we always expect another sound

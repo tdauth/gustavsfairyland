@@ -5,8 +5,8 @@ TODOS 1.1:
 - FIXED: Rechtschreibfehler bscreubung hinzufügen
 - FIXED (Careful, many changes of the players state!): Spiel abbrechen und pausieren im Player geht nicht während das Märchen abgespielt wird nachdem man gewonnen hat.
 - FIXED (init i): Bonus-Clips sind nicht mehr freigeschaltet. Genau die Hälfte der freigeschalteten Clips wird wieder gelöscht beim Neustart.
-- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten.
-- Kreativmodus wird nicht pausiert (Spiel anhalten). Wenn man einmal pausiert, hat man danach direkt gewonnen.
+- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
+- FIXED: Kreativmodus wird nicht pausiert (Spiel anhalten). Wenn man einmal pausiert, hat man danach direkt gewonnen.
 - Clip "tranken von einem Brunnen" hat Standbild.
 - FIXED: Zwei Klick mich-Links haben ein anderes Blau.
 - FIXED: Mahler's Piano ...
