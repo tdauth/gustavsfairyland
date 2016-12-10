@@ -123,7 +123,7 @@ void fairytale::pauseGameAction()
 
 void fairytale::cancelGame()
 {
-	if (!this->isGameRunning())
+	if (!this->isGameRunning() && !this->m_playCompleteSolution)
 	{
 		qDebug() << "Invalid call of cancelGame()";
 
@@ -398,6 +398,7 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	this->m_turns = 0;
 	this->m_totalElapsedTime = 0;
 	this->scrollArea->hide();
+	this->versionLabel->hide();
 	this->gameAreaWidget()->show();
 	this->descriptionLabel->show();
 	this->timeLabel->show();
@@ -483,6 +484,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
+	this->versionLabel->setText(tr("Version: %1").arg(gustavsfairyland_VERSION));
+
 	this->advancedGroupBox->setChecked(false);
 	this->advancedGroupBoxWidget->hide();
 
@@ -509,14 +512,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
-#ifndef Q_OS_ANDROID
-#else
-	// Android uses QML and the QML type MediaPlayer emits a signal without a parameter. The state must be checked in the slot itself.
-	//connect(this->m_player->mediaPlayer(), SIGNAL(playbackStateChanged()), this, SLOT(finishNarratorAndroid()));
-#endif
-
-	connect(this->m_player, &Player::stateChanged, this, &fairytale::finishNarrator);
-	connect(this->m_player, &Player::finishVideoAndSounds, this, &fairytale::onFinishVideoAndSounds);
+	connect(this->m_player, &Player::stateChangedVideoAndSounds, this, &fairytale::finishNarrator);
 
 	/*
 	 * NOTE: Don't use the same shortcuts for menu actions or anything else to avoid ambiguous shortcuts.
@@ -568,9 +564,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 		settings.setArrayIndex(i);
 		const QString packageId = settings.value("package").toString();
 		const QString clipId = settings.value("clip").toString();
-		const bool unlock = settings.value("unlock").toBool();
 
-		this->m_bonusClipUnlocks[ClipKey(packageId, clipId)] = unlock;
+		this->m_bonusClipUnlocks.insert(ClipKey(packageId, clipId));
 	}
 
 	settings.endArray();
@@ -643,17 +638,16 @@ fairytale::~fairytale()
 
 	settings.endArray();
 
-	settings.beginWriteArray("bonusclipunlocks");
+	settings.beginWriteArray("bonusclipunlocks", this->m_bonusClipUnlocks.size());
+	i = 0;
 
-	for (BonusClipUnlocks::const_iterator iterator = this->m_bonusClipUnlocks.begin(); iterator != this->m_bonusClipUnlocks.end(); ++iterator)
+	for (BonusClipUnlocks::const_iterator iterator = this->m_bonusClipUnlocks.begin(); iterator != this->m_bonusClipUnlocks.end(); ++iterator, ++i)
 	{
 		settings.setArrayIndex(i);
-		const QString packageId = iterator.key().first;
+		const QString packageId = iterator->first;
 		settings.setValue("package", packageId);
-		const QString clipId = iterator.key().second;
+		const QString clipId = iterator->second;
 		settings.setValue("clip", clipId);
-		const bool unlock = iterator.value();
-		settings.setValue("unlock", unlock);
 	}
 
 	settings.endArray();
@@ -1430,35 +1424,44 @@ void fairytale::afterOutroWin()
 
 			for (ClipPackage::BonusClips::const_iterator iterator = clipPackage->bonusClips().begin(); iterator != clipPackage->bonusClips().end(); ++iterator)
 			{
-				if (this->m_bonusClipUnlocks.find(ClipKey(clipPackage->id(), iterator.key())) == this->m_bonusClipUnlocks.end())
+				const ClipKey clipKey = ClipKey(clipPackage->id(), iterator.key());
+
+				if (this->m_bonusClipUnlocks.find(clipKey) == this->m_bonusClipUnlocks.end())
 				{
-					lockedBonusClips.insert(ClipKey(packageIterator.key(), iterator.key()));
+					lockedBonusClips.insert(clipKey);
 				}
 			}
 		}
 
-		const int index = qrand() % lockedBonusClips.size();
-		int i = 0;
-		BonusClip *bonusClip = nullptr;
-		ClipKey bonusClipKey;
-
-		for (QSet<ClipKey>::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
+		if (!lockedBonusClips.isEmpty())
 		{
-			if (i == index)
-			{
-				bonusClipKey = *iterator;
-				this->m_bonusClipUnlocks.insert(bonusClipKey, true);
-				bonusClip = getBonusClipByKey(bonusClipKey);
+			const int index = qrand() % lockedBonusClips.size();
+			int i = 0;
+			BonusClip *bonusClip = nullptr;
+			ClipKey bonusClipKey;
 
-				break;
+			for (QSet<ClipKey>::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
+			{
+				if (i == index)
+				{
+					bonusClipKey = *iterator;
+					this->m_bonusClipUnlocks.insert(bonusClipKey);
+					bonusClip = getBonusClipByKey(bonusClipKey);
+
+					break;
+				}
+			}
+
+			// Play the bonus clip
+			if (bonusClip != nullptr)
+			{
+				// TODO play it
+				QMessageBox::information(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip %1!").arg(bonusClip->description()));
 			}
 		}
-
-		// Play the bonus clip
-		if (bonusClip != nullptr)
+		else
 		{
-			// TODO play it
-			QMessageBox::information(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip %1!").arg(bonusClip->description()));
+			QMessageBox::information(this, tr("Unlocked all Bonus Clips already!"), tr("You have already unlocked all available bonus clips!"));
 		}
 	}
 
@@ -1498,7 +1501,7 @@ bool fairytale::isGamePaused() const
 
 void fairytale::pauseGame()
 {
-	if (this->isGamePaused() || !this->isGameRunning())
+	if (this->isGamePaused() || (!this->isGameRunning() && !this->m_playCompleteSolution))
 	{
 		qDebug() << "Warning: Invalid call of pauseGame()";
 
@@ -1513,7 +1516,8 @@ void fairytale::pauseGame()
 	{
 		this->m_player->pause();
 	}
-	else
+	// Dont pause the timer and game mode if the complete solution is played!
+	else if (this->isGameRunning())
 	{
 		this->pauseTimer();
 		this->gameMode()->pause();
@@ -1522,7 +1526,7 @@ void fairytale::pauseGame()
 
 void fairytale::resumeGame()
 {
-	if (!this->isGamePaused() || !this->isGameRunning())
+	if (!this->isGamePaused() || (!this->isGameRunning() && !this->m_playCompleteSolution))
 	{
 		qDebug() << "Warning: Invalid call of resumeGame()";
 
@@ -1537,7 +1541,8 @@ void fairytale::resumeGame()
 	{
 		this->m_player->play();
 	}
-	else
+	// Dont resume the timer and game mode if the complete solution is played!
+	else if (this->isGameRunning())
 	{
 		this->resumeTimer();
 		this->gameMode()->resume();
@@ -1755,14 +1760,6 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	gameButtonsWidget->setVisible(enabled);
 }
 
-#ifdef Q_OS_ANDROID
-void fairytale::finishNarratorAndroid()
-{
-	this->finishNarrator(this->m_player->state());
-
-}
-#endif
-
 void fairytale::finishNarrator(QMediaPlayer::State state)
 {
 	qDebug() << "Finish narrator with state:" << state;
@@ -1771,7 +1768,8 @@ void fairytale::finishNarrator(QMediaPlayer::State state)
 	{
 		case QMediaPlayer::StoppedState:
 		{
-			// is handled in onFinishVideoAndSounds()
+			onFinishVideoAndSounds();
+
 			break;
 		}
 
@@ -2072,6 +2070,7 @@ void fairytale::changeEvent(QEvent *event)
 			qDebug() << "Retranslate UI";
 			this->retranslateUi(this);
 			this->updatePixmap();
+			this->versionLabel->setText(tr("Version: %1").arg(gustavsfairyland_VERSION));
 
 			break;
 		}
@@ -2122,6 +2121,13 @@ void fairytale::cleanupGame()
 	this->m_playOutroWin = false;
 	this->m_playOutroLose = false;
 
+	/*
+	 * Could also happen during playing the custom fairytale!
+	 */
+	this->m_playCompleteSolution = false;
+	this->m_completeSolutionIndex = 0;
+	this->customFairytaleDialog()->hide();
+
 	// Note: Make sure this has no effect in its connected slots!
 	this->m_player->stop();
 	this->m_player->hide();
@@ -2138,6 +2144,7 @@ void fairytale::cleanupAfterOneGame()
 	hideGameWidgets();
 
 	this->scrollArea->show();
+	this->versionLabel->show();
 	// Make sure all paint stuff from the game mode disappears.
 	this->repaint();
 }

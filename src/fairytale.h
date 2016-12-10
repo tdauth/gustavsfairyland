@@ -463,7 +463,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		QAudioInputSelectorControl* audioInputSelectorControl() const;
 
 		BonusClip* getBonusClipByKey(const ClipKey &key);
-		typedef QMap<ClipKey, bool> BonusClipUnlocks;
+		/**
+		 * \brief BonusClipUnlocks stores all entries for Bonus Clips which are unlocked.
+		 *
+		 * Every bonus clip is identified by its unique key.
+		 */
+		typedef QSet<ClipKey> BonusClipUnlocks;
 		const BonusClipUnlocks& bonusClipUnlocks() const;
 
 		BonusClipsDialog* bonusClipsDialog();
@@ -478,9 +483,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		virtual void showEvent(QShowEvent *event) override;
 
 	private slots:
-#ifdef Q_OS_ANDROID
-		void finishNarratorAndroid();
-#endif
 		void finishNarrator(QMediaPlayer::State state);
 		void onFinishVideoAndSounds();
 		void finishAudio(QMediaPlayer::State state);

@@ -34,7 +34,7 @@ void ClipEditor::chooseImage()
 		this->m_clip->setImageUrl(url);
 		QPixmap pixmap(filePath);
 		this->imageLabel->setPixmap(pixmap.scaled(256, 256, Qt::KeepAspectRatio));
-		this->imageLabel->setText(this->m_clip->imageUrl().toString());
+		this->imagePathLabel->setText(this->m_clip->imageUrl().toString());
 
 		checkForValidFields();
 	}
@@ -84,7 +84,15 @@ void ClipEditor::imageSaved(int id, const QString &fileName)
 
 void ClipEditor::chooseVideo()
 {
-	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Video"), this->m_dir,  tr("All files (*);;Videos (*.mkv *.avi *.mp4)"));
+#ifdef Q_OS_WIN
+	const QString videoFormat = tr("msmpeg4v2 - WMV Files");
+#else
+	const QString videoFormat = tr("H264 compressed videos - MP4, OGG, MKV files with this codec");
+#endif
+
+	QMessageBox::information(this, tr("Video Format"), tr("Note that only some Video formats work on different platforms. Recommended video format for this platform: %1").arg(videoFormat));
+
+	const QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Video"), this->m_dir,  tr("All files (*);;Videos (*.mkv *.avi *.mp4 *.wmv)"));
 
 	if (!filePath.isEmpty())
 	{
@@ -642,8 +650,14 @@ bool ClipEditor::moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldU
 			newUrl = QUrl::fromLocalFile(target);
 			qDebug() << "New image URL" << newUrl;
 
-			// Delete the old file to safe space.
-			QFile::remove(oldImageFile.absoluteFilePath());
+			/*
+			 * Delete the old file to safe space.
+			 * But only if it is a temporary recorded file.
+			 */
+			if (oldImageFile.dir() == clipsDirectory())
+			{
+				QFile::remove(oldImageFile.absoluteFilePath());
+			}
 		}
 	}
 	else

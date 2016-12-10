@@ -39,8 +39,24 @@ class Player
 		 * This signal is emitted when the video/sound and the parallel sounds have finished both.
 		 */
 		void finishVideoAndSounds();
+		/**
+		 * This signal is emitted when the video/sound OR the parallel sound is started.
+		 */
+		void startVideoOrSounds();
+		/**
+		 * This signal is emitted when the video/sound and the parallel sounds are being paused or one of them is paused and the other is not used.
+		 */
+		void pauseVideoAndSounds();
 
+		/**
+		 * This signal is emitted when the state of the video/sound player changes (not of the parallel sounds player).
+		 */
 		void stateChanged(QMediaPlayer::State state);
+
+		/**
+		 * This signal is emitted when the state of the video/sound player AND the parallel sounds player changes.
+		 */
+		void stateChangedVideoAndSounds(QMediaPlayer::State state);
 
 	public slots:
 		void playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame = true, bool multipleVideos = true);
@@ -133,6 +149,8 @@ class Player
 		 * Checks if the video and the parallel sounds have all been finished. If so the signal \ref finishVideoAndSounds() is emitted.
 		 */
 		void checkForFinish();
+		void checkForStart();
+		void checkForPause();
 
 		fairytale *m_app;
 

@@ -136,6 +136,8 @@ void Player::showEvent(QShowEvent *event)
 
 void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
 {
+	Q_ASSERT(this->m_parallelSoundsMediaPlayer->state() == state);
+
 	switch (state)
 	{
 		case QMediaPlayer::StoppedState:
@@ -156,11 +158,15 @@ void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
 
 		case QMediaPlayer::PlayingState:
 		{
+			this->checkForStart();
+
 			break;
 		}
 
 		case QMediaPlayer::PausedState:
 		{
+			this->checkForPause();
+
 			break;
 		}
 	}
@@ -168,6 +174,10 @@ void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
 
 void Player::onChangeState(QMediaPlayer::State state)
 {
+#ifndef Q_OS_ANDROID
+	Q_ASSERT(this->m_mediaPlayer->state() == state);
+#endif
+
 	qDebug() << "Emitting signal" << state;
 	emit stateChanged(state);
 
@@ -182,11 +192,15 @@ void Player::onChangeState(QMediaPlayer::State state)
 
 		case QMediaPlayer::PlayingState:
 		{
+			this->checkForStart();
+
 			break;
 		}
 
 		case QMediaPlayer::PausedState:
 		{
+			this->checkForPause();
+
 			break;
 		}
 	}
@@ -202,6 +216,7 @@ void Player::onChangeStateAndroid()
 void Player::onChangeStateAndroidQtAv(QtAV::AVPlayer::State state)
 {
 	qDebug() << "State changed on Android player" << state;
+	Q_ASSERT(this->m_player->state() == state);
 
 	switch (state)
 	{
@@ -243,7 +258,34 @@ void Player::checkForFinish()
 		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
 #endif
 
+		emit stateChangedVideoAndSounds(QMediaPlayer::StoppedState);
 		emit finishVideoAndSounds();
+	}
+}
+
+void Player::checkForStart()
+{
+	if (this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::PlayingState || this->state() == QMediaPlayer::PlayingState)
+	{
+		emit stateChangedVideoAndSounds(QMediaPlayer::PlayingState);
+		emit startVideoOrSounds();
+	}
+}
+
+void Player::checkForPause()
+{
+	if ((this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::PausedState && this->state() == QMediaPlayer::PausedState)
+			|| ((
+					this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::PausedState && this->state() == QMediaPlayer::StoppedState
+					)
+				|| (
+					this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::StoppedState && this->state() == QMediaPlayer::PausedState
+					)
+				)
+		)
+	{
+		emit stateChangedVideoAndSounds(QMediaPlayer::PausedState);
+		emit pauseVideoAndSounds();
 	}
 }
 
@@ -452,6 +494,7 @@ void Player::pause()
 #else
 	this->mediaPlayer()->pause();
 #endif
+	this->m_parallelSoundsMediaPlayer->pause();
 }
 
 void Player::stop()
@@ -461,6 +504,7 @@ void Player::stop()
 #else
 	this->mediaPlayer()->stop();
 #endif
+	this->m_parallelSoundsMediaPlayer->stop();
 }
 
 void Player::setVolume(int volume)

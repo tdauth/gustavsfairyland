@@ -13,6 +13,35 @@
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Programming: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Testing: Johanna Wohlgemuth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Grandpa Jott: Grandpa Jott&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Vampire: Anne&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Werewolf: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Plague Doctor: Jannis&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Popcorn Saleswoman: Sarah&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Fairy: Johanna Wohlgemuth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Princess: Klara&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Jedi: Mats&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Wood texture: &lt;/span&gt;&lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Icon: &lt;/span&gt;&lt;a href=&quot; https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahler&apos;s 5th Symphony: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahler&apos;s Piano Quartett: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/MahlerPianoQuartetInAMinor&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Custom Font: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Oxygen Icons: &lt;/span&gt;&lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip Icons: Several External Sources&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Organization and Video Recordings: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
@@ -35,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Custom Font: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Oxygen Icons: &lt;/span&gt;&lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip Icons: Several External Sources&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -62,7 +91,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip-Icons: Mehrere externe Quellen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../build/ui_aboutdialog.h" line="123"/>
+        <location filename="../build/ui_aboutdialog.h" line="124"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -95,7 +124,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="545"/>
-        <location filename="../src/clipeditor.cpp" line="433"/>
+        <location filename="../src/clipeditor.cpp" line="441"/>
         <source>Description:</source>
         <translation>Beschreibung:</translation>
     </message>
@@ -145,39 +174,63 @@ p, li { white-space: pre-wrap; }
         <translation>Alle Dateien (*);;Bilder (*.jpg *.jpeg *.png)</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="87"/>
+        <location filename="../src/clipeditor.cpp" line="93"/>
+        <source>Video Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/clipeditor.cpp" line="95"/>
         <source>Choose Video</source>
         <translation>Video wählen</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="87"/>
-        <source>All files (*);;Videos (*.mkv *.avi *.mp4)</source>
-        <translation>Alle Dateien (*);;Videos (*.mkv *.avi *.mp4)</translation>
+        <location filename="../src/clipeditor.cpp" line="95"/>
+        <source>All files (*);;Videos (*.mkv *.avi *.mp4 *.wmv)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="114"/>
+        <source>All files (*);;Videos (*.mkv *.avi *.mp4)</source>
+        <translation type="vanished">Alle Dateien (*);;Videos (*.mkv *.avi *.mp4)</translation>
+    </message>
+    <message>
+        <location filename="../src/clipeditor.cpp" line="88"/>
+        <source>msmpeg4v2 - WMV Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/clipeditor.cpp" line="90"/>
+        <source>H264 compressed videos - MP4, OGG, MKV files with this codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/clipeditor.cpp" line="93"/>
+        <source>Note that only some Video formats work on different platforms. Recommended video format for this platform: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/clipeditor.cpp" line="122"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="114"/>
+        <location filename="../src/clipeditor.cpp" line="122"/>
         <source>Error code %1 on recording a video.</source>
         <translation>Fehler-Code %1 während der Aufnahme eines Videos.</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="330"/>
+        <location filename="../src/clipeditor.cpp" line="338"/>
         <source>Choose Narrating Sound</source>
         <translation>Erzähler-Sound wählen</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="330"/>
+        <location filename="../src/clipeditor.cpp" line="338"/>
         <source>All files (*);;Audio (*.wav)</source>
         <translation>Alle Dateien (*);;Audio (*.wav)</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="433"/>
+        <location filename="../src/clipeditor.cpp" line="441"/>
         <source>Description</source>
-        <translation>Bescchreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
 </context>
 <context>
@@ -430,12 +483,22 @@ p, li { white-space: pre-wrap; }
         <translation>Wollen Sie ein bestehendes eigenes Märchen überschreiben?</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="133"/>
+        <location filename="../src/customfairytaledialog.cpp" line="36"/>
+        <source>Saved Custom Fairytale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/customfairytaledialog.cpp" line="36"/>
+        <source>Successfully saved custom fairytale &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/customfairytaledialog.cpp" line="135"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="157"/>
+        <location filename="../src/customfairytaledialog.cpp" line="159"/>
         <source>And if %1 did not die then %2 is still alive today.&lt;br/&gt;End</source>
         <translation>Und wenn %1 nicht gestorben ist, dann lebt %2 noch heute.&lt;br/&gt;Ende</translation>
     </message>
@@ -456,7 +519,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">ist</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="166"/>
+        <location filename="../src/customfairytaledialog.cpp" line="168"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation>Aber niemand weiß, was als Nächstes geschah.&lt;br/&gt;Ende</translation>
     </message>
@@ -718,7 +781,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="363"/>
+        <location filename="../build/ui_mainwindow.h" line="369"/>
         <source>Gustav&apos;s Fairyland</source>
         <translation>Gustavs Märchenwelt</translation>
     </message>
@@ -727,72 +790,77 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Eigenes Spiel</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="369"/>
+        <location filename="../build/ui_mainwindow.h" line="374"/>
         <source>Let&apos;s Go!</source>
         <translation>Los geht&apos;s!</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="370"/>
+        <location filename="../build/ui_mainwindow.h" line="375"/>
         <source>A&amp;dvanced</source>
         <translation>&amp;Erweitert</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="376"/>
+        <location filename="../build/ui_mainwindow.h" line="381"/>
         <source>Saved Fairytales</source>
         <translation>Gespeicherte Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="368"/>
+        <location filename="../build/ui_mainwindow.h" line="373"/>
         <source>Record</source>
         <translation>Aufnehmen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="366"/>
+        <location filename="../build/ui_mainwindow.h" line="371"/>
         <source>Game Mode</source>
         <translation>Spielmodus</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="371"/>
+        <location filename="../build/ui_mainwindow.h" line="376"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="372"/>
+        <location filename="../build/ui_mainwindow.h" line="377"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="373"/>
+        <location filename="../build/ui_mainwindow.h" line="378"/>
         <source>Credits</source>
         <translation>Mitwirkende</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="374"/>
+        <location filename="../build/ui_mainwindow.h" line="379"/>
         <source>Editor</source>
         <translation>Editor</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="375"/>
+        <location filename="../build/ui_mainwindow.h" line="380"/>
         <source>High Scores</source>
         <translation>High Scores</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="367"/>
+        <location filename="../build/ui_mainwindow.h" line="387"/>
+        <source>Version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_mainwindow.h" line="372"/>
         <source>Bonus Clips</source>
         <translation>Bonus-Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="377"/>
+        <location filename="../build/ui_mainwindow.h" line="382"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="378"/>
+        <location filename="../build/ui_mainwindow.h" line="385"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="379"/>
+        <location filename="../build/ui_mainwindow.h" line="386"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
@@ -1076,149 +1144,165 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="393"/>
         <location filename="../src/fairytale.cpp" line="394"/>
-        <location filename="../src/fairytale.cpp" line="1532"/>
-        <location filename="../src/fairytale.cpp" line="1533"/>
+        <location filename="../src/fairytale.cpp" line="1536"/>
+        <location filename="../src/fairytale.cpp" line="1537"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="419"/>
+        <location filename="../src/fairytale.cpp" line="420"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="524"/>
+        <location filename="../src/fairytale.cpp" line="487"/>
+        <location filename="../src/fairytale.cpp" line="2073"/>
+        <source>Version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="520"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="528"/>
+        <location filename="../src/fairytale.cpp" line="524"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="608"/>
+        <location filename="../src/fairytale.cpp" line="603"/>
         <source>Use default clip packages?</source>
         <translation>Standard-Clip-Pakete verwenden?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="608"/>
+        <location filename="../src/fairytale.cpp" line="603"/>
         <source>Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?</source>
         <translation>Ihr Clip-Paket-Verzeichnis wurde geändert. Das kann an einer alten Installation dieses Spiels liegen. Einige der neusten Clips sind daher möglicherweise nicht verfügbar. Wollen Sie die Standard-Clip-Pakete der aktuellen Installation verwenden?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1179"/>
+        <location filename="../src/fairytale.cpp" line="1173"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1179"/>
+        <location filename="../src/fairytale.cpp" line="1173"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1185"/>
+        <location filename="../src/fairytale.cpp" line="1179"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1185"/>
+        <location filename="../src/fairytale.cpp" line="1179"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1190"/>
+        <location filename="../src/fairytale.cpp" line="1184"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1190"/>
+        <location filename="../src/fairytale.cpp" line="1184"/>
         <source>Custom Clip Package is missing.</source>
         <translation>Clip-Paket mit eigenen Clips fehlt.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1233"/>
+        <location filename="../src/fairytale.cpp" line="1227"/>
         <source>Unable to start the game</source>
         <translation>Spiel konnte nicht gestartet werden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1233"/>
+        <location filename="../src/fairytale.cpp" line="1227"/>
         <source>Unable to start the game since clips are missing. Try to restore the default settings.</source>
         <translation>Das Spiel konnte nicht gestartet werden, da Clips fehlen. Versuchen Sie die Standardeinstellungen wieder herzustellen.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1366"/>
-        <location filename="../src/fairytale.cpp" line="1408"/>
+        <location filename="../src/fairytale.cpp" line="1360"/>
+        <location filename="../src/fairytale.cpp" line="1402"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1461"/>
+        <location filename="../src/fairytale.cpp" line="1459"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1461"/>
+        <location filename="../src/fairytale.cpp" line="1459"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation>Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1508"/>
-        <location filename="../src/fairytale.cpp" line="1509"/>
+        <location filename="../src/fairytale.cpp" line="1464"/>
+        <source>Unlocked all Bonus Clips already!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="1464"/>
+        <source>You have already unlocked all available bonus clips!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="1511"/>
+        <location filename="../src/fairytale.cpp" line="1512"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1652"/>
+        <location filename="../src/fairytale.cpp" line="1657"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1680"/>
-        <location filename="../src/fairytale.cpp" line="1732"/>
+        <location filename="../src/fairytale.cpp" line="1685"/>
+        <location filename="../src/fairytale.cpp" line="1737"/>
         <source>Invalid gamemode</source>
         <translation>Ungültiger Spielmodus</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1680"/>
-        <location filename="../src/fairytale.cpp" line="1732"/>
+        <location filename="../src/fairytale.cpp" line="1685"/>
+        <location filename="../src/fairytale.cpp" line="1737"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation>Der Spielmodus hat weist ein ungültiges Verhalten auf.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1968"/>
+        <location filename="../src/fairytale.cpp" line="1966"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1989"/>
-        <location filename="../src/fairytale.cpp" line="2023"/>
+        <location filename="../src/fairytale.cpp" line="1987"/>
+        <location filename="../src/fairytale.cpp" line="2021"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1993"/>
-        <location filename="../src/fairytale.cpp" line="2027"/>
+        <location filename="../src/fairytale.cpp" line="1991"/>
+        <location filename="../src/fairytale.cpp" line="2025"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2000"/>
+        <location filename="../src/fairytale.cpp" line="1998"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2004"/>
+        <location filename="../src/fairytale.cpp" line="2002"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2011"/>
+        <location filename="../src/fairytale.cpp" line="2009"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2015"/>
+        <location filename="../src/fairytale.cpp" line="2013"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

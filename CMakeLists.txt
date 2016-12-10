@@ -1,4 +1,16 @@
 cmake_minimum_required(VERSION 3.0.0)
+
+# TODO use Hunter for easier dependency resolving
+#include("cmake/HunterGate.cmake")
+
+#HunterGate(
+#    URL "https://github.com/ruslo/hunter/archive/v0.7.0.tar.gz"
+#    SHA1 "e730118c7ec65126398f8d4f09daf9366791ede0"
+#)
+
+#hunter_add_package(Qt)
+#hunter_add_package(OpenCV)
+
 project(gustavsfairyland)
 
 if (ANDROID)
@@ -24,7 +36,12 @@ message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 
-configure_file(config.h.in config.h)
+set(gustavsfairyland_VERSION_MAJOR "1")
+set(gustavsfairyland_VERSION_MINOR "1")
+set(gustavsfairyland_VERSION_PATCH "0")
+set(gustavsfairyland_VERSION "1.1.0")
+
+configure_file(config.h.in config.h ESCAPE_QUOTES)
 include_directories("${CMAKE_BINARY_DIR}")
 
 # Validate XML files if possible
@@ -68,15 +85,10 @@ endif ()
 if (USE_QTMEL)
 	include(ExternalProject)
 
+	set(CMAKE_MODULE_PATH "C:/Users/tamino/Downloads/opencv/build/")
+	set(CMAKE_PREFIX_PATH "C:/Users/tamino/Downloads/opencv/build/")
 	find_package(OpenCV REQUIRED)
 	find_package(ZLIB REQUIRED)
-	find_path(AV_INCLUDE libavcodec/avcodec.h PATHS /usr/include/ffmpeg/)
-
-	if (NOT AV_INCLUDE)
-		message(FATAL_ERROR "avcodec.h not found")
-	else ()
-		message(STATUS "Found avcodec.h in: ${AV_INCLUDE}")
-	endif ()
 
 	add_custom_target(ffmpegQtMEL ALL bash -x buildffmpeg_qtmel.sh "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" SOURCES "${CMAKE_SOURCE_DIR}/ffmpeg-git-14d94a1.tar.bz2" "${CMAKE_SOURCE_DIR}/buildffmpeg_qtmel.sh")
 	set(AV_INCLUDE "${CMAKE_BINARY_DIR}/ffmpeg-git-14d94a1/install/include/")
@@ -394,10 +406,10 @@ set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "wc3lib.org")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
-set(CPACK_PACKAGE_VERSION "1.0.0")
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_VERSION "${gustavsfairyland_VERSION}")
+set(CPACK_PACKAGE_VERSION_MAJOR "${gustavsfairyland_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${gustavsfairyland_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${gustavsfairyland_VERSION_PATCH}")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "gustavsfairyland")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_PACKAGE_EXECUTABLES "gustavsfairyland" "Gustav's Fairyland")

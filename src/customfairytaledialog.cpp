@@ -32,6 +32,8 @@ void CustomFairytaleDialog::save()
 		customFairytale->setName(text);
 		customFairytale->setClipIds(m_clips);
 		m_app->addCustomFairytale(customFairytale);
+
+		QMessageBox::information(this, tr("Saved Custom Fairytale"), tr("Successfully saved custom fairytale \"%1\".").arg(text));
 	}
 }
 

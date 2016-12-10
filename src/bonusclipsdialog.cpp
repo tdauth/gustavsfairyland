@@ -78,27 +78,24 @@ void BonusClipsDialog::update()
 
 	for (fairytale::BonusClipUnlocks::const_iterator iterator = m_app->bonusClipUnlocks().begin(); iterator != m_app->bonusClipUnlocks().end(); ++iterator)
 	{
-		if (iterator.value())
+		BonusClip *bonusClip = m_app->getBonusClipByKey(*iterator);
+
+		if (bonusClip != nullptr)
 		{
-			BonusClip *bonusClip = m_app->getBonusClipByKey(iterator.key());
+			QPushButton *pushButton = new QPushButton(bonusClip->description());
+			pushButton->setIconSize(QSize(32, 32));
+			pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
 
-			if (bonusClip != nullptr)
-			{
-				QPushButton *pushButton = new QPushButton(bonusClip->description());
-				pushButton->setIconSize(QSize(32, 32));
-				pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+			QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
+			layout->insertWidget(i, pushButton, 0, Qt::AlignCenter);
+			connect(pushButton, &QPushButton::clicked, this, &BonusClipsDialog::playBonusClip);
+			m_buttons.insert(pushButton, new Button(*iterator, pushButton, this));
 
-				QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
-				layout->insertWidget(i, pushButton, 0, Qt::AlignCenter);
-				connect(pushButton, &QPushButton::clicked, this, &BonusClipsDialog::playBonusClip);
-				m_buttons.insert(pushButton, new Button(iterator.key(), pushButton, this));
-
-				++i;
-			}
-			else
-			{
-				qDebug() << "Bonus clip" << iterator.key() << "could not be found!";
-			}
+			++i;
+		}
+		else
+		{
+			qDebug() << "Bonus clip" << *iterator << "could not be found!";
 		}
 	}
 }

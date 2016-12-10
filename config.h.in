@@ -1,2 +1,6 @@
 #cmakedefine USE_QTMEL
 #cmakedefine DEBUG
+#define gustavsfairyland_VERSION "${gustavsfairyland_VERSION}"
+#define gustavsfairyland_VERSION_MAJOR "${gustavsfairyland_VERSION_MAJOR}"
+#define gustavsfairyland_VERSION_MINOR "${gustavsfairyland_VERSION_MINOR}"
+#define gustavsfairyland_VERSION_PATCH "${gustavsfairyland_VERSION_PATCH}"
