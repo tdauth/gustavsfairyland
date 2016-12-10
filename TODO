@@ -1,7 +1,13 @@
+TODOS 1.2:
+- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown.
+- English Qt translations are not loaded on Linux with installed RPM.
+- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
+- valgrind memory leaks.
+
 TODOS 1.1:
 - FIXED: Bildpfad steht zu weit oben (Clip-Editor). Passiert nur, wenn man manuell eine Bilddatei auswählt.
 - FIXED: Bilder und Videos werden verschoben und nicht kopiert. Sollen nur verschoben werden, wenn sie nicht aus tmp kommen!
-- FIXED: Dazu schreiben, welches videoformt funktioniert: Windows nur wmv-Dateien (siehe compressvideos.sh).
+- FIXED: Dazu schreiben, welches Videoformat funktioniert: Windows nur wmv-Dateien (siehe compressvideos.sh).
 - FIXED: Rechtschreibfehler bscreubung hinzufügen
 - FIXED (Careful, many changes of the players state!): Spiel abbrechen und pausieren im Player geht nicht während das Märchen abgespielt wird nachdem man gewonnen hat.
 - FIXED (init i): Bonus-Clips sind nicht mehr freigeschaltet. Genau die Hälfte der freigeschalteten Clips wird wieder gelöscht beim Neustart.
@@ -13,10 +19,6 @@ TODOS 1.1:
 - FIXED: Message Box anzeigen wenn Märchen erfolgreich gespeichert wurde.
 - DONE: Show version in main menu.
 - DONE: Add new Fairy clip.
-- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown.
-- English Qt translations are not loaded on Linux with installed RPM.
-- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
-- valgrind memory leaks.
 
 Finale TODOS Version 1.0 (Windows und Linux):
 - FIXED: Bonus Clips have always German descriptions.

@@ -1005,32 +1005,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="356"/>
+        <location filename="../src/settingsdialog.cpp" line="351"/>
         <source>Persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="358"/>
+        <location filename="../src/settingsdialog.cpp" line="353"/>
         <source>Acts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="361"/>
+        <location filename="../src/settingsdialog.cpp" line="356"/>
         <source>Intro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="367"/>
+        <location filename="../src/settingsdialog.cpp" line="362"/>
         <source>Outros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="375"/>
+        <location filename="../src/settingsdialog.cpp" line="370"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="381"/>
+        <location filename="../src/settingsdialog.cpp" line="376"/>
         <source>Bonuses</source>
         <translation type="unfinished"></translation>
     </message>

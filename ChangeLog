@@ -1,2 +1,14 @@
 Release 1.1.0:
-*
+* Fixed restoring all unlocked bonus clips. Half of them got lost after restarting the application.
+* Fixed canceling and pausing the game while showing the complete fairytale at the end of a game.
+* Fixed the image path position and image display in the clip editor when choosing a file manually for an image.
+* Fixed moving manually chosen files when creating a clip instead of copying them which would be correct.
+* Show information about the video codec which is supported on the current platform when choosing a video file manually.
+* Fixed some spelling mistakes.
+* Fixed pausing creative mode and winning directly after continuing the game.
+* Fixed the video for the clip "drank from a fountain".
+* Fixed blue colors of two links in the credits.
+* Fixed a crash which occured when all bonus clips had already been unlocked and the game tried to unlock another one.
+* Show a message box after saving a custom fairytale.
+* Show the game's version in the main menu.
+* Added a new clip for the fairy.
