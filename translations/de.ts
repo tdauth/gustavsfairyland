@@ -36,7 +36,32 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Custom Font: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Oxygen Icons: &lt;/span&gt;&lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Click me&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip Icons: Several External Sources&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; font-weight:600;&quot;&gt;Mitwirkende&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Organisation und Videoaufnahmen: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Programmierung: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Tests: Johanna Wohlgemuth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Opa Jott: Opa Jott&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Vampir: Anne&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Werwolf: Carsten Thomas&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Pestarzt: Jannis&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Popcornverkäuferin: Sarah&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Fee: Johanna Wohlgemuth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Prinzessin: Klara&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Jedi: Mats&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Gustav Mahler: Tamino Dauth&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Holztextur: &lt;/span&gt;&lt;a href=&quot;http://publicdomainvectors.org/en/free-clipart/Wood-texture/39404.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;&lt;br /&gt;Paper texture: &lt;/span&gt;&lt;a href=&quot;http://all-free-download.com/free-vector/download/set-of-blank-paper-design-vector_524297.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Icon: &lt;/span&gt;&lt;a href=&quot; https://commons.wikimedia.org/wiki/File:Gustav_Mahler_by_Hans_Schliessmann-12.jpg&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahlers 5te Sinfonie: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/Mahler_Symphony_5&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Mahlers Piano-Quartett: &lt;/span&gt;&lt;a href=&quot;https://archive.org/details/MahlerPianoQuartetInAMinor&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Eigene Schriftart: &lt;/span&gt;&lt;a href=&quot;http://www.1001fonts.com/ringbearer-font.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Oxygen-Symbole: &lt;/span&gt;&lt;a href=&quot;https://github.com/pasnox/oxygen-icons-png&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt; text-decoration: underline; color:#0000ff;&quot;&gt;Klick mich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ringbearer&apos;; font-size:16pt;&quot;&gt;Clip-Symbole: Mehrere externe Quellen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -176,7 +201,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/clipeditor.cpp" line="93"/>
         <source>Video Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Video-Format</translation>
     </message>
     <message>
         <location filename="../src/clipeditor.cpp" line="95"/>
@@ -186,7 +211,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/clipeditor.cpp" line="95"/>
         <source>All files (*);;Videos (*.mkv *.avi *.mp4 *.wmv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*);;Videos (*.mkv *.avi *.mp4 *.wmv)</translation>
     </message>
     <message>
         <source>All files (*);;Videos (*.mkv *.avi *.mp4)</source>
@@ -195,17 +220,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/clipeditor.cpp" line="88"/>
         <source>msmpeg4v2 - WMV Files</source>
-        <translation type="unfinished"></translation>
+        <translation>msmpeg4v2 - WMV-Dateien</translation>
     </message>
     <message>
         <location filename="../src/clipeditor.cpp" line="90"/>
         <source>H264 compressed videos - MP4, OGG, MKV files with this codec</source>
-        <translation type="unfinished"></translation>
+        <translation>H264 komprimierte Videos - MP4-, OGG-, MKV-Dateien mit diesem Codec</translation>
     </message>
     <message>
         <location filename="../src/clipeditor.cpp" line="93"/>
         <source>Note that only some Video formats work on different platforms. Recommended video format for this platform: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Beachten Sie, dass nur einige Videoformate auf den unterschiedlichen Plattformen funktionieren. Empfohlenes Videoformat für diese Plattform: %1</translation>
     </message>
     <message>
         <location filename="../src/clipeditor.cpp" line="122"/>
@@ -485,12 +510,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="36"/>
         <source>Saved Custom Fairytale</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Märchen gespeichert</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="36"/>
         <source>Successfully saved custom fairytale &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Märchen \&quot;%1\&quot; erfolgreich gespeichert.</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="135"/>
@@ -842,7 +867,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="387"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Version:</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="372"/>
@@ -1058,7 +1083,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/settingsdialog.cpp" line="177"/>
         <location filename="../src/settingsdialog.cpp" line="182"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Diese Option hat keine Auswirkungen.</translation>
     </message>
     <message>
         <location filename="../src/settingsdialog.cpp" line="194"/>
@@ -1158,7 +1183,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/fairytale.cpp" line="487"/>
         <location filename="../src/fairytale.cpp" line="2073"/>
         <source>Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Version: %1</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="520"/>
@@ -1183,27 +1208,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="1173"/>
         <source>Error on Saving Custom Clips Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Speichern des eigenen Clip-Pakets</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1173"/>
         <source>Error on Saving Custom Clips Package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Speichern des eigenen Clip-Paket.</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1179"/>
         <source>Missing Custom Clip Dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Clip-Verzeichnis fehlt</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1179"/>
         <source>Custom Clip Dir is missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Clip-Verzeichnis fehlt.</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1184"/>
         <source>Missing Custom Clip Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenes Clip-Paket fehlt</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1184"/>
@@ -1239,12 +1264,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="1464"/>
         <source>Unlocked all Bonus Clips already!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es wurden bereits alle Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1464"/>
         <source>You have already unlocked all available bonus clips!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie haben bereits alle verfügbaren Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1511"/>
