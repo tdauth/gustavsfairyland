@@ -68,7 +68,7 @@
 		</clip>
 		<clip id="fairy">
 			<image>./fairy/fairy.jpg</image>
-			<video>./fairy/fairy.mp4</video>
+			<video>./fairy/fairy.mkv</video>
 			<narrator>
 				<en>./fairy/fairy_en.wav</en>
 				<de>./fairy/fairy_de.wav</de>

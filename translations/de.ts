@@ -515,7 +515,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="36"/>
         <source>Successfully saved custom fairytale &quot;%1&quot;.</source>
-        <translation>Eigenes Märchen \&quot;%1\&quot; erfolgreich gespeichert.</translation>
+        <translation>Eigenes Märchen &quot;%1&quot; erfolgreich gespeichert.</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="135"/>
