@@ -13,6 +13,8 @@ TODOS 1.1:
 - FIXED: Absturz, wenn man bereits alle Bonus-Clips freigeschaltet hatte. Lieber Nachricht anzeigen.
 - FIXED: Message Box anzeigen wenn Märchen erfolgreich gespeichert wurde.
 - DONE: Show version in main menu.
+- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown.
+- English Qt translations are not loaded on Linux with installed RPM.
 
 Finale TODOS Version 1.0 (Windows und Linux):
 - FIXED: Bonus Clips have always German descriptions.

@@ -68,7 +68,7 @@
 		</clip>
 		<clip id="fairy">
 			<image>./fairy/fairy.jpg</image>
-			<video>./fairy/fairy.mkv</video>
+			<video>./fairy/fairy.mp4</video>
 			<narrator>
 				<en>./fairy/fairy_en.wav</en>
 				<de>./fairy/fairy_de.wav</de>
@@ -379,6 +379,16 @@
 		<description>
                         <en>the dancing plague doctor</en>
 			<de>der tanzende Pestarzt</de>
+		</description>
+	</bonusClip>
+
+	<!-- https://www.freesound.org/people/Timbre/sounds/75712/ -->
+	<bonusClip id="fairyconjuring">
+		<image>./fairy/fairy.jpg</image>
+		<video>./fairy/fairybonus.mkv</video>
+		<description>
+			<en>the conjuring fairy</en>
+			<de>die zaubernde Fee</de>
 		</description>
 	</bonusClip>
 </clips>
