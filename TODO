@@ -5,16 +5,18 @@ TODOS 1.1:
 - FIXED: Rechtschreibfehler bscreubung hinzufügen
 - FIXED (Careful, many changes of the players state!): Spiel abbrechen und pausieren im Player geht nicht während das Märchen abgespielt wird nachdem man gewonnen hat.
 - FIXED (init i): Bonus-Clips sind nicht mehr freigeschaltet. Genau die Hälfte der freigeschalteten Clips wird wieder gelöscht beim Neustart.
-- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
 - FIXED: Kreativmodus wird nicht pausiert (Spiel anhalten). Wenn man einmal pausiert, hat man danach direkt gewonnen.
-- Clip "tranken von einem Brunnen" hat Standbild.
+- FIXED: Clip "tranken von einem Brunnen" hat Standbild.
 - FIXED: Zwei Klick mich-Links haben ein anderes Blau.
 - FIXED: Mahler's Piano ...
 - FIXED: Absturz, wenn man bereits alle Bonus-Clips freigeschaltet hatte. Lieber Nachricht anzeigen.
 - FIXED: Message Box anzeigen wenn Märchen erfolgreich gespeichert wurde.
 - DONE: Show version in main menu.
+- DONE: Add new Fairy clip.
 - Wind sound does not stop when you cancel the game during the initial intro or when the player is shown.
 - English Qt translations are not loaded on Linux with installed RPM.
+- Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
+- valgrind memory leaks.
 
 Finale TODOS Version 1.0 (Windows und Linux):
 - FIXED: Bonus Clips have always German descriptions.

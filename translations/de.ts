@@ -1106,32 +1106,32 @@ p, li { white-space: pre-wrap; }
         <translation>Fehlende Clips im Verzeichnis.</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="351"/>
+        <location filename="../src/settingsdialog.cpp" line="356"/>
         <source>Persons</source>
         <translation>Personen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="353"/>
+        <location filename="../src/settingsdialog.cpp" line="358"/>
         <source>Acts</source>
         <translation>Handlungen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="356"/>
+        <location filename="../src/settingsdialog.cpp" line="361"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="362"/>
+        <location filename="../src/settingsdialog.cpp" line="367"/>
         <source>Outros</source>
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="370"/>
+        <location filename="../src/settingsdialog.cpp" line="375"/>
         <source>Lost</source>
         <translation>Verloren</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="376"/>
+        <location filename="../src/settingsdialog.cpp" line="381"/>
         <source>Bonuses</source>
         <translation>Boni</translation>
     </message>
