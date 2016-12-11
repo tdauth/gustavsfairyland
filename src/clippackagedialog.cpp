@@ -11,7 +11,9 @@ ClipPackageDialog::ClipPackageDialog(QWidget* parent, Qt::WindowFlags f): QDialo
 	this->setupUi(this);
 
 	connect(this->gameModesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ClipPackageDialog::currentGameModeIndexChanged);
-	this->advancedGroupBox->hide();
+
+	this->advancedGroupBox->setChecked(false);
+	this->advancedWidget->hide();
 
 	connect(this->okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 	connect(this->cancelPushButton, &QPushButton::clicked, this, &QDialog::reject);

@@ -180,82 +180,82 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipPackageDialog</name>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="202"/>
+        <location filename="../build/ui_clippackagedialog.h" line="205"/>
         <source>Select Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="204"/>
+        <location filename="../build/ui_clippackagedialog.h" line="207"/>
         <source>Game Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="205"/>
+        <location filename="../build/ui_clippackagedialog.h" line="208"/>
         <source>Difficulty:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="208"/>
+        <location filename="../build/ui_clippackagedialog.h" line="211"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="209"/>
+        <location filename="../build/ui_clippackagedialog.h" line="212"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="210"/>
+        <location filename="../build/ui_clippackagedialog.h" line="213"/>
         <source>Hard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="211"/>
+        <location filename="../build/ui_clippackagedialog.h" line="214"/>
         <source>Mahlerisch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="213"/>
+        <location filename="../build/ui_clippackagedialog.h" line="216"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="215"/>
+        <location filename="../build/ui_clippackagedialog.h" line="217"/>
         <source>Clip Packages:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="216"/>
+        <location filename="../build/ui_clippackagedialog.h" line="218"/>
         <source>Use Max Rounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="217"/>
+        <location filename="../build/ui_clippackagedialog.h" line="219"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_clippackagedialog.h" line="218"/>
+        <location filename="../build/ui_clippackagedialog.h" line="220"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="149"/>
+        <location filename="../src/clippackagedialog.cpp" line="151"/>
         <source>No game modes available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="153"/>
+        <location filename="../src/clippackagedialog.cpp" line="155"/>
         <source>No clip packages available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="157"/>
+        <location filename="../src/clippackagedialog.cpp" line="159"/>
         <source>Clip Packages have not enough clips.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/clippackagedialog.cpp" line="160"/>
+        <location filename="../src/clippackagedialog.cpp" line="162"/>
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -101,18 +101,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="advancedCheckBox">
-        <property name="font">
-         <font>
-          <pointsize>25</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Advanced</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QGroupBox" name="advancedGroupBox">
         <property name="enabled">
          <bool>true</bool>
@@ -123,61 +111,70 @@
          </font>
         </property>
         <property name="title">
-         <string/>
+         <string>Advanced</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QLabel" name="label_2">
-           <property name="font">
-            <font>
-             <pointsize>25</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Clip Packages:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="clipPackagesWidget" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+          <widget class="QWidget" name="advancedWidget" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_2"/>
+             <widget class="QLabel" name="label_2">
+              <property name="font">
+               <font>
+                <pointsize>25</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Clip Packages:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="clipPackagesWidget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="useMaxRoundsCheckBox">
+              <property name="font">
+               <font>
+                <pointsize>25</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Use Max Rounds</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="maxRoundsSpinBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>25</pointsize>
+               </font>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+             </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="useMaxRoundsCheckBox">
-           <property name="font">
-            <font>
-             <pointsize>25</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Use Max Rounds</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="maxRoundsSpinBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>25</pointsize>
-            </font>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
           </widget>
          </item>
         </layout>
@@ -263,28 +260,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>447</y>
+     <x>150</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
-     <x>260</x>
-     <y>488</y>
+     <x>310</x>
+     <y>478</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>advancedCheckBox</sender>
+   <sender>advancedGroupBox</sender>
    <signal>clicked(bool)</signal>
-   <receiver>advancedGroupBox</receiver>
+   <receiver>advancedWidget</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>216</x>
-     <y>265</y>
+     <x>130</x>
+     <y>282</y>
     </hint>
     <hint type="destinationlabel">
-     <x>106</x>
-     <y>329</y>
+     <x>133</x>
+     <y>307</y>
     </hint>
    </hints>
   </connection>
