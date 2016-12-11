@@ -456,7 +456,7 @@ void RoomWidget::changeEvent(QEvent* event)
 
 void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 {
-	if (this->gameMode()->playClickSounds() && !soundEffects.isEmpty())
+	if (!soundEffects.isEmpty())
 	{
 		std::mt19937 eng(rd()); // seed the generator
 		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range

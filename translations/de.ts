@@ -631,7 +631,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GameModeMoving</name>
     <message>
-        <location filename="../src/gamemodemoving.h" line="58"/>
+        <location filename="../src/gamemodemoving.h" line="55"/>
         <source>Pages On The Ground</source>
         <translation>Seiten auf dem Fußboden</translation>
     </message>
@@ -974,164 +974,183 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../build/ui_settings.h" line="259"/>
+        <location filename="../build/ui_settings.h" line="397"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="277"/>
+        <location filename="../build/ui_settings.h" line="399"/>
+        <location filename="../build/ui_settings.h" line="404"/>
+        <location filename="../build/ui_settings.h" line="414"/>
+        <location filename="../build/ui_settings.h" line="415"/>
+        <location filename="../build/ui_settings.h" line="416"/>
+        <source>Volume:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_settings.h" line="402"/>
+        <source>Wind Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_settings.h" line="403"/>
+        <source>Narrator Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_settings.h" line="410"/>
+        <source>Video Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_settings.h" line="424"/>
         <source>Clips Directory:</source>
         <translation>Clips-Verzeichnis:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="269"/>
+        <location filename="../build/ui_settings.h" line="421"/>
         <source>Add File</source>
         <translation>Datei hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="270"/>
+        <location filename="../build/ui_settings.h" line="422"/>
         <source>Add Directory</source>
         <translation>Verzeichnis hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="271"/>
+        <location filename="../build/ui_settings.h" line="423"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="272"/>
+        <location filename="../build/ui_settings.h" line="420"/>
         <source>Choose Directory</source>
         <translation>Verzeichnis auswählen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="274"/>
+        <location filename="../build/ui_settings.h" line="426"/>
         <source>Possible Rounds</source>
         <translation>Mögliche Runden</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="275"/>
+        <location filename="../build/ui_settings.h" line="427"/>
         <source>Number of Clips</source>
         <translation>Anzahl der Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="276"/>
+        <location filename="../build/ui_settings.h" line="428"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="260"/>
+        <location filename="../build/ui_settings.h" line="398"/>
         <source>Sound</source>
         <translation>Sound</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="261"/>
+        <location filename="../build/ui_settings.h" line="401"/>
         <source>Click Sounds</source>
         <translation>Anklick-Sounds</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="262"/>
+        <location filename="../build/ui_settings.h" line="418"/>
         <source>Audio Output Device:</source>
         <translation>Audio-Ausgabegerät:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="263"/>
         <source>Music Volume:</source>
-        <translation>Musiklautstärke:</translation>
+        <translation type="vanished">Musiklautstärke:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="264"/>
+        <location filename="../build/ui_settings.h" line="406"/>
+        <location filename="../build/ui_settings.h" line="408"/>
+        <location filename="../build/ui_settings.h" line="411"/>
+        <location filename="../build/ui_settings.h" line="412"/>
+        <location filename="../build/ui_settings.h" line="413"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="266"/>
+        <location filename="../build/ui_settings.h" line="400"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="267"/>
+        <location filename="../build/ui_settings.h" line="417"/>
         <source>Audio Input Device:</source>
         <translation>Audio-Eingabegerät:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="280"/>
+        <location filename="../build/ui_settings.h" line="430"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="279"/>
+        <location filename="../build/ui_settings.h" line="419"/>
         <source>Clips</source>
         <translation>Clips</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="66"/>
-        <location filename="../src/settingsdialog.cpp" line="214"/>
+        <location filename="../src/settingsdialog.cpp" line="76"/>
+        <location filename="../src/settingsdialog.cpp" line="192"/>
         <source>Clips Directory</source>
         <translation>Clips-Verzeichnis</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="92"/>
-        <location filename="../src/settingsdialog.cpp" line="97"/>
-        <location filename="../src/settingsdialog.cpp" line="177"/>
-        <location filename="../src/settingsdialog.cpp" line="182"/>
         <source>Game mode is missing</source>
-        <translation>Spielmodus fehlt</translation>
+        <translation type="vanished">Spielmodus fehlt</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="92"/>
-        <location filename="../src/settingsdialog.cpp" line="97"/>
-        <location filename="../src/settingsdialog.cpp" line="177"/>
-        <location filename="../src/settingsdialog.cpp" line="182"/>
         <source>Game mode &quot;Moving Pages on the Ground&quot; is missing. One option has no effect.</source>
-        <translation>Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Diese Option hat keine Auswirkungen.</translation>
+        <translation type="vanished">Spielmodus &quot;Seiten auf dem Fußboden&quot; fehlt. Diese Option hat keine Auswirkungen.</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="194"/>
+        <location filename="../src/settingsdialog.cpp" line="172"/>
         <source>Add Clip</source>
         <translation>Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="194"/>
+        <location filename="../src/settingsdialog.cpp" line="172"/>
         <source>Clip Files (*.xml)</source>
         <translation>Clip-Dateien (*.xml)</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <location filename="../src/settingsdialog.cpp" line="227"/>
         <source>Missing Clips</source>
         <translation>Fehlende Clips</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <location filename="../src/settingsdialog.cpp" line="227"/>
         <source>Missing clips in the directory.</source>
         <translation>Fehlende Clips im Verzeichnis.</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="351"/>
+        <location filename="../src/settingsdialog.cpp" line="334"/>
         <source>Persons</source>
         <translation>Personen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="353"/>
+        <location filename="../src/settingsdialog.cpp" line="336"/>
         <source>Acts</source>
         <translation>Handlungen</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="356"/>
+        <location filename="../src/settingsdialog.cpp" line="339"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="362"/>
+        <location filename="../src/settingsdialog.cpp" line="354"/>
         <source>Outros</source>
         <translation>Outros</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="370"/>
+        <location filename="../src/settingsdialog.cpp" line="362"/>
         <source>Lost</source>
         <translation>Verloren</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="376"/>
+        <location filename="../src/settingsdialog.cpp" line="368"/>
         <source>Bonuses</source>
         <translation>Boni</translation>
     </message>

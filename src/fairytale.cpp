@@ -527,7 +527,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(m_cancelGameShortcut, &QShortcut::activatedAmbiguously, this, &fairytale::cancelGame); // TEST
 
 	m_audioPlayer->setAudioRole(QAudio::GameRole);
-	m_audioPlayer->setVolume(50);
+	m_audioPlayer->setVolume(defaultClickSoundsVolume);
 	connect(this->m_audioPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishAudio);
 
 	m_musicPlayer->setAudioRole(QAudio::GameRole);

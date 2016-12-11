@@ -13,10 +13,6 @@
 
 void SettingsDialog::restoreDefaults()
 {
-	musicCheckBox->setChecked(true);
-	musicVolumeSpinBox->setValue(30);
-	clickSoundsCheckBox->setChecked(true);
-
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
 	// We need file:/ on other systems.
@@ -26,6 +22,20 @@ void SettingsDialog::restoreDefaults()
 	// Dont prepend file:/ on Android!
 	m_clipsDir = QUrl(m_app->defaultClipsDirectory());
 #endif
+
+	// Sound
+	musicCheckBox->setChecked(true);
+	musicVolumeSpinBox->setValue(fairytale::defaultMusicVolume);
+	clickSoundsCheckBox->setChecked(true);
+	clickSoundsVolumeSpinBox->setValue(fairytale::defaultClickSoundsVolume);
+	windSoundCheckBox->setChecked(true);
+	windSoundVolumeSpinBox->setValue(fairytale::defaultWindSoundVolume);
+	narratorSoundCheckBox->setChecked(true);
+	narratorSoundVolumeSpinBox->setValue(fairytale::defaultNarratorSoundVolume);
+	videoSoundCheckBox->setChecked(true);
+	videoSoundVolumeSpinBox->setValue(fairytale::defaultVideoSoundVolume);
+
+	// Clips
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
 	// TODO unload only on apply!
@@ -74,29 +84,6 @@ void SettingsDialog::changeClipsDirectory()
 
 void SettingsDialog::apply()
 {
-	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
-	this->m_app->setMusicVolume(musicVolumeSpinBox->value());
-
-	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
-
-	if (iterator != this->m_app->gameModes().end())
-	{
-		GameModeMoving *gameModeMoving = dynamic_cast<GameModeMoving*>(iterator.value());
-
-		if (gameModeMoving != nullptr)
-		{
-			gameModeMoving->setPlayClickSounds(clickSoundsCheckBox->isChecked());
-		}
-		else
-		{
-			QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
-		}
-	}
-	else
-	{
-		QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
-	}
-
 	if (this->fullScreenCheckBox->isChecked())
 	{
 		// TODO Workaround: in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
@@ -111,6 +98,13 @@ void SettingsDialog::apply()
 		this->m_app->showNormal();
 	}
 
+	// Sound
+	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
+	this->m_app->setMusicVolume(musicVolumeSpinBox->value());
+	this->m_app->setAudioPlayerMuted(!clickSoundsCheckBox->isChecked());
+	this->m_app->setAudioPlayerVolume(clickSoundsVolumeSpinBox->value());
+
+	// Clips
 	this->m_app->setClipsDir(m_clipsDir);
 
 	// Set all specified clip packages for the application.
@@ -126,8 +120,13 @@ void SettingsDialog::apply()
 
 void SettingsDialog::update()
 {
+	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
+
+	// Sound
 	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
 	musicVolumeSpinBox->setValue(this->m_app->musicVolume());
+	clickSoundsCheckBox->setChecked(!this->m_app->isAudioPlayerMuted());
+	clickSoundsVolumeSpinBox->setValue(this->m_app->audioPlayerVolume());
 
 	int i = 0;
 
@@ -161,28 +160,7 @@ void SettingsDialog::update()
 
 	audioInputDeviceComboBox->setEnabled(m_app->audioInputSelectorControl() != nullptr);
 
-
-	fairytale::GameModes::const_iterator iterator = this->m_app->gameModes().find("pagesontheground");
-
-	if (iterator != this->m_app->gameModes().end())
-	{
-		GameModeMoving *gameModeMoving = dynamic_cast<GameModeMoving*>(iterator.value());
-
-		if (gameModeMoving != nullptr)
-		{
-			clickSoundsCheckBox->setChecked(gameModeMoving->playClickSounds());
-		}
-		else
-		{
-			QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
-		}
-	}
-	else
-	{
-		QMessageBox::warning(this, tr("Game mode is missing"), tr("Game mode \"Moving Pages on the Ground\" is missing. One option has no effect."));
-	}
-
-	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
+	// Clips
 	this->m_clipsDir = this->m_app->clipsDir();
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
@@ -282,7 +260,7 @@ void SettingsDialog::removeSelected()
     }
 }
 
-void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int column)
+void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int /* column */)
 {
 	Clips::iterator iterator = m_clips.find(item);
 
@@ -312,9 +290,13 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	setupUi(this);
 
 	connect(this->buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, this, &SettingsDialog::restoreDefaults);
-	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SettingsDialog::accept);
+	this->buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/themes/oxygen/32x32/actions/dialog-ok-apply.png"));
+	this->buttonBox->button(QDialogButtonBox::Cancel)->setIconSize(QSize(32, 32));
 	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SettingsDialog::apply);
+	connect(this->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SettingsDialog::accept);
 	connect(this->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &SettingsDialog::apply);
+	this->buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/themes/oxygen/32x32/actions/dialog-close.png"));
+	this->buttonBox->button(QDialogButtonBox::Cancel)->setIconSize(QSize(32, 32));
 	connect(this->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &SettingsDialog::reject);
 
 	connect(this->clipsDirectoryPushButton, &QPushButton::clicked, this, &SettingsDialog::changeClipsDirectory);
@@ -324,7 +306,8 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent
 	connect(this->removePushButton, &QPushButton::clicked, this, &SettingsDialog::removeSelected);
 	connect(this->treeWidget, &QTreeWidget::itemDoubleClicked, this, &SettingsDialog::itemDoubleClicked);
 
-	this->clipsGroupBox->hide();
+	this->clipsGroupBox->setChecked(false);
+	this->clipsWidget->hide();
 }
 
 void SettingsDialog::fill(const fairytale::ClipPackages &packages)
@@ -355,8 +338,17 @@ void SettingsDialog::fill(ClipPackage *package)
 	QTreeWidgetItem *introItem = new QTreeWidgetItem(topLevelItem);
 	introItem->setText(0, tr("Intro"));
 	const QUrl introUrl = m_app->resolveClipUrl(package->intro());
-	introItem->setIcon(0, QIcon(introUrl.toLocalFile()));
-	introItem->setText(1, QString::number(1));
+
+	if (introUrl.isLocalFile())
+	{
+		introItem->setIcon(0, QIcon(introUrl.toLocalFile()));
+		introItem->setText(1, QString::number(1));
+	}
+	else
+	{
+		introItem->setIcon(0, QIcon());
+		introItem->setText(1, QString::number(0));
+	}
 
 	QTreeWidgetItem *outrosItem = new QTreeWidgetItem(topLevelItem);
 	outrosItem->setText(0, tr("Outros"));
@@ -422,6 +414,21 @@ void SettingsDialog::load(QSettings &settings)
 {
 	settings.beginGroup("settings");
 
+	// showing maximized or fullscren leads to menu actions disappearing on a smartphone
+#ifdef Q_OS_ANDROID
+	const bool defaultShowFullScreen = false;
+#else
+	const bool defaultShowFullScreen = true;
+#endif
+	this->fullScreenCheckBox->setChecked(settings.value("fullscreen", defaultShowFullScreen).toBool());
+
+	// Sound
+	this->musicCheckBox->setChecked(settings.value("music", true).toBool());
+	this->musicVolumeSpinBox->setValue(settings.value("musicVolume", fairytale::defaultMusicVolume).toInt());
+	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
+	this->clickSoundsVolumeSpinBox->setValue(settings.value("clickSoundsVolume", fairytale::defaultClickSoundsVolume).toInt());
+
+	// Clips
 	const QDir defaultClipsDir(m_app->defaultClipsDirectory());
 	qDebug() << "Default clips dir:" << m_app->defaultClipsDirectory();
 	// the default path is the "clips" sub directory
@@ -430,17 +437,6 @@ void SettingsDialog::load(QSettings &settings)
 #else
 	m_clipsDir = QUrl(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
 #endif
-	this->musicCheckBox->setChecked(settings.value("music", true).toBool());
-	this->musicVolumeSpinBox->setValue(settings.value("musicVolume", 30).toInt());
-	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
-// showing maximized or fullscren leads to menu actions disappearing on a smartphone
-#ifdef Q_OS_ANDROID
-	const bool defaultShowFullScreen = false;
-#else
-	const bool defaultShowFullScreen = true;
-#endif
-	this->fullScreenCheckBox->setChecked(settings.value("fullscreen", defaultShowFullScreen).toBool());
-
 	qDebug() << "Set clips dir to" << m_clipsDir;
 
 	const int size = settings.beginReadArray("clipPackages");
@@ -495,15 +491,21 @@ void SettingsDialog::load(QSettings &settings)
 void SettingsDialog::save(QSettings &settings)
 {
 	settings.beginGroup("settings");
+
+	settings.setValue("fullscreen", this->fullScreenCheckBox->isChecked());
+
+	// Sound
+	settings.setValue("music", this->musicCheckBox->isChecked());
+	settings.setValue("musicVolume", this->musicVolumeSpinBox->value());
+	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
+	settings.setValue("clickSoundsVolume", this->clickSoundsVolumeSpinBox->value());
+
+	// Clips
 #ifndef Q_OS_ANDROID
 	settings.setValue("clipsDir", m_clipsDir.toLocalFile());
 #else
 	settings.setValue("clipsDir", m_clipsDir.toString());
 #endif
-	settings.setValue("music", this->musicCheckBox->isChecked());
-	settings.setValue("musicVolume", this->musicVolumeSpinBox->value());
-	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
-	settings.setValue("fullscreen", this->fullScreenCheckBox->isChecked());
 
 	settings.beginWriteArray("clipPackages", this->m_clipPackages.size());
 	int i = 0;

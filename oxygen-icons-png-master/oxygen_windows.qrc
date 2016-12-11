@@ -1,27 +1,29 @@
 <RCC>
-	<qresource prefix="themes">
-		<file>oxygen/32x32/actions/dialog-ok-apply.png</file>
-		<file>oxygen/32x32/actions/media-playback-start.png</file>
-		<file>oxygen/32x32/actions/media-playback-pause.png</file>
-		<file>oxygen/32x32/actions/media-skip-forward.png</file>
-		<file>oxygen/32x32/devices/audio-input-microphone.png</file>
-		<file>oxygen/32x32/devices/camera-photo.png</file>
-		<file>oxygen/32x32/actions/edit-image-face-recognize.png</file>
-		<file>oxygen/32x32/actions/application-exit.png</file>
-		<file>oxygen/32x32/actions/appointment-new.png</file>
-		<file>oxygen/32x32/actions/dialog-close.png</file>
-		<file>oxygen/32x32/actions/edit-redo.png</file>
-		<file>oxygen/32x32/actions/document-save.png</file>
-		<file>oxygen/32x32/actions/games-solve.png</file>
-		<file>oxygen/32x32/actions/games-achievements.png</file>
-		<file>oxygen/32x32/devices/camera-web.png</file>
-		<file>oxygen/32x32/apps/preferences-desktop-gaming.png</file>
-		<file>oxygen/32x32/actions/games-config-options.png</file>
-		<file>oxygen/32x32/categories/applications-education-language.png</file>
-		<file>oxygen/32x32/actions/help-about.png</file>
-		<file>oxygen/32x32/actions/games-config-background.png</file>
-		<file>oxygen/32x32/actions/games-highscores.png</file>
-		<file>oxygen/32x32/actions/tools-wizard.png</file>
-		<file>oxygen/32x32/places/folder-blue.png</file>
-	</qresource>
+    <qresource prefix="/themes">
+        <file>oxygen/32x32/actions/dialog-ok-apply.png</file>
+        <file>oxygen/32x32/actions/media-playback-start.png</file>
+        <file>oxygen/32x32/actions/media-playback-pause.png</file>
+        <file>oxygen/32x32/actions/media-skip-forward.png</file>
+        <file>oxygen/32x32/devices/audio-input-microphone.png</file>
+        <file>oxygen/32x32/devices/camera-photo.png</file>
+        <file>oxygen/32x32/actions/edit-image-face-recognize.png</file>
+        <file>oxygen/32x32/actions/application-exit.png</file>
+        <file>oxygen/32x32/actions/appointment-new.png</file>
+        <file>oxygen/32x32/actions/dialog-close.png</file>
+        <file>oxygen/32x32/actions/edit-redo.png</file>
+        <file>oxygen/32x32/actions/document-save.png</file>
+        <file>oxygen/32x32/actions/games-solve.png</file>
+        <file>oxygen/32x32/actions/games-achievements.png</file>
+        <file>oxygen/32x32/devices/camera-web.png</file>
+        <file>oxygen/32x32/apps/preferences-desktop-gaming.png</file>
+        <file>oxygen/32x32/actions/games-config-options.png</file>
+        <file>oxygen/32x32/categories/applications-education-language.png</file>
+        <file>oxygen/32x32/actions/help-about.png</file>
+        <file>oxygen/32x32/actions/games-config-background.png</file>
+        <file>oxygen/32x32/actions/games-highscores.png</file>
+        <file>oxygen/32x32/actions/tools-wizard.png</file>
+        <file>oxygen/32x32/places/folder-blue.png</file>
+        <file>oxygen/32x32/actions/document-open.png</file>
+        <file>oxygen/32x32/actions/document-open-folder.png</file>
+    </qresource>
 </RCC>

@@ -28,8 +28,6 @@ class GameModeMoving : public GameMode
 		virtual void start() override;
 
 		int startSpeed() const;
-		void setPlayClickSounds(bool play);
-		bool playClickSounds() const;
 
 	private slots:
 		void gotIt();
@@ -45,7 +43,6 @@ class GameModeMoving : public GameMode
 		QList<fairytale::ClipKey> m_remainingClips;
 		fairytale::ClipKey m_currentSolution;
 		RoomWidget *m_roomWidget;
-		bool m_playClickSounds;
 };
 
 inline QString GameModeMoving::id() const
@@ -56,16 +53,6 @@ inline QString GameModeMoving::id() const
 inline QString GameModeMoving::name() const
 {
 	return tr("Pages On The Ground");
-}
-
-inline void GameModeMoving::setPlayClickSounds(bool play)
-{
-	this->m_playClickSounds = play;
-}
-
-inline bool GameModeMoving::playClickSounds() const
-{
-	return this->m_playClickSounds;
 }
 
 inline void GameModeMoving::setState(GameMode::State state)

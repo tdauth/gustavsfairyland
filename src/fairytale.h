@@ -139,6 +139,12 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		typedef QPair<QString, QString> ClipKey;
 
+		static const int defaultMusicVolume = 30;
+		static const int defaultClickSoundsVolume = 50;
+		static const int defaultWindSoundVolume = 15;
+		static const int defaultNarratorSoundVolume = 50;
+		static const int defaultVideoSoundVolume = 50;
+
 		/**
 		 * Default game style which is applied in the beginning to qApp.
 		 *
@@ -393,6 +399,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool isMusicMuted() const;
 		void setMusicVolume(int volume);
 		int musicVolume() const;
+
+		void setAudioPlayerMuted(bool muted);
+		bool isAudioPlayerMuted() const;
+		void setAudioPlayerVolume(int volume);
+		int audioPlayerVolume() const;
 
 		/**
 		 * Loads the default clip package and returns true if it exists and has successfully been loaded.
@@ -803,6 +814,26 @@ inline void fairytale::setMusicVolume(int volume)
 inline int fairytale::musicVolume() const
 {
 	return this->m_musicPlayer->volume();
+}
+
+inline void fairytale::setAudioPlayerMuted(bool muted)
+{
+	this->m_audioPlayer->setMuted(muted);
+}
+
+inline bool fairytale::isAudioPlayerMuted() const
+{
+	return this->m_audioPlayer->isMuted();
+}
+
+inline void fairytale::setAudioPlayerVolume(int volume)
+{
+	this->m_audioPlayer->setVolume(volume);
+}
+
+inline int fairytale::audioPlayerVolume() const
+{
+	return this->m_audioPlayer->volume();
 }
 
 inline const fairytale::CustomFairytales& fairytale::customFairytales() const

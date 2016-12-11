@@ -5,7 +5,7 @@
 #include "floatingclip.h"
 #include "clip.h"
 
-GameModeMoving::GameModeMoving(fairytale* app): GameMode(app), m_state(State::None), m_roomWidget(nullptr), m_playClickSounds(true)
+GameModeMoving::GameModeMoving(fairytale* app): GameMode(app), m_state(State::None), m_roomWidget(nullptr)
 {
 }
 

@@ -37,9 +37,9 @@ option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos a
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
-set(gustavsfairyland_VERSION_MINOR "1")
+set(gustavsfairyland_VERSION_MINOR "2")
 set(gustavsfairyland_VERSION_PATCH "0")
-set(gustavsfairyland_VERSION "1.1.0")
+set(gustavsfairyland_VERSION "${gustavsfairyland_VERSION_MAJOR}.${gustavsfairyland_VERSION_MINOR}.${gustavsfairyland_VERSION_PATCH}")
 
 configure_file(config.h.in config.h ESCAPE_QUOTES)
 include_directories("${CMAKE_BINARY_DIR}")
@@ -85,8 +85,6 @@ endif ()
 if (USE_QTMEL)
 	include(ExternalProject)
 
-	set(CMAKE_MODULE_PATH "C:/Users/tamino/Downloads/opencv/build/")
-	set(CMAKE_PREFIX_PATH "C:/Users/tamino/Downloads/opencv/build/")
 	find_package(OpenCV REQUIRED)
 	find_package(ZLIB REQUIRED)
 
