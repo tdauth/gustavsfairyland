@@ -18,7 +18,7 @@ class GameModeMoving : public GameMode
 		virtual QString id() const override;
 		virtual QString name() const override;
 		virtual GameMode::State state() override;
-		virtual fairytale::ClipKey solution() override;
+		virtual ClipKeys solutions() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
 		virtual void nextTurn() override;

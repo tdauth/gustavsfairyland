@@ -504,6 +504,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		FairytalesDialog* fairytalesDialog();
 		void showFairytalesDialog();
 
+		void addCurrentSolution();
+
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
@@ -527,11 +529,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Updates the text of the time label with the remaining time.
 		 */
 		void updateTimeLabel();
-		void addCurrentSolution();
 		void cleanupGame();
 		void cleanupAfterOneGame();
 		void hideGameWidgets();
 		void finishPlayingCustomFairytale();
+
+		/**
+		 * Updates the timer and description laben and starts the timer if necessary. Calls GameMode::afterNarrator().
+		 */
+		void afterNarrator();
 		/**
 		  * \return Returns the URL to the "and" sound in the current language.
 		  */

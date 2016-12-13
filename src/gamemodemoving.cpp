@@ -14,9 +14,12 @@ GameMode::State GameModeMoving::state()
 	return this->m_state;
 }
 
-fairytale::ClipKey GameModeMoving::solution()
+GameMode::ClipKeys GameModeMoving::solutions()
 {
-	return this->m_currentSolution;
+	ClipKeys result;
+	result.push_back(this->m_currentSolution);
+
+	return result;
 }
 
 long int GameModeMoving::time()

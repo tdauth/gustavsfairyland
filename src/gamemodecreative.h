@@ -21,7 +21,7 @@ class GameModeCreative : public GameMode
 		GameModeCreative(fairytale *app);
 
 		virtual GameMode::State state() override;
-		virtual fairytale::ClipKey solution() override;
+		virtual ClipKeys solutions() override;
 		virtual long int time() override;
 		virtual void afterNarrator() override;
 		virtual void nextTurn() override;

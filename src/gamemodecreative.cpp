@@ -40,9 +40,12 @@ GameMode::State GameModeCreative::state()
 	return this->m_state;
 }
 
-fairytale::ClipKey GameModeCreative::solution()
+GameMode::ClipKeys GameModeCreative::solutions()
 {
-	return this->m_currentSolution;
+	ClipKeys result;
+	result.push_back(this->m_currentSolution);
+
+	return result;
 }
 
 long int GameModeCreative::time()

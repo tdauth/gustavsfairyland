@@ -9,13 +9,12 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QWidget(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QWidget(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_pause(false)
 {
 	setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
 	move(0, 0);
 	resize(QSize(width, width));
 	raise();
-	//setAutoFillBackground(false);
 }
 
 void FloatingClip::paint(QPainter *painter)
@@ -93,7 +92,7 @@ void FloatingClip::resume()
 
 void FloatingClip::updatePosition(qint64 elapsedTime)
 {
-	if (elapsedTime <= 0)
+	if (elapsedTime <= 0 || m_pause)
 	{
 		return;
 	}
@@ -238,7 +237,7 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 	}
 }
 
-void FloatingClip::mousePressEvent(QMouseEvent* event)
+void FloatingClip::mousePressEvent(QMouseEvent *event)
 {
 	if (m_roomWidget->mode() == RoomWidget::Mode::DragAndDrop)
 	{
@@ -249,7 +248,13 @@ void FloatingClip::mousePressEvent(QMouseEvent* event)
 		drag->setMimeData(mimeData);
 		drag->setPixmap(QPixmap::fromImage(this->m_scaledImage));
 
+		m_pause = true;
+
+		QApplication::setOverrideCursor(Qt::ClosedHandCursor);
 		Qt::DropAction dropAction = drag->exec();
+		QApplication::restoreOverrideCursor();
+
+		m_pause = false;
 	}
 }
 

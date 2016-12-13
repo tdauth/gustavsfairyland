@@ -51,7 +51,8 @@ class GameMode : public QObject
 		virtual void nextTurn() = 0;
 		virtual void afterNarrator() = 0;
 		virtual long int time() = 0;
-		virtual fairytale::ClipKey solution() = 0;
+		typedef QList<fairytale::ClipKey> ClipKeys;
+		virtual ClipKeys solutions() = 0;
 		virtual State state() = 0;
 
 		/**

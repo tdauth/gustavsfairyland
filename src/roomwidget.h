@@ -16,6 +16,7 @@ class Door;
 class FloatingClip;
 class Clip;
 class ClickAnimation;
+class SolutionWidget;
 
 // Use QOpenGLWidget for better performance but there is a bug when resizing the widget with OpenGL. It is painted over the sizes.
 typedef QWidget RoomWidgetParent;
@@ -74,6 +75,11 @@ class RoomWidget : public RoomWidgetParent
 		 * \return Returns the pixels per S which the floating clip is moved.
 		 */
 		int floatingClipSpeed() const;
+		void setFloatingClipSpeedFactor(double floatingClipSpeedFactor);
+		/**
+		 * \return Returns an additional floating clip factor which is 1.0 by default.
+		 */
+		double floatingClipSpeedFactor() const;
 
 		/**
 		 * \return Returns the maximum distance in pixels which the floating clip moves from a collision. This distance is smaller if the room widget is smaller.
@@ -96,6 +102,13 @@ class RoomWidget : public RoomWidgetParent
 		const Doors& doors() const;
 		const FloatingClips& floatingClips() const;
 
+		void playSuccessSound();
+		void playFailSound();
+
+		void cancelDrags();
+
+		void setSolutionWidget(SolutionWidget *solutionWidget);
+
 	protected:
 		/// Repaints the room widget and the doors as well as the floating clip.
 		virtual void paintEvent(QPaintEvent *event) override;
@@ -112,6 +125,9 @@ class RoomWidget : public RoomWidgetParent
 		virtual void resizeEvent(QResizeEvent *event) override;
 
 		virtual void changeEvent(QEvent *event) override;
+
+		virtual void dragEnterEvent(QDragEnterEvent *event) override;
+		virtual void dropEvent(QDropEvent *event) override;
 
 	private:
 		/**
@@ -140,8 +156,14 @@ class RoomWidget : public RoomWidgetParent
 		QImage m_woodImageDisabled;
 		QMediaPlayer *m_windSoundPlayer;
 		bool m_playWindSound = true;
+		double m_floatingClipSpeedFactor;
 
 		ClickAnimations m_clickAnimations;
+
+		/**
+		 * Only required in drag & drop mode.
+		 */
+		SolutionWidget *m_solutionWidget;
 };
 
 inline RoomWidget::Mode RoomWidget::mode() const
@@ -162,6 +184,21 @@ inline const RoomWidget::Doors& RoomWidget::doors() const
 inline const RoomWidget::FloatingClips& RoomWidget::floatingClips() const
 {
 	return this->m_floatingClips;
+}
+
+inline void RoomWidget::setFloatingClipSpeedFactor(double floatingClipSpeedFactor)
+{
+	this->m_floatingClipSpeedFactor = floatingClipSpeedFactor;
+}
+
+inline double RoomWidget::floatingClipSpeedFactor() const
+{
+	return this->m_floatingClipSpeedFactor;
+}
+
+inline void RoomWidget::setSolutionWidget(SolutionWidget *solutionWidget)
+{
+	this->m_solutionWidget = solutionWidget;
 }
 
 #endif // ROOMWIDGET_H

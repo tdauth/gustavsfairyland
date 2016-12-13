@@ -83,6 +83,7 @@ class FloatingClip : public QWidget
 		int m_dirX;
 		int m_dirY;
 		int m_collisionDistance; // The distance which has been moved due to a collision. Every update after the collision will increase this counter until it reaches a maximum, then it will be reset. Every collision sets this to 1 again.
+		bool m_pause;
 		fairytale::ClipKey m_clipKey;
 		/// Store the scaled version of the clip's image to improve performance.
 		QImage m_scaledImage;

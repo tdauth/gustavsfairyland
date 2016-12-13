@@ -109,9 +109,12 @@ GameMode::State GameModeOneOutOfFour::state()
 	return m_state;
 }
 
-fairytale::ClipKey GameModeOneOutOfFour::solution()
+GameMode::ClipKeys GameModeOneOutOfFour::solutions()
 {
-	return this->m_currentSolution;
+	ClipKeys result;
+	result.push_back(this->m_currentSolution);
+
+	return result;
 }
 
 void GameModeOneOutOfFour::nextTurn()

@@ -34,7 +34,7 @@ class GameModeOneOutOfFour : public GameMode
 		virtual void pause() override;
 		virtual void resume() override;
 		virtual GameMode::State state() override;
-		virtual fairytale::ClipKey solution() override;
+		virtual ClipKeys solutions() override;
 		virtual void nextTurn() override;
 		virtual void afterNarrator() override;
 		virtual long int time() override;

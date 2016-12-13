@@ -9,6 +9,7 @@
 #include "gamemodemoving.h"
 #include "fairytale.h"
 #include "clickanimation.h"
+#include "solutionwidget.h"
 
 void RoomWidget::changeWind()
 {
@@ -197,12 +198,47 @@ int RoomWidget::floatingClipSpeed() const
 	}
 
 	const int availableWidth = qMax(rect().height(), rect().width());
-	const int result = int(double(availableWidth) * factor);
+	const int result = int(double(availableWidth) * factor * floatingClipSpeedFactor());
 
 	qDebug() << "Result:" << result;
 
 	// make sure it does not stop
 	return result;
+}
+
+void RoomWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	FloatingClip *floatingClip = dynamic_cast<FloatingClip*>(event->source());
+
+	if (floatingClip != nullptr)
+	{
+		qDebug() << "Accept drop in room widget!";
+		event->acceptProposedAction();
+	}
+}
+
+
+void RoomWidget::dropEvent(QDropEvent *event)
+{
+	qDebug() << "Drop event in room widget!";
+	FloatingClip *floatingClip = dynamic_cast<FloatingClip*>(event->source());
+
+	if (floatingClip != nullptr)
+	{
+		// accept but reset it in the game mode later
+		event->acceptProposedAction();
+
+		if (m_solutionWidget != nullptr)
+		{
+			m_solutionWidget->fail(floatingClip->clipKey());
+		}
+	}
+	else
+	{
+		qDebug() << "Unable to find corresponding floating clip.";
+	}
+
+	QWidget::dropEvent(event);
 }
 
 int RoomWidget::maxCollisionDistance() const
@@ -212,7 +248,7 @@ int RoomWidget::maxCollisionDistance() const
 	return availableWidth / 5;
 }
 
-RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_mode(mode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true)
+RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_mode(mode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true), m_floatingClipSpeedFactor(1.0), m_solutionWidget(nullptr)
 {
 	// The room widget is painted all the time directly.
 	//this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -234,6 +270,11 @@ RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWid
 	m_windSoundPlayer->setVolume(15);
 
 	connect(m_windSoundPlayer, &QMediaPlayer::stateChanged, this, &RoomWidget::windSoundStateChanged);
+
+	if (mode == Mode::DragAndDrop)
+	{
+		this->setAcceptDrops(true);
+	}
 
 //	qDebug() << "Current Context:" << this->format();
 }
@@ -307,6 +348,19 @@ void RoomWidget::clearFloatingClips()
 	this->m_floatingClips.clear();
 }
 
+void RoomWidget::removeFloatingClip(const fairytale::ClipKey &clipKey)
+{
+	FloatingClips::iterator iterator = this->m_floatingClips.find(clipKey);
+
+	if (iterator != this->m_floatingClips.end())
+	{
+		FloatingClip *floatingClip = iterator.value();
+		this->m_floatingClips.erase(iterator);
+		delete floatingClip;
+		floatingClip = nullptr;
+	}
+}
+
 void RoomWidget::clearClickAnimations()
 {
 	this->m_clickAnimations.clear();
@@ -347,6 +401,26 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	QWidget::paintEvent(event);
 }
 
+void RoomWidget::playSuccessSound()
+{
+	playSoundFromList(m_successSoundPaths);
+}
+
+void RoomWidget::playFailSound()
+{
+	playSoundFromList(m_failSoundPaths);
+}
+
+void RoomWidget::cancelDrags()
+{
+	for (FloatingClip *floatingClip : m_floatingClips)
+	{
+		// Stop Drag & Drop on pausing.
+		QMouseEvent *finishMoveEvent = new QMouseEvent(QEvent::MouseButtonRelease, floatingClip->pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+		qApp->sendEvent(floatingClip, finishMoveEvent);
+	}
+}
+
 void RoomWidget::mousePressEvent(QMouseEvent *event)
 {
 	QWidget::mousePressEvent(event);
@@ -357,9 +431,9 @@ void RoomWidget::mousePressEvent(QMouseEvent *event)
 
 		if (!this->m_won)
 		{
-			if (this->m_floatingClips[this->gameMode()->solution()]->contains(event->pos()))
+			if (this->m_floatingClips[this->gameMode()->solutions().front()]->contains(event->pos()))
 			{
-				playSoundFromList(m_successSoundPaths);
+				playSuccessSound();
 
 				this->m_won = true;
 
@@ -372,7 +446,7 @@ void RoomWidget::mousePressEvent(QMouseEvent *event)
 			// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
 			else
 			{
-				playSoundFromList(m_failSoundPaths);
+				playFailSound();
 			}
 		}
 	}

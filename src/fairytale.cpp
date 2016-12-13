@@ -1628,7 +1628,7 @@ void fairytale::nextTurn()
 		{
 			if (this->gameMode()->hasToChooseTheSolution())
 			{
-				const ClipKey clipKey = this->gameMode()->solution();
+				const ClipKey clipKey = this->gameMode()->solutions().front();
 
 				if (!clipKey.isEmpty())
 				{
@@ -1642,7 +1642,6 @@ void fairytale::nextTurn()
 					Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
 					const QString description = this->description(startPersonClip, this->m_turns, solution);
 
-					this->m_remainingTime = this->gameMode()->time();
 					this->descriptionLabel->clear();
 					this->timeLabel->clear();
 
@@ -1684,13 +1683,13 @@ void fairytale::nextTurn()
 				// Some game modes dont have a single solution every turn.
 				else
 				{
-					this->gameMode()->afterNarrator();
+					this->afterNarrator();
 				}
 			}
 			// Just continue with the game mode
 			else
 			{
-				this->gameMode()->afterNarrator();
+				this->afterNarrator();
 			}
 
 			break;
@@ -1720,7 +1719,7 @@ void fairytale::onFinishTurn()
 	// If no start person has been selected yet, make sure this one is used as the start person.
 	if (this->m_turns == 1)
 	{
-		this->m_startPerson = this->gameMode()->solution();
+		this->m_startPerson = this->gameMode()->solutions().front();
 	}
 
 	switch (this->gameMode()->state())
@@ -1853,24 +1852,7 @@ void fairytale::onFinishVideoAndSounds()
 
 					this->m_playerSounds.clear();
 
-					this->updateTimeLabel();
-					// the description label helps to remember
-					this->descriptionLabel->setText(this->description(this->getClipByKey(this->m_startPerson), this->m_turns, this->getClipByKey(this->gameMode()->solution())));
-
-					this->gameMode()->afterNarrator();
-
-					// run every second
-					if (this->gameMode()->hasLimitedTime())
-					{
-						this->m_isRunningTimer = true;
-						this->m_pausedTimer = false;
-						this->m_timer.start(1000);
-					}
-					else
-					{
-						this->m_isRunningTimer = false;
-						this->m_pausedTimer = false;
-					}
+					this->afterNarrator();
 				}
 				// played only the word "and" or the first person sound then we always expect another sound
 				else
@@ -1947,6 +1929,29 @@ void fairytale::finishAudio(QMediaPlayer::State state)
 	}
 }
 
+void fairytale::afterNarrator()
+{
+	this->updateTimeLabel();
+	// the description label helps to remember
+	this->descriptionLabel->setText(this->description(this->getClipByKey(this->m_startPerson), this->m_turns, this->getClipByKey(this->gameMode()->solutions().front())));
+
+	this->gameMode()->afterNarrator();
+
+	// run every second
+	if (this->gameMode()->hasLimitedTime())
+	{
+		this->m_remainingTime = this->gameMode()->time();
+		this->m_isRunningTimer = true;
+		this->m_pausedTimer = false;
+		this->m_timer.start(1000);
+	}
+	else
+	{
+		this->m_isRunningTimer = false;
+		this->m_pausedTimer = false;
+	}
+}
+
 void fairytale::startMusic()
 {
 	// TODO add to package XML file, each package can have its own background music
@@ -1991,8 +1996,11 @@ void fairytale::updateTimeLabel()
 
 void fairytale::addCurrentSolution()
 {
-	this->customFairytaleDialog()->addClip(this->gameMode()->solution());
-	this->m_completeSolution.push_back(this->gameMode()->solution());
+	for (ClipKey clipKey : this->gameMode()->solutions())
+	{
+		this->customFairytaleDialog()->addClip(clipKey);
+		this->m_completeSolution.push_back(clipKey);
+	}
 }
 
 QString fairytale::description(Clip *startPersonClip, int turn, Clip *clip, bool markBold)
