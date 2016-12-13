@@ -431,7 +431,11 @@ set(CPACK_RPM_PACKAGE_URL "http://wc3lib.org")
 set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1, qt5-qtsvg >= 5.5.1 qt5-qttranslations >= 5.5.1")
 
 # Debian
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "qt5-default") # Ubuntu dependency
+set(CPACK_DEBIAN_PACKAGE_SECTION "Games")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://gustavsfairyland.wordpress.com")
 
 include(CPack)
