@@ -557,12 +557,12 @@ p, li { white-space: pre-wrap; }
         <translation>Eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="174"/>
+        <location filename="../build/ui_customfairytale.h" line="175"/>
         <source>Retry</source>
         <translation>Nochmal versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="175"/>
+        <location filename="../build/ui_customfairytale.h" line="174"/>
         <source>Retry Easier</source>
         <translation>Nochmal leichter versuchen</translation>
     </message>
@@ -1218,7 +1218,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="488"/>
-        <location filename="../src/fairytale.cpp" line="2101"/>
+        <location filename="../src/fairytale.cpp" line="2102"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
@@ -1332,39 +1332,39 @@ p, li { white-space: pre-wrap; }
         <translation>Der Spielmodus hat weist ein ungültiges Verhalten auf.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1991"/>
+        <location filename="../src/fairytale.cpp" line="1992"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2015"/>
-        <location filename="../src/fairytale.cpp" line="2049"/>
+        <location filename="../src/fairytale.cpp" line="2016"/>
+        <location filename="../src/fairytale.cpp" line="2050"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2019"/>
-        <location filename="../src/fairytale.cpp" line="2053"/>
+        <location filename="../src/fairytale.cpp" line="2020"/>
+        <location filename="../src/fairytale.cpp" line="2054"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2026"/>
+        <location filename="../src/fairytale.cpp" line="2027"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2030"/>
+        <location filename="../src/fairytale.cpp" line="2031"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2037"/>
+        <location filename="../src/fairytale.cpp" line="2038"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2041"/>
+        <location filename="../src/fairytale.cpp" line="2042"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>
