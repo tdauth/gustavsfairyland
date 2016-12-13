@@ -23,12 +23,14 @@ GameMode::ClipKeys GameModeSequence::solutions()
 long int GameModeSequence::time()
 {
 	int startValue = 8000;
+	int perClipValue = 1500;
 
 	switch (app()->difficulty())
 	{
 		case fairytale::Difficulty::Easy:
 		{
 			startValue = 10000;
+			perClipValue = 1600;
 
 			break;
 		}
@@ -36,6 +38,7 @@ long int GameModeSequence::time()
 		case fairytale::Difficulty::Normal:
 		{
 			startValue = 8000;
+			perClipValue = 1500;
 
 			break;
 		}
@@ -43,6 +46,7 @@ long int GameModeSequence::time()
 		case fairytale::Difficulty::Hard:
 		{
 			startValue = 6000;
+			perClipValue = 1400;
 
 			break;
 		}
@@ -50,13 +54,14 @@ long int GameModeSequence::time()
 		case fairytale::Difficulty::Mahlerisch:
 		{
 			startValue = 4000;
+			perClipValue = 1300;
 
 			break;
 		}
 	}
 
 	// More time to order all floating clips!
-	return (1500 * maxFloatingClips + startValue);
+	return (perClipValue * maxFloatingClips + startValue);
 }
 
 void GameModeSequence::afterNarrator()
@@ -176,8 +181,41 @@ void GameModeSequence::start()
 	{
 		this->m_roomWidget = new RoomWidget(this, RoomWidget::Mode::DragAndDrop, this->app()->gameAreaWidget());
 		this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
+		double factor = 0.30;
+
+		switch (app()->difficulty())
+		{
+			case fairytale::Difficulty::Easy:
+			{
+				factor = 0.30;
+
+				break;
+			}
+
+			case fairytale::Difficulty::Normal:
+			{
+				factor = 0.50;
+
+				break;
+			}
+
+			case fairytale::Difficulty::Hard:
+			{
+				factor = 0.70;
+
+				break;
+			}
+
+			case fairytale::Difficulty::Mahlerisch:
+			{
+				factor = 0.90;
+
+				break;
+			}
+		}
+
 		// Make floating clips slower for drag & drop which is harder than just clicking.
-		this->m_roomWidget->setFloatingClipSpeedFactor(0.30);
+		this->m_roomWidget->setFloatingClipSpeedFactor(factor);
 	}
 	else
 	{
