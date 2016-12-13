@@ -416,13 +416,15 @@ set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
 
 # NSIS Windows
 set(CPACK_NSIS_MODIFY_PATH ON)
-set(CPACK_NSIS_URL_INFO_ABOUT "http://wc3lib.org")
+set(CPACK_NSIS_URL_INFO_ABOUT "https://gustavsfairyland.wordpress.com")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
 string(REPLACE "/" "\\\\" WINDOWS_EXE_PATH "$<TARGET_FILE:gustavsfairyland>")
 set(CPACK_NSIS_INSTALLED_ICON_NAME "${WINDOWS_EXE_PATH}")
 set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
 set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
+# The path page is confusing for normal users and it is not necessary for the game.
+set(CPACK_NSIS_MODIFY_PATH OFF)
 
 # Fedora package
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "noarch") # Actually  x86_64
