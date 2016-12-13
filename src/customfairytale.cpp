@@ -19,7 +19,7 @@ void CustomFairytale::load(const QSettings &settings)
 	foreach (QString clipIdPair, clipIdPairs)
 	{
 		const QStringList pair = clipIdPair.split(":");
-		clipIds.push_back(ClipKey(pair.front(), pair.back()));
+		clipIds.push_back(fairytale::ClipKey(pair.front(), pair.back()));
 	}
 
 	this->setClipIds(clipIds);
@@ -30,7 +30,7 @@ void CustomFairytale::save(QSettings &settings)
 	settings.setValue("name", this->name());
 	QStringList clipIdPairs;
 
-	foreach (ClipKey clipKey, clipIds())
+	foreach (fairytale::ClipKey clipKey, clipIds())
 	{
 		clipIdPairs.push_back(clipKey.first + ":" + clipKey.second);
 	}
@@ -57,7 +57,7 @@ CustomFairytale* CustomFairytale::fromString(const QString& value, const QString
 	foreach (QString clipIdPair, values)
 	{
 		const QStringList pair = clipIdPair.split(":");
-		clipIds.push_back(ClipKey(pair.front(), pair.back()));
+		clipIds.push_back(fairytale::ClipKey(pair.front(), pair.back()));
 	}
 
 	result->setClipIds(clipIds);
@@ -70,7 +70,7 @@ QString CustomFairytale::toString()
 {
 	QStringList clipIdPairs;
 
-	foreach (ClipKey clipKey, clipIds())
+	foreach (fairytale::ClipKey clipKey, clipIds())
 	{
 		clipIdPairs.push_back(clipKey.first + ":" + clipKey.second);
 	}

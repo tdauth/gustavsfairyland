@@ -9,11 +9,16 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QObject(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QWidget(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0)
 {
+	setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
+	move(0, 0);
+	resize(QSize(width, width));
+	raise();
+	//setAutoFillBackground(false);
 }
 
-void FloatingClip::paint(QPainter *painter, QWidget *area)
+void FloatingClip::paint(QPainter *painter)
 {
 	const int x1 = this->x();
 	const int y1 = this->y();
@@ -27,11 +32,19 @@ void FloatingClip::paint(QPainter *painter, QWidget *area)
 	const int heightDifference = (imagePaper.height() - image.height()) / 2;
 	const int widthDifference = (imagePaper.width() - image.width()) / 2;
 	painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
+
+	raise();
+}
+
+void FloatingClip::paintEvent(QPaintEvent *event)
+{
+	QWidget::paintEvent(event);
 }
 
 void FloatingClip::setWidth(int width)
 {
 	this->m_width = width;
+	resize(QSize(width, width));
 	updateScaledClipImage();
 }
 
@@ -64,6 +77,8 @@ void FloatingClip::start()
 	{
 		this->m_dirY = -1;
 	}
+
+	this->show();
 }
 
 void FloatingClip::pause()
@@ -223,6 +238,29 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 	}
 }
 
+void FloatingClip::mousePressEvent(QMouseEvent* event)
+{
+	if (m_roomWidget->mode() == RoomWidget::Mode::DragAndDrop)
+	{
+		// start dragging
+		QDrag *drag = new QDrag(this);
+		QMimeData *mimeData = new QMimeData;
+
+		drag->setMimeData(mimeData);
+		drag->setPixmap(QPixmap::fromImage(this->m_scaledImage));
+
+		Qt::DropAction dropAction = drag->exec();
+	}
+}
+
+void FloatingClip::dragEnterEvent(QDragEnterEvent *event)
+{
+}
+
+void FloatingClip::dragLeaveEvent(QDragLeaveEvent *event)
+{
+}
+
 void FloatingClip::updateScaledClipImage()
 {
 	m_scaledImagePaper = QImage(":/resources/paper.jpg").scaled(m_width, m_width, Qt::KeepAspectRatio);
@@ -244,6 +282,16 @@ void FloatingClip::updateScaledClipImage()
 		Q_ASSERT(!this->m_scaledImage.isNull());
 		this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
 	}
+
+	resize(QSize(m_scaledImagePaper.height(), m_scaledImagePaper.width()));
+}
+
+void FloatingClip::move(int x, int y)
+{
+	this->m_x = x;
+	this->m_y = y;
+	QWidget::move(x, y);
+	//QWidget::move(this->mapFrom(m_roomWidget, QPoint(x, y)));
 }
 
 #include "floatingclip.moc"

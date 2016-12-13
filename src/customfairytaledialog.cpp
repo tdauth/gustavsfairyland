@@ -44,7 +44,7 @@ void CustomFairytaleDialog::retry()
 	this->close();
 }
 
-void CustomFairytaleDialog::addClip(const CustomFairytale::ClipKey &clipKey)
+void CustomFairytaleDialog::addClip(const fairytale::ClipKey &clipKey)
 {
 	m_clips.push_back(clipKey);
 	IconLabel *label = new IconLabel(this);

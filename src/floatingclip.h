@@ -16,7 +16,7 @@ class Clip;
  *
  * The floating clip moves around in the room widget (\ref RoomWidget) depending on the current wind direction.
  */
-class FloatingClip : public QObject
+class FloatingClip : public QWidget
 {
 	Q_OBJECT
 
@@ -24,15 +24,12 @@ class FloatingClip : public QObject
 		FloatingClip(RoomWidget *parent, int width, int speed);
 
 		/**
-		 * Paints the floating clip with \p painter on \p area.
-		 */
-		void paint(QPainter *painter, QWidget *area);
-
-		/**
 		 * Sets the current clip reference for the floating clip. The image of the clip will be shown on the floating clip.
 		 * \param clipKey The referenced clip
 		 */
 		void setClip(fairytale::ClipKey clipKey);
+		fairytale::ClipKey clipKey() const;
+
 		void setSpeed(int speed);
 		/**
 		 * \return Returns the pixels per S the floating clip is moved.
@@ -61,6 +58,14 @@ class FloatingClip : public QObject
 		bool contains(const QPoint &pos) const;
 
 		void updatePosition(qint64 elapsedTime);
+
+		void paint(QPainter *painter);
+
+	protected:
+		virtual void paintEvent(QPaintEvent *event) override;
+		virtual void mousePressEvent(QMouseEvent *event) override;
+		virtual void dragEnterEvent(QDragEnterEvent *event) override;
+		virtual void dragLeaveEvent(QDragLeaveEvent *event) override;
 
 	private:
 		/**
@@ -92,6 +97,10 @@ inline void FloatingClip::setClip(fairytale::ClipKey clipKey)
 	this->updateScaledClipImage();
 }
 
+inline fairytale::ClipKey FloatingClip::clipKey() const
+{
+	return this->m_clipKey;
+}
 
 inline void FloatingClip::setSpeed(int speed)
 {
@@ -136,12 +145,6 @@ inline void FloatingClip::setDirY(int dirY)
 inline int FloatingClip::dirY() const
 {
 	return this->m_dirY;
-}
-
-inline void FloatingClip::move(int x, int y)
-{
-	this->m_x = x;
-	this->m_y = y;
 }
 
 inline bool FloatingClip::contains(const QPoint &pos) const

@@ -18,6 +18,7 @@
 #include "gamemodeoneoutoffour.h"
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
+#include "gamemodesequence.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -539,6 +540,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeOneOutOfFour->id(), gameModeOneOutOfFour);
 	GameModeCreative *gameModeCreative = new GameModeCreative(this);
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
+	GameModeSequence *gameModeSequence = new GameModeSequence(this);
+	m_gameModes.insert(gameModeSequence->id(), gameModeSequence);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -1626,54 +1629,63 @@ void fairytale::nextTurn()
 			if (this->gameMode()->hasToChooseTheSolution())
 			{
 				const ClipKey clipKey = this->gameMode()->solution();
-				Clip *solution = this->getClipByKey(clipKey);
 
-				if (this->m_turns == 0)
+				if (!clipKey.isEmpty())
 				{
-					this->m_startPerson = clipKey;
-				}
+					Clip *solution = this->getClipByKey(clipKey);
 
-				Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
-				const QString description = this->description(startPersonClip, this->m_turns, solution);
+					if (this->m_turns == 0)
+					{
+						this->m_startPerson = clipKey;
+					}
 
-				this->m_remainingTime = this->gameMode()->time();
-				this->descriptionLabel->clear();
-				this->timeLabel->clear();
+					Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
+					const QString description = this->description(startPersonClip, this->m_turns, solution);
 
-				qDebug() << "Queue the sounds.";
+					this->m_remainingTime = this->gameMode()->time();
+					this->descriptionLabel->clear();
+					this->timeLabel->clear();
 
-				// play the sound for the inital character again
-				if (solution->isPerson() && turns() > 1)
-				{
+					qDebug() << "Queue the sounds.";
+
+					// play the sound for the inital character again
+					if (solution->isPerson() && turns() > 1)
+					{
+						PlayerSoundData data;
+						data.narratorSoundUrl = startPersonClip->narratorUrl();
+						data.description = this->description(startPersonClip, 0, startPersonClip);
+						data.imageUrl = startPersonClip->imageUrl();
+						data.prefix = true;
+						this->queuePlayerSound(data);
+					}
+
+					// play the sound "and"
+					if (solution->isPerson() && turns() > 0)
+					{
+						PlayerSoundData data;
+						data.narratorSoundUrl = this->narratorSoundUrl();
+						data.description = tr("and");
+						data.imageUrl = solution->imageUrl();
+						data.prefix = true;
+						this->queuePlayerSound(data);
+					}
+
+					/*
+					* Play the narrator sound for the current solution as hint.
+					*/
+					// Make sure that the current click sound ends before playing the narrator sound.
 					PlayerSoundData data;
-					data.narratorSoundUrl = startPersonClip->narratorUrl();
-					data.description = this->description(startPersonClip, 0, startPersonClip);
-					data.imageUrl = startPersonClip->imageUrl();
-					data.prefix = true;
-					this->queuePlayerSound(data);
-				}
-
-				// play the sound "and"
-				if (solution->isPerson() && turns() > 0)
-				{
-					PlayerSoundData data;
-					data.narratorSoundUrl = this->narratorSoundUrl();
-					data.description = tr("and");
+					data.narratorSoundUrl = solution->narratorUrl();
+					data.description = this->description(startPersonClip, 0, solution); // use always the stand alone description
 					data.imageUrl = solution->imageUrl();
-					data.prefix = true;
+					data.prefix = false;
 					this->queuePlayerSound(data);
 				}
-
-				/*
-				* Play the narrator sound for the current solution as hint.
-				*/
-				// Make sure that the current click sound ends before playing the narrator sound.
-				PlayerSoundData data;
-				data.narratorSoundUrl = solution->narratorUrl();
-				data.description = this->description(startPersonClip, 0, solution); // use always the stand alone description
-				data.imageUrl = solution->imageUrl();
-				data.prefix = false;
-				this->queuePlayerSound(data);
+				// Some game modes dont have a single solution every turn.
+				else
+				{
+					this->gameMode()->afterNarrator();
+				}
 			}
 			// Just continue with the game mode
 			else

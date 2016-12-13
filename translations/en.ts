@@ -548,6 +548,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>GameModeSequence</name>
+    <message>
+        <location filename="../src/gamemodesequence.h" line="62"/>
+        <source>Sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameOverDialog</name>
     <message>
         <location filename="../build/ui_gameoverdialog.h" line="85"/>
@@ -1063,177 +1071,177 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../src/fairytale.cpp" line="141"/>
+        <location filename="../src/fairytale.cpp" line="142"/>
         <source>Cancel Game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="141"/>
+        <location filename="../src/fairytale.cpp" line="142"/>
         <source>Do you want to cancel the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="393"/>
         <location filename="../src/fairytale.cpp" line="394"/>
-        <location filename="../src/fairytale.cpp" line="1536"/>
-        <location filename="../src/fairytale.cpp" line="1537"/>
+        <location filename="../src/fairytale.cpp" line="395"/>
+        <location filename="../src/fairytale.cpp" line="1539"/>
+        <location filename="../src/fairytale.cpp" line="1540"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="420"/>
+        <location filename="../src/fairytale.cpp" line="421"/>
         <source>Intro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="487"/>
-        <location filename="../src/fairytale.cpp" line="2082"/>
+        <location filename="../src/fairytale.cpp" line="488"/>
+        <location filename="../src/fairytale.cpp" line="2094"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="520"/>
+        <location filename="../src/fairytale.cpp" line="521"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="524"/>
+        <location filename="../src/fairytale.cpp" line="525"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="603"/>
+        <location filename="../src/fairytale.cpp" line="606"/>
         <source>Use default clip packages?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="603"/>
+        <location filename="../src/fairytale.cpp" line="606"/>
         <source>Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1173"/>
+        <location filename="../src/fairytale.cpp" line="1176"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1173"/>
+        <location filename="../src/fairytale.cpp" line="1176"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1179"/>
+        <location filename="../src/fairytale.cpp" line="1182"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1179"/>
+        <location filename="../src/fairytale.cpp" line="1182"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1184"/>
+        <location filename="../src/fairytale.cpp" line="1187"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1184"/>
+        <location filename="../src/fairytale.cpp" line="1187"/>
         <source>Custom Clip Package is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1227"/>
+        <location filename="../src/fairytale.cpp" line="1230"/>
         <source>Unable to start the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1227"/>
+        <location filename="../src/fairytale.cpp" line="1230"/>
         <source>Unable to start the game since clips are missing. Try to restore the default settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1360"/>
-        <location filename="../src/fairytale.cpp" line="1402"/>
+        <location filename="../src/fairytale.cpp" line="1363"/>
+        <location filename="../src/fairytale.cpp" line="1405"/>
         <source>Outro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1459"/>
+        <location filename="../src/fairytale.cpp" line="1462"/>
         <source>Unlocked Bonus Clip!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1459"/>
+        <location filename="../src/fairytale.cpp" line="1462"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1464"/>
+        <location filename="../src/fairytale.cpp" line="1467"/>
         <source>Unlocked all Bonus Clips already!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1464"/>
+        <location filename="../src/fairytale.cpp" line="1467"/>
         <source>You have already unlocked all available bonus clips!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1511"/>
-        <location filename="../src/fairytale.cpp" line="1512"/>
+        <location filename="../src/fairytale.cpp" line="1514"/>
+        <location filename="../src/fairytale.cpp" line="1515"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1661"/>
+        <location filename="../src/fairytale.cpp" line="1667"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1689"/>
-        <location filename="../src/fairytale.cpp" line="1741"/>
+        <location filename="../src/fairytale.cpp" line="1701"/>
+        <location filename="../src/fairytale.cpp" line="1753"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1689"/>
-        <location filename="../src/fairytale.cpp" line="1741"/>
+        <location filename="../src/fairytale.cpp" line="1701"/>
+        <location filename="../src/fairytale.cpp" line="1753"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1975"/>
+        <location filename="../src/fairytale.cpp" line="1987"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1996"/>
-        <location filename="../src/fairytale.cpp" line="2030"/>
+        <location filename="../src/fairytale.cpp" line="2008"/>
+        <location filename="../src/fairytale.cpp" line="2042"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2000"/>
-        <location filename="../src/fairytale.cpp" line="2034"/>
+        <location filename="../src/fairytale.cpp" line="2012"/>
+        <location filename="../src/fairytale.cpp" line="2046"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2007"/>
+        <location filename="../src/fairytale.cpp" line="2019"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2011"/>
+        <location filename="../src/fairytale.cpp" line="2023"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2018"/>
+        <location filename="../src/fairytale.cpp" line="2030"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2022"/>
+        <location filename="../src/fairytale.cpp" line="2034"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>

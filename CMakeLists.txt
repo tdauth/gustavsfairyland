@@ -125,6 +125,7 @@ set(fairyland_HEADERS
 	src/gamemodemoving.h
 	src/gamemodeoneoutoffour.h
 	src/gamemodecreative.h
+	src/gamemodesequence.h
 	src/iconbutton.h
 	src/roomwidget.h
 	src/settingsdialog.h
@@ -140,6 +141,7 @@ set(fairyland_HEADERS
 	src/fairytalesdialog.h
 	src/localedialog.h
 	src/translatedwidget.h
+	src/solutionwidget.h
 )
 
 set(fairyland_SRCS
@@ -160,6 +162,7 @@ set(fairyland_SRCS
 	src/gamemodemoving.cpp
 	src/gamemodeoneoutoffour.cpp
 	src/gamemodecreative.cpp
+	src/gamemodesequence.cpp
 	src/iconbutton.cpp
 	src/roomwidget.cpp
 	src/settingsdialog.cpp
@@ -175,6 +178,7 @@ set(fairyland_SRCS
 	src/fairytalesdialog.cpp
 	src/localedialog.cpp
 	src/translatedwidget.cpp
+	src/solutionwidget.cpp
 )
 
 set(fairyland_UI

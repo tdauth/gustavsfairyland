@@ -64,7 +64,7 @@ long int GameModeMoving::time()
 
 void GameModeMoving::afterNarrator()
 {
-	this->m_roomWidget->floatingClips().at(0)->setClip(m_currentSolution);
+	this->m_roomWidget->addFloatingClip(m_currentSolution, this->m_roomWidget->floatingClipWidth(), this->m_roomWidget->floatingClipSpeed());
 	this->m_roomWidget->clearClickAnimations();
 
 	// add more floating clips every round to make it a bit harder
@@ -176,15 +176,13 @@ void GameModeMoving::start()
 	// the room widget is cached
 	if (this->m_roomWidget == nullptr)
 	{
-		this->m_roomWidget = new RoomWidget(this, this->app()->gameAreaWidget());
-		connect(this->m_roomWidget, SIGNAL(gotIt()), this, SLOT(gotIt()));
+		this->m_roomWidget = new RoomWidget(this, RoomWidget::Mode::Click, this->app()->gameAreaWidget());
+		connect(this->m_roomWidget, &RoomWidget::gotIt, this, &GameModeMoving::gotIt);
 		this->app()->gameAreaLayout()->addWidget(this->m_roomWidget);
 	}
 	else
 	{
-		this->m_roomWidget->clearFloatingClipsExceptFirst();
-		// update speed due to difficulty
-		this->m_roomWidget->floatingClips().front()->setSpeed(m_roomWidget->floatingClipSpeed());
+		this->m_roomWidget->clearFloatingClips();
 		this->m_roomWidget->clearClickAnimations();
 		this->m_roomWidget->show();
 	}

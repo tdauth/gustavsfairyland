@@ -212,7 +212,7 @@ int RoomWidget::maxCollisionDistance() const
 	return availableWidth / 5;
 }
 
-RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true)
+RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_mode(mode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true)
 {
 	// The room widget is painted all the time directly.
 	//this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -223,8 +223,6 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 	{
 		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
 	}
-
-	m_floatingClips.push_back(new FloatingClip(this, this->floatingClipWidth(), this->floatingClipSpeed()));
 
 	updateSounds();
 
@@ -238,6 +236,11 @@ RoomWidget::RoomWidget(GameModeMoving *gameMode, QWidget *parent) : RoomWidgetPa
 	connect(m_windSoundPlayer, &QMediaPlayer::stateChanged, this, &RoomWidget::windSoundStateChanged);
 
 //	qDebug() << "Current Context:" << this->format();
+}
+
+RoomWidget::~RoomWidget()
+{
+	clearFloatingClips();
 }
 
 void RoomWidget::start()
@@ -290,17 +293,18 @@ void RoomWidget::addFloatingClip(const fairytale::ClipKey &clipKey, int width, i
 {
 	FloatingClip *floatingClip = new FloatingClip(this, width, speed);
 	floatingClip->setClip(clipKey);
-	m_floatingClips.push_back(floatingClip);
+
+	m_floatingClips.insert(clipKey, floatingClip);
 }
 
-void RoomWidget::clearFloatingClipsExceptFirst()
+void RoomWidget::clearFloatingClips()
 {
-	for (int i = 1; i < this->m_floatingClips.size(); ++i)
+	for (FloatingClip *floatingClip : m_floatingClips)
 	{
-		delete this->m_floatingClips.at(i);
+		delete floatingClip;
 	}
 
-	this->m_floatingClips.resize(1);
+	this->m_floatingClips.clear();
 }
 
 void RoomWidget::clearClickAnimations()
@@ -310,13 +314,8 @@ void RoomWidget::clearClickAnimations()
 
 void RoomWidget::paintEvent(QPaintEvent *event)
 {
-	//qDebug() << "Paint event";
-
 	QPainter painter;
 	painter.begin(this);
-
-	//qDebug() << "Image size: " << m_woodImage.size();
-	//qDebug() << "Size in paint event: " << this->size();
 
 	if (this->isEnabled())
 	{
@@ -332,10 +331,10 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 		door->paint(&painter, this);
 	}
 
-	// reverse foreach, make sure the solution is always printed on top
-	for (FloatingClips::reverse_iterator iterator = m_floatingClips.rbegin(); iterator != m_floatingClips.rend(); ++iterator)
+	// TODO reverse foreach, make sure the solution is always printed on top
+	for (FloatingClips::iterator iterator = m_floatingClips.begin(); iterator != m_floatingClips.end(); ++iterator)
 	{
-		(*iterator)->paint(&painter, this);
+		(*iterator)->paint(&painter);
 	}
 
 	foreach (ClickAnimation *clickAnimation, this->m_clickAnimations)
@@ -345,8 +344,6 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 
 	painter.end();
 
-	//qDebug() << "Paint event end";
-
 	QWidget::paintEvent(event);
 }
 
@@ -354,40 +351,45 @@ void RoomWidget::mousePressEvent(QMouseEvent *event)
 {
 	QWidget::mousePressEvent(event);
 
-	this->m_clickAnimations.push_back(new ClickAnimation(this, event->pos()));
-
-	if (!this->m_won)
+	if (mode() == Mode::Click)
 	{
-		if (this->m_floatingClips.at(0)->contains(event->pos()))
-		{
-			playSoundFromList(m_successSoundPaths);
+		this->m_clickAnimations.push_back(new ClickAnimation(this, event->pos()));
 
-			this->m_won = true;
-
-			// dont move anything anymore
-			m_windTimer->stop();
-			m_paintTimer->stop();
-			// Pause immediately that the timer stops, otherwise there might still be time in which the player can lose. Don't pause the game mode, otherwise the release event is never triggered.
-			this->gameMode()->app()->pauseTimer();
-		}
-		// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
-		else
+		if (!this->m_won)
 		{
-			playSoundFromList(m_failSoundPaths);
+			if (this->m_floatingClips[this->gameMode()->solution()]->contains(event->pos()))
+			{
+				playSoundFromList(m_successSoundPaths);
+
+				this->m_won = true;
+
+				// dont move anything anymore
+				m_windTimer->stop();
+				m_paintTimer->stop();
+				// Pause immediately that the timer stops, otherwise there might still be time in which the player can lose. Don't pause the game mode, otherwise the release event is never triggered.
+				this->gameMode()->app()->pauseTimer();
+			}
+			// only play the sound newly if the old is not still playing, otherwise you only here the beginning of the sound
+			else
+			{
+				playSoundFromList(m_failSoundPaths);
+			}
 		}
 	}
-
 }
 
 void RoomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	QWidget::mouseReleaseEvent(event);
 
-	if (m_won)
+	if (mode() == Mode::Click)
 	{
-		m_won = false;
+		if (m_won)
+		{
+			m_won = false;
 
-		emit gotIt();
+			emit gotIt();
+		}
 	}
 }
 

@@ -11,7 +11,7 @@
 
 #include "fairytale.h"
 
-class GameModeMoving;
+class GameMode;
 class Door;
 class FloatingClip;
 class Clip;
@@ -41,9 +41,26 @@ class RoomWidget : public RoomWidgetParent
 		void windSoundStateChanged(QMediaPlayer::State state);
 
 	public:
+		enum class Mode
+		{
+			/**
+			 * Win by clicking the current solution.
+			 */
+			Click,
+			/**
+			 * Win by dragin and dropping.
+			 */
+			DragAndDrop
+		};
+
 		typedef QVector<Door*> Doors;
-		typedef QVector<FloatingClip*> FloatingClips;
+		typedef QMap<fairytale::ClipKey, FloatingClip*> FloatingClips;
 		typedef QVector<ClickAnimation*> ClickAnimations;
+
+		/**
+		 * \return Returns the mode of the room widget which determines how to solve the fairytale.
+		 */
+		Mode mode() const;
 
 		/**
 		 * The size of a floating clip depends on the room widget's size.
@@ -63,16 +80,18 @@ class RoomWidget : public RoomWidgetParent
 		 */
 		int maxCollisionDistance() const;
 
-		RoomWidget(GameModeMoving *gameMode, QWidget* parent);
+		RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent);
+		virtual ~RoomWidget();
 
-		GameModeMoving* gameMode() const;
+		GameMode* gameMode() const;
 
 		void pause();
 		void start();
 		void resume();
 
 		void addFloatingClip(const fairytale::ClipKey &clipKey, int width, int speed);
-		void clearFloatingClipsExceptFirst();
+		void clearFloatingClips();
+		void removeFloatingClip(const fairytale::ClipKey &clipKey);
 		void clearClickAnimations();
 		const Doors& doors() const;
 		const FloatingClips& floatingClips() const;
@@ -104,7 +123,8 @@ class RoomWidget : public RoomWidgetParent
 
 		void updateSounds();
 
-		GameModeMoving *m_gameMode;
+		GameMode *m_gameMode;
+		Mode m_mode;
 		bool m_won;
 		std::random_device rd; // obtain a random number from hardware
 		QTimer *m_windTimer;
@@ -124,7 +144,12 @@ class RoomWidget : public RoomWidgetParent
 		ClickAnimations m_clickAnimations;
 };
 
-inline GameModeMoving* RoomWidget::gameMode() const
+inline RoomWidget::Mode RoomWidget::mode() const
+{
+	return this->m_mode;
+}
+
+inline GameMode* RoomWidget::gameMode() const
 {
 	return this->m_gameMode;
 }

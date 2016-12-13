@@ -137,7 +137,22 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * The key of every bonus clip is represented by the ID of its clip package and the ID of the clip itself.
 		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
 		 */
-		typedef QPair<QString, QString> ClipKey;
+		class ClipKey : public QPair<QString, QString>
+		{
+			public:
+				ClipKey()
+				{
+				}
+
+				ClipKey(const QString &packageId, const QString &clipId) : QPair<QString, QString>(packageId, clipId)
+				{
+				}
+
+				bool isEmpty() const
+				{
+					return this->first.isEmpty() && this->second.isEmpty();
+				}
+		};
 
 		static const int defaultMusicVolume = 30;
 		static const int defaultClickSoundsVolume = 50;

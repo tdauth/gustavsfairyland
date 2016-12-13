@@ -6,18 +6,15 @@
 #include <QList>
 #include <QStringList>
 
+#include "fairytale.h"
+
 /**
  * \brief Allows the player to store the result of a game.
  */
 class CustomFairytale : public QObject
 {
 	public:
-		/**
-		 * The key of every clip is represented by the ID of its clip package and the ID of the clip itself.
-		 * This key can be used to uniquely identify bonus clips even if several clip packages are being used.
-		 */
-		typedef QPair<QString, QString> ClipKey;
-		typedef QList<ClipKey> ClipIds;
+		typedef QList<fairytale::ClipKey> ClipIds;
 
 		CustomFairytale(QObject *parent);
 
