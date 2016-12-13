@@ -564,12 +564,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_customfairytale.h" line="175"/>
         <source>Retry Easier</source>
-        <translation type="unfinished"></translation>
+        <translation>Nochmal leichter versuchen</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="176"/>
         <source>Retry Harder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nochmal schwerer versuchen</translation>
     </message>
     <message>
         <location filename="../build/ui_customfairytale.h" line="179"/>
