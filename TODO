@@ -6,6 +6,7 @@ TODOS 1.2:
 - Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).
 - Add path-Seite verwirrt bei NSIS-Installation.
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen.
+- Erneut versuchen: Kein Intro mehr abspielen?
 
 TODOS 1.1:
 - FIXED: Bildpfad steht zu weit oben (Clip-Editor). Passiert nur, wenn man manuell eine Bilddatei auswählt.

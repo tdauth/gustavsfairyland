@@ -43,7 +43,6 @@ void FloatingClip::paintEvent(QPaintEvent *event)
 void FloatingClip::setWidth(int width)
 {
 	this->m_width = width;
-	resize(QSize(width, width));
 	updateScaledClipImage();
 }
 
@@ -288,7 +287,7 @@ void FloatingClip::updateScaledClipImage()
 		this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);
 	}
 
-	resize(QSize(m_scaledImagePaper.height(), m_scaledImagePaper.width()));
+	resize(QSize(m_scaledImagePaper.width(), m_scaledImagePaper.height()));
 }
 
 void FloatingClip::move(int x, int y)

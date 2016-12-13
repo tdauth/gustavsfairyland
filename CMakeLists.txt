@@ -431,7 +431,7 @@ set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
 set(CPACK_NSIS_MODIFY_PATH OFF)
 
 # Fedora package
-set(CPACK_RPM_PACKAGE_ARCHITECTURE "noarch") # Actually  x86_64
+set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_GROUP "games")
 set(CPACK_RPM_PACKAGE_URL "https://gustavsfairyland.wordpress.com")
 set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1, qt5-qtsvg >= 5.5.1 qt5-qttranslations >= 5.5.1")

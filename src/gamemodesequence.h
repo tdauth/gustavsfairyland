@@ -58,7 +58,7 @@ inline QString GameModeSequence::id() const
 
 inline QString GameModeSequence::name() const
 {
-	return tr("Sequence");
+	return tr("Complete Fairytale");
 }
 
 inline void GameModeSequence::setState(GameMode::State state)

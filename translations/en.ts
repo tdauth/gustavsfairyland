@@ -551,7 +551,7 @@ p, li { white-space: pre-wrap; }
     <name>GameModeSequence</name>
     <message>
         <location filename="../src/gamemodesequence.h" line="61"/>
-        <source>Sequence</source>
+        <source>Complete Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

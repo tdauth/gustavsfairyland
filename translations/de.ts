@@ -648,8 +648,8 @@ p, li { white-space: pre-wrap; }
     <name>GameModeSequence</name>
     <message>
         <location filename="../src/gamemodesequence.h" line="61"/>
-        <source>Sequence</source>
-        <translation type="unfinished"></translation>
+        <source>Complete Fairytale</source>
+        <translation>Vollständiges Märchen</translation>
     </message>
 </context>
 <context>
@@ -993,22 +993,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_settings.h" line="415"/>
         <location filename="../build/ui_settings.h" line="416"/>
         <source>Volume:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lautstärke:</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="402"/>
         <source>Wind Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Windgeräusch</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="403"/>
         <source>Narrator Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzählerton</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="410"/>
         <source>Video Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoton</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="424"/>
