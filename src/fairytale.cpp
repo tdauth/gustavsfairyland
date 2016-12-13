@@ -1942,6 +1942,7 @@ void fairytale::afterNarrator()
 		this->m_remainingTime = this->gameMode()->time();
 		this->m_isRunningTimer = true;
 		this->m_pausedTimer = false;
+		this->updateTimeLabel();
 		this->m_timer.start(1000);
 	}
 	else
