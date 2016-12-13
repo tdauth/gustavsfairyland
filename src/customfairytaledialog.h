@@ -25,6 +25,8 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		void addClip(const fairytale::ClipKey &clipKey);
 		void save();
 		void retry();
+		void retryEasier();
+		void retryHarder();
 
 	public:
 		CustomFairytaleDialog(fairytale *app, QWidget *parent);
@@ -34,6 +36,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		 * \return If this returns try it indicates that the user wants to retry the game with the same parameters as before.
 		 */
 		bool clickedRetry() const;
+		fairytale::Difficulty retryDifficulty() const;
 
 	protected:
 		virtual void showEvent(QShowEvent *event) override;
@@ -47,11 +50,17 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		Clips m_clips;
 		ClipLabels m_clipLabels;
 		bool m_retry;
+		fairytale::Difficulty m_retryDifficulty;
 };
 
 inline bool CustomFairytaleDialog::clickedRetry() const
 {
 	return this->m_retry;
+}
+
+inline fairytale::Difficulty CustomFairytaleDialog::retryDifficulty() const
+{
+	return this->m_retryDifficulty;
 }
 
 #endif // CUSTOMFAIRYTALEDIALOG_H

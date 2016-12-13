@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>729</width>
+    <width>911</width>
     <height>431</height>
    </rect>
   </property>
@@ -36,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>709</width>
-        <height>69</height>
+        <width>891</width>
+        <height>73</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -85,6 +85,40 @@
         <property name="icon">
          <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
           <normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="retryEasierPushButton">
+        <property name="text">
+         <string>Retry Easier</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="retryHarderPushButton">
+        <property name="text">
+         <string>Retry Harder</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../oxygen-icons-png-master/oxygen.qrc">
+          <normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -181,6 +215,7 @@
  </tabstops>
  <resources>
   <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
+  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>
 </ui>

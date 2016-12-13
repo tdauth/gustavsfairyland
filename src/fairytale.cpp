@@ -1240,7 +1240,7 @@ void fairytale::quickGame()
 	startNewGame(clipPackages, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
-void fairytale::retry()
+void fairytale::retry(Difficulty difficulty)
 {
 	if (this->clipPackages().isEmpty() || this->gameModes().isEmpty())
 	{
@@ -1250,7 +1250,6 @@ void fairytale::retry()
 	// Start with the first available stuff.
 	ClipPackages clipPackages = this->currentClipPackages();
 	GameMode *gameMode = this->gameMode();
-	const Difficulty difficulty = this->difficulty();
 	const bool useMaxRounds = this->useMaxRounds();
 	const int maxRounds = this->maxRounds();
 
@@ -1384,7 +1383,7 @@ void fairytale::afterOutroGameOver()
 	// prevents recursive calls in dialog
 	else
 	{
-		this->retry();
+		this->retry(this->customFairytaleDialog()->retryDifficulty());
 	}
 }
 
@@ -1493,7 +1492,7 @@ void fairytale::afterOutroWin()
 	// prevents recursive calls in dialog
 	else
 	{
-		this->retry();
+		this->retry(this->customFairytaleDialog()->retryDifficulty());
 	}
 }
 

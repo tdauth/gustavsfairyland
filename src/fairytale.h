@@ -47,6 +47,18 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 {
 	Q_OBJECT
 
+	public:
+		/**
+		 * Depending on the game mode the difficulty has influence on the gameplay and makes it harder or easier.
+		 */
+		enum class Difficulty
+		{
+			Easy, /// With this difficulty should be even retarded people (no offense) should be able to finish the game.
+			Normal, /// With a limited number of rounds it should be possible to finish with a decent time but with more rounds it could be harder to finish successfully.
+			Hard, /// Only professionals can finish the game successfully with this difficulty.
+			Mahlerisch /// Impossible difficulty since Mahler himself was a genius.
+		};
+
 	public slots:
 		/**
 		 * Starts a new game.
@@ -99,7 +111,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * Restarts the game with the same package and the same game mode.
 		 */
-		void retry();
+		void retry(Difficulty difficulty);
 
 		QStringList languages() const;
 
@@ -113,17 +125,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool loadLanguage(const QString &language);
 
 	public:
-		/**
-		 * Depending on the game mode the difficulty has influence on the gameplay and makes it harder or easier.
-		 */
-		enum class Difficulty
-		{
-			Easy, /// With this difficulty should be even retarded people (no offense) should be able to finish the game.
-			Normal, /// With a limited number of rounds it should be possible to finish with a decent time but with more rounds it could be harder to finish successfully.
-			Hard, /// Only professionals can finish the game successfully with this difficulty.
-			Mahlerisch /// Impossible difficulty since Mahler himself was a genius.
-		};
-
 		/**
 		 * Stores all game modes by their unique IDs.
 		 */

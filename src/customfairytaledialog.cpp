@@ -41,6 +41,78 @@ void CustomFairytaleDialog::retry()
 {
 	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
 	this->m_retry = true;
+	// Retry with the same difficulty.
+	this->m_retryDifficulty = this->m_app->difficulty();
+	this->close();
+}
+
+void CustomFairytaleDialog::retryEasier()
+{
+	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
+	this->m_retry = true;
+	// Retry with a easier difficulty.
+	switch (this->m_app->difficulty())
+	{
+		case fairytale::Difficulty::Easy:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Easy;
+			break;
+		}
+
+		case fairytale::Difficulty::Normal:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Easy;
+			break;
+		}
+
+		case fairytale::Difficulty::Hard:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Normal;
+			break;
+		}
+
+		case fairytale::Difficulty::Mahlerisch:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Hard;
+			break;
+		}
+	}
+
+	this->close();
+}
+
+void CustomFairytaleDialog::retryHarder()
+{
+	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
+	this->m_retry = true;
+	// Retry with a harder difficulty.
+	switch (this->m_app->difficulty())
+	{
+		case fairytale::Difficulty::Easy:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Normal;
+			break;
+		}
+
+		case fairytale::Difficulty::Normal:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Hard;
+			break;
+		}
+
+		case fairytale::Difficulty::Hard:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Mahlerisch;
+			break;
+		}
+
+		case fairytale::Difficulty::Mahlerisch:
+		{
+			this->m_retryDifficulty = fairytale::Difficulty::Mahlerisch;
+			break;
+		}
+	}
+
 	this->close();
 }
 
@@ -69,7 +141,7 @@ void CustomFairytaleDialog::addClip(const fairytale::ClipKey &clipKey)
 	this->savePushButton->show();
 }
 
-CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false)
+CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false), m_retryDifficulty(fairytale::Difficulty::Normal)
 {
 	setupUi(this);
 	this->setModal(true);
@@ -78,6 +150,8 @@ CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : 
 	connect(this->savePushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::save);
 	connect(this->okPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::accept);
 	connect(this->retryPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retry);
+	connect(this->retryEasierPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retryEasier);
+	connect(this->retryHarderPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retryHarder);
 }
 
 void CustomFairytaleDialog::clear()
@@ -192,6 +266,9 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 	{
 		playFinalVideoPushButton->setFocus(Qt::TabFocusReason);
 	}
+
+	this->retryEasierPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Easy);
+	this->retryHarderPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Mahlerisch);
 
 	QWidget::showEvent(event);
 }

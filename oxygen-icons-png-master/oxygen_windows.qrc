@@ -25,5 +25,7 @@
         <file>oxygen/32x32/places/folder-blue.png</file>
         <file>oxygen/32x32/actions/document-open.png</file>
         <file>oxygen/32x32/actions/document-open-folder.png</file>
+	<file>oxygen/32x32/actions/arrow-up-double.png</file>
+	<file>oxygen/32x32/actions/arrow-down-double.png</file>
     </qresource>
 </RCC>

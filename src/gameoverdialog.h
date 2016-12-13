@@ -10,9 +10,6 @@ class GameOverDialog : public QDialog, protected Ui::GameOverDialog
 {
 	Q_OBJECT
 
-	public slots:
-		void retry();
-
 	public:
 		GameOverDialog(fairytale *app, QWidget *parent);
 

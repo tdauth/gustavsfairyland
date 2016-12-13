@@ -121,7 +121,7 @@ void GameModeSequence::nextTurn()
 			copy.removeAt(index);
 			m_remainingClips.removeAll(clipKey);
 
-			if (i == 1)
+			if (i >= 1)
 			{
 				requiresPerson = !requiresPerson;
 			}
