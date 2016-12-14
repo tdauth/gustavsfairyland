@@ -155,7 +155,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 				}
 		};
 
-		static const int defaultMusicVolume = 40;
+		static const int defaultMusicVolume = 70;
 		static const int defaultClickSoundsVolume = 100;
 		static const int defaultVideoSoundVolume = 100;
 

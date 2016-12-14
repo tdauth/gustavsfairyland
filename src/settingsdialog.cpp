@@ -501,7 +501,7 @@ void SettingsDialog::save(QSettings &settings)
 	settings.setValue("musicVolume", this->musicVolumeSpinBox->value());
 	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
 	settings.setValue("clickSoundsVolume", this->clickSoundsVolumeSpinBox->value());
-	settings.setValue("videoSounds", this->videoSoundCheckBox->isChecked());
+	settings.setValue("videoSound", this->videoSoundCheckBox->isChecked());
 	settings.setValue("videoSoundsVolume", this->videoSoundVolumeSpinBox->value());
 
 	// Clips

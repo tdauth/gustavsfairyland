@@ -520,12 +520,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="74"/>
         <source>Game Mode</source>
-        <translation type="unfinished">Spielmodus</translation>
+        <translation>Spielmodus</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="74"/>
         <source>Game Mode:</source>
-        <translation type="unfinished">Spielmodus:</translation>
+        <translation>Spielmodus:</translation>
     </message>
     <message>
         <location filename="../src/customfairytaledialog.cpp" line="254"/>
@@ -562,29 +562,48 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="205"/>
+        <location filename="../build/ui_customfairytale.h" line="215"/>
         <source>Custom Fairytale</source>
         <translation>Eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="206"/>
-        <source>Easier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_customfairytale.h" line="211"/>
-        <source>Harder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_customfairytale.h" line="207"/>
-        <source>Different Game Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_customfairytale.h" line="208"/>
-        <source>Retry</source>
+        <location filename="../build/ui_customfairytale.h" line="216"/>
+        <source>Try Again</source>
         <translation>Nochmal versuchen</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="217"/>
+        <source>Play Video</source>
+        <translation>Video abspielen</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="218"/>
+        <source>Easier</source>
+        <translation>Leichter</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="219"/>
+        <source>Harder</source>
+        <translation>Schwerer</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="220"/>
+        <source>Cancel Game</source>
+        <translation>Spiel abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="221"/>
+        <source>Save Video</source>
+        <translation>Video speichern</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="222"/>
+        <source>Change Game Mode</source>
+        <translation>Spielmodus ändern</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="vanished">Nochmal versuchen</translation>
     </message>
     <message>
         <source>Retry Easier</source>
@@ -595,19 +614,16 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Nochmal schwerer versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="210"/>
         <source>Play Custom Fairytale</source>
-        <translation>Eigenes Märchen abspielen</translation>
+        <translation type="vanished">Eigenes Märchen abspielen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="212"/>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation type="vanished">Schließen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="209"/>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="vanished">Speichern</translation>
     </message>
 </context>
 <context>
@@ -861,9 +877,8 @@ p, li { white-space: pre-wrap; }
         <translation>Los geht&apos;s!</translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="375"/>
         <source>A&amp;dvanced</source>
-        <translation>&amp;Erweitert</translation>
+        <translation type="vanished">&amp;Erweitert</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="381"/>
@@ -881,6 +896,7 @@ p, li { white-space: pre-wrap; }
         <translation>Spielmodus</translation>
     </message>
     <message>
+        <location filename="../build/ui_mainwindow.h" line="375"/>
         <location filename="../build/ui_mainwindow.h" line="376"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
@@ -934,27 +950,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="148"/>
+        <location filename="../build/ui_player.h" line="153"/>
         <source>Player</source>
         <translation>Abspielprogramm</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="152"/>
+        <location filename="../build/ui_player.h" line="157"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="153"/>
+        <location filename="../build/ui_player.h" line="158"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="150"/>
+        <location filename="../build/ui_player.h" line="155"/>
         <source>Skip (Space)</source>
         <translation>Überspringen (Leertaste)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="151"/>
+        <location filename="../build/ui_player.h" line="156"/>
         <source>Skip All</source>
         <translation>Alles überspringen</translation>
     </message>

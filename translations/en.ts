@@ -465,43 +465,43 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="205"/>
+        <location filename="../build/ui_customfairytale.h" line="215"/>
         <source>Custom Fairytale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="206"/>
+        <location filename="../build/ui_customfairytale.h" line="216"/>
+        <source>Try Again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="217"/>
+        <source>Play Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="218"/>
         <source>Easier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="211"/>
+        <location filename="../build/ui_customfairytale.h" line="219"/>
         <source>Harder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="207"/>
-        <source>Different Game Mode</source>
+        <location filename="../build/ui_customfairytale.h" line="220"/>
+        <source>Cancel Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="208"/>
-        <source>Retry</source>
+        <location filename="../build/ui_customfairytale.h" line="221"/>
+        <source>Save Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="210"/>
-        <source>Play Custom Fairytale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_customfairytale.h" line="212"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../build/ui_customfairytale.h" line="209"/>
-        <source>Save</source>
+        <location filename="../build/ui_customfairytale.h" line="222"/>
+        <source>Change Game Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -752,11 +752,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_mainwindow.h" line="375"/>
-        <source>A&amp;dvanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../build/ui_mainwindow.h" line="381"/>
         <source>Saved Fairytales</source>
         <translation type="unfinished"></translation>
@@ -772,6 +767,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../build/ui_mainwindow.h" line="375"/>
         <location filename="../build/ui_mainwindow.h" line="376"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
@@ -825,27 +821,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="148"/>
+        <location filename="../build/ui_player.h" line="153"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="152"/>
+        <location filename="../build/ui_player.h" line="157"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="153"/>
+        <location filename="../build/ui_player.h" line="158"/>
         <source>Cancel Game (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="150"/>
+        <location filename="../build/ui_player.h" line="155"/>
         <source>Skip (Space)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="151"/>
+        <location filename="../build/ui_player.h" line="156"/>
         <source>Skip All</source>
         <translation type="unfinished"></translation>
     </message>

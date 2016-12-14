@@ -43,7 +43,7 @@ Player::Player(QWidget *parent, fairytale *app)
 	this->m_videoWidget->show();
 #endif
 
-	this->setVolume(50);
+	this->setVolume(fairytale::defaultVideoSoundVolume);
 
 	this->m_parallelSoundsMediaPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_parallelSoundsMediaPlayer, &QMediaPlayer::stateChanged, this, &Player::onChangeStateParallelSoundPlayer);
@@ -489,6 +489,8 @@ void Player::playParallelSound(fairytale *app, const QUrl &url)
 
 void Player::play()
 {
+	qDebug() << "Play with volume" << this->volume() << "and is muted" << this->isMuted() << "and video player audio role" << this->mediaPlayer()->audioRole();
+
 #ifdef Q_OS_ANDROID
 	this->m_player->play();
 #else

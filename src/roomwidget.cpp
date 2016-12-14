@@ -97,6 +97,7 @@ void RoomWidget::changeWind()
 		m_playWindSound = false;
 		m_windSoundPlayer->setMedia(QUrl("qrc:/resources/wind.wav"));
 		m_windSoundPlayer->setVolume(this->gameMode()->app()->musicVolume());
+		m_windSoundPlayer->setMuted(this->gameMode()->app()->isMusicMuted());
 		m_windSoundPlayer->play();
 	}
 }
@@ -146,6 +147,7 @@ void RoomWidget::windSoundStateChanged(QMediaPlayer::State state)
 		if (this->isEnabled())
 		{
 			m_windSoundPlayer->setVolume(this->gameMode()->app()->musicVolume());
+			m_windSoundPlayer->setMuted(this->gameMode()->app()->isMusicMuted());
 			m_windSoundPlayer->play();
 		}
 		// can play again
