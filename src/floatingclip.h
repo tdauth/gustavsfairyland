@@ -61,9 +61,12 @@ class FloatingClip : public QWidget
 
 		void paint(QPainter *painter);
 
+		bool isPaused() const;
+
 	protected:
 		virtual void paintEvent(QPaintEvent *event) override;
 		virtual void mousePressEvent(QMouseEvent *event) override;
+		virtual void mouseReleaseEvent(QMouseEvent *event) override;
 		virtual void dragEnterEvent(QDragEnterEvent *event) override;
 		virtual void dragLeaveEvent(QDragLeaveEvent *event) override;
 
@@ -151,6 +154,11 @@ inline int FloatingClip::dirY() const
 inline bool FloatingClip::contains(const QPoint &pos) const
 {
 	return QRect(x(), y(), m_scaledImagePaper.width(), m_scaledImagePaper.height()).contains(pos);
+}
+
+inline bool FloatingClip::isPaused() const
+{
+	return this->m_pause;
 }
 
 #endif // FLOATINGCLIP_H

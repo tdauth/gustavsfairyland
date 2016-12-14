@@ -28,10 +28,6 @@ void SettingsDialog::restoreDefaults()
 	musicVolumeSpinBox->setValue(fairytale::defaultMusicVolume);
 	clickSoundsCheckBox->setChecked(true);
 	clickSoundsVolumeSpinBox->setValue(fairytale::defaultClickSoundsVolume);
-	windSoundCheckBox->setChecked(true);
-	windSoundVolumeSpinBox->setValue(fairytale::defaultWindSoundVolume);
-	narratorSoundCheckBox->setChecked(true);
-	narratorSoundVolumeSpinBox->setValue(fairytale::defaultNarratorSoundVolume);
 	videoSoundCheckBox->setChecked(true);
 	videoSoundVolumeSpinBox->setValue(fairytale::defaultVideoSoundVolume);
 
@@ -103,6 +99,8 @@ void SettingsDialog::apply()
 	this->m_app->setMusicVolume(musicVolumeSpinBox->value());
 	this->m_app->setAudioPlayerMuted(!clickSoundsCheckBox->isChecked());
 	this->m_app->setAudioPlayerVolume(clickSoundsVolumeSpinBox->value());
+	this->m_app->setVideoSoundMuted(!videoSoundCheckBox->isChecked());
+	this->m_app->setVideoSoundVolume(videoSoundVolumeSpinBox->value());
 
 	// Clips
 	this->m_app->setClipsDir(m_clipsDir);
@@ -127,6 +125,8 @@ void SettingsDialog::update()
 	musicVolumeSpinBox->setValue(this->m_app->musicVolume());
 	clickSoundsCheckBox->setChecked(!this->m_app->isAudioPlayerMuted());
 	clickSoundsVolumeSpinBox->setValue(this->m_app->audioPlayerVolume());
+	videoSoundCheckBox->setChecked(!this->m_app->isVideoSoundMuted());
+	videoSoundVolumeSpinBox->setValue(this->m_app->videoSoundVolume());
 
 	int i = 0;
 
@@ -427,6 +427,8 @@ void SettingsDialog::load(QSettings &settings)
 	this->musicVolumeSpinBox->setValue(settings.value("musicVolume", fairytale::defaultMusicVolume).toInt());
 	this->clickSoundsCheckBox->setChecked(settings.value("clickSounds", true).toBool());
 	this->clickSoundsVolumeSpinBox->setValue(settings.value("clickSoundsVolume", fairytale::defaultClickSoundsVolume).toInt());
+	this->videoSoundCheckBox->setChecked(settings.value("videoSound", true).toBool());
+	this->videoSoundVolumeSpinBox->setValue(settings.value("videoSoundVolume", fairytale::defaultVideoSoundVolume).toInt());
 
 	// Clips
 	const QDir defaultClipsDir(m_app->defaultClipsDirectory());
@@ -499,6 +501,8 @@ void SettingsDialog::save(QSettings &settings)
 	settings.setValue("musicVolume", this->musicVolumeSpinBox->value());
 	settings.setValue("clickSounds", this->clickSoundsCheckBox->isChecked());
 	settings.setValue("clickSoundsVolume", this->clickSoundsVolumeSpinBox->value());
+	settings.setValue("videoSounds", this->videoSoundCheckBox->isChecked());
+	settings.setValue("videoSoundsVolume", this->videoSoundVolumeSpinBox->value());
 
 	// Clips
 #ifndef Q_OS_ANDROID

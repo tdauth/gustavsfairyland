@@ -25,6 +25,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		void addClip(const fairytale::ClipKey &clipKey);
 		void save();
 		void retry();
+		void retryWithDifferentGameMode();
 		void retryEasier();
 		void retryHarder();
 
@@ -36,6 +37,7 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		 * \return If this returns try it indicates that the user wants to retry the game with the same parameters as before.
 		 */
 		bool clickedRetry() const;
+		GameMode* retryGameMode() const;
 		fairytale::Difficulty retryDifficulty() const;
 
 	protected:
@@ -50,12 +52,18 @@ class CustomFairytaleDialog : public QDialog, protected Ui::CustomFairytaleWidge
 		Clips m_clips;
 		ClipLabels m_clipLabels;
 		bool m_retry;
+		GameMode *m_retryGameMode;
 		fairytale::Difficulty m_retryDifficulty;
 };
 
 inline bool CustomFairytaleDialog::clickedRetry() const
 {
 	return this->m_retry;
+}
+
+inline GameMode* CustomFairytaleDialog::retryGameMode() const
+{
+	return this->m_retryGameMode;
 }
 
 inline fairytale::Difficulty CustomFairytaleDialog::retryDifficulty() const

@@ -98,6 +98,7 @@ class RoomWidget : public RoomWidgetParent
 		void addFloatingClip(const fairytale::ClipKey &clipKey, int width, int speed);
 		void clearFloatingClips();
 		void removeFloatingClip(const fairytale::ClipKey &clipKey);
+		void hideFloatingClip(const fairytale::ClipKey &clipKey);
 		void clearClickAnimations();
 		const Doors& doors() const;
 		const FloatingClips& floatingClips() const;
@@ -108,6 +109,9 @@ class RoomWidget : public RoomWidgetParent
 		void cancelDrags();
 
 		void setSolutionWidget(SolutionWidget *solutionWidget);
+
+		void mouseClick(const QPoint &pos);
+		void mouseRelease();
 
 	protected:
 		/// Repaints the room widget and the doors as well as the floating clip.
@@ -149,6 +153,7 @@ class RoomWidget : public RoomWidgetParent
 		qint64 m_paintTime;
 		Doors m_doors;
 		FloatingClips m_floatingClips;
+		FloatingClips m_hiddenFloatingClips;
 		QStringList m_failSoundPaths;
 		QStringList m_successSoundPaths;
 		QSvgRenderer m_woodSvg;

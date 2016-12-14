@@ -41,15 +41,57 @@ void CustomFairytaleDialog::retry()
 {
 	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
 	this->m_retry = true;
+	// Retry with same game mode.
+	this->m_retryGameMode = this->m_app->gameMode();
 	// Retry with the same difficulty.
 	this->m_retryDifficulty = this->m_app->difficulty();
 	this->close();
+}
+
+void CustomFairytaleDialog::retryWithDifferentGameMode()
+{
+	const fairytale::GameModes gameModes = this->m_app->gameModes();
+
+	QStringList items;
+	QMap<QString, GameMode*> itemGameModes;
+	int current = 0;
+	int i = 0;
+
+	for (GameMode *gameMode : gameModes.values())
+	{
+		items.push_back(gameMode->name());
+		itemGameModes.insert(gameMode->name(), gameMode);
+
+		if (m_app->gameMode() == gameMode)
+		{
+			current = i;
+		}
+
+		++i;
+	}
+
+	bool ok;
+	const QString item = QInputDialog::getItem(this, tr("Game Mode"), tr("Game Mode:"), items, current, false,  &ok);
+
+	if (ok)
+	{
+		// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
+		this->m_retry = true;
+		// Retry with chosen game mode.
+		this->m_retryGameMode = itemGameModes[item];
+		// Retry with the same difficulty.
+		this->m_retryDifficulty = this->m_app->difficulty();
+
+		this->close();
+	}
 }
 
 void CustomFairytaleDialog::retryEasier()
 {
 	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
 	this->m_retry = true;
+	// Retry with same game mode.
+	this->m_retryGameMode = this->m_app->gameMode();
 	// Retry with a easier difficulty.
 	switch (this->m_app->difficulty())
 	{
@@ -85,6 +127,8 @@ void CustomFairytaleDialog::retryHarder()
 {
 	// Store this flag and let the game know that it should start a retry. Directly retrying from here leads to exec() recursion.
 	this->m_retry = true;
+	// Retry with same game mode.
+	this->m_retryGameMode = this->m_app->gameMode();
 	// Retry with a harder difficulty.
 	switch (this->m_app->difficulty())
 	{
@@ -141,7 +185,7 @@ void CustomFairytaleDialog::addClip(const fairytale::ClipKey &clipKey)
 	this->savePushButton->show();
 }
 
-CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false), m_retryDifficulty(fairytale::Difficulty::Normal)
+CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app), m_retry(false), m_retryGameMode(nullptr), m_retryDifficulty(fairytale::Difficulty::Normal)
 {
 	setupUi(this);
 	this->setModal(true);
@@ -150,6 +194,7 @@ CustomFairytaleDialog::CustomFairytaleDialog(fairytale *app, QWidget *parent) : 
 	connect(this->savePushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::save);
 	connect(this->okPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::accept);
 	connect(this->retryPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retry);
+	connect(this->gameModePushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retryWithDifferentGameMode);
 	connect(this->retryEasierPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retryEasier);
 	connect(this->retryHarderPushButton, &QPushButton::clicked, this, &CustomFairytaleDialog::retryHarder);
 }

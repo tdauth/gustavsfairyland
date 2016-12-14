@@ -250,10 +250,24 @@ void FloatingClip::mousePressEvent(QMouseEvent *event)
 		m_pause = true;
 
 		QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-		Qt::DropAction dropAction = drag->exec();
+		drag->exec();
 		QApplication::restoreOverrideCursor();
 
 		m_pause = false;
+	}
+	else if (m_roomWidget->mode() == RoomWidget::Mode::Click)
+	{
+		m_roomWidget->mouseClick(this->mapToParent(event->pos()));
+	}
+}
+
+void FloatingClip::mouseReleaseEvent(QMouseEvent* event)
+{
+	QWidget::mouseReleaseEvent(event);
+
+	if (m_roomWidget->mode() == RoomWidget::Mode::Click)
+	{
+		m_roomWidget->mouseRelease();
 	}
 }
 

@@ -105,6 +105,15 @@ int Player::volume() const
 #endif
 }
 
+bool Player::isMuted() const
+{
+#ifdef Q_OS_ANDROID
+	return this->m_player->audio()->isMuted();
+#else
+	return this->mediaPlayer()->isMuted();
+#endif
+}
+
 void Player::changeEvent(QEvent *event)
 {
 	switch(event->type())
@@ -517,6 +526,17 @@ void Player::setVolume(int volume)
 #endif
 
 	this->m_parallelSoundsMediaPlayer->setVolume(volume);
+}
+
+void Player::setMuted(bool muted)
+{
+#ifdef Q_OS_ANDROID
+	this->m_player->audio()->setMuted(muted);
+#else
+	this->mediaPlayer()->setMuted(muted);
+#endif
+
+	this->m_parallelSoundsMediaPlayer->setMuted(muted);
 }
 
 void Player::skip()

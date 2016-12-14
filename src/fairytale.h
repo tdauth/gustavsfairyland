@@ -109,9 +109,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void quickGame();
 
 		/**
-		 * Restarts the game with the same package and the same game mode.
+		 * Restarts the game with the same package and the specified settings.
 		 */
-		void retry(Difficulty difficulty);
+		void retry(GameMode *gameMode, Difficulty difficulty);
 
 		QStringList languages() const;
 
@@ -155,11 +155,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 				}
 		};
 
-		static const int defaultMusicVolume = 30;
-		static const int defaultClickSoundsVolume = 50;
-		static const int defaultWindSoundVolume = 15;
-		static const int defaultNarratorSoundVolume = 50;
-		static const int defaultVideoSoundVolume = 50;
+		static const int defaultMusicVolume = 40;
+		static const int defaultClickSoundsVolume = 100;
+		static const int defaultVideoSoundVolume = 100;
 
 		/**
 		 * Default game style which is applied in the beginning to qApp.
@@ -420,6 +418,17 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool isAudioPlayerMuted() const;
 		void setAudioPlayerVolume(int volume);
 		int audioPlayerVolume() const;
+
+		void setNarratorSoundMuted(bool muted);
+		bool isNarratorSoundMuted() const;
+		void setNarratorSoundVolume(int volume);
+		int narratorSoundVolume() const;
+
+		void setVideoSoundMuted(bool muted);
+		bool isVideoSoundMuted() const;
+		void setVideoSoundVolume(int volume);
+		int videoSoundVolume() const;
+
 
 		/**
 		 * Loads the default clip package and returns true if it exists and has successfully been loaded.

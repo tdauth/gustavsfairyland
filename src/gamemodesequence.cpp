@@ -254,7 +254,8 @@ void GameModeSequence::solved(const fairytale::ClipKey &clipKey)
 	qDebug() << "Succeed floating clip";
 	this->m_roomWidget->playSuccessSound();
 
-	this->m_roomWidget->removeFloatingClip(clipKey);
+	// Only pause and hide the floating clip. Otherwise we are still in a function of the corresponding floating clip and cant delete it.
+	this->m_roomWidget->hideFloatingClip(clipKey);
 
 	if (m_solutionWidget->solvedAll())
 	{

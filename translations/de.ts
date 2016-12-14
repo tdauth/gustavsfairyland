@@ -518,12 +518,22 @@ p, li { white-space: pre-wrap; }
         <translation>Eigenes Märchen &quot;%1&quot; erfolgreich gespeichert.</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="209"/>
+        <location filename="../src/customfairytaledialog.cpp" line="74"/>
+        <source>Game Mode</source>
+        <translation type="unfinished">Spielmodus</translation>
+    </message>
+    <message>
+        <location filename="../src/customfairytaledialog.cpp" line="74"/>
+        <source>Game Mode:</source>
+        <translation type="unfinished">Spielmodus:</translation>
+    </message>
+    <message>
+        <location filename="../src/customfairytaledialog.cpp" line="254"/>
         <source>Once Upon a time there lived %1 and the following happened:&lt;br/&gt;</source>
         <translation>Es war einmal vor langer Zeit, da lebte %1 und es begab sich Folgendes:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="233"/>
+        <location filename="../src/customfairytaledialog.cpp" line="278"/>
         <source>And if %1 did not die then %2 is still alive today.&lt;br/&gt;End</source>
         <translation>Und wenn %1 nicht gestorben ist, dann lebt %2 noch heute.&lt;br/&gt;Ende</translation>
     </message>
@@ -544,7 +554,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">ist</translation>
     </message>
     <message>
-        <location filename="../src/customfairytaledialog.cpp" line="242"/>
+        <location filename="../src/customfairytaledialog.cpp" line="287"/>
         <source>But nobody knows what happened next.&lt;br/&gt;End</source>
         <translation>Aber niemand weiß, was als Nächstes geschah.&lt;br/&gt;Ende</translation>
     </message>
@@ -552,37 +562,50 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CustomFairytaleWidget</name>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="173"/>
+        <location filename="../build/ui_customfairytale.h" line="205"/>
         <source>Custom Fairytale</source>
         <translation>Eigenes Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="175"/>
+        <location filename="../build/ui_customfairytale.h" line="206"/>
+        <source>Easier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="211"/>
+        <source>Harder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="207"/>
+        <source>Different Game Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build/ui_customfairytale.h" line="208"/>
         <source>Retry</source>
         <translation>Nochmal versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="174"/>
         <source>Retry Easier</source>
-        <translation>Nochmal leichter versuchen</translation>
+        <translation type="vanished">Nochmal leichter versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="176"/>
         <source>Retry Harder</source>
-        <translation>Nochmal schwerer versuchen</translation>
+        <translation type="vanished">Nochmal schwerer versuchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="179"/>
+        <location filename="../build/ui_customfairytale.h" line="210"/>
         <source>Play Custom Fairytale</source>
         <translation>Eigenes Märchen abspielen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="177"/>
+        <location filename="../build/ui_customfairytale.h" line="212"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../build/ui_customfairytale.h" line="178"/>
+        <location filename="../build/ui_customfairytale.h" line="209"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -911,27 +934,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../build/ui_player.h" line="213"/>
+        <location filename="../build/ui_player.h" line="148"/>
         <source>Player</source>
         <translation>Abspielprogramm</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="215"/>
+        <location filename="../build/ui_player.h" line="152"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="216"/>
+        <location filename="../build/ui_player.h" line="153"/>
         <source>Cancel Game (C)</source>
         <translation>Spiel abbrechen (C)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="218"/>
+        <location filename="../build/ui_player.h" line="150"/>
         <source>Skip (Space)</source>
         <translation>Überspringen (Leertaste)</translation>
     </message>
     <message>
-        <location filename="../build/ui_player.h" line="217"/>
+        <location filename="../build/ui_player.h" line="151"/>
         <source>Skip All</source>
         <translation>Alles überspringen</translation>
     </message>
@@ -992,86 +1015,82 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../build/ui_settings.h" line="397"/>
+        <location filename="../build/ui_settings.h" line="350"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="399"/>
-        <location filename="../build/ui_settings.h" line="404"/>
-        <location filename="../build/ui_settings.h" line="414"/>
-        <location filename="../build/ui_settings.h" line="415"/>
-        <location filename="../build/ui_settings.h" line="416"/>
+        <location filename="../build/ui_settings.h" line="356"/>
+        <location filename="../build/ui_settings.h" line="360"/>
+        <location filename="../build/ui_settings.h" line="363"/>
         <source>Volume:</source>
         <translation>Lautstärke:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="402"/>
         <source>Wind Sound</source>
-        <translation>Windgeräusch</translation>
+        <translation type="vanished">Windgeräusch</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="403"/>
         <source>Narrator Sound</source>
-        <translation>Erzählerton</translation>
+        <translation type="vanished">Erzählerton</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="410"/>
+        <location filename="../build/ui_settings.h" line="357"/>
         <source>Video Sound</source>
         <translation>Videoton</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="424"/>
+        <location filename="../build/ui_settings.h" line="371"/>
         <source>Clips Directory:</source>
         <translation>Clips-Verzeichnis:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="421"/>
+        <location filename="../build/ui_settings.h" line="368"/>
         <source>Add File</source>
         <translation>Datei hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="422"/>
+        <location filename="../build/ui_settings.h" line="369"/>
         <source>Add Directory</source>
         <translation>Verzeichnis hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="423"/>
+        <location filename="../build/ui_settings.h" line="370"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="420"/>
+        <location filename="../build/ui_settings.h" line="367"/>
         <source>Choose Directory</source>
         <translation>Verzeichnis auswählen</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="426"/>
+        <location filename="../build/ui_settings.h" line="373"/>
         <source>Possible Rounds</source>
         <translation>Mögliche Runden</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="427"/>
+        <location filename="../build/ui_settings.h" line="374"/>
         <source>Number of Clips</source>
         <translation>Anzahl der Clips</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="428"/>
+        <location filename="../build/ui_settings.h" line="375"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="398"/>
+        <location filename="../build/ui_settings.h" line="351"/>
         <source>Sound</source>
         <translation>Sound</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="401"/>
+        <location filename="../build/ui_settings.h" line="355"/>
         <source>Click Sounds</source>
         <translation>Anklick-Sounds</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="418"/>
+        <location filename="../build/ui_settings.h" line="365"/>
         <source>Audio Output Device:</source>
         <translation>Audio-Ausgabegerät:</translation>
     </message>
@@ -1080,36 +1099,34 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Musiklautstärke:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="406"/>
-        <location filename="../build/ui_settings.h" line="408"/>
-        <location filename="../build/ui_settings.h" line="411"/>
-        <location filename="../build/ui_settings.h" line="412"/>
-        <location filename="../build/ui_settings.h" line="413"/>
+        <location filename="../build/ui_settings.h" line="353"/>
+        <location filename="../build/ui_settings.h" line="358"/>
+        <location filename="../build/ui_settings.h" line="361"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="400"/>
+        <location filename="../build/ui_settings.h" line="362"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="417"/>
+        <location filename="../build/ui_settings.h" line="364"/>
         <source>Audio Input Device:</source>
         <translation>Audio-Eingabegerät:</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="430"/>
+        <location filename="../build/ui_settings.h" line="377"/>
         <source>Full Screen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="../build/ui_settings.h" line="419"/>
+        <location filename="../build/ui_settings.h" line="366"/>
         <source>Clips</source>
         <translation>Clips</translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="76"/>
+        <location filename="../src/settingsdialog.cpp" line="72"/>
         <location filename="../src/settingsdialog.cpp" line="192"/>
         <source>Clips Directory</source>
         <translation>Clips-Verzeichnis</translation>
@@ -1206,8 +1223,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="394"/>
         <location filename="../src/fairytale.cpp" line="395"/>
+        <location filename="../src/fairytale.cpp" line="1537"/>
         <location filename="../src/fairytale.cpp" line="1538"/>
-        <location filename="../src/fairytale.cpp" line="1539"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
@@ -1218,7 +1235,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="488"/>
-        <location filename="../src/fairytale.cpp" line="2102"/>
+        <location filename="../src/fairytale.cpp" line="2101"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
@@ -1283,88 +1300,88 @@ p, li { white-space: pre-wrap; }
         <translation>Das Spiel konnte nicht gestartet werden, da Clips fehlen. Versuchen Sie die Standardeinstellungen wieder herzustellen.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1362"/>
-        <location filename="../src/fairytale.cpp" line="1404"/>
+        <location filename="../src/fairytale.cpp" line="1361"/>
+        <location filename="../src/fairytale.cpp" line="1403"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1461"/>
+        <location filename="../src/fairytale.cpp" line="1460"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1461"/>
+        <location filename="../src/fairytale.cpp" line="1460"/>
         <source>Unlocked Bonus clip %1!</source>
         <translation>Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1466"/>
+        <location filename="../src/fairytale.cpp" line="1465"/>
         <source>Unlocked all Bonus Clips already!</source>
         <translation>Es wurden bereits alle Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1466"/>
+        <location filename="../src/fairytale.cpp" line="1465"/>
         <source>You have already unlocked all available bonus clips!</source>
         <translation>Sie haben bereits alle verfügbaren Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
+        <location filename="../src/fairytale.cpp" line="1512"/>
         <location filename="../src/fairytale.cpp" line="1513"/>
-        <location filename="../src/fairytale.cpp" line="1514"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1665"/>
+        <location filename="../src/fairytale.cpp" line="1664"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1699"/>
-        <location filename="../src/fairytale.cpp" line="1751"/>
+        <location filename="../src/fairytale.cpp" line="1698"/>
+        <location filename="../src/fairytale.cpp" line="1750"/>
         <source>Invalid gamemode</source>
         <translation>Ungültiger Spielmodus</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1699"/>
-        <location filename="../src/fairytale.cpp" line="1751"/>
+        <location filename="../src/fairytale.cpp" line="1698"/>
+        <location filename="../src/fairytale.cpp" line="1750"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation>Der Spielmodus hat weist ein ungültiges Verhalten auf.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1992"/>
+        <location filename="../src/fairytale.cpp" line="1991"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2016"/>
-        <location filename="../src/fairytale.cpp" line="2050"/>
+        <location filename="../src/fairytale.cpp" line="2015"/>
+        <location filename="../src/fairytale.cpp" line="2049"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2020"/>
-        <location filename="../src/fairytale.cpp" line="2054"/>
+        <location filename="../src/fairytale.cpp" line="2019"/>
+        <location filename="../src/fairytale.cpp" line="2053"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2027"/>
+        <location filename="../src/fairytale.cpp" line="2026"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2031"/>
+        <location filename="../src/fairytale.cpp" line="2030"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2038"/>
+        <location filename="../src/fairytale.cpp" line="2037"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2042"/>
+        <location filename="../src/fairytale.cpp" line="2041"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>

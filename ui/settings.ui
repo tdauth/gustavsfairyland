@@ -56,13 +56,6 @@
              <item>
               <widget class="QWidget" name="volumeWidget" native="true">
                <layout class="QGridLayout" name="gridLayout_3">
-                <item row="1" column="1">
-                 <widget class="QLabel" name="label_6">
-                  <property name="text">
-                   <string>Volume:</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="4">
                  <spacer name="horizontalSpacer_3">
                   <property name="orientation">
@@ -75,41 +68,6 @@
                    </size>
                   </property>
                  </spacer>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QCheckBox" name="musicCheckBox">
-                  <property name="text">
-                   <string>Music</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QCheckBox" name="clickSoundsCheckBox">
-                  <property name="text">
-                   <string>Click Sounds</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QCheckBox" name="windSoundCheckBox">
-                  <property name="text">
-                   <string>Wind Sound</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QCheckBox" name="narratorSoundCheckBox">
-                  <property name="text">
-                   <string>Narrator Sound</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Volume:</string>
-                  </property>
-                 </widget>
                 </item>
                 <item row="0" column="2">
                  <widget class="QSpinBox" name="musicVolumeSpinBox">
@@ -130,8 +88,29 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="4">
-                 <spacer name="horizontalSpacer">
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="clickSoundsCheckBox">
+                  <property name="text">
+                   <string>Click Sounds</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>Volume:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="videoSoundCheckBox">
+                  <property name="text">
+                   <string>Video Sound</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="4">
+                 <spacer name="horizontalSpacer_6">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -155,96 +134,46 @@
                    <number>100</number>
                   </property>
                   <property name="value">
-                   <number>50</number>
+                   <number>100</number>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="0">
-                 <widget class="QCheckBox" name="videoSoundCheckBox">
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_3">
                   <property name="text">
-                   <string>Video Sound</string>
+                   <string>Volume:</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="2">
-                 <widget class="QSpinBox" name="windSoundVolumeSpinBox">
-                  <property name="suffix">
-                   <string>%</string>
-                  </property>
-                  <property name="value">
-                   <number>15</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="2">
-                 <widget class="QSpinBox" name="narratorSoundVolumeSpinBox">
-                  <property name="suffix">
-                   <string>%</string>
-                  </property>
-                  <property name="value">
-                   <number>50</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="2">
                  <widget class="QSpinBox" name="videoSoundVolumeSpinBox">
                   <property name="suffix">
                    <string>%</string>
                   </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="value">
-                   <number>50</number>
+                   <number>100</number>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QLabel" name="label_2">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="musicCheckBox">
+                  <property name="text">
+                   <string>Music</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_6">
                   <property name="text">
                    <string>Volume:</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Volume:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Volume:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="4">
-                 <spacer name="horizontalSpacer_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="3" column="4">
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="4" column="4">
-                 <spacer name="horizontalSpacer_6">
+                <item row="0" column="4">
+                 <spacer name="horizontalSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>

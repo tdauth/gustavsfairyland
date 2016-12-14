@@ -1240,7 +1240,7 @@ void fairytale::quickGame()
 	startNewGame(clipPackages, gameMode, difficulty, useMaxRounds, maxRounds);
 }
 
-void fairytale::retry(Difficulty difficulty)
+void fairytale::retry(GameMode *gameMode, Difficulty difficulty)
 {
 	if (this->clipPackages().isEmpty() || this->gameModes().isEmpty())
 	{
@@ -1249,7 +1249,6 @@ void fairytale::retry(Difficulty difficulty)
 
 	// Start with the first available stuff.
 	ClipPackages clipPackages = this->currentClipPackages();
-	GameMode *gameMode = this->gameMode();
 	const bool useMaxRounds = this->useMaxRounds();
 	const int maxRounds = this->maxRounds();
 
@@ -1383,7 +1382,7 @@ void fairytale::afterOutroGameOver()
 	// prevents recursive calls in dialog
 	else
 	{
-		this->retry(this->customFairytaleDialog()->retryDifficulty());
+		this->retry(this->customFairytaleDialog()->retryGameMode(), this->customFairytaleDialog()->retryDifficulty());
 	}
 }
 
@@ -1492,7 +1491,7 @@ void fairytale::afterOutroWin()
 	// prevents recursive calls in dialog
 	else
 	{
-		this->retry(this->customFairytaleDialog()->retryDifficulty());
+		this->retry(this->customFairytaleDialog()->retryGameMode(), this->customFairytaleDialog()->retryDifficulty());
 	}
 }
 
@@ -2616,6 +2615,26 @@ void fairytale::updatePixmap()
 	{
 		qDebug() << fileInfo.absoluteFilePath() << "does not exist!";
 	}
+}
+
+void fairytale::setVideoSoundMuted(bool muted)
+{
+	this->m_player->setMuted(muted);
+}
+
+bool fairytale::isVideoSoundMuted() const
+{
+	return this->m_player->isMuted();
+}
+
+void fairytale::setVideoSoundVolume(int volume)
+{
+	this->m_player->setVolume(volume);
+}
+
+int fairytale::videoSoundVolume() const
+{
+	return this->m_player->volume();
 }
 
 #include "fairytale.moc"

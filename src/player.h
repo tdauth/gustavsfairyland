@@ -87,6 +87,7 @@ class Player
 		 * \param volume A value between 0 and 100.
 		 */
 		void setVolume(int volume);
+		void setMuted(bool muted);
 
 		/**
 		 * Skips the currently played video or sound.
@@ -112,6 +113,7 @@ class Player
 
 		QMediaPlayer::State state() const;
 		int volume() const;
+		bool isMuted() const;
 
 #ifndef Q_OS_ANDROID
 		QMediaPlayer* mediaPlayer() const;

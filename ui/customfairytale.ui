@@ -20,7 +20,7 @@
    <string>Custom Fairytale</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="7">
+   <item row="0" column="0" colspan="4">
     <widget class="QScrollArea" name="scrollArea">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>891</width>
-        <height>73</height>
+        <height>69</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -74,148 +74,217 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0" colspan="7" alignment="Qt::AlignHCenter|Qt::AlignTop">
-    <widget class="QWidget" name="widget" native="true">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QPushButton" name="retryEasierPushButton">
-        <property name="text">
-         <string>Retry Easier</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="retryPushButton">
-        <property name="text">
-         <string>Retry</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="retryHarderPushButton">
-        <property name="text">
-         <string>Retry Harder</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="okPushButton">
-        <property name="text">
-         <string>Close</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="savePushButton">
-        <property name="text">
-         <string>Save</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/document-save.png</normaloff>:/themes/oxygen/32x32/actions/document-save.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="playFinalVideoPushButton">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Play Custom Fairytale</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-          <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
+   <item row="1" column="0">
+    <widget class="QScrollArea" name="scrollArea_2">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-61</y>
+        <width>856</width>
+        <height>395</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QTextBrowser" name="textBrowser">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="6" column="1">
+           <widget class="QPushButton" name="retryEasierPushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Easier</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-down-double.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
+           <widget class="QPushButton" name="gameModePushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Different Game Mode</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/games-solve.png</normaloff>:/themes/oxygen/32x32/actions/games-solve.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QPushButton" name="retryPushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Retry</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</normaloff>:/themes/oxygen/32x32/actions/edit-redo.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QPushButton" name="savePushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Save</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/document-save.png</normaloff>:/themes/oxygen/32x32/actions/document-save.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QPushButton" name="playFinalVideoPushButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Play Custom Fairytale</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</normaloff>:/themes/oxygen/32x32/actions/media-playback-start.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QPushButton" name="retryHarderPushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Harder</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</normaloff>:/themes/oxygen/32x32/actions/arrow-up-double.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1" colspan="2">
+           <widget class="QPushButton" name="okPushButton">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Close</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
+              <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item row="1" column="0" colspan="7">
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="font">
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="5">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>scrollArea</tabstop>
-  <tabstop>textBrowser</tabstop>
  </tabstops>
  <resources>
   <include location="../oxygen-icons-png-master/oxygen_windows.qrc"/>
-  <include location="../oxygen-icons-png-master/oxygen.qrc"/>
  </resources>
  <connections/>
 </ui>
