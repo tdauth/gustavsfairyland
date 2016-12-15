@@ -5,6 +5,7 @@
 #include "fairytale.h"
 #include "clippackage.h"
 #include "iconbutton.h"
+#include "iconlabel.h"
 #include "clip.h"
 
 void GameModeCreative::clickCard()
@@ -56,6 +57,40 @@ long int GameModeCreative::time()
 void GameModeCreative::afterNarrator()
 {
 	clearAll();
+
+	m_currentFairytaleWidget = new QWidget();
+	QHBoxLayout *layout = new QHBoxLayout();
+	m_currentFairytaleWidget->setLayout(layout);
+
+	for (fairytale::ClipKey clipKey : this->app()->completeSolution())
+	{
+		IconLabel *label = new IconLabel(m_currentFairytaleWidget);
+		layout->addWidget(label);
+		this->m_clipLabels.push_back(label);
+		label->setAlignment(Qt::AlignCenter);
+		label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+		const QSize iconSize = QSize(64, 64);
+		label->setMinimumSize(iconSize);
+		label->setMaximumSize(iconSize);
+
+		const Clip *clip = this->app()->getClipByKey(clipKey);
+
+#ifndef Q_OS_ANDROID
+		const QString imageFile = this->app()->resolveClipUrl(clip->imageUrl()).toLocalFile();
+#else
+		const QString imageFile = this->app()->resolveClipUrl(clip->imageUrl()).url();
+#endif
+		label->setFile(imageFile);
+		label->setEnabled(true); // dont grey out the clip icon
+	}
+
+	m_currentFairytaleScrollArea = new QScrollArea();
+	m_currentFairytaleScrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	m_currentFairytaleScrollArea->setWidget(m_currentFairytaleWidget);
+	m_currentFairytaleScrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+	this->app()->gameAreaLayout()->addWidget(m_currentFairytaleScrollArea);
+	this->app()->gameAreaLayout()->setAlignment(m_currentFairytaleScrollArea, Qt::AlignHCenter | Qt::AlignTop);
 
 	m_widget = new QWidget();
 	QGridLayout *gridLayout = new QGridLayout();
@@ -130,6 +165,9 @@ void GameModeCreative::afterNarrator()
 
 	m_finishButton = new QPushButton(this->app());
 	m_finishButton->setText(tr("Complete Fairytale"));
+	m_finishButton->setIconSize(QSize(32, 32));
+	m_finishButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/dialog-ok-apply.png"));
+
 	app()->gameAreaLayout()->addWidget(m_finishButton);
 	app()->gameAreaLayout()->setAlignment(m_finishButton, Qt::AlignCenter);
 	connect(m_finishButton, &QPushButton::clicked, this, &GameModeCreative::finish);
@@ -144,7 +182,12 @@ void GameModeCreative::nextTurn()
 
 void GameModeCreative::resume()
 {
-	foreach (ClipButton *button, this->m_buttons)
+	for (IconLabel *iconLabel : m_clipLabels)
+	{
+		iconLabel->setEnabled(true);
+	}
+
+	for (ClipButton *button : this->m_buttons)
 	{
 		button->setEnabled(true);
 	}
@@ -154,7 +197,12 @@ void GameModeCreative::resume()
 
 void GameModeCreative::pause()
 {
-	foreach (ClipButton *button, this->m_buttons)
+	for (IconLabel *iconLabel : m_clipLabels)
+	{
+		iconLabel->setEnabled(false);
+	}
+
+	for (ClipButton *button : this->m_buttons)
 	{
 		button->setEnabled(false);
 	}
@@ -188,6 +236,25 @@ void GameModeCreative::setState(State state)
 
 void GameModeCreative::clearAll()
 {
+	for (IconLabel *iconLabel : m_clipLabels)
+	{
+		delete iconLabel;
+	}
+
+	this->m_clipLabels.clear();
+
+	if (m_currentFairytaleWidget != nullptr)
+	{
+		delete m_currentFairytaleWidget;
+		m_currentFairytaleWidget = nullptr;
+	}
+
+	if (m_currentFairytaleScrollArea != nullptr)
+	{
+		delete m_currentFairytaleScrollArea;
+		m_currentFairytaleScrollArea = nullptr;
+	}
+
 	foreach (ClipButton *button, this->m_buttons)
 	{
 		delete button;

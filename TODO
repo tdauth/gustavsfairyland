@@ -6,14 +6,22 @@ TODOS 1.2:
 - Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).
 - DONE (removed): Add path-Seite verwirrt bei NSIS-Installation.
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen.
-- Erneut versuchen: Kein Intro mehr abspielen?
+- DEPRECATED: Erneut versuchen: Kein Intro mehr abspielen?
 - DONE: Erneut versuchen mit anderem Schwierigkeitsgrad: Erneut leichter. Erneut schwerer.
 - DONE: Retry with different game mode. Otherwise the other game modes might get ignored.
 - DONE: Increase volume (for Windows 8 and 10).
 - DONE: Allow changing volume in settings.
 - DONE: Make Play button for custom fairytales bigger and highlight it.
-- Ask if the unlocked Bonus Clip should be played immediately.
+- DONE: Ask if the unlocked Bonus Clip should be played immediately.
 - DONE: New game mode "Complete Fairytale" with Drag & Drop.
+- FIXED: Retry with different game mode: Creative Mode -> Crash on Windows. Creative mode seems to crash always (when started the normal way, too).
+- FIXED: Music is too loud by default.
+- DONE: Add a headline to the Record Widget: "Add New Clip".
+- DONE: Add a message box on adding a new clip: "New clip has been added and is available in the game now."
+- DEPRECATED: Sort shown Bonus Clips and Saved Fairytales by alphabetical order.
+- DONE: Use the GPLv3 for the source code.
+- FIXED: Game Mode "Complete Fairytale" has 0 rounds in High Scores.
+- DONE: Show the current fairytale in the game mode "Creative Mode".
 
 TODOS 1.1:
 - FIXED: Bildpfad steht zu weit oben (Clip-Editor). Passiert nur, wenn man manuell eine Bilddatei auswählt.

@@ -155,7 +155,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 				}
 		};
 
-		static const int defaultMusicVolume = 70;
+		/**
+		 * The default music volume in percentage from 0 to 100.
+		 */
+		static const int defaultMusicVolume = 50;
 		static const int defaultClickSoundsVolume = 100;
 		static const int defaultVideoSoundVolume = 100;
 
@@ -253,6 +256,18 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void afterOutroGameOver();
 		void win();
 		void afterOutroWin();
+		/**
+		 * Unlocks a random bonus clip if not all bonus clips have already been unlocked. Otherwise it shows a message box with this information.
+		 * When a bonus clip is unlocked it shows the user a message box asking him if he/she wants to see the bonus clip now.
+		 * If the user clicks "Yes" the bonus clip is being played immediately.
+		 * \return Returns true if the bonus clip is being played immediately. Otherwise it returns false.
+		 */
+		bool unlockRandomBonusClip();
+		/**
+		 * Adds a new high scores entry and shows the custom fairytale dialog.
+		 * This has to be called after unlocking a bonus clip. Either after it has been played or directly afterwards.
+		 */
+		void afterUnlockingBonusClip();
 
 		bool isMediaPlayerPaused() const;
 		bool isMediaPlayerPlaying() const;
@@ -309,7 +324,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		int turns() const;
 		/**
-		 * \return Returns the current number of rounds.
+		 * \return Returns the current number of rounds. If the game mode doesn't use a maximum number of rounds, it does always return 1.
 		 */
 		int rounds() const;
 
@@ -509,7 +524,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		BonusClipsDialog* bonusClipsDialog();
 		void showBonusClipsDialog();
-		void playBonusClip(const fairytale::ClipKey &clipKey);
+		void playBonusClip(const fairytale::ClipKey &clipKey, bool duringGame = false);
 
 		FairytalesDialog* fairytalesDialog();
 		void showFairytalesDialog();
@@ -521,7 +536,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		virtual void showEvent(QShowEvent *event) override;
 
 	private slots:
-		void finishNarrator(QMediaPlayer::State state);
+		void onVideoAndSoundStateChanged(QMediaPlayer::State state);
 		void onFinishVideoAndSounds();
 		void finishAudio(QMediaPlayer::State state);
 		void finishMusic(QMediaPlayer::State state);
@@ -666,6 +681,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		BonusClipUnlocks m_bonusClipUnlocks;
 
 		bool m_playingBonusClip;
+		bool m_playingBonusClipDuringGame;
 
 		QTranslator m_qtTranslator;
 		QTranslator m_qtBaseTranslator;
@@ -755,11 +771,6 @@ inline QUrl fairytale::clipsDir() const
 inline int fairytale::turns() const
 {
 	return this->m_turns;
-}
-
-inline int fairytale::rounds() const
-{
-	return (this->m_turns - 1) / 2;
 }
 
 inline bool fairytale::requiresPerson() const

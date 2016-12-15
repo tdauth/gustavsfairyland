@@ -760,3 +760,15 @@ void ClipEditor::updateDescriptionWidget(Clip *clip)
 		this->descriptionsListWidget->addItem(item);
 	}
 }
+
+void ClipEditor::setIsNewClip(bool isNewClip)
+{
+	if (isNewClip)
+	{
+		titleLabel->setText(tr("Add new clip"));
+	}
+	else
+	{
+		titleLabel->setText(tr("Edit clip"));
+	}
+}

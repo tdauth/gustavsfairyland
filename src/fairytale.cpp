@@ -474,6 +474,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 , m_gameOverDialog(nullptr)
 , m_highScores(new HighScores(this, this))
 , m_playingBonusClip(false)
+, m_playingBonusClipDuringGame(false)
 , m_playingCustomFairytale(nullptr)
 , m_customFairytaleIndex(0)
 , m_pauseGameShortcut(nullptr)
@@ -513,7 +514,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
-	connect(this->m_player, &Player::stateChangedVideoAndSounds, this, &fairytale::finishNarrator);
+	connect(this->m_player, &Player::stateChangedVideoAndSounds, this, &fairytale::onVideoAndSoundStateChanged);
 
 	/*
 	 * NOTE: Don't use the same shortcuts for menu actions or anything else to avoid ambiguous shortcuts.
@@ -1141,6 +1142,7 @@ void fairytale::record()
 		if (ensureCustomClipsExistence())
 		{
 			clipEditor.setTargetClipsDirectory(QDir(customClipsDirectory()));
+			clipEditor.setIsNewClip(true);
 
 			if (execInCentralWidgetIfNecessaryEx(&clipEditor, [](QDialog *dialog) {
 				/*
@@ -1167,6 +1169,8 @@ void fairytale::record()
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());
 				this->customClipPackage()->addClip(clipOfCustomPackage);
+
+				QMessageBox::information(this, tr("Added new clip"), tr("A new clip has been added and is available in the game now."));
 
 				/*
 				* The custom clips file has to be in the home directory to be writable and unique for the user.
@@ -1415,57 +1419,78 @@ void fairytale::afterOutroWin()
 		execInCentralWidgetIfNecessary(this->wonDialog());
 	}
 
+	bool playBonusClip = false;
+
 	if (this->gameMode()->unlockBonusClip())
 	{
-		QSet<ClipKey> lockedBonusClips;
+		playBonusClip = this->unlockRandomBonusClip();
+	}
 
-		for (ClipPackages::const_iterator packageIterator = this->currentClipPackages().begin(); packageIterator != this->currentClipPackages().end(); ++packageIterator)
+	if (!playBonusClip)
+	{
+		this->afterUnlockingBonusClip();
+	}
+}
+
+bool fairytale::unlockRandomBonusClip()
+{
+	QSet<ClipKey> lockedBonusClips;
+
+	for (ClipPackages::const_iterator packageIterator = this->currentClipPackages().begin(); packageIterator != this->currentClipPackages().end(); ++packageIterator)
+	{
+		ClipPackage *clipPackage = packageIterator.value();
+
+		for (ClipPackage::BonusClips::const_iterator iterator = clipPackage->bonusClips().begin(); iterator != clipPackage->bonusClips().end(); ++iterator)
 		{
-			ClipPackage *clipPackage = packageIterator.value();
+			const ClipKey clipKey = ClipKey(clipPackage->id(), iterator.key());
 
-			for (ClipPackage::BonusClips::const_iterator iterator = clipPackage->bonusClips().begin(); iterator != clipPackage->bonusClips().end(); ++iterator)
+			if (this->m_bonusClipUnlocks.find(clipKey) == this->m_bonusClipUnlocks.end())
 			{
-				const ClipKey clipKey = ClipKey(clipPackage->id(), iterator.key());
-
-				if (this->m_bonusClipUnlocks.find(clipKey) == this->m_bonusClipUnlocks.end())
-				{
-					lockedBonusClips.insert(clipKey);
-				}
+				lockedBonusClips.insert(clipKey);
 			}
-		}
-
-		if (!lockedBonusClips.isEmpty())
-		{
-			const int index = qrand() % lockedBonusClips.size();
-			int i = 0;
-			BonusClip *bonusClip = nullptr;
-			ClipKey bonusClipKey;
-
-			for (QSet<ClipKey>::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
-			{
-				if (i == index)
-				{
-					bonusClipKey = *iterator;
-					this->m_bonusClipUnlocks.insert(bonusClipKey);
-					bonusClip = getBonusClipByKey(bonusClipKey);
-
-					break;
-				}
-			}
-
-			// Play the bonus clip
-			if (bonusClip != nullptr)
-			{
-				// TODO play it
-				QMessageBox::information(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip %1!").arg(bonusClip->description()));
-			}
-		}
-		else
-		{
-			QMessageBox::information(this, tr("Unlocked all Bonus Clips already!"), tr("You have already unlocked all available bonus clips!"));
 		}
 	}
 
+	if (!lockedBonusClips.isEmpty())
+	{
+		const int index = qrand() % lockedBonusClips.size();
+		int i = 0;
+		BonusClip *bonusClip = nullptr;
+		ClipKey bonusClipKey;
+
+		for (QSet<ClipKey>::iterator iterator = lockedBonusClips.begin(); iterator != lockedBonusClips.end(); ++iterator, ++i)
+		{
+			if (i == index)
+			{
+				bonusClipKey = *iterator;
+				this->m_bonusClipUnlocks.insert(bonusClipKey);
+				bonusClip = getBonusClipByKey(bonusClipKey);
+
+				break;
+			}
+		}
+
+		// Play the bonus clip
+		if (bonusClip != nullptr)
+		{
+			if (QMessageBox::question(this, tr("Unlocked Bonus Clip!"), tr("Unlocked Bonus clip \"%1\"! Do you want to see it now?").arg(bonusClip->description()), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+			{
+				this->playBonusClip(bonusClipKey, true);
+
+				return true;
+			}
+		}
+	}
+	else
+	{
+		QMessageBox::information(this, tr("Unlocked all Bonus Clips already!"), tr("You have already unlocked all available bonus clips!"));
+	}
+
+	return false;
+}
+
+void fairytale::afterUnlockingBonusClip()
+{
 	if (this->gameMode()->addToHighScores())
 	{
 		QString name = qgetenv("USER");
@@ -1773,9 +1798,9 @@ void fairytale::setGameButtonsEnabled(bool enabled)
 	gameButtonsWidget->setVisible(enabled);
 }
 
-void fairytale::finishNarrator(QMediaPlayer::State state)
+void fairytale::onVideoAndSoundStateChanged(QMediaPlayer::State state)
 {
-	qDebug() << "Finish narrator with state:" << state;
+	qDebug() << "Change video and sound state:" << state;
 
 	switch (state)
 	{
@@ -1906,10 +1931,19 @@ void fairytale::onFinishVideoAndSounds()
 			}
 		}
 	}
+	// Bonus clip was playing.
 	else
 	{
 		this->m_playingBonusClip = false;
 		this->m_player->hide();
+
+		qDebug() << "Finished bonus clip";
+
+		if (this->m_playingBonusClipDuringGame)
+		{
+			qDebug() << "Game is still running, therefore show the custom fairytale dialog now";
+			this->afterUnlockingBonusClip();
+		}
 	}
 }
 
@@ -1929,9 +1963,17 @@ void fairytale::finishAudio(QMediaPlayer::State state)
 
 void fairytale::afterNarrator()
 {
-	this->updateTimeLabel();
+	this->timeLabel->clear();
+
 	// the description label helps to remember
-	this->descriptionLabel->setText(this->description(this->getClipByKey(this->m_startPerson), this->m_turns, this->getClipByKey(this->gameMode()->solutions().front())));
+	if (this->gameMode()->hasToChooseTheSolution())
+	{
+		this->descriptionLabel->setText(this->description(this->getClipByKey(this->m_startPerson), this->m_turns, this->getClipByKey(this->gameMode()->solutions().front())));
+	}
+	else
+	{
+		this->descriptionLabel->setText(this->gameMode()->name());
+	}
 
 	this->gameMode()->afterNarrator();
 
@@ -1948,6 +1990,7 @@ void fairytale::afterNarrator()
 	{
 		this->m_isRunningTimer = false;
 		this->m_pausedTimer = false;
+		this->timeLabel->clear();
 	}
 }
 
@@ -2286,9 +2329,9 @@ void fairytale::addClipPackage(ClipPackage *package)
 	this->m_clipPackages.insert(package->id(), package);
 }
 
-void fairytale::playBonusClip(const fairytale::ClipKey &clipKey)
+void fairytale::playBonusClip(const fairytale::ClipKey &clipKey, bool duringGame)
 {
-	if (m_playingBonusClip || this->isGameRunning())
+	if (m_playingBonusClip)
 	{
 		return;
 	}
@@ -2298,6 +2341,7 @@ void fairytale::playBonusClip(const fairytale::ClipKey &clipKey)
 	if (bonusClip != nullptr)
 	{
 		this->m_playingBonusClip = true;
+		this->m_playingBonusClipDuringGame = duringGame;
 		this->m_player->playBonusVideo(this, bonusClip->videoUrl(), bonusClip->description());
 	}
 	else
@@ -2635,6 +2679,16 @@ void fairytale::setVideoSoundVolume(int volume)
 int fairytale::videoSoundVolume() const
 {
 	return this->m_player->volume();
+}
+
+int fairytale::rounds() const
+{
+	if (this->gameMode() != nullptr && !this->gameMode()->useMaxRounds())
+	{
+		return 1;
+	}
+
+	return (this->m_turns - 1) / 2;
 }
 
 #include "fairytale.moc"

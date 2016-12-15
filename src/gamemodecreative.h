@@ -8,6 +8,7 @@
 #include "gamemode.h"
 
 class IconButton;
+class IconLabel;
 
 class GameModeCreative : public GameMode
 {
@@ -69,6 +70,12 @@ class GameModeCreative : public GameMode
 
 		State m_state;
 		fairytale::ClipKey m_currentSolution;
+
+		QScrollArea *m_currentFairytaleScrollArea = nullptr;
+		QWidget *m_currentFairytaleWidget = nullptr;
+		typedef QList<IconLabel*> IconLabels;
+		IconLabels m_clipLabels;
+
 		/**
 		 * All clip buttons from which the user has to choose one solution.
 		 */

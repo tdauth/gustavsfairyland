@@ -312,8 +312,16 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 		playFinalVideoPushButton->setFocus(Qt::TabFocusReason);
 	}
 
-	this->retryEasierPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Easy);
-	this->retryHarderPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Mahlerisch);
+	if (this->m_app->gameMode()->useDifficulty())
+	{
+		this->retryEasierPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Easy);
+		this->retryHarderPushButton->setVisible(this->m_app->difficulty() != fairytale::Difficulty::Mahlerisch);
+	}
+	else
+	{
+		this->retryEasierPushButton->hide();
+		this->retryHarderPushButton->hide();
+	}
 
 	QWidget::showEvent(event);
 }

@@ -89,6 +89,8 @@ class ClipEditor : public QDialog, protected Ui::ClipEditor
 		 * \}
 		 */
 
+		void setIsNewClip(bool isNewClip);
+
 	private slots:
 		void clipIdChanged(const QString &text);
 		void setIsPerson(bool isAPerson);

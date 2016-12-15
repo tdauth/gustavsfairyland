@@ -72,6 +72,7 @@ void ClipPackageEditor::editClip()
 		const QString id = item->data(0, Qt::UserRole).toString();
 		Clip *clip = this->m_clipPackage->clips()[id];
 
+		this->clipEditor()->setIsNewClip(false);
 		this->clipEditor()->fill(clip);
 
 		if (this->clipEditor()->exec() == QDialog::Accepted)

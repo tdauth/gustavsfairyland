@@ -83,7 +83,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-60</y>
+        <y>-80</y>
         <width>856</width>
         <height>414</height>
        </rect>
@@ -206,7 +206,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Cancel Game</string>
+             <string>Back To Main Menu</string>
             </property>
             <property name="icon">
              <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">

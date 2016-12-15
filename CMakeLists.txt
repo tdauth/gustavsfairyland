@@ -419,7 +419,6 @@ set(CPACK_CREATE_DESKTOP_LINKS "gustavsfairyland")
 set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
 
 # NSIS Windows
-set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_NSIS_URL_INFO_ABOUT "https://gustavsfairyland.wordpress.com")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
