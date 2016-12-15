@@ -151,7 +151,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../build/ui_clipeditor.h" line="553"/>
         <location filename="../src/clipeditor.cpp" line="768"/>
         <source>Add new clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuen Clip hinzufügen</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="554"/>
@@ -266,7 +266,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/clipeditor.cpp" line="772"/>
         <source>Edit clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip bearbeiten</translation>
     </message>
 </context>
 <context>
@@ -600,7 +600,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_customfairytale.h" line="220"/>
         <source>Back To Main Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück zum Hauptmenü</translation>
     </message>
     <message>
         <source>Cancel Game</source>
@@ -948,7 +948,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="371"/>
         <source>Change Game Mode</source>
-        <translation type="unfinished">Spielmodus ändern</translation>
+        <translation>Spielmodus ändern</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="382"/>
@@ -1297,12 +1297,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="1173"/>
         <source>Added new clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuen Clip hinzugefügt</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1173"/>
         <source>A new clip has been added and is available in the game now.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein neuer Clip wurde hinzugefügt und ist nun im Spiel verfügbar.</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="1180"/>
@@ -1358,7 +1358,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="1476"/>
         <source>Unlocked Bonus clip &quot;%1&quot;! Do you want to see it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bonus-Clip &quot;%1&quot; freigeschaltet! Wollen Sie ihn jetzt anschauen?</translation>
     </message>
     <message>
         <source>Unlocked Bonus clip %1!</source>
