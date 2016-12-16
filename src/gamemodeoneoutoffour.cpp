@@ -60,7 +60,7 @@ void GameModeOneOutOfFour::start()
 		IconButton *button = new IconButton(this->app());
 		this->m_buttons.push_back(button);
 		this->app()->gameAreaLayout()->addWidget(button, row, column);
-		connect(button, SIGNAL(clicked()), this, SLOT(clickCard()));
+		connect(button, &IconButton::clicked, this, &GameModeOneOutOfFour::clickCard);
 		button->hide();
 
 		if ((i + 1) % 2 == 0)

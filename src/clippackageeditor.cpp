@@ -222,19 +222,19 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 
 	connect(this->idLineEdit, &QLineEdit::textChanged, this, &ClipPackageEditor::idChanged);
 	connect(this->loadCustomClipsPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::loadCustomClipsPackage);
-	connect(this->addClipPushButton, SIGNAL(clicked()), this, SLOT(addClip()));
-	connect(this->editClipPushButton, SIGNAL(clicked()), this, SLOT(editClip()));
-	connect(this->removeClipPushButton, SIGNAL(clicked()), this, SLOT(removeClip()));
+	connect(this->addClipPushButton, &QPushButton::clicked, this, &ClipPackageEditor::addClip);
+	connect(this->editClipPushButton, &QPushButton::clicked, this, &ClipPackageEditor::editClip);
+	connect(this->removeClipPushButton, &QPushButton::clicked, this, &ClipPackageEditor::removeClip);
 	connect(this->newPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::newPackage);
-	connect(this->loadPackagePushButton, SIGNAL(clicked()), this, SLOT(loadPackage()));
-	connect(this->saveAsPushButton, SIGNAL(clicked()), this, SLOT(saveAs()));
+	connect(this->loadPackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::loadPackage);
+	connect(this->saveAsPushButton, &QPushButton::clicked, this, &ClipPackageEditor::saveAs);
 	connect(this->savePushButton, &QPushButton::clicked, this, &ClipPackageEditor::save);
-	connect(this->closePackagePushButton, SIGNAL(clicked()), this, SLOT(closePackage()));
+	connect(this->closePackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::closePackage);
 
-	connect(this->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(this->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipPackageEditor::accept);
+	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipPackageEditor::reject);
 
-	connect(this->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(changedCurrentItem(QTreeWidgetItem*,QTreeWidgetItem*)));
+	connect(this->treeWidget, &QTreeWidget::currentItemChanged, this, &ClipPackageEditor::changedCurrentItem);
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clippackageeditordir").toString();

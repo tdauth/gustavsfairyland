@@ -328,8 +328,8 @@ Recorder::Recorder(QWidget *parent) : QDialog(parent), m_camera(nullptr), m_reco
 	connect(m_qtmelRecorder, &QtMELRecorder::stateChanged, this, &Recorder::videoRecorderStateChangedQtMEL);
 
 	connect(m_qtmelRecorder->encoder(), SIGNAL(error(Encoder::Error)), this, SLOT(onEncoderError(Encoder::Error)));
-	connect(m_cameraGrabber, SIGNAL(AbstractGrabber::error(AbstractGrabber::Error)), this, SLOT(onGrabberError(AbstractGrabber::Error)));
-	connect(m_audioGrabber, SIGNAL(AbstractGrabber::error(AbstractGrabber::Error)), this, SLOT(onGrabberError(AbstractGrabber::Error)));
+	connect(m_cameraGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
+	connect(m_audioGrabber, &AbstractGrabber::error, this, &Recorder::onGrabberError);
 #endif
 
 	m_recorder = new QMediaRecorder(m_camera);
