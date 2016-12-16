@@ -74,9 +74,7 @@ git submodule update --init
 
 # The user.conf file can have user defined values.
 cp -f "$PROJECT_DIR/user.conf" ./
-# Add debug and release targets if available.
-echo "" >> ./user.conf
-echo "CONFIG += debug_and_release" >> ./user.conf
+cp -f "$PROJECT_DIR/user.conf" ./src/user.conf
 
 # Change back to the project dir
 cd ..
@@ -118,4 +116,4 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
 "$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" ../qtav/QtAV.pro
-make -j4 # "${BUILD_TYPE,,}" TODO debug target does not exist
+make # -j4  "${BUILD_TYPE,,}" TODO debug target does not exist although in the Makefile!
