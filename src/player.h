@@ -142,8 +142,8 @@ class Player
 		void onChangeStateParallelSoundPlayer(QMediaPlayer::State state);
 		void onChangeState(QMediaPlayer::State state);
 #ifdef Q_OS_ANDROID
-		void onChangeStateAndroid();
 		void onChangeStateAndroidQtAv(QtAV::AVPlayer::State state);
+		void onError(const QtAV::AVError &e);
 #endif
 
 	private:

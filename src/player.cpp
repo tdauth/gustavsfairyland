@@ -52,6 +52,7 @@ Player::Player(QWidget *parent, fairytale *app)
 	connect(this->mediaPlayer(), &QMediaPlayer::stateChanged, this, &Player::onChangeState);
 #else
 	connect(this->m_player, &QtAV::AVPlayer::stateChanged, this, &Player::onChangeStateAndroidQtAv);
+	connect(this->m_player, &QtAV::AVPlayer::error, this, &Player::onError);
 #endif
 
 	this->m_iconLabel->setAlignment(Qt::AlignCenter);
@@ -183,9 +184,7 @@ void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
 
 void Player::onChangeState(QMediaPlayer::State state)
 {
-#ifndef Q_OS_ANDROID
-	Q_ASSERT(this->m_mediaPlayer->state() == state);
-#endif
+	Q_ASSERT(this->state() == state);
 
 	qDebug() << "Emitting signal" << state;
 	emit stateChanged(state);
@@ -216,16 +215,11 @@ void Player::onChangeState(QMediaPlayer::State state)
 }
 
 #ifdef Q_OS_ANDROID
-void Player::onChangeStateAndroid()
-{
-	this->onChangeState(this->state());
-
-}
-
 void Player::onChangeStateAndroidQtAv(QtAV::AVPlayer::State state)
 {
 	qDebug() << "State changed on Android player" << state;
 	Q_ASSERT(this->m_player->state() == state);
+	qDebug() << "After assert";
 
 	switch (state)
 	{
@@ -250,6 +244,11 @@ void Player::onChangeStateAndroidQtAv(QtAV::AVPlayer::State state)
 			break;
 		}
 	}
+}
+
+void Player::onError(const QtAV::AVError &e)
+{
+	qDebug() << "QtAV error:" << e;
 }
 #endif
 
@@ -342,9 +341,10 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 
 #ifdef Q_OS_ANDROID
 	qDebug() << "Playing video:" << resolvedUrl.toString();
+	qDebug() << "Audio backends:" << m_player->audio()->backends();
+	qDebug() << "Current audio backend:" << m_player->audio()->backend();
 	m_player->setFile(resolvedUrl.toString());
 	m_player->load();
-	//this->m_renderer->resize(app->size() / 1.5); // make videos bigger
 #else
 	/*
 	 * Play the narrator clip for the current solution as hint.
@@ -412,7 +412,7 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->descriptionLabel->setText(description);
 
 #ifdef Q_OS_ANDROID
-	qDebug() << "Playing video:" << soundUrl.toString();
+	qDebug() << "Playing sound:" << soundUrl.toString();
 	m_player->setFile(soundUrl.toString());
 	m_player->load();
 #else
@@ -511,6 +511,7 @@ void Player::pause()
 void Player::stop()
 {
 #ifdef Q_OS_ANDROID
+	qDebug() << "Stopping Android player";
 	this->m_player->stop();
 #else
 	this->mediaPlayer()->stop();
