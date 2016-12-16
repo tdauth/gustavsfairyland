@@ -1,3 +1,15 @@
+Release 1.2.0:
+* Added more sound controls in the settings.
+* Increased default sound volume.
+* Improved user interface: Changed some descriptions, added headlines, fixed layouts, increased font sizes, use more checkable group boxes.
+* Fixed Debian/Ubuntu .deb file.
+* Updated homepage link for packages.
+* Don't show the confusing add path page for NSIS installers anymore.
+* Added the new game mode "Complete Fairytale" which uses the Drag & Drop mechanism.
+* Show the current fairytale in the game mode "Creative".
+* Added more retry buttons for changing the difficulty and the game mode. Otherwise it might be overlooked that there are more settings.
+* Allow playing the unlocked bonus clip immediately.
+
 Release 1.1.0:
 * Fixed restoring all unlocked bonus clips. Half of them got lost after restarting the application.
 * Fixed canceling and pausing the game while showing the complete fairytale at the end of a game.
