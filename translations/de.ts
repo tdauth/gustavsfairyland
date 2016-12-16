@@ -143,54 +143,58 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ClipEditor</name>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="552"/>
+        <location filename="../build/ui_clipeditor.h" line="556"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="553"/>
-        <location filename="../src/clipeditor.cpp" line="768"/>
+        <location filename="../build/ui_clipeditor.h" line="557"/>
+        <location filename="../src/clipeditor.cpp" line="769"/>
         <source>Add new clip</source>
         <translation>Neuen Clip hinzufügen</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="554"/>
+        <location filename="../build/ui_clipeditor.h" line="558"/>
         <location filename="../src/clipeditor.cpp" line="441"/>
         <source>Description:</source>
         <translation>Beschreibung:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="555"/>
+        <location filename="../build/ui_clipeditor.h" line="559"/>
         <source>Is a Person</source>
         <translation>Ist eine Person</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="564"/>
         <source>Advanced</source>
-        <translation>Erweitert</translation>
+        <translation type="vanished">Erweitert</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="566"/>
+        <location filename="../build/ui_clipeditor.h" line="568"/>
+        <source>Ad&amp;vanced</source>
+        <translation>&amp;Erweitert</translation>
+    </message>
+    <message>
+        <location filename="../build/ui_clipeditor.h" line="569"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="569"/>
+        <location filename="../build/ui_clipeditor.h" line="572"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="572"/>
+        <location filename="../build/ui_clipeditor.h" line="575"/>
         <source>Clip ID:</source>
         <translation>Clip-ID:</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="573"/>
+        <location filename="../build/ui_clipeditor.h" line="576"/>
         <source>Narrating Sounds</source>
         <translation>Erzähler-Sounds</translation>
     </message>
     <message>
-        <location filename="../build/ui_clipeditor.h" line="578"/>
+        <location filename="../build/ui_clipeditor.h" line="581"/>
         <source>Descriptions</source>
         <translation>Beschreibungen</translation>
     </message>
@@ -264,7 +268,7 @@ p, li { white-space: pre-wrap; }
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location filename="../src/clipeditor.cpp" line="772"/>
+        <location filename="../src/clipeditor.cpp" line="773"/>
         <source>Edit clip</source>
         <translation>Clip bearbeiten</translation>
     </message>
@@ -994,17 +998,17 @@ p, li { white-space: pre-wrap; }
         <translation>Alles überspringen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="74"/>
+        <location filename="../src/player.cpp" line="75"/>
         <source>SPACE</source>
         <translation>SPACE</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="78"/>
+        <location filename="../src/player.cpp" line="79"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="81"/>
+        <location filename="../src/player.cpp" line="82"/>
         <source>C</source>
         <translation>C</translation>
     </message>
