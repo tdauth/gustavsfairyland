@@ -524,7 +524,8 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 	connect(this->m_recorder->recorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::videoRecorderStateChanged);
 	connect(this->m_recorder->audioRecorder(), &QMediaRecorder::stateChanged, this, &ClipEditor::audioRecorderStateChanged);
 
-	this->advancedGroupBox->hide();
+	this->advancedGroupBox->setChecked(false);
+	this->advancedWidget->hide();
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clipeditordir").toString();
