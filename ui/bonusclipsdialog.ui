@@ -50,7 +50,7 @@
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
+          <item alignment="Qt::AlignHCenter">
            <widget class="QWidget" name="contentWidget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>

@@ -85,9 +85,10 @@ void BonusClipsDialog::update()
 			QPushButton *pushButton = new QPushButton(bonusClip->description());
 			pushButton->setIconSize(QSize(32, 32));
 			pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+			pushButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 			QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
-			layout->insertWidget(i, pushButton, 0, Qt::AlignCenter);
+			layout->insertWidget(i, pushButton);
 			connect(pushButton, &QPushButton::clicked, this, &BonusClipsDialog::playBonusClip);
 			m_buttons.insert(pushButton, new Button(*iterator, pushButton, this));
 
