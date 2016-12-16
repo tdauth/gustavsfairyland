@@ -666,7 +666,7 @@ fairytale::~fairytale()
 
 QString fairytale::defaultClipsDirectory() const
 {
-#ifdef DEBUG
+#if defined(DEBUG) && not defined(Q_OS_ANDROID)
 	/*
 	 * In debug mode we are in the directory "build", so we have to use a different relative path.
 	 */
