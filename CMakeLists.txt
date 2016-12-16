@@ -35,6 +35,7 @@ message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
+option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." TRUE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
 set(gustavsfairyland_VERSION_MINOR "2")
@@ -278,6 +279,14 @@ endif ()
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)
 
+if (USE_DOXYGEN)
+	find_program(DOXYGEN_PATH doxygen)
+
+	if (DOXYGEN_PATH)
+		add_custom_target(Doxygen ALL ${DOXYGEN_PATH} "${CMAKE_BINARY_DIR}/doc/doxygen.conf" SOURCES ${fairyland_HEADERS} ${fairyland_SRCS} ${fairyland_UI})
+	endif ()
+endif ()
+
 if (ANDROID)
 	# This custom target is referenced by all install commands for Android.
 	add_custom_target(CopyAssets ALL SOURCES ${fairytale_QM_FILES} ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_SOURCE_DIR}/clips/custom.xml)
@@ -417,8 +426,9 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_PACKAGE_EXECUTABLES "gustavsfairyland" "Gustav's Fairyland")
 set(CPACK_CREATE_DESKTOP_LINKS "gustavsfairyland")
 set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/resources\\\\logo.jpg")
+set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
 
-# NSIS Windows
+# Windows NSIS
 set(CPACK_NSIS_URL_INFO_ABOUT "https://gustavsfairyland.wordpress.com")
 # improve the compression since we have many clips and Qt binaries
 set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
@@ -429,16 +439,15 @@ set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/resources/logo.ico")
 # The path page is confusing for normal users and it is not necessary for the game.
 set(CPACK_NSIS_MODIFY_PATH OFF)
 
-# Fedora package
+# Fedora RPM
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_GROUP "games")
 set(CPACK_RPM_PACKAGE_URL "https://gustavsfairyland.wordpress.com")
 set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1, qt5-qtsvg >= 5.5.1 qt5-qttranslations >= 5.5.1")
 
-# Debian
+# Debian and Ubuntu DEB
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
-set(CPACK_PACKAGE_CONTACT "tamino@cdauth.eu")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "qt5-default") # Ubuntu dependency
 set(CPACK_DEBIAN_PACKAGE_SECTION "Games")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://gustavsfairyland.wordpress.com")
