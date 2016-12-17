@@ -415,7 +415,7 @@ if (ANDROID)
 endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
-set(CPACK_PACKAGE_VENDOR "wc3lib.org")
+set(CPACK_PACKAGE_VENDOR "https://gustavsfairyland.wordpress.com")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
 set(CPACK_PACKAGE_VERSION "${gustavsfairyland_VERSION}")
@@ -442,15 +442,16 @@ set(CPACK_NSIS_MODIFY_PATH OFF)
 
 # Fedora RPM
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
-set(CPACK_RPM_PACKAGE_GROUP "games")
+set(CPACK_RPM_PACKAGE_GROUP "Amusements/Games")
 set(CPACK_RPM_PACKAGE_URL "https://gustavsfairyland.wordpress.com")
+set(CPACK_RPM_PACKAGE_LICENSE "GPLv3")
 set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtsvg >= 5.5.1, qt5-qttranslations >= 5.5.1")
 
 # Debian and Ubuntu DEB
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5gui5, libqt5widgets5, libqt5multimedia5, libqt5multimediawidgets5, libqt5xml5, libqt5svg5, qttranslations5-l10n") # Ubuntu dependency
-set(CPACK_DEBIAN_PACKAGE_SECTION "Games")
+set(CPACK_DEBIAN_PACKAGE_SECTION "games")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://gustavsfairyland.wordpress.com")
 
 include(CPack)
