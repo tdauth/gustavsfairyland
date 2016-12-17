@@ -69,6 +69,7 @@ set(CMAKE_AUTORCC ON)
 
 # Find all Qt modules which are required
 find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5MultimediaWidgets REQUIRED)
@@ -236,7 +237,7 @@ endif ()
 add_subdirectory(src)
 
 add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (USE_QTMEL)
 	target_link_libraries(gustavsfairylandlib "${QT_MEL_LIBRARIES}" ${AV_LIBRARIES} ${OpenCV_LIBRARIES} ${ZLIB_LIBRARIES})
@@ -266,7 +267,7 @@ else ()
 	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
 endif()
 
-target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
 if (ANDROID)
 	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
@@ -443,12 +444,12 @@ set(CPACK_NSIS_MODIFY_PATH OFF)
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_GROUP "games")
 set(CPACK_RPM_PACKAGE_URL "https://gustavsfairyland.wordpress.com")
-set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxmlpatterns >= 5.5.1, qt5-qtsvg >= 5.5.1 qt5-qttranslations >= 5.5.1")
+set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxml >= 5.5.1, qt5-qtsvg >= 5.5.1, qt5-qttranslations >= 5.5.1")
 
 # Debian and Ubuntu DEB
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "qt5-default") # Ubuntu dependency
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5gui5, libqt5widgets5, libqt5multimedia5, libqt5multimediawidgets5, libqt5xml5, libqt5svg5, qttranslations5-l10n") # Ubuntu dependency
 set(CPACK_DEBIAN_PACKAGE_SECTION "Games")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://gustavsfairyland.wordpress.com")
 
