@@ -109,7 +109,7 @@ int Player::volume() const
 bool Player::isMuted() const
 {
 #ifdef Q_OS_ANDROID
-	return this->m_player->audio()->mute();
+	return this->m_player->audio()->isMute();
 #else
 	return this->mediaPlayer()->isMuted();
 #endif
