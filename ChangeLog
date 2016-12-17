@@ -9,6 +9,7 @@ Release 1.2.0:
 * Show the current fairytale in the game mode "Creative".
 * Added more retry buttons for changing the difficulty and the game mode. Otherwise it might be overlooked that there are more settings.
 * Allow playing the unlocked bonus clip immediately.
+* Group highscores by game mode only instead of clip packages since they only add clips.
 
 Release 1.1.0:
 * Fixed restoring all unlocked bonus clips. Half of them got lost after restarting the application.

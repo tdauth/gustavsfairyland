@@ -36,7 +36,7 @@ HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 bool HighScores::addHighScore(const HighScore &highScore)
 {
-	const Key key(highScore.packages().join(";"), highScore.gameMode());
+	const Key key(highScore.gameMode());
 
 	if (!this->m_highScores.contains(key))
 	{
@@ -51,6 +51,7 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	{
 		const HighScore &existingHighScore = *pos;
 
+		// existingHighScore is worse when it took longer but with the same number of rounds and difficulty. The game mode is already the same. It is also worse if it has lesse rounds with the same difficulty or if simply the difficulty is lower.
 		if ((existingHighScore.time() > highScore.time() && existingHighScore.rounds() == highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || (existingHighScore.rounds() < highScore.rounds() && existingHighScore.difficulty() == highScore.difficulty()) || ((int)existingHighScore.difficulty() < (int)highScore.difficulty()))
 		{
 			qDebug() << "Found smaller highscore with time: " << existingHighScore.time() << " and rounds " << existingHighScore.rounds() << " and difficulty " << (int)existingHighScore.difficulty();

@@ -80,8 +80,8 @@ class HighScores : public QDialog, protected Ui::HighScores
 		void clearAll();
 
 	public:
-		/// Store high scores with the samge package and game mode, comparing highscores from different packages or game modes does not make any sense.
-		typedef QPair<QString, QString> Key;
+		/// Store high scores with the same game mode, comparing highscores from different game modes does not make any sense. The packages do not matter since they just add clips.
+		typedef QString Key;
 		typedef QLinkedList<HighScore> HighScoreList;
 		typedef QHash<Key, HighScoreList> HighScoreMap;
 
