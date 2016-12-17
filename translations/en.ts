@@ -673,37 +673,37 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="135"/>
+        <location filename="../src/highscores.cpp" line="136"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="139"/>
+        <location filename="../src/highscores.cpp" line="140"/>
         <source>, %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="145"/>
+        <location filename="../src/highscores.cpp" line="146"/>
         <source>%1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="178"/>
+        <location filename="../src/highscores.cpp" line="179"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="181"/>
+        <location filename="../src/highscores.cpp" line="182"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="184"/>
+        <location filename="../src/highscores.cpp" line="185"/>
         <source>Hard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/highscores.cpp" line="187"/>
+        <location filename="../src/highscores.cpp" line="188"/>
         <source>Mahlerisch</source>
         <translation type="unfinished"></translation>
     </message>
