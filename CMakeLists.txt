@@ -444,10 +444,10 @@ set(CPACK_NSIS_MODIFY_PATH OFF)
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_GROUP "games")
 set(CPACK_RPM_PACKAGE_URL "https://gustavsfairyland.wordpress.com")
-set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtxml >= 5.5.1, qt5-qtsvg >= 5.5.1, qt5-qttranslations >= 5.5.1")
+set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase-gui >= 5.5.1, qt5-qtmultimedia >= 5.5.1, qt5-qtsvg >= 5.5.1, qt5-qttranslations >= 5.5.1")
 
 # Debian and Ubuntu DEB
-set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "all")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tamino Dauth")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5gui5, libqt5widgets5, libqt5multimedia5, libqt5multimediawidgets5, libqt5xml5, libqt5svg5, qttranslations5-l10n") # Ubuntu dependency
 set(CPACK_DEBIAN_PACKAGE_SECTION "Games")
