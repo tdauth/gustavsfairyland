@@ -489,11 +489,10 @@ void Player::playParallelSound(fairytale *app, const QUrl &url)
 
 void Player::play()
 {
-	qDebug() << "Play with volume" << this->volume() << "and is muted" << this->isMuted() << "and video player audio role" << this->mediaPlayer()->audioRole();
-
 #ifdef Q_OS_ANDROID
 	this->m_player->play();
 #else
+	qDebug() << "Play with volume" << this->volume() << "and is muted" << this->isMuted() << "and video player audio role" << this->mediaPlayer()->audioRole();
 	this->mediaPlayer()->play();
 #endif
 }
