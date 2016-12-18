@@ -4,7 +4,7 @@
 #include <QWidget>
 
 /**
- * @brief Abstract class for widgets which have a retranslateUi() method and need to be retranslated when the language changes.
+ * \brief Abstract class for widgets which have a retranslateUi() method and need to be retranslated when the language changes.
  *
  * Derive all your widgets using UI forms from this class to implement the retranslation automatically.
  */
