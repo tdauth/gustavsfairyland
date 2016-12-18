@@ -648,17 +648,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FairytalesDialog</name>
     <message>
-        <location filename="../build/ui_fairytalesdialog.h" line="105"/>
+        <location filename="../build/ui_fairytalesdialog.h" line="114"/>
         <source>Fairytales</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../build/ui_fairytalesdialog.h" line="106"/>
+        <location filename="../build/ui_fairytalesdialog.h" line="115"/>
         <source>Saved Fairytales</source>
         <translation>Gespeicherte Märchen</translation>
     </message>
     <message>
-        <location filename="../build/ui_fairytalesdialog.h" line="107"/>
+        <location filename="../build/ui_fairytalesdialog.h" line="116"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>

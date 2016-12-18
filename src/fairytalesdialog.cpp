@@ -120,32 +120,29 @@ void FairytalesDialog::update()
 	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().begin(); iterator != m_app->customFairytales().end(); ++iterator)
 	{
 		CustomFairytale *customFairytale = iterator.value();
-		QScrollArea *scrollArea = new QScrollArea(); // dont use this as parent since it is deleted automatically when fairytale is deleted
-		scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-		scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-		QWidget *widget = new QWidget(scrollArea);
-		widget->setLayout(new QHBoxLayout());
+
+		QGroupBox *widget = new QGroupBox(this);
+		QHBoxLayout *widgetLayout = new QHBoxLayout();
+		widget->setLayout(widgetLayout);
 		widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		widget->setTitle(customFairytale->name());
 
 		QPushButton *pushButton = new QPushButton(tr("Play"), widget);
-		widget->layout()->addWidget(pushButton);
+		widgetLayout->addWidget(pushButton);
 		connect(pushButton, &QPushButton::clicked, this, &FairytalesDialog::playFairytale);
 		pushButton->setIconSize(QSize(32, 32));
 		pushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-start.png"));
 
 		QPushButton *deletePushButton = new QPushButton(tr("Delete"), widget);
-		widget->layout()->addWidget(deletePushButton);
+		widgetLayout->addWidget(deletePushButton);
 		connect(deletePushButton, &QPushButton::clicked, this, &FairytalesDialog::deleteFairytale);
 		deletePushButton->setIconSize(QSize(32, 32));
 		deletePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/dialog-close.png"));
 
-		QLabel *label = new QLabel(customFairytale->name(), widget);
-		widget->layout()->addWidget(label);
-
 		for (CustomFairytale::ClipIds::const_iterator clipIdIterator = customFairytale->clipIds().begin(); clipIdIterator != customFairytale->clipIds().end(); ++clipIdIterator)
 		{
 			IconLabel *iconLabel = new IconLabel(widget);
-			widget->layout()->addWidget(iconLabel);
+			widgetLayout->addWidget(iconLabel);
 			iconLabel->setAlignment(Qt::AlignCenter);
 			iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 			const QSize iconSize = QSize(128, 128);
@@ -169,10 +166,10 @@ void FairytalesDialog::update()
 			}
 		}
 
-		scrollArea->setWidget(widget);
-		QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
-		layout->addWidget(scrollArea);
-		m_fairytales.insert(widget, new Fairytale(customFairytale->name(), scrollArea, this));
+		widgetLayout->addStretch();
+
+		contentWidget->layout()->addWidget(widget);
+		m_fairytales.insert(widget, new Fairytale(customFairytale->name(), widget, this));
 	}
 }
 

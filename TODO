@@ -4,6 +4,9 @@ TODOs 1.3:
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
 - valgrind memory leaks.
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen.
+- Color of the scrollbars and spin boxes does not match the game color.
+- FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht.
+- Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).

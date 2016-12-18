@@ -35,7 +35,7 @@ message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
-option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." TRUE)
+option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." FALSE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
 set(gustavsfairyland_VERSION_MINOR "2")
