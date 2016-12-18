@@ -27,8 +27,6 @@ class fairytale;
  */
 class ClipPackage : public QObject
 {
-	Q_OBJECT
-
 	public:
 		/**
 		 * A map of all names in all supported languages.

@@ -144,6 +144,7 @@ set(fairyland_HEADERS
 	src/localedialog.h
 	src/translatedwidget.h
 	src/solutionwidget.h
+	src/abstractclip.h
 )
 
 set(fairyland_SRCS
@@ -181,6 +182,7 @@ set(fairyland_SRCS
 	src/localedialog.cpp
 	src/translatedwidget.cpp
 	src/solutionwidget.cpp
+	src/abstractclip.cpp
 )
 
 set(fairyland_UI

@@ -9,8 +9,6 @@
 #include "bonusclip.h"
 #include "fairytale.h"
 
-#include "clippackage.moc"
-
 ClipPackage::ClipPackage(fairytale *app, QObject *parent) : QObject(parent), m_app(app)
 {
 }
