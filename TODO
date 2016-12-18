@@ -7,6 +7,7 @@ TODOs 1.3:
 - Color of the scrollbars and spin boxes does not match the game color.
 - FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht.
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
+- Use QtMEL for Windows (if necessary with Hunter).
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).

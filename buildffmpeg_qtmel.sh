@@ -13,5 +13,5 @@ fi
 
 cd "$BUILD_DIR/ffmpeg-git-14d94a1"
 # Enable all necessary recording formats here.
-./configure --prefix="$BUILD_DIR"/install --enable-muxer=mp4 --enable-libx264 --enable-avisynth
+./configure --prefix="$BUILD_DIR"/install #--enable-muxer=mp4 --enable-libx264 --enable-avisynth --enable-gpl
 make -j4 install
