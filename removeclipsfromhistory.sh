@@ -8,7 +8,7 @@ for i in "${files[@]}"
 do
 	echo "$i"
 	git filter-branch -f --index-filter \
-	"git rm -r --cached --ignore-unmatch ./clips/$i"
+	"git rm -r --cached --ignore-unmatch ./clips/$i" -- --all
 done
 
 git diff master@{1}
