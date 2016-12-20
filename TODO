@@ -1,5 +1,5 @@
 TODOs 1.3:
-- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown.
+- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be shown anymore).
 - English Qt translations are not loaded on Linux with installed RPM.
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
 - valgrind memory leaks.
