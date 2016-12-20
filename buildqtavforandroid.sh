@@ -3,12 +3,29 @@
 # This script builds the project QtAV for Android which requires ffmpeg as well. Therefore ffmpeg has to be build as well.
 # To build both projects for Android, the Android NDK is required as well as a binary Qt version for Android.
 
-QT_DIR="$1"
-ANDROID_PREFIX="$2"
-ANDROID_TARGET="$3"
-BUILD_TYPE="$4"
+BUILD_TYPE="$1"
+PROJECT_DIR="$2"
+PROJECT_BIN_DIR="$3"
+QT_DIR="$4"
+ANDROID_PREFIX="$5"
+ANDROID_TARGET="$6"
 
 export HOME_TAMINO="/home/tamino"
+
+if [ -z "$BUILD_TYPE" ] ; then
+	echo "Define BUILD_TYPE as argument 1 (Debug or Release)"
+	exit 1
+fi
+
+if [ -z "$PROJECT_DIR" ] ; then
+	echo "Define PROJECT_DIR as argument 2"
+	exit 1
+fi
+
+if [ -z "$PROJECT_BIN_DIR" ] ; then
+	echo "Define PROJECT_BIN_DIR as argument 3"
+	exit 1
+fi
 
 if [ -z "$QT_DIR" ] ; then
 	echo "Setting QT_DIR automatically"
@@ -25,24 +42,23 @@ if [ -z "$ANDROID_TARGET" ] ; then
 	ANDROID_TARGET="armv7" # x86
 fi
 
-if [ -z "$BUILD_TYPE" ] ; then
-	echo "Define BUILD_TYPE as argument 4 (Debug or Release)"
-	exit 1
-fi
-
 export NDK_ROOT="$HOME_TAMINO/android-ndk-r12b"
 export INSTALL_DIR="../installffmpeg"
-export PROJECT_DIR=$(pwd)
 export QT_PATH="$QT_DIR"
 
+# Work in the binary dir.
+cd "$PROJECT_BIN_DIR"
+
+export FFMPEG_DIR="$PROJECT_BIN_DIR/build_ffmpeg"
+
 # https://github.com/wang-bin/build_ffmpeg/wiki
-if [ ! -d ./build_ffmpeg ] ; then
-	git clone https://github.com/wang-bin/build_ffmpeg.git ./build_ffmpeg
+if [ ! -d "$FFMPEG_DIR" ] ; then
+	git clone https://github.com/wang-bin/build_ffmpeg.git "$FFMPEG_DIR"
 fi
 
 export FFMPEG_VERSION="3.1.5"
-export FFSRC="$PROJECT_DIR/ffmpeg-$FFMPEG_VERSION" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
-export FFMPEG_PREFIX="$PROJECT_DIR/build_ffmpeg/$ANDROID_PREFIX"
+export FFSRC="$PROJECT_BIN_DIR/ffmpeg-$FFMPEG_VERSION" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
+export FFMPEG_PREFIX="$FFMPEG_DIR/$ANDROID_PREFIX"
 
 # Download and extract ffmpeg if it does not exist.
 # TODO checksums? or rather use a local copy
@@ -54,41 +70,35 @@ if [ ! -e "$FFSRC" ] ; then
 fi
 
 # Overwrite custom Android configuration with the correct NDK path
-cp -f "$PROJECT_DIR/config-android.sh" ./build_ffmpeg
+cp -f "$PROJECT_DIR/config-android.sh" "$FFMPEG_DIR"
 # TODO specify NDK_ROOT in file "config-android.sh" as well as static build
-cd ./build_ffmpeg
+cd "$FFMPEG_DIR"
 ./build_ffmpeg.sh android "$ANDROID_TARGET"
 
-# Change back to the project dir
-cd ..
+export QT_AV_DIR="$PROJECT_BIN_DIR/qtav"
 
 # https://github.com/wang-bin/QtAV/wiki/Build-QtAV
-if [ ! -d ./qtav ]; then
-	#rm -rf ./qtav
-	git clone https://github.com/wang-bin/QtAV.git ./qtav
+if [ ! -d "$QT_AV_DIR" ]; then
+	git clone https://github.com/wang-bin/QtAV.git "$QT_AV_DIR"
 fi
 
-cd ./qtav
+cd "$QT_AV_DIR"
 git submodule update --init
 #git checkout tags/v1.11.0
 
 # The user.conf file can have user defined values.
-cp -f "$PROJECT_DIR/user.conf" ./
-cp -f "$PROJECT_DIR/user.conf" ./src/user.conf
+cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/user.conf"
+cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/src/user.conf"
 
-# Change back to the project dir
-cd ..
+export QT_AV_BUILD_DIR="$PROJECT_BIN_DIR/buildqtav"
 
 # Always clean the build directory to avoid old stuff.
-if [ ! -d ./buildqtav ]; then
-	#rm -rf ./buildqtav
-	mkdir ./buildqtav
+if [ ! -d "$QT_AV_BUILD_DIR" ]; then
+	mkdir "$QT_AV_BUILD_DIR"
 fi
 
-cd ./buildqtav
+cd "$QT_AV_BUILD_DIR"
 
-#export CPATH="$PROJECT_DIR/ffmpeg-3.1.1-android/include/":openal_path/include:$CPATH
-#export LIBRARY_PATH="$PROJECT_DIR/ffmpeg-3.1.1-android/lib/armv7":openal_path/lib:$LIBRARY_PATH
 export FFMPEG_INCLUDE_DIR="$FFMPEG_PREFIX/include"
 export FFMPEG_LIB_DIR="$FFMPEG_PREFIX/lib"
 export CPATH="$FFMPEG_INCLUDE_DIR/:$CPATH"
@@ -103,17 +113,8 @@ ls -lha "$FFMPEG_LIB_DIR/"
 echo "Building QtAV from: $(pwd)"
 echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # "$QT_PATH/5.7/android_x86/bin/qmake"
-# += staticlib to build itself statically
-# "CONFIG += static_ffmpeg static_openal"
-# Needs the library paths for -lswresample and -lavresample
-# -L$FFMPEG_LIB_DIR/
-# -r "CONFIG+=recheck"
-# "CONFIG += no_config_tests" NOTE Don't use this, it leads to errors.
-# Take off config_vaapi for ARM?
-# "LIBS+=-L$QT_PATH/lib" don't use this and don't create symbolic links
-# QMAKE_LIBDIR+=$FFMPEG_LIB_DIR
 # If the error "Error: libavresample or libswresample is required" appears, use this:
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
-"$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" ../qtav/QtAV.pro
+"$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "$QT_AV_DIR/QtAV.pro"
 make -j4 #  "${BUILD_TYPE,,}" TODO debug target does not exist although in the Makefile!

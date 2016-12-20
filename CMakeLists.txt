@@ -35,6 +35,7 @@ message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
 option(USE_QTAV "Enable this option to use QtAV for playing video files." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
+option(USE_VLCQT "Enable this option to use VLC-Qt. Another library to play videos." FALSE)
 option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." FALSE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
@@ -113,6 +114,16 @@ if (USE_QTMEL)
 	set(QT_MEL_LIBRARIES "${CMAKE_BINARY_DIR}/QtMEL-prefix/src/QtMEL/libsQt5/libqtmel.so")
 	include_directories("${CMAKE_BINARY_DIR}/QtMEL-prefix/src/QtMEL/include/")
 	link_directories("${AV_LIBRARY_DIR}")
+endif ()
+
+if (USE_VLCQT)
+	include(ExternalProject)
+
+	# Requires libVLC (vlc-devel on Fedora) and Qt 5
+	ExternalProject_Add(VLCQt
+		GIT_REPOSITORY https://github.com/vlc-qt/vlc-qt.git
+		INSTALL_COMMAND ""
+	)
 endif ()
 
 set(fairyland_HEADERS
@@ -227,7 +238,7 @@ QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/o
 
 if (USE_QTAV)
 	if (ANDROID)
-		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib")
+		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib")
 	else ()
 		set(QTAV_FFMPEG_LIB_DIR "/usr/lib64")
 		set(QTAV_LIB_DIR "lib_linux_x86_64")
@@ -241,13 +252,13 @@ if (USE_QTAV)
 		"${QTAV_FFMPEG_LIB_DIR}/libavutil.so"
 		"${QTAV_FFMPEG_LIB_DIR}/libswresample.so"
 		"${QTAV_FFMPEG_LIB_DIR}/libswscale.so"
-		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
-		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
+		"${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
+		"${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
 	)
 
 	if (ANDROID)
 		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" "${CMAKE_BUILD_TYPE}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	elseif (UNIX)
 		# Make sure that ffmpeg-devel is installed in /usr/include/ffmpeg.
 		find_path(FFMPEG_INCLUDE_DIR ffmpeg PATHS /usr/include)
@@ -256,7 +267,7 @@ if (USE_QTAV)
 			message(FATAL_ERROR "Missing /usr/include/ffmpeg.")
 		endif ()
 
-		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforlinux.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforlinux.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	else ()
 		message(FATAL_ERROR "Other systems are not supported for the option USE_QTAV.")
 	endif ()
@@ -308,10 +319,10 @@ if (USE_QTAV)
 		target_link_libraries(gustavsfairyland Qt5::AndroidExtras)
 	endif ()
 
-	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
-	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
-	include_directories("${CMAKE_SOURCE_DIR}/qtav/widgets/")
-	include_directories("${CMAKE_SOURCE_DIR}/qtav/widgets/QtAVWidgets/")
+	include_directories("${CMAKE_BINARY_DIR}/qtav/src/")
+	include_directories("${CMAKE_BINARY_DIR}/qtav/src/QtAV")
+	include_directories("${CMAKE_BINARY_DIR}/qtav/widgets/")
+	include_directories("${CMAKE_BINARY_DIR}/qtav/widgets/QtAVWidgets/")
 endif ()
 
 configure_file(doc/doxygen.conf doc/doxygen.conf)
