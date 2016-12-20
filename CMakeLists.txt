@@ -1,17 +1,16 @@
 cmake_minimum_required(VERSION 3.4.3)
 
 # TODO use Hunter for easier dependency resolving
-#include("cmake/HunterGate.cmake")
+include("cmake/HunterGate.cmake")
 
-#HunterGate(
-#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
-#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
-#)
-
-#hunter_add_package(Qt)
-#hunter_add_package(OpenCV)
+HunterGate(
+	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
+	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
+)
 
 project(gustavsfairyland)
+
+#hunter_add_package(Qt)
 
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
@@ -90,6 +89,9 @@ endif ()
 # On Windows recording with the webcam is not supported yet by QtMultimedia. Therefore we need an alternative library.
 if (USE_QTMEL)
 	include(ExternalProject)
+
+	hunter_add_package(OpenCV)
+	hunter_add_package(ZLIB)
 
 	find_package(OpenCV REQUIRED)
 	find_package(ZLIB REQUIRED)
