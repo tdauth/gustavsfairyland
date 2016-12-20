@@ -80,20 +80,10 @@ void GameModeMoving::afterNarrator()
 		{
 			this->m_roomWidget->addFloatingClip(this->app()->completeSolution().at(index), this->m_roomWidget->floatingClipWidth(), this->m_roomWidget->floatingClipSpeed());
 		}
-
-		// make them faster than the  first clip
-		//const int speed = this->startSpeed() + this->app()->turns() * (this->app()->hasTouchDevice() ? 60 : 10);
-		//qDebug() << "Speed: " << speed;
-
-		/*
-		 * TODO set speed depending on RoomWidget::floatingClipSpeed()
-		foreach (FloatingClip *clip, this->m_roomWidget->floatingClips())
-		{
-			clip->setSpeed(speed);
-		}
-		*/
 	}
 
+	qDebug() << "Starting room widget is shown" << this->m_roomWidget->isVisible();
+	this->m_roomWidget->show();
 	this->m_roomWidget->start();
 }
 
@@ -134,6 +124,9 @@ void GameModeMoving::nextTurn()
 		const int index = qrand() % copy.size();
 		m_currentSolution = copy.at(index);
 		m_remainingClips.removeAll(m_currentSolution);
+
+		// TEST
+		this->m_roomWidget->show();
 
 		setState(State::Running);
 	}

@@ -288,10 +288,14 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
-#if 1 == 0 //def Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
 	if (dynamic_cast<QPushButton*>(widget) != nullptr)
 	{
+		/*
+		 * Cache the initial widget size and font on the startup once.
+		 * It is required to calculate the relative new size and font size.
+		 */
 		WidgetSizes::iterator iterator = m_widgetSizes.find(widget);
 
 		if (iterator == m_widgetSizes.end())
@@ -601,16 +605,30 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	{
 		resetToDefaultClipPackages();
 	}
-	// Make sure both return absolute paths.
-	else if (this->defaultClipsDirectory() != this->clipsDir().toLocalFile())
+	else
 	{
-		if (QMessageBox::question(this, tr("Use default clip packages?"), tr("Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+#ifndef Q_OS_ANDROID
+		const QString currentClipsDir = this->clipsDir().toLocalFile();
+#else
+		const QString currentClipsDir = this->clipsDir().toString();
+#endif
+		// Make sure both return absolute paths.
+		if (this->defaultClipsDirectory() != currentClipsDir)
 		{
-			resetToDefaultClipPackages();
+			qDebug() << "Current clips dir:" << currentClipsDir;
+
+			if (QMessageBox::question(this, tr("Use default clip packages?"), tr("Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+			{
+				resetToDefaultClipPackages();
+			}
 		}
+
+		qDebug() << "Compared clips dirs:" << this->defaultClipsDirectory() << "and" << currentClipsDir;
 	}
 
-	qDebug() << "Compared clips dirs:" << this->defaultClipsDirectory() << "and" << this->clipsDir().toLocalFile();
+#ifdef Q_OS_ANDROID
+	connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(resizeScreenEvent(int)));
+#endif
 }
 
 fairytale::~fairytale()
@@ -666,7 +684,7 @@ fairytale::~fairytale()
 
 QString fairytale::defaultClipsDirectory() const
 {
-#if defined(DEBUG) && not defined(Q_OS_ANDROID)
+#if defined(DEBUG) && !defined(Q_OS_ANDROID)
 	/*
 	 * In debug mode we are in the directory "build", so we have to use a different relative path.
 	 */
@@ -1840,6 +1858,8 @@ void fairytale::onFinishVideoAndSounds()
 		// played intro
 		if (this->m_playIntro)
 		{
+			qDebug() << "After intro";
+
 			this->m_playIntro = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
@@ -1848,6 +1868,8 @@ void fairytale::onFinishVideoAndSounds()
 		// played outro win
 		else if (this->m_playOutroWin)
 		{
+			qDebug() << "After outro win";
+
 			this->m_playOutroWin = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
@@ -1856,6 +1878,8 @@ void fairytale::onFinishVideoAndSounds()
 		// played outro lose
 		else if (this->m_playOutroLose)
 		{
+			qDebug() << "After outro lose";
+
 			this->m_playOutroLose = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
@@ -1870,10 +1894,14 @@ void fairytale::onFinishVideoAndSounds()
 				// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
 				if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
 				{
+					qDebug() << "After narrator stuff";
+
 					this->m_player->stop();
 					this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
 					this->m_playerSounds.clear();
+
+					qDebug() << "Calling after narrator";
 
 					this->afterNarrator();
 				}
@@ -1975,6 +2003,7 @@ void fairytale::afterNarrator()
 		this->descriptionLabel->setText(this->gameMode()->name());
 	}
 
+	qDebug() << "Call game mode after narrator" << this->gameMode();
 	this->gameMode()->afterNarrator();
 
 	// run every second
@@ -2172,6 +2201,16 @@ void fairytale::showEvent(QShowEvent *event)
 	this->updateSize(scrollArea);
 	this->updateSize(gameButtonsWidget);
 	this->updatePixmap();
+}
+
+void fairytale::resizeScreenEvent(int screen)
+{
+	qDebug() << "Screen size changed for screen:" << screen;
+	/*
+	 * Whenever the screen orientation changes, update the size.
+	 */
+	this->updateSize(scrollArea);
+	this->updateSize(gameButtonsWidget);
 }
 
 void fairytale::cleanupGame()

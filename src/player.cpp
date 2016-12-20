@@ -12,7 +12,7 @@ Player::Player(QWidget *parent, fairytale *app)
 : QWidget(parent)
 #endif
 , m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_skippedAll(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 , m_player(nullptr)
 , m_renderer(nullptr)
 #else
@@ -21,7 +21,7 @@ Player::Player(QWidget *parent, fairytale *app)
 {
 	setupUi(this);
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	this->m_player = new QtAV::AVPlayer(this);
 	this->m_renderer = new QtAV::OpenGLWidgetRenderer(this); // GLWidgetRenderer2
 	this->m_player->setRenderer(m_renderer);
@@ -48,7 +48,7 @@ Player::Player(QWidget *parent, fairytale *app)
 	this->m_parallelSoundsMediaPlayer->setAudioRole(QAudio::GameRole);
 	connect(this->m_parallelSoundsMediaPlayer, &QMediaPlayer::stateChanged, this, &Player::onChangeStateParallelSoundPlayer);
 
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 	connect(this->mediaPlayer(), &QMediaPlayer::stateChanged, this, &Player::onChangeState);
 #else
 	connect(this->m_player, &QtAV::AVPlayer::stateChanged, this, &Player::onChangeStateAndroidQtAv);
@@ -90,7 +90,7 @@ Player::~Player()
 
 QMediaPlayer::State Player::state() const
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	return QMediaPlayer::State(this->m_player->state());
 #else
 	return this->mediaPlayer()->state();
@@ -99,7 +99,7 @@ QMediaPlayer::State Player::state() const
 
 int Player::volume() const
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	return this->m_player->audio()->volume() * 100.0;
 #else
 	return this->mediaPlayer()->volume();
@@ -108,7 +108,7 @@ int Player::volume() const
 
 bool Player::isMuted() const
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	return this->m_player->audio()->isMute();
 #else
 	return this->mediaPlayer()->isMuted();
@@ -142,6 +142,13 @@ void Player::showEvent(QShowEvent *event)
 	Base::showEvent(event);
 
 	fairytale::updateSize(buttonsWidget);
+}
+
+void Player::hideEvent(QHideEvent *event)
+{
+	Base::hideEvent(event);
+
+	qDebug() << "Hide player!";
 }
 
 void Player::onChangeStateParallelSoundPlayer(QMediaPlayer::State state)
@@ -214,7 +221,7 @@ void Player::onChangeState(QMediaPlayer::State state)
 	}
 }
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 void Player::onChangeStateAndroidQtAv(QtAV::AVPlayer::State state)
 {
 	qDebug() << "State changed on Android player" << state;
@@ -304,7 +311,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_skippedAll = false;
 	this->m_iconLabel->hide();
 	this->m_iconLabel->setFile("");
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 	this->m_videoWidget->show();
 
 	if (app->isFullScreen())
@@ -339,7 +346,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	this->descriptionLabel->setText(description);
 	const QUrl resolvedUrl = app->resolveClipUrl(url);
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	qDebug() << "Playing video:" << resolvedUrl.toString();
 	qDebug() << "Audio backends:" << m_player->audio()->backends();
 	qDebug() << "Current audio backend:" << m_player->audio()->backend();
@@ -354,7 +361,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 
 	this->play();
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	this->m_renderer->widget()->show();
 #endif
 }
@@ -379,7 +386,7 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_isPrefix = prefix;
 	this->m_skipped = false;
 	this->m_skippedAll = false;
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 	this->m_videoWidget->hide();
 #else
 	this->m_renderer->widget()->hide();
@@ -411,8 +418,18 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 
 	this->descriptionLabel->setText(description);
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	qDebug() << "Playing sound:" << soundUrl.toString();
+
+	if (m_player->audio()->backend().isEmpty())
+	{
+		qDebug() << "No audio backend available for QtAV.";
+
+		onChangeStateAndroidQtAv(QtAV::AVPlayer::StoppedState);
+
+		return;
+	}
+
 	m_player->setFile(soundUrl.toString());
 	m_player->load();
 #else
@@ -439,7 +456,7 @@ void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &desc
 	this->m_isPrefix = false;
 	this->m_skipped = false;
 	this->m_skippedAll = false;
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 	this->m_videoWidget->hide();
 #else
 	this->m_renderer->widget()->hide();
@@ -489,8 +506,25 @@ void Player::playParallelSound(fairytale *app, const QUrl &url)
 
 void Player::play()
 {
-#ifdef Q_OS_ANDROID
-	this->m_player->play();
+#ifdef USE_QTAV
+	const QFileInfo fileInfo(this->m_player->file());
+
+	if (!fileInfo.exists() || !fileInfo.isReadable())
+	{
+		qDebug() << "File" << fileInfo.absoluteFilePath() << "does not exist!";
+
+		return;
+	}
+
+	// TEST mute
+	// disables audio output:
+	//this->m_player->audio()->setBackends(QStringList() << "null");
+	//this->m_player->audio()->setMute(true);
+	qDebug() << "Play QtAV" << fileInfo.absoluteFilePath();
+	this->m_player->play(); // FIXME crashes
+	// TEST
+	//onChangeStateAndroidQtAv(QtAV::AVPlayer::StoppedState);
+
 #else
 	qDebug() << "Play with volume" << this->volume() << "and is muted" << this->isMuted() << "and video player audio role" << this->mediaPlayer()->audioRole();
 	this->mediaPlayer()->play();
@@ -499,7 +533,7 @@ void Player::play()
 
 void Player::pause()
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	this->m_player->pause(true);
 #else
 	this->mediaPlayer()->pause();
@@ -509,7 +543,7 @@ void Player::pause()
 
 void Player::stop()
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	qDebug() << "Stopping Android player";
 	this->m_player->stop();
 #else
@@ -520,7 +554,7 @@ void Player::stop()
 
 void Player::setVolume(int volume)
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	const qreal realVolume = (qreal)(volume) * 0.01;
 	this->m_player->audio()->setVolume(realVolume);
 #else
@@ -532,7 +566,7 @@ void Player::setVolume(int volume)
 
 void Player::setMuted(bool muted)
 {
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 	this->m_player->audio()->setMute(muted);
 #else
 	this->mediaPlayer()->setMuted(muted);

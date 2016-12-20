@@ -84,10 +84,7 @@ void SettingsDialog::apply()
 	{
 		// TODO Workaround: in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
 		this->m_app->show();
-
-#ifndef Q_OS_ANDROID // Don't use fullscreen on Android, it hides the menu bar completely
 		this->m_app->showFullScreen();
-#endif
 	}
 	else
 	{

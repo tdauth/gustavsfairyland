@@ -146,6 +146,7 @@ void RoomWidget::windSoundStateChanged(QMediaPlayer::State state)
 		// play loop
 		if (this->isEnabled())
 		{
+			qDebug() << "Replay wind sound since room widget is enabled";
 			m_windSoundPlayer->setVolume(this->gameMode()->app()->musicVolume());
 			m_windSoundPlayer->setMuted(this->gameMode()->app()->isMusicMuted());
 			m_windSoundPlayer->play();

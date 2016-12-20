@@ -1,3 +1,4 @@
+#cmakedefine USE_QTAV
 #cmakedefine USE_QTMEL
 #cmakedefine DEBUG
 #define gustavsfairyland_VERSION "${gustavsfairyland_VERSION}"

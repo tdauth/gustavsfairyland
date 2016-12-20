@@ -3,11 +3,13 @@ TODOs 1.3:
 - English Qt translations are not loaded on Linux with installed RPM.
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
 - valgrind memory leaks.
-- Wenn Hunter unter Linux zumindest geht, cross compiling damit testen.
+- Wenn Hunter unter Linux zumindest geht, cross compiling damit testen. Siehe https://github.com/ruslo/hunter/issues/622#issuecomment-268078415
 - Color of the scrollbars and spin boxes does not match the game color.
 - FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht.
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
 - Use QtMEL for Windows (if necessary with Hunter).
+- Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
+- Add option USE_QTAV to use QtAV on Linux as well.
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).

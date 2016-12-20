@@ -13,7 +13,11 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 
 	qApp->setPalette(fairytale::gameColorPalette());
+
+// FIXME Applying the style on Android doubles the font on the initial start.
+#ifndef Q_OS_ANDROID
 	qApp->setStyleSheet(fairytale::gameStyleSheet());
+#endif
 	qApp->setFont(fairytale::gameFont());
 
 	// Create seed for the random

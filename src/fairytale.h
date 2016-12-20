@@ -534,6 +534,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
+		void resizeScreenEvent(int screen);
 
 	private slots:
 		void onVideoAndSoundStateChanged(QMediaPlayer::State state);

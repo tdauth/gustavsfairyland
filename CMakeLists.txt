@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.4.3)
 
 # TODO use Hunter for easier dependency resolving
 #include("cmake/HunterGate.cmake")
 
 #HunterGate(
-#    URL "https://github.com/ruslo/hunter/archive/v0.7.0.tar.gz"
-#    SHA1 "e730118c7ec65126398f8d4f09daf9366791ede0"
+#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
+#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
 #)
 
 #hunter_add_package(Qt)
@@ -34,6 +34,7 @@ endif ()
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
 option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
+option(USE_QTAV "Enable this option to use QtAV for playing video files." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." FALSE)
 
@@ -78,9 +79,12 @@ find_package(Qt5Svg REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
 # Requires QtAV for playing videos
-if (ANDROID)
+if (USE_QTAV)
 	find_package(Qt5OpenGL REQUIRED) # Required by QtAV
-	find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
+
+	if (ANDROID)
+		find_package(Qt5AndroidExtras REQUIRED) # Required by QtAV
+	endif ()
 endif ()
 
 # On Windows recording with the webcam is not supported yet by QtMultimedia. Therefore we need an alternative library.
@@ -219,21 +223,41 @@ QT5_CREATE_TRANSLATION(fairytale_QM_FILES ${fairytale_TRANSLATION_SRCS} ${fairyl
 # Besides that you should use oxygen.qrc to find the icons and add them to oxygen_windows.qrc to keep the executable small.
 QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/oxygen_windows.qrc)
 
-if (ANDROID)
+if (USE_QTAV)
+	if (ANDROID)
+		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib")
+	else ()
+		set(QTAV_FFMPEG_LIB_DIR "/usr/lib64")
+		set(QTAV_LIB_DIR "lib_linux_x86_64")
+	endif ()
+
 	set(QTAV_LIBRARIES
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavcodec.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavfilter.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavformat.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavresample.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libavutil.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libswresample.so"
-		"${CMAKE_SOURCE_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib/libswscale.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libavcodec.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libavfilter.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libavformat.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libavresample.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libavutil.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libswresample.so"
+		"${QTAV_FFMPEG_LIB_DIR}/libswscale.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
 		"${CMAKE_SOURCE_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
 	)
 
-	# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-	add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" "${CMAKE_BUILD_TYPE}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+	if (ANDROID)
+		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
+		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" "${CMAKE_BUILD_TYPE}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+	elseif (UNIX)
+		# Make sure that ffmpeg-devel is installed in /usr/include/ffmpeg.
+		find_path(FFMPEG_INCLUDE_DIR ffmpeg PATHS /usr/include)
+
+		if (NOT FFMPEG_INCLUDE_DIR)
+			message(FATAL_ERROR "Missing /usr/include/ffmpeg.")
+		endif ()
+
+		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforlinux.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+	else ()
+		message(FATAL_ERROR "Other systems are not supported for the option USE_QTAV.")
+	endif ()
 endif ()
 
 add_subdirectory(src)
@@ -245,10 +269,14 @@ if (USE_QTMEL)
 	target_link_libraries(gustavsfairylandlib "${QT_MEL_LIBRARIES}" ${AV_LIBRARIES} ${OpenCV_LIBRARIES} ${ZLIB_LIBRARIES})
 endif ()
 
-if (ANDROID)
+if (USE_QTAV)
 	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})
 	add_dependencies(gustavsfairylandlib GeneratedQtAVLibraries)
-	target_link_libraries(gustavsfairylandlib Qt5::OpenGL Qt5::AndroidExtras ${QTAV_LIBRARIES})
+	target_link_libraries(gustavsfairylandlib Qt5::OpenGL ${QTAV_LIBRARIES})
+
+	if (ANDROID)
+		target_link_libraries(gustavsfairylandlib Qt5::AndroidExtras)
+	endif ()
 endif ()
 
 set(RES_FILES "")
@@ -271,8 +299,12 @@ endif()
 
 target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
 
-if (ANDROID)
-	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES} Qt5::AndroidExtras)
+if (USE_QTAV)
+	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES})
+
+	if (ANDROID)
+		target_link_libraries(gustavsfairyland Qt5::AndroidExtras)
+	endif ()
 
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/")
 	include_directories("${CMAKE_SOURCE_DIR}/qtav/src/QtAV")
@@ -412,7 +444,6 @@ if (ANDROID)
 		DEPENDS
 		${QTAV_LIBRARIES}
 	)
-	# KEYSTORE "${CMAKE_SOURCE_DIR}/mykey.keystore" mykey KEYSTORE_PASSWORD walter
 	add_dependencies(my_app_apk CopyAssets)
 endif ()
 

@@ -1,11 +1,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "config.h"
+
 #include <QtWidgets/QDialog>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtCore/QQueue>
-// On Android videos can be only played in QML.
-#ifdef Q_OS_ANDROID
+// On Android videos can be only played in QML or with QtAV.
+#ifdef USE_QTAV
 #include <QtAV>
 #include <QtAVWidgets>
 #include <OpenGLWidgetRenderer.h>
@@ -115,7 +117,7 @@ class Player
 		int volume() const;
 		bool isMuted() const;
 
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 		QMediaPlayer* mediaPlayer() const;
 #endif
 
@@ -137,11 +139,12 @@ class Player
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
+		virtual void hideEvent(QHideEvent *event) override;
 
 	private slots:
 		void onChangeStateParallelSoundPlayer(QMediaPlayer::State state);
 		void onChangeState(QMediaPlayer::State state);
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 		void onChangeStateAndroidQtAv(QtAV::AVPlayer::State state);
 		void onError(const QtAV::AVError &e);
 #endif
@@ -170,7 +173,7 @@ class Player
 		/// Player for background music.
 		QMediaPlayer *m_parallelSoundsMediaPlayer;
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 		QtAV::AVPlayer *m_player;
 		QtAV::OpenGLWidgetRenderer *m_renderer; // GLWidgetRenderer2
 
@@ -181,7 +184,7 @@ class Player
 #endif
 };
 
-#ifndef Q_OS_ANDROID
+#ifndef USE_QTAV
 inline QMediaPlayer* Player::mediaPlayer() const
 {
 	return this->m_mediaPlayer;
