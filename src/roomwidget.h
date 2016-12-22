@@ -10,6 +10,7 @@
 #include <QSvgRenderer>
 
 #include "fairytale.h"
+#include "config.h"
 
 class GameMode;
 class Door;
@@ -19,7 +20,11 @@ class ClickAnimation;
 class SolutionWidget;
 
 // Use QOpenGLWidget for better performance but there is a bug when resizing the widget with OpenGL. It is painted over the sizes.
+#ifdef USE_QTAV
 typedef QWidget RoomWidgetParent;
+#else
+typedef QWidget RoomWidgetParent;
+#endif
 
 /**
  * \brief A widget which displays a room with four windows from the top.
