@@ -18,8 +18,6 @@ class Clip;
  */
 class FloatingClip : public QWidget
 {
-	Q_OBJECT
-
 	public:
 		FloatingClip(RoomWidget *parent, int width, int speed);
 

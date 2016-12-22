@@ -8,8 +8,6 @@
 
 class GameOverDialog : public QDialog, protected Ui::GameOverDialog
 {
-	Q_OBJECT
-
 	public:
 		GameOverDialog(fairytale *app, QWidget *parent);
 

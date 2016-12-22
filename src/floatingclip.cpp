@@ -311,5 +311,3 @@ void FloatingClip::move(int x, int y)
 	QWidget::move(x, y);
 	//QWidget::move(this->mapFrom(m_roomWidget, QPoint(x, y)));
 }
-
-#include "floatingclip.moc"
