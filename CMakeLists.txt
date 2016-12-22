@@ -258,7 +258,7 @@ if (USE_QTAV)
 
 	if (ANDROID)
 		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-		add_custom_target(QtAV bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+		add_custom_target(QtAV bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_PREFIX_FFMPEG}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	elseif (UNIX)
 		# Make sure that ffmpeg-devel is installed in /usr/include/ffmpeg.
 		find_path(FFMPEG_INCLUDE_DIR ffmpeg PATHS /usr/include)

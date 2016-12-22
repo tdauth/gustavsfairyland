@@ -8,7 +8,8 @@ PROJECT_DIR="$2"
 PROJECT_BIN_DIR="$3"
 QT_DIR="$4"
 ANDROID_PREFIX="$5"
-ANDROID_TARGET="$6"
+ANDROID_PREFIX_FFMPEG="$6"
+ANDROID_TARGET="$7"
 
 export HOME_TAMINO="/home/tamino"
 
@@ -37,6 +38,11 @@ if [ -z "$ANDROID_PREFIX" ] ; then
 	ANDROID_PREFIX="sdk-android-armv7-gcc" # sdk-android-x86
 fi
 
+if [ -z "$ANDROID_PREFIX_FFMPEG" ] ; then
+	echo "Setting ANDROID_PREFIX_FFMPEG automatically"
+	ANDROID_PREFIX_FFMPEG="sdk-android-armv7-gcc" # sdk-android-x86-gcc
+fi
+
 if [ -z "$ANDROID_TARGET" ] ; then
 	echo "Setting ANDROID_TARGET automatically"
 	ANDROID_TARGET="armv7" # x86
@@ -58,7 +64,7 @@ fi
 
 export FFMPEG_VERSION="3.1.5"
 export FFSRC="$PROJECT_BIN_DIR/ffmpeg-$FFMPEG_VERSION" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
-export FFMPEG_PREFIX="$FFMPEG_DIR/$ANDROID_PREFIX"
+export FFMPEG_PREFIX="$FFMPEG_DIR/$ANDROID_PREFIX_FFMPEG"
 
 # Download and extract ffmpeg if it does not exist.
 # TODO checksums? or rather use a local copy
