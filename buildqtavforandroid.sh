@@ -62,11 +62,11 @@ export FFMPEG_PREFIX="$FFMPEG_DIR/$ANDROID_PREFIX"
 
 # Download and extract ffmpeg if it does not exist.
 # TODO checksums? or rather use a local copy
-if [ ! -e "$FFSRC" ] ; then
+if [ ! -d "$FFSRC" ] ; then
 	wget "http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2"
-	wget "http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2.asc"
-	gpg --verify "ffmpeg-$FFMPEG_VERSION.tar.bz2.asc" "ffmpeg-$FFMPEG_VERSION.tar.bz2"
-	tar -xjf "ffmpeg-$FFMPEG_VERSION.tar.bz2"
+	#wget "http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2.asc"
+	#gpg --verify "ffmpeg-$FFMPEG_VERSION.tar.bz2.asc" "ffmpeg-$FFMPEG_VERSION.tar.bz2"
+	tar -xjf "./ffmpeg-$FFMPEG_VERSION.tar.bz2"
 fi
 
 # Overwrite custom Android configuration with the correct NDK path
@@ -87,8 +87,13 @@ git submodule update --init
 #git checkout tags/v1.11.0
 
 # The user.conf file can have user defined values.
-cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/user.conf"
-cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/src/user.conf"
+if [ "$BUILD_TYPE" = "Debug" ] ; then
+	cp -f "$PROJECT_DIR/user.conf.debug" "$QT_AV_DIR/user.conf"
+	cp -f "$PROJECT_DIR/user.conf.debug" "$QT_AV_DIR/src/user.conf"
+else
+	cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/user.conf"
+	cp -f "$PROJECT_DIR/user.conf" "$QT_AV_DIR/src/user.conf"
+fi
 
 export QT_AV_BUILD_DIR="$PROJECT_BIN_DIR/buildqtav"
 
@@ -117,4 +122,5 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
 "$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "$QT_AV_DIR/QtAV.pro"
-make -j4 #  "${BUILD_TYPE,,}" TODO debug target does not exist although in the Makefile!
+make clean
+make -j4

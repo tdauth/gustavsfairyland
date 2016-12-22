@@ -50,5 +50,6 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 
 	# Deinterlaced for Android
 	# http://video.stackexchange.com/questions/17396/how-to-deinterlacing-with-ffmpeg
-	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameAndroid"
+	# Crash with QtAV and aac audio codec: https://github.com/wang-bin/QtAV/issues/138
+	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec vorbis -ac 2 -strict -2 -f mp4 "$compressedNameAndroid"
 done

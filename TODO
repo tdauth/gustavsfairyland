@@ -14,6 +14,8 @@ TODOs 1.3:
 - FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
 - FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
 - Cut all pauses for all clip narrator sounds.
+- Android Crash: https://github.com/wang-bin/QtAV/issues/138 Test another audio codec (Vorbis). Its not about the audio codec (tested). Try to build libQtAV with debug flags and ffmpeg to get the symbols and lines. Building in debug mode works, but androiddeployqt does always strip libraries: https://bugreports.qt.io/browse/QTBUG-57771
+- Use maximum space on Android for the main window (but not more than that).
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).
@@ -114,7 +116,6 @@ Weitere TODOs:
 - Recorder support on Android. QtAV has no webcam recording support nor a widget. QML should work but did not before with the player.
 - Windows: No camera recording support: http://doc.qt.io/qt-5/qtmultimedia-windows.html http://stackoverflow.com/questions/24841760/record-a-video-from-a-webcam-with-qt5
 - Windows maybe OpenCV: http://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
-- Android Crash: https://github.com/wang-bin/QtAV/issues/138
 - Qt5Network and Qt5GL are deployed on Windows. Why? Clean build dir?
 - Extract a video frame if possible as default image.
 - Maybe show the current fairytale at the top in the creative mode.
@@ -128,7 +129,7 @@ Weitere TODOs:
 - FIXED: Seitenverhältnis von Videos sitmmt nach aktueller Konvertierung nicht. compressvideos.sh anpassen. Originales Seitenverhältnis beibehalten.
 - DONE (Ausnahme sind Input-Dialoge oder MessageBoxes): Android: Nur ein Toplevelwindow? Keine überlappenden Fenster?
 - FIXED (keine modalen Dialoge mehr) Android: https://github.com/wang-bin/QtAV/issues/749
-- Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
+- FIXED: Android: Grundlegendes Problem: Keine modalen Dialoge mehr. Alles im Layout des Main Windows!
 - Vor allem im Portraitmodus auf Android wird das Spiel hin und wieder breiter als der Bildschirm!
 - Wenn dabei der Player zu breit wird oder evtl. das Video zu lange geladen wird, bleibt das Video-Widget schwarz.
 - DONE: Wenn modaler Dialog offen ist und ein weiterer modaler Dialog geöffnet wird (Eigenes Märchen - Player) muss das erste Widget verborgen werden.

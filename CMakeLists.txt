@@ -258,7 +258,7 @@ if (USE_QTAV)
 
 	if (ANDROID)
 		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
-		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforandroid.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+		add_custom_target(QtAV bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	elseif (UNIX)
 		# Make sure that ffmpeg-devel is installed in /usr/include/ffmpeg.
 		find_path(FFMPEG_INCLUDE_DIR ffmpeg PATHS /usr/include)
@@ -267,7 +267,7 @@ if (USE_QTAV)
 			message(FATAL_ERROR "Missing /usr/include/ffmpeg.")
 		endif ()
 
-		add_custom_command(OUTPUT ${QTAV_LIBRARIES} COMMAND bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/buildqtavforlinux.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
+		add_custom_target(QtAV bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	else ()
 		message(FATAL_ERROR "Other systems are not supported for the option USE_QTAV.")
 	endif ()
@@ -283,8 +283,7 @@ if (USE_QTMEL)
 endif ()
 
 if (USE_QTAV)
-	add_custom_target(GeneratedQtAVLibraries DEPENDS ${QTAV_LIBRARIES})
-	add_dependencies(gustavsfairylandlib GeneratedQtAVLibraries)
+	add_dependencies(gustavsfairylandlib QtAV)
 	target_link_libraries(gustavsfairylandlib Qt5::OpenGL ${QTAV_LIBRARIES})
 
 	if (ANDROID)

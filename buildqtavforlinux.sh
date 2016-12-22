@@ -46,7 +46,14 @@ if [ ! -e "$FFSRC" ] ; then
 fi
 
 cd "./ffmpeg-$FFMPEG_VERSION"
-./configure
+
+# Build FFMPEG with debug mode: https://lists.libav.org/pipermail/ffmpeg-user/2009-January/018741.html
+if [ "$BUILD_TYPE" = "Debug" ] ; then
+	./configure --enable-shared --disable-static --disable-optimizations --disable-mmx --disable-stripping
+else
+	./configure
+fi
+
 make -j4
 
 
