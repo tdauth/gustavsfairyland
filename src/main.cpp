@@ -5,12 +5,23 @@
 #include <QApplication>
 #include <QTime>
 
+#include "config.h"
+
+#ifdef USE_QTAV
+#include <QtAV/QtAV.h>
+#endif
+
 int main(int argc, char** argv)
 {
 	// Support better scaling on Android.
 	//QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
 	QApplication app(argc, argv);
+
+#ifdef USE_QTAV
+	qputenv("QTAV_FFMPEG_LOG", "debug");
+	QtAV::setLogLevel(QtAV::LogAll);
+#endif
 
 	qApp->setPalette(fairytale::gameColorPalette());
 
