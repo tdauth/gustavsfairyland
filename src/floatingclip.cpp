@@ -9,9 +9,11 @@
 #include "door.h"
 #include "speed.h"
 
-FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QWidget(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_pause(false)
+FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : FloatingClipParent(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_pause(false)
 {
 	setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
+	// Make itself transparent
+	this->setAttribute(Qt::WA_TranslucentBackground, true);
 	move(0, 0);
 	resize(QSize(width, width));
 	raise();
@@ -19,6 +21,8 @@ FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : QWidget(p
 
 void FloatingClip::paint(QPainter *painter)
 {
+	raise();
+
 	const int x1 = this->x();
 	const int y1 = this->y();
 
@@ -31,13 +35,6 @@ void FloatingClip::paint(QPainter *painter)
 	const int heightDifference = (imagePaper.height() - image.height()) / 2;
 	const int widthDifference = (imagePaper.width() - image.width()) / 2;
 	painter->drawImage(x1 + widthDifference, y1 + heightDifference, image);
-
-	raise();
-}
-
-void FloatingClip::paintEvent(QPaintEvent *event)
-{
-	QWidget::paintEvent(event);
 }
 
 void FloatingClip::setWidth(int width)

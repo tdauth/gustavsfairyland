@@ -4,19 +4,27 @@
 #include <QObject>
 #include <QPoint>
 #include <QWidget>
+#include <QOpenGLWidget>
 
 #include "speed.h"
 #include "fairytale.h"
+#include "config.h"
 
 class RoomWidget;
 class Clip;
+
+#ifdef USE_QTAV
+typedef QWidget FloatingClipParent;
+#else
+typedef QWidget FloatingClipParent;
+#endif
 
 /**
  * \brief The floating clip which has to be catched in time. Otherwise the game is lost.
  *
  * The floating clip moves around in the room widget (\ref RoomWidget) depending on the current wind direction.
  */
-class FloatingClip : public QWidget
+class FloatingClip : public FloatingClipParent
 {
 	public:
 		FloatingClip(RoomWidget *parent, int width, int speed);
@@ -62,7 +70,6 @@ class FloatingClip : public QWidget
 		bool isPaused() const;
 
 	protected:
-		virtual void paintEvent(QPaintEvent *event) override;
 		virtual void mousePressEvent(QMouseEvent *event) override;
 		virtual void mouseReleaseEvent(QMouseEvent *event) override;
 		virtual void dragEnterEvent(QDragEnterEvent *event) override;
