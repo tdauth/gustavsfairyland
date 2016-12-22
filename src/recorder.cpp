@@ -41,24 +41,13 @@ void Recorder::recordVideo()
 
 void Recorder::captureImage()
 {
-	//m_camera->setCaptureMode(QCamera::CaptureStillImage);
-	//m_camera->start();
-	//on half pressed shutter button
+	// on half pressed shutter button
 	m_camera->searchAndLock();
 
-	//m_imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-	/* TODO when setting manually set everything
-	QImageEncoderSettings encoderSettings = m_imageCapture->encodingSettings();
-	encoderSettings.setQuality(QMultimedia::VeryHighQuality);
-	//encoderSettings.setCodec("jpeg");
-	qDebug() << "Resolution" << encoderSettings.resolution();
-	qDebug() << "Codec" << encoderSettings.codec();
-	m_imageCapture->setEncodingSettings(encoderSettings);
-	*/
 	const int id = m_imageCapture->capture(outputFile());
 	qDebug() << "Recording image to " << outputFile() << "with id" << id;
 
-	//on shutter button released
+	// on shutter button released
 	m_camera->unlock();
 	m_finshedRecording = true;
 }
