@@ -14,7 +14,16 @@ TODOs 1.3:
 - FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
 - FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
 - Cut all pauses for all clip narrator sounds.
-- Android Crash: https://github.com/wang-bin/QtAV/issues/138 Test another audio codec (Vorbis). Its not about the audio codec (tested). Try to build libQtAV with debug flags and ffmpeg to get the symbols and lines. Building in debug mode works, but androiddeployqt does always strip libraries: https://bugreports.qt.io/browse/QTBUG-57771
+- Android Crash: https://github.com/wang-bin/QtAV/issues/138 Test another audio codec (Vorbis). Its not about the audio codec (tested). Try to build libQtAV with debug flags and ffmpeg to get the symbols and lines. Building in debug mode works, but androiddeployqt does always strip libraries: https://bugreports.qt.io/browse/QTBUG-57771 The following method causes the crash:
+	void AudioResampler::setOutAudioFormat(const AudioFormat& format)
+	{
+	DPTR_D(AudioResampler); // Works
+	 if (d.out_format == format) // Crash
+	     return;
+	 d.out_format = format;
+	 prepare();
+	}
+Search for the bug by commenting line by line out.
 - Use maximum space on Android for the main window (but not more than that).
 
 TODOS 1.2:
