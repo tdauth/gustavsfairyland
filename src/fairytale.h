@@ -158,7 +158,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * The default music volume in percentage from 0 to 100.
 		 */
-		static const int defaultMusicVolume = 50;
+		static const int defaultMusicVolume = 25;
 		static const int defaultClickSoundsVolume = 100;
 		static const int defaultVideoSoundVolume = 100;
 
@@ -268,6 +268,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * This has to be called after unlocking a bonus clip. Either after it has been played or directly afterwards.
 		 */
 		void afterUnlockingBonusClip();
+
+		bool askForPlayingFairytale();
+		void afterAskingForPlayingFairytale();
 
 		bool isMediaPlayerPaused() const;
 		bool isMediaPlayerPlaying() const;
@@ -727,6 +730,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * This data is used as a reference when scaling them in \ref updateSize().
 		 */
 		static WidgetSizes m_widgetSizes;
+
+		/**
+		 * All widgets which have currently been executed by \ref execInCentralWidgetIfNecessaryEx().
+		 */
+		QList<QWidget*> m_centralWidgets;
 };
 
 inline bool fairytale::isMediaPlayerPaused() const

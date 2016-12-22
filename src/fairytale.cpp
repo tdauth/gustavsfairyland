@@ -953,12 +953,20 @@ void fairytale::showWidgetsInMainWindow(Widgets widgets)
 
 int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda)
 {
+	if (this->m_centralWidgets.contains(dialog))
+	{
+		qDebug() << "Warning:" << dialog->objectName() << "has been executed in central widget for a second time. Recursion error?";
+
+		return QDialog::Rejected;
+	}
+
 	// TODO disable and enable all menu bar actions as well as long as the widget is shown
 	const Widgets hiddenWidgets = hideWidgetsInMainWindow();
 
 	const bool wasModal = dialog->isModal();
 	dialog->setModal(false);
 	this->centralWidget()->layout()->addWidget(dialog);
+	this->m_centralWidgets.push_back(dialog);
 	/*
 	 * Place the dialog widget at the center of the central widget.
 	 * This does also align widgets properly which are too small.
@@ -1003,6 +1011,7 @@ int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<v
 	const int result = m_centralDialogResult;
 	m_centralDialogResult = -1;
 
+	this->m_centralWidgets.removeAll(dialog);
 	this->centralWidget()->layout()->removeWidget(dialog);
 	dialog->setModal(wasModal);
 
@@ -1522,6 +1531,35 @@ void fairytale::afterUnlockingBonusClip()
 		this->highScores()->addHighScore(highScore);
 	}
 
+	if (!askForPlayingFairytale())
+	{
+		this->afterAskingForPlayingFairytale();
+	}
+}
+
+bool fairytale::askForPlayingFairytale()
+{
+	// Only show if the fairytale is not empty!
+	if (!this->m_completeSolution.isEmpty())
+	{
+		if (QMessageBox::question(this, tr("Play video?"), tr("Do you want to see the video of your fairytale now?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+		{
+			this->playFinalVideo();
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void fairytale::afterAskingForPlayingFairytale()
+{
+	if (this->m_centralWidgets.contains(this->customFairytaleDialog()))
+	{
+		return;
+	}
+
 	// Show the custom fairytale dialog which allows the winner to watch his created fairytale.
 	execInCentralWidgetIfNecessary(this->customFairytaleDialog());
 
@@ -1935,6 +1973,8 @@ void fairytale::onFinishVideoAndSounds()
 				// The dialog has to disappear, after the player watched all final clips.
 				this->m_player->hide();
 				// Dont hide the custom fairytale. The player should have the change to save or rewatch it.
+
+				this->afterAskingForPlayingFairytale();
 			}
 		}
 		// Play the next clip of a custom fairytale

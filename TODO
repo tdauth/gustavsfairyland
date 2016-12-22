@@ -5,11 +5,15 @@ TODOs 1.3:
 - valgrind memory leaks.
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen. Siehe https://github.com/ruslo/hunter/issues/622#issuecomment-268078415
 - Color of the scrollbars and spin boxes does not match the game color.
-- FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht.
+- FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht, da der vertikale Scroll Bar nicht erscheint.
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
 - Use QtMEL for Windows (if necessary with Hunter).
 - Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
 - Add option USE_QTAV to use QtAV on Linux as well.
+- FIXED: Music is too loud (especially during bonus clips and videos): Reduce its default volume to 25 %.
+- FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
+- FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
+- Cut all pauses for all clip narrator sounds.
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).
