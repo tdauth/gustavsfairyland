@@ -117,9 +117,18 @@ void FairytalesDialog::update()
 {
 	clearFairytales();
 
-	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().begin(); iterator != m_app->customFairytales().end(); ++iterator)
+	QStringList customFairytaleKeys = m_app->customFairytales().keys();
+
+	qDebug() << "custom fairytale keys:" << customFairytaleKeys;
+
+	/*
+	 * Always sort the same way by keys.
+	 */
+	customFairytaleKeys.sort();
+
+	for (const QString customFairytaleKey : customFairytaleKeys)
 	{
-		CustomFairytale *customFairytale = iterator.value();
+		CustomFairytale *customFairytale = m_app->customFairytales()[customFairytaleKey];
 
 		QGroupBox *widget = new QGroupBox(this);
 		QHBoxLayout *widgetLayout = new QHBoxLayout();

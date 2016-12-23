@@ -74,11 +74,28 @@ void BonusClipsDialog::update()
 {
 	clearButtons();
 
+	/*
+	 * Always sort the bonus clips the same way.
+	 */
+	QList<fairytale::ClipKey> clipKeys = m_app->bonusClipUnlocks().toList();
+
+	qDebug() << "Clip keys:" << clipKeys;
+
+	std::sort(clipKeys.begin(), clipKeys.end(), [](const fairytale::ClipKey &a, const fairytale::ClipKey &b)
+		{
+			if (a.first == b.first)
+			{
+				return QString::compare(a.second, b.second) < 0;
+			}
+
+			return QString::compare(a.first, b.first) < 0;
+		});
+
 	int i = 0;
 
-	for (fairytale::BonusClipUnlocks::const_iterator iterator = m_app->bonusClipUnlocks().begin(); iterator != m_app->bonusClipUnlocks().end(); ++iterator)
+	for (const fairytale::ClipKey &clipKey : clipKeys)
 	{
-		BonusClip *bonusClip = m_app->getBonusClipByKey(*iterator);
+		BonusClip *bonusClip = m_app->getBonusClipByKey(clipKey);
 
 		if (bonusClip != nullptr)
 		{
@@ -90,13 +107,13 @@ void BonusClipsDialog::update()
 			QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
 			layout->insertWidget(i, pushButton);
 			connect(pushButton, &QPushButton::clicked, this, &BonusClipsDialog::playBonusClip);
-			m_buttons.insert(pushButton, new Button(*iterator, pushButton, this));
+			m_buttons.insert(pushButton, new Button(clipKey, pushButton, this));
 
 			++i;
 		}
 		else
 		{
-			qDebug() << "Bonus clip" << *iterator << "could not be found!";
+			qDebug() << "Bonus clip" << clipKey << "could not be found!";
 		}
 	}
 }
