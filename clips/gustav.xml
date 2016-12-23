@@ -378,7 +378,7 @@
 		<video>./steampunk/bonus/steampunk.mkv</video>
 		<description>
                         <en>the dancing plague doctor</en>
-			<de>der tanzende Pestarzt</de>
+			<de>der tanzende Pestdoktor</de>
 		</description>
 	</bonusClip>
 
@@ -389,6 +389,123 @@
 		<description>
 			<en>the conjuring fairy</en>
 			<de>die zaubernde Fee</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="developer">
+		<image>./mahler/mahler.jpg</image>
+		<video>./developer/developer.avi</video>
+		<description>
+			<en>the developer</en>
+			<de>der Entwickler</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="mahlerletter">
+		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/bonus/brief.mkv</video>
+		<description>
+			<en>Mahler and the letter</en>
+			<de>Mahler und der Brief</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="mahlermusic">
+		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/bonus/musik.mkv</video>
+		<description>
+			<en>Mahler and the music</en>
+			<de>Mahler und die Musik</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="mahleropera">
+		<image>./mahler/mahler.jpg</image>
+		<video>./mahler/bonus/oper.mkv</video>
+		<description>
+			<en>Mahler and the opera</en>
+			<de>Mahler und die Oper</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="grandpajott1763">
+		<image>./opajott/opajott.jpg</image>
+		<video>./opajott/bonus/1763.mkv</video>
+		<description>
+                        <en>Grandpa Jott 1763</en>
+			<de>Opa Jott 1763</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="grandpajottfuckinghot">
+		<image>./opajott/opajott.jpg</image>
+		<video>./opajott/bonus/fuckinghot.mkv</video>
+		<description>
+                        <en>Grandpa Jott fucking hot</en>
+			<de>Opa Jott fucking hot</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="grandpajottancestors">
+		<image>./opajott/opajott.jpg</image>
+		<video>./opajott/bonus/zeugtahnen.mkv</video>
+		<description>
+                        <en>Grandpa Jott on Ancestors</en>
+			<de>Opa Jott über Ahnen</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="princessrejection">
+		<image>./princess/princess.jpg</image>
+		<video>./princess/abfuhr.mkv</video>
+		<description>
+                        <en>Rejection by the princess</en>
+			<de>Abfuhr von der Prinzessin</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="princesshair">
+		<image>./princess/princess.jpg</image>
+		<video>./princess/haare.mkv</video>
+		<description>
+                        <en>The hair of the princess</en>
+			<de>Die Haare der Prinzessin</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="princesswind">
+		<image>./princess/princess.jpg</image>
+		<video>./princess/wind.mkv</video>
+		<description>
+                        <en>The wind and the princess</en>
+			<de>Der Wind und die Prinzessin</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="steampunkscare">
+		<image>./steampunk/steampunk.jpg</image>
+		<video>./steampunk/bonus/erschrecken.mkv</video>
+		<description>
+                        <en>the scary plague doctor</en>
+			<de>der unheimliche Pestdoktor</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="steampunkpipes">
+		<image>./steampunk/steampunk.jpg</image>
+		<video>./steampunk/bonus/rohre.mkv</video>
+		<description>
+                        <en>the plague doctor's pipes</en>
+			<de>die Rohre des Pestdoktors</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="vampiresucksblood">
+		<image>./vampire/vampire.jpg</image>
+		<video>./vampire/bonus.mkv</video>
+		<description>
+                        <en>the vampire sucks blood</en>
+			<de>der Vampir saugt Blut</de>
 		</description>
 	</bonusClip>
 </clips>

@@ -11,6 +11,7 @@ TODOs 1.3:
 - Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
 - Add option USE_QTAV to use QtAV on Linux as well.
 - FIXED: Music is too loud (especially during bonus clips and videos): Reduce its default volume to 25 %.
+- Disable music during videos completely.
 - FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
 - FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
 - Cut all pauses for all clip narrator sounds.

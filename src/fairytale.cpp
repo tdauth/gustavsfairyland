@@ -288,7 +288,7 @@ qreal fairytale::screenHeightRatio()
 
 void fairytale::updateSize(QWidget *widget)
 {
-#ifdef Q_OS_ANDROID
+#if 1 == 0 //def Q_OS_ANDROID
 	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
 	if (dynamic_cast<QPushButton*>(widget) != nullptr)
 	{
@@ -489,6 +489,16 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->m_player->hide();
 
 	setupUi(this);
+
+#ifdef DEBUG
+	QPushButton *unlockAllPushButton = new QPushButton(tr("Unlock all bonus clips"), this);
+	connect(unlockAllPushButton, &QPushButton::clicked, this, &fairytale::unlockAllBonusClips);
+	menuButtonsWidget->layout()->addWidget(unlockAllPushButton);
+
+	QPushButton *lockAllPushButton = new QPushButton(tr("Lock all bonus clips"), this);
+	connect(lockAllPushButton, &QPushButton::clicked, this, &fairytale::lockAllBonusClips);
+	menuButtonsWidget->layout()->addWidget(lockAllPushButton);
+#endif
 
 	this->versionLabel->setText(tr("Version: %1").arg(gustavsfairyland_VERSION));
 
@@ -2621,9 +2631,11 @@ void fairytale::changePrimaryScreen(QScreen *screen)
 void fairytale::changeAvailableGeometry(const QRect &geometry)
 {
 	qDebug() << "available geometry" << geometry;
+	/*
 	const QSize size = QSize(geometry.width(), geometry.height());
 	this->setMaximumSize(size); // prevent widgets from expanding too wide!
 	this->resize(QSize(geometry.width(), geometry.height()));
+	*/
 }
 
 void fairytale::finishCentralDialog(int result)
@@ -2631,6 +2643,22 @@ void fairytale::finishCentralDialog(int result)
 	m_centralDialogResult = result;
 	// Make sure the result cannot be changed anymore.
 	disconnect(dynamic_cast<QDialog*>(QObject::sender()), &QDialog::finished, this, &fairytale::finishCentralDialog);
+}
+
+void fairytale::unlockAllBonusClips()
+{
+	for (ClipPackages::const_iterator iterator = this->m_clipPackages.begin(); iterator != this->m_clipPackages.end(); ++iterator)
+	{
+		for (ClipPackage::BonusClips::const_iterator bonusClipIterator = iterator.value()->bonusClips().begin(); bonusClipIterator != iterator.value()->bonusClips().end(); ++bonusClipIterator)
+		{
+			this->m_bonusClipUnlocks.insert(ClipKey(iterator.key(), bonusClipIterator.key()));
+		}
+	}
+}
+
+void fairytale::lockAllBonusClips()
+{
+	this->m_bonusClipUnlocks.clear();
 }
 
 void fairytale::addCustomFairytale(CustomFairytale *customFairytale)

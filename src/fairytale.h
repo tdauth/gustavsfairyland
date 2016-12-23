@@ -552,6 +552,9 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		void finishCentralDialog(int result);
 
+		void unlockAllBonusClips();
+		void lockAllBonusClips();
+
 	private:
 		void updatePixmap();
 		/**

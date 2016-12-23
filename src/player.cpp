@@ -273,6 +273,11 @@ void Player::checkForFinish()
 		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
 #endif
 
+		if (!this->m_musicWasMutedBefore)
+		{
+			this->m_app->setMusicMuted(false);
+		}
+
 		emit stateChangedVideoAndSounds(QMediaPlayer::StoppedState);
 		emit finishVideoAndSounds();
 	}
@@ -506,6 +511,10 @@ void Player::playParallelSound(fairytale *app, const QUrl &url)
 
 void Player::play()
 {
+	this->m_musicWasMutedBefore = this->m_app->isMusicMuted();
+	this->m_app->setMusicMuted(true);
+	// TODO wait for muted
+
 #ifdef USE_QTAV
 	const QFileInfo fileInfo(this->m_player->file());
 
