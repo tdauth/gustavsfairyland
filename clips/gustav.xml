@@ -405,8 +405,8 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/brief.mkv</video>
 		<description>
-			<en>Mahler and the letter</en>
-			<de>Mahler und der Brief</de>
+			<en>Gustav Mahler and the letter</en>
+			<de>Gustav Mahler und der Brief</de>
 		</description>
 	</bonusClip>
 
@@ -414,8 +414,8 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/musik.mkv</video>
 		<description>
-			<en>Mahler and the music</en>
-			<de>Mahler und die Musik</de>
+			<en>Gustav Mahler and the music</en>
+			<de>Gustav Mahler und die Musik</de>
 		</description>
 	</bonusClip>
 
@@ -423,8 +423,8 @@
 		<image>./mahler/mahler.jpg</image>
 		<video>./mahler/bonus/oper.mkv</video>
 		<description>
-			<en>Mahler and the opera</en>
-			<de>Mahler und die Oper</de>
+			<en>Gustav Mahler and the opera</en>
+			<de>Gustav Mahler und die Oper</de>
 		</description>
 	</bonusClip>
 
