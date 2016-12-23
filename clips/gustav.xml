@@ -508,4 +508,22 @@
 			<de>der Vampir saugt Blut</de>
 		</description>
 	</bonusClip>
+
+	<bonusClip id="fairyfuckoff">
+		<image>./fairy/fairy.jpg</image>
+		<video>./fairy/fuckoff.mkv</video>
+		<description>
+                        <en>the Fairy is practicing conjuring</en>
+			<de>die Fee übt das Zaubern</de>
+		</description>
+	</bonusClip>
+
+	<bonusClip id="fairybanana">
+		<image>./fairy/fairy.jpg</image>
+		<video>./fairy/banane.mkv</video>
+		<description>
+                        <en>the Fairy creates a magical banana</en>
+			<de>die Fee erschafft eine magische Banane</de>
+		</description>
+	</bonusClip>
 </clips>
