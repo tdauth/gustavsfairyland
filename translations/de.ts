@@ -175,7 +175,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clipeditor.h" line="588"/>
         <source>Show &amp;More</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mehr anzeigen</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="589"/>
@@ -205,12 +205,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clipeditor.h" line="604"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="605"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/clipeditor.cpp" line="29"/>
@@ -327,7 +327,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackagedialog.h" line="216"/>
         <source>Show More</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehr anzeigen</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -384,7 +384,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="192"/>
         <source>Bonus Clips</source>
-        <translation type="unfinished">Bonus-Clips</translation>
+        <translation>Bonus-Clips</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="193"/>
@@ -434,12 +434,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="202"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="203"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../build/ui_clippackageeditor.h" line="190"/>
@@ -949,7 +949,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_mainwindow.h" line="375"/>
         <source>Show &amp;More</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mehr anzeigen</translation>
     </message>
     <message>
         <location filename="../build/ui_mainwindow.h" line="376"/>
@@ -1143,12 +1143,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_settings.h" line="351"/>
         <source>Show So&amp;und Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>So&amp;und-Einstellungen anzeigen</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="366"/>
         <source>Show Cli&amp;p Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cli&amp;p-Einstellungen anzeigen</translation>
     </message>
     <message>
         <location filename="../build/ui_settings.h" line="373"/>
