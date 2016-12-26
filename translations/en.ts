@@ -544,12 +544,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="130"/>
+        <location filename="../src/fairytalesdialog.cpp" line="139"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="136"/>
+        <location filename="../src/fairytalesdialog.cpp" line="145"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -857,17 +857,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="75"/>
+        <location filename="../src/player.cpp" line="80"/>
         <source>SPACE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="79"/>
+        <location filename="../src/player.cpp" line="84"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="82"/>
+        <location filename="../src/player.cpp" line="87"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1101,8 +1101,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="398"/>
         <location filename="../src/fairytale.cpp" line="399"/>
-        <location filename="../src/fairytale.cpp" line="1618"/>
-        <location filename="../src/fairytale.cpp" line="1619"/>
+        <location filename="../src/fairytale.cpp" line="1628"/>
+        <location filename="../src/fairytale.cpp" line="1629"/>
         <source>Pause Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1112,174 +1112,184 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="493"/>
-        <location filename="../src/fairytale.cpp" line="2213"/>
+        <location filename="../src/fairytale.cpp" line="494"/>
+        <source>Unlock all bonus clips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="498"/>
+        <source>Lock all bonus clips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fairytale.cpp" line="503"/>
+        <location filename="../src/fairytale.cpp" line="2237"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="526"/>
+        <location filename="../src/fairytale.cpp" line="536"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="530"/>
+        <location filename="../src/fairytale.cpp" line="540"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="620"/>
+        <location filename="../src/fairytale.cpp" line="630"/>
         <source>Use default clip packages?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="620"/>
+        <location filename="../src/fairytale.cpp" line="630"/>
         <source>Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1200"/>
+        <location filename="../src/fairytale.cpp" line="1210"/>
         <source>Added new clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1200"/>
+        <location filename="../src/fairytale.cpp" line="1210"/>
         <source>A new clip has been added and is available in the game now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1207"/>
+        <location filename="../src/fairytale.cpp" line="1217"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1207"/>
+        <location filename="../src/fairytale.cpp" line="1217"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1213"/>
+        <location filename="../src/fairytale.cpp" line="1223"/>
         <source>Missing Custom Clip Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1213"/>
+        <location filename="../src/fairytale.cpp" line="1223"/>
         <source>Custom Clip Dir is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1218"/>
+        <location filename="../src/fairytale.cpp" line="1228"/>
         <source>Missing Custom Clip Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1218"/>
+        <location filename="../src/fairytale.cpp" line="1228"/>
         <source>Custom Clip Package is missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1261"/>
+        <location filename="../src/fairytale.cpp" line="1271"/>
         <source>Unable to start the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1261"/>
+        <location filename="../src/fairytale.cpp" line="1271"/>
         <source>Unable to start the game since clips are missing. Try to restore the default settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1392"/>
-        <location filename="../src/fairytale.cpp" line="1434"/>
+        <location filename="../src/fairytale.cpp" line="1402"/>
+        <location filename="../src/fairytale.cpp" line="1444"/>
         <source>Outro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1503"/>
+        <location filename="../src/fairytale.cpp" line="1513"/>
         <source>Unlocked Bonus Clip!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1503"/>
+        <location filename="../src/fairytale.cpp" line="1513"/>
         <source>Unlocked Bonus clip &quot;%1&quot;! Do you want to see it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1513"/>
+        <location filename="../src/fairytale.cpp" line="1523"/>
         <source>Unlocked all Bonus Clips already!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1513"/>
+        <location filename="../src/fairytale.cpp" line="1523"/>
         <source>You have already unlocked all available bonus clips!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1545"/>
+        <location filename="../src/fairytale.cpp" line="1555"/>
         <source>Play video?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1545"/>
+        <location filename="../src/fairytale.cpp" line="1555"/>
         <source>Do you want to see the video of your fairytale now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1593"/>
-        <location filename="../src/fairytale.cpp" line="1594"/>
+        <location filename="../src/fairytale.cpp" line="1603"/>
+        <location filename="../src/fairytale.cpp" line="1604"/>
         <source>Continue Game (P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1745"/>
+        <location filename="../src/fairytale.cpp" line="1762"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1779"/>
-        <location filename="../src/fairytale.cpp" line="1831"/>
+        <location filename="../src/fairytale.cpp" line="1801"/>
+        <location filename="../src/fairytale.cpp" line="1853"/>
         <source>Invalid gamemode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1779"/>
-        <location filename="../src/fairytale.cpp" line="1831"/>
+        <location filename="../src/fairytale.cpp" line="1801"/>
+        <location filename="../src/fairytale.cpp" line="1853"/>
         <source>The gamemode has invalid behaviour.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2103"/>
+        <location filename="../src/fairytale.cpp" line="2127"/>
         <source>%1 Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2127"/>
-        <location filename="../src/fairytale.cpp" line="2161"/>
+        <location filename="../src/fairytale.cpp" line="2151"/>
+        <location filename="../src/fairytale.cpp" line="2185"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2131"/>
-        <location filename="../src/fairytale.cpp" line="2165"/>
+        <location filename="../src/fairytale.cpp" line="2155"/>
+        <location filename="../src/fairytale.cpp" line="2189"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2138"/>
+        <location filename="../src/fairytale.cpp" line="2162"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2142"/>
+        <location filename="../src/fairytale.cpp" line="2166"/>
         <source>and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2149"/>
+        <location filename="../src/fairytale.cpp" line="2173"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2153"/>
+        <location filename="../src/fairytale.cpp" line="2177"/>
         <source>%1 and %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1288,50 +1298,50 @@ p, li { white-space: pre-wrap; }
     <name>gustav::Recorder</name>
     <message>
         <location filename="../src/recorder.cpp" line="39"/>
-        <location filename="../src/recorder.cpp" line="75"/>
+        <location filename="../src/recorder.cpp" line="64"/>
         <source>Pause Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="83"/>
-        <location filename="../src/recorder.cpp" line="91"/>
+        <location filename="../src/recorder.cpp" line="72"/>
+        <location filename="../src/recorder.cpp" line="80"/>
         <source>Continue Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="105"/>
-        <location filename="../src/recorder.cpp" line="414"/>
+        <location filename="../src/recorder.cpp" line="94"/>
+        <location filename="../src/recorder.cpp" line="403"/>
         <source>Record Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="113"/>
+        <location filename="../src/recorder.cpp" line="102"/>
         <source>Record Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="127"/>
+        <location filename="../src/recorder.cpp" line="116"/>
         <source>Camera Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="127"/>
+        <location filename="../src/recorder.cpp" line="116"/>
         <source>Capture mode %1 is not supported on this system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="189"/>
-        <location filename="../src/recorder.cpp" line="235"/>
+        <location filename="../src/recorder.cpp" line="178"/>
+        <location filename="../src/recorder.cpp" line="224"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="405"/>
+        <location filename="../src/recorder.cpp" line="394"/>
         <source>Make Photo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recorder.cpp" line="633"/>
+        <location filename="../src/recorder.cpp" line="622"/>
         <source>Encoder error code %1: %2. Image grabber error code %3: %4.</source>
         <translation type="unfinished"></translation>
     </message>
