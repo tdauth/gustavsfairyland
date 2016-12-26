@@ -10,9 +10,9 @@ TODOs 1.3:
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
 - Use QtMEL for Windows (if necessary with Hunter). It should allow recording videos on Windows.
 - DONE: Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
-- Add option USE_QTAV to use QtAV on Linux as well.
+- Add option USE_QTAV to use QtAV on Linux as well. Linking errors at the moment.
 - FIXED: Music is too loud (especially during bonus clips and videos): Reduce its default volume to 25 %.
-- Disable music during videos completely.
+- Disable music during videos completely. Since it is asynchronous it is not guaranteed that it is muted.
 - FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
 - FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
 - Cut all pauses for all clip narrator sounds.
@@ -27,6 +27,9 @@ TODOs 1.3:
 	}
 Search for the bug by commenting line by line out.
 - Use maximum space on Android for the main window (but not more than that).
+- DONE: Add new Bonus Clips.
+- DONE: Make all OK and Cancel buttons use icons.
+- DONE: Rename "Advanced" to "Show more".
 
 TODOS 1.2:
 - FIXED: Ubuntu-Installation klappt nicht (Ubuntu LTS 14.04).

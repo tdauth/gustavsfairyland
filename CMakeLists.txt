@@ -40,7 +40,7 @@ option(USE_ANDROID_JAVA_PLAYER "Enable this option to use a Java-based video pla
 option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." FALSE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
-set(gustavsfairyland_VERSION_MINOR "2")
+set(gustavsfairyland_VERSION_MINOR "3")
 set(gustavsfairyland_VERSION_PATCH "0")
 set(gustavsfairyland_VERSION "${gustavsfairyland_VERSION_MAJOR}.${gustavsfairyland_VERSION_MINOR}.${gustavsfairyland_VERSION_PATCH}")
 
