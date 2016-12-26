@@ -1,5 +1,6 @@
 TODOs 1.3:
-- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be shown anymore).
+- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore).
+- DONE: Fix "Skip All" at intro.
 - English Qt translations are not loaded on Linux with installed RPM.
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal.
 - valgrind memory leaks.
@@ -7,8 +8,8 @@ TODOs 1.3:
 - Color of the scrollbars and spin boxes does not match the game color.
 - FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht, da der vertikale Scroll Bar nicht erscheint.
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
-- Use QtMEL for Windows (if necessary with Hunter).
-- Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
+- Use QtMEL for Windows (if necessary with Hunter). It should allow recording videos on Windows.
+- DONE: Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
 - Add option USE_QTAV to use QtAV on Linux as well.
 - FIXED: Music is too loud (especially during bonus clips and videos): Reduce its default volume to 25 %.
 - Disable music during videos completely.

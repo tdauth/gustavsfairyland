@@ -127,5 +127,6 @@ echo "Running qmake: \"$QT_PATH/bin/qmake\""
 # If the error "Error: libavresample or libswresample is required" appears, use this:
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
+# "CONFIG+=debug" is required for the debugging output.
 "$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "CONFIG+=debug" "$QT_AV_DIR/QtAV.pro"
 make -j4

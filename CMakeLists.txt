@@ -240,7 +240,7 @@ if (USE_QTAV)
 	if (ANDROID)
 		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib")
 	else ()
-		set(QTAV_FFMPEG_LIB_DIR "/usr/lib64")
+		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/ffmpeginstall/lib")
 		set(QTAV_LIB_DIR "lib_linux_x86_64")
 	endif ()
 
@@ -260,12 +260,23 @@ if (USE_QTAV)
 		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
 		add_custom_target(QtAV bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${ANDROID_PREFIX}" "${ANDROID_PREFIX_FFMPEG}" "${ANDROID_TARGET}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	elseif (UNIX)
-		# Make sure that ffmpeg-devel is installed in /usr/include/ffmpeg.
-		find_path(FFMPEG_INCLUDE_DIR ffmpeg PATHS /usr/include)
+		# Make sure that the pulseaudio library is available. Otherwise there won't be an audio backend for QtAV.
+		find_library(PULSELIBRARY pulse PATHS /usr/lib64)
 
-		if (NOT FFMPEG_INCLUDE_DIR)
-			message(FATAL_ERROR "Missing /usr/include/ffmpeg.")
+		if (NOT PULSELIBRARY)
+			message(FATAL_ERROR "Missing pulse library.")
 		endif ()
+
+		find_library(OPENALLIBRARY openal PATHS /usr/lib64)
+
+		if (NOT OPENALLIBRARY)
+			message(FATAL_ERROR "Missing openal library.")
+		endif ()
+
+		set(CMAKE_INSTALL_RPATH "${QTAV_FFMPEG_LIB_DIR}" "${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}")
+		set(CMAKE_SKIP_BUILD_RPATH FALSE)
+		set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
+		set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 
 		add_custom_target(QtAV bash -x ./buildqtavforlinux.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	else ()
@@ -446,6 +457,19 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
+	set(JAVA_HOME /usr/java/default)
+	set(Java_JAVA_EXECUTABLE "${JAVA_HOME}/bin/java")
+	set(Java_JAVAC_EXECUTABLE "${JAVA_HOME}/bin/javac")
+	set(Java_JAVADOC_EXECUTABLE "${JAVA_HOME}/bin/javadoc")
+	set(Java_JAR_EXECUTABLE "${JAVA_HOME}/bin/jar")
+	set(Java_JAVAH_EXECUTABLE "${JAVA_HOME}/bin/javah")
+	find_package(Java REQUIRED)
+	include(UseJava)
+
+	set(CMAKE_JAVA_COMPILE_FLAGS -source 7 -target 7)
+	set(CMAKE_JAVA_INCLUDE_PATH "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar")
+	add_jar(PlayerJar SOURCES src/android/Player.java OUTPUT_NAME Player INCLUDE_JARS "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar" OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/libs")
+
 	# Copy all clips and xml files into a subfolder in assets
 	#add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
 	# Use the following command to generate a signing key
@@ -456,7 +480,7 @@ if (ANDROID)
 		DEPENDS
 		${QTAV_LIBRARIES}
 	)
-	add_dependencies(my_app_apk CopyAssets)
+	add_dependencies(my_app_apk CopyAssets PlayerJar QtAV gustavsfairyland)
 endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
