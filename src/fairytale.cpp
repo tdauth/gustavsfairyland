@@ -1721,53 +1721,65 @@ void fairytale::nextTurn()
 
 				if (!clipKey.isEmpty())
 				{
-					Clip *solution = this->getClipByKey(clipKey);
-
+					/*
+					 * Make sure the start person is set.
+					 */
 					if (this->m_turns == 0)
 					{
 						this->m_startPerson = clipKey;
 					}
 
-					Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
-					const QString description = this->description(startPersonClip, this->m_turns, solution);
-
-					this->descriptionLabel->clear();
-					this->timeLabel->clear();
-
-					qDebug() << "Queue the sounds.";
-
-					// play the sound for the inital character again
-					if (solution->isPerson() && turns() > 1)
-					{
-						PlayerSoundData data;
-						data.narratorSoundUrl = startPersonClip->narratorUrl();
-						data.description = this->description(startPersonClip, 0, startPersonClip);
-						data.imageUrl = startPersonClip->imageUrl();
-						data.prefix = true;
-						this->queuePlayerSound(data);
-					}
-
-					// play the sound "and"
-					if (solution->isPerson() && turns() > 0)
-					{
-						PlayerSoundData data;
-						data.narratorSoundUrl = this->narratorSoundUrl();
-						data.description = tr("and");
-						data.imageUrl = solution->imageUrl();
-						data.prefix = true;
-						this->queuePlayerSound(data);
-					}
-
 					/*
-					* Play the narrator sound for the current solution as hint.
-					*/
-					// Make sure that the current click sound ends before playing the narrator sound.
-					PlayerSoundData data;
-					data.narratorSoundUrl = solution->narratorUrl();
-					data.description = this->description(startPersonClip, 0, solution); // use always the stand alone description
-					data.imageUrl = solution->imageUrl();
-					data.prefix = false;
-					this->queuePlayerSound(data);
+					 * If everything has been skipped from the beginning intro, don't show any images with playing sounds.
+					 */
+					if (!this->m_player->skippedAll())
+					{
+						Clip *startPersonClip = this->getClipByKey(this->m_startPerson);
+						Clip *solution = this->getClipByKey(clipKey);
+						const QString description = this->description(startPersonClip, this->m_turns, solution);
+
+						this->descriptionLabel->clear();
+						this->timeLabel->clear();
+
+						qDebug() << "Queue the sounds.";
+
+						// play the sound for the inital character again
+						if (solution->isPerson() && turns() > 1)
+						{
+							PlayerSoundData data;
+							data.narratorSoundUrl = startPersonClip->narratorUrl();
+							data.description = this->description(startPersonClip, 0, startPersonClip);
+							data.imageUrl = startPersonClip->imageUrl();
+							data.prefix = true;
+							this->queuePlayerSound(data);
+						}
+
+						// play the sound "and"
+						if (solution->isPerson() && turns() > 0)
+						{
+							PlayerSoundData data;
+							data.narratorSoundUrl = this->narratorSoundUrl();
+							data.description = tr("and");
+							data.imageUrl = solution->imageUrl();
+							data.prefix = true;
+							this->queuePlayerSound(data);
+						}
+
+						/*
+						* Play the narrator sound for the current solution as hint.
+						*/
+						// Make sure that the current click sound ends before playing the narrator sound.
+						PlayerSoundData data;
+						data.narratorSoundUrl = solution->narratorUrl();
+						data.description = this->description(startPersonClip, 0, solution); // use always the stand alone description
+						data.imageUrl = solution->imageUrl();
+						data.prefix = false;
+						this->queuePlayerSound(data);
+					}
+					else
+					{
+						this->afterNarrator();
+					}
 				}
 				// Some game modes dont have a single solution every turn.
 				else
@@ -1956,6 +1968,8 @@ void fairytale::onFinishVideoAndSounds()
 				// played only the word "and" or the first person sound then we always expect another sound
 				else
 				{
+					qDebug() << "Deque next sound, skipped: " << this->m_player->skipped();
+
 					const PlayerSoundData data = m_playerSounds.dequeue();
 					this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
 				}

@@ -181,9 +181,9 @@ class Player
 #else
 		QVideoWidget *m_videoWidget;
 		QMediaPlayer *m_mediaPlayer;
+#endif
 
 		bool m_musicWasMutedBefore = false;
-#endif
 };
 
 #ifndef USE_QTAV
