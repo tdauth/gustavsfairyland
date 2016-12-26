@@ -19,6 +19,8 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 
 #ifdef USE_QTAV
+	qputenv("QTAV_LOG", "all");
+	qputenv("QTAV_LOG_LEVEL", "all");
 	qputenv("QTAV_FFMPEG_LOG", "debug");
 	QtAV::setLogLevel(QtAV::LogAll);
 #endif
