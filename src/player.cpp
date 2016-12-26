@@ -1,6 +1,11 @@
 #include <QtGui>
 #include <QMultimedia>
 
+#if defined(Q_OS_ANDROID) && defined(USE_ANDROID_JAVA_PLAYER)
+#include <QAndroidJniObject>
+#include <QtAndroid>
+#endif
+
 #include "player.h"
 #include "fairytale.h"
 #include "iconlabel.h"
@@ -364,7 +369,26 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_mediaPlayer->setMedia(resolvedUrl);
 #endif
 
+#if defined(Q_OS_ANDROID) && defined(USE_ANDROID_JAVA_PLAYER)
+	qDebug() << "Calling Java method";
+
+	if (QAndroidJniObject::isClassAvailable("gustavsfairyland/Player"))
+	{
+		qDebug() << "Class is available.";
+
+		QAndroidJniObject player;
+		player = QAndroidJniObject("gustavsfairyland/Player",
+			"(Landroid/app/Activity;)V",
+			QtAndroid::androidActivity().object<jobject>()
+		);
+	}
+	else
+	{
+		qDebug() << "Class is not available.";
+	}
+#else
 	this->play();
+#endif
 
 #ifdef USE_QTAV
 	this->m_renderer->widget()->show();

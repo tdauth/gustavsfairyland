@@ -1,5 +1,6 @@
 #cmakedefine USE_QTAV
 #cmakedefine USE_QTMEL
+#cmakedefine USE_ANDROID_JAVA_PLAYER
 #cmakedefine DEBUG
 #define gustavsfairyland_VERSION "${gustavsfairyland_VERSION}"
 #define gustavsfairyland_VERSION_MAJOR "${gustavsfairyland_VERSION_MAJOR}"

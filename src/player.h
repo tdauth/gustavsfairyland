@@ -25,6 +25,8 @@ class IconLabel;
  *
  * \note There can only be played one video at a time but you can play parallel sounds to the video on another track.
  * \note On Android the backend is not QMultimedia and QMultimediaWidgets since the widgets are not supported on Android. On Android QtAV is used instead.
+ *
+ * The backend depends on the options set during the compile time of the game.
  */
 class Player
 #ifndef Q_OS_ANDROID

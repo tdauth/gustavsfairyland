@@ -36,6 +36,7 @@ option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos a
 option(USE_QTAV "Enable this option to use QtAV for playing video files." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 option(USE_VLCQT "Enable this option to use VLC-Qt. Another library to play videos." FALSE)
+option(USE_ANDROID_JAVA_PLAYER "Enable this option to use a Java-based video player on Android." FALSE)
 option(USE_DOXYGEN "Enable this option to generate an API documentation using Doxygen if it is available." FALSE)
 
 set(gustavsfairyland_VERSION_MAJOR "1")
@@ -457,18 +458,20 @@ if (WIN32)
 endif ()
 
 if (ANDROID)
-	set(JAVA_HOME /usr/java/default)
-	set(Java_JAVA_EXECUTABLE "${JAVA_HOME}/bin/java")
-	set(Java_JAVAC_EXECUTABLE "${JAVA_HOME}/bin/javac")
-	set(Java_JAVADOC_EXECUTABLE "${JAVA_HOME}/bin/javadoc")
-	set(Java_JAR_EXECUTABLE "${JAVA_HOME}/bin/jar")
-	set(Java_JAVAH_EXECUTABLE "${JAVA_HOME}/bin/javah")
-	find_package(Java REQUIRED)
-	include(UseJava)
+	if (USE_ANDROID_JAVA_PLAYER)
+		set(JAVA_HOME /usr/java/default)
+		set(Java_JAVA_EXECUTABLE "${JAVA_HOME}/bin/java")
+		set(Java_JAVAC_EXECUTABLE "${JAVA_HOME}/bin/javac")
+		set(Java_JAVADOC_EXECUTABLE "${JAVA_HOME}/bin/javadoc")
+		set(Java_JAR_EXECUTABLE "${JAVA_HOME}/bin/jar")
+		set(Java_JAVAH_EXECUTABLE "${JAVA_HOME}/bin/javah")
+		find_package(Java REQUIRED)
+		include(UseJava)
 
-	set(CMAKE_JAVA_COMPILE_FLAGS -source 7 -target 7)
-	set(CMAKE_JAVA_INCLUDE_PATH "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar")
-	add_jar(PlayerJar SOURCES src/android/Player.java OUTPUT_NAME Player INCLUDE_JARS "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar" OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/libs")
+		set(CMAKE_JAVA_COMPILE_FLAGS -source 7 -target 7)
+		set(CMAKE_JAVA_INCLUDE_PATH "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar")
+		add_jar(PlayerJar SOURCES src/android/Player.java OUTPUT_NAME Player INCLUDE_JARS "${QT_ANDROID_SDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/android.jar" OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/libs")
+	endif ()
 
 	# Copy all clips and xml files into a subfolder in assets
 	#add_custom_target(CopyAssets ALL COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/clips ${CMAKE_BINARY_DIR}/assets/clips)
@@ -480,7 +483,11 @@ if (ANDROID)
 		DEPENDS
 		${QTAV_LIBRARIES}
 	)
-	add_dependencies(my_app_apk CopyAssets PlayerJar QtAV gustavsfairyland)
+	add_dependencies(my_app_apk CopyAssets QtAV gustavsfairyland)
+
+	if (USE_ANDROID_JAVA_PLAYER)
+		add_dependencies(my_app_apk PlayerJar)
+	endif ()
 endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
