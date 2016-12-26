@@ -5,6 +5,7 @@
 #include "clipeditor.h"
 #include "clippackage.h"
 #include "clip.h"
+#include "bonusclip.h"
 
 #include "clippackageeditor.moc"
 #include "fairytale.h"
@@ -36,6 +37,7 @@ void ClipPackageEditor::loadCustomClipsPackage()
 
 	this->m_clipPackage->clear();
 	treeWidget->clear();
+	bonusClipTreeWidget->clear();
 
 	checkForValidFields();
 
@@ -80,6 +82,7 @@ void ClipPackageEditor::editClip()
 			this->clipEditor()->assignToClip(clip);
 		}
 	}
+	// TODO allow editting bonus clips
 }
 
 void ClipPackageEditor::removeClip()
@@ -118,6 +121,7 @@ void ClipPackageEditor::loadPackage()
 	{
 		this->m_clipPackage->clear();
 		treeWidget->clear();
+		bonusClipTreeWidget->clear();
 
 		checkForValidFields();
 
@@ -209,8 +213,17 @@ void ClipPackageEditor::closePackage()
 	}
 }
 
-void ClipPackageEditor::changedCurrentItem(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void ClipPackageEditor::changedCurrentClipItem(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+	this->bonusClipTreeWidget->selectionModel()->clearSelection();
+	const bool hasSelectedClip = (current != nullptr);
+	editClipPushButton->setEnabled(hasSelectedClip);
+	removeClipPushButton->setEnabled(hasSelectedClip);
+}
+
+void ClipPackageEditor::changedCurrentBonusClipItem(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+	this->treeWidget->selectionModel()->clearSelection();
 	const bool hasSelectedClip = (current != nullptr);
 	editClipPushButton->setEnabled(hasSelectedClip);
 	removeClipPushButton->setEnabled(hasSelectedClip);
@@ -231,10 +244,11 @@ ClipPackageEditor::ClipPackageEditor(fairytale *app, QWidget* parent) : QDialog(
 	connect(this->savePushButton, &QPushButton::clicked, this, &ClipPackageEditor::save);
 	connect(this->closePackagePushButton, &QPushButton::clicked, this, &ClipPackageEditor::closePackage);
 
-	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipPackageEditor::accept);
-	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipPackageEditor::reject);
+	connect(this->okPushButton, &QPushButton::clicked, this, &ClipPackageEditor::accept);
+	connect(this->cancelPushButton, &QPushButton::clicked, this, &ClipPackageEditor::reject);
 
-	connect(this->treeWidget, &QTreeWidget::currentItemChanged, this, &ClipPackageEditor::changedCurrentItem);
+	connect(this->treeWidget, &QTreeWidget::currentItemChanged, this, &ClipPackageEditor::changedCurrentClipItem);
+	connect(this->bonusClipTreeWidget, &QTreeWidget::currentItemChanged, this, &ClipPackageEditor::changedCurrentBonusClipItem);
 
 	QSettings settings("fairytale");
 	m_dir = settings.value("clippackageeditordir").toString();
@@ -281,6 +295,18 @@ void ClipPackageEditor::loadClipPackage()
 		item->setText(0, clip->description());
 		item->setData(0, Qt::UserRole, clip->id());
 		treeWidget->addTopLevelItem(item);
+	}
+
+	for (ClipPackage::BonusClips::const_iterator iterator = this->m_clipPackage->bonusClips().begin(); iterator != this->m_clipPackage->bonusClips().end(); ++iterator)
+	{
+		const BonusClip *clip = iterator.value();
+
+		QTreeWidgetItem *item = new QTreeWidgetItem(bonusClipTreeWidget);
+		const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
+		item->setIcon(0, QIcon(imageUrl.toLocalFile()));
+		item->setText(0, clip->description());
+		item->setData(0, Qt::UserRole, clip->id());
+		bonusClipTreeWidget->addTopLevelItem(item);
 	}
 
 	checkForValidFields();

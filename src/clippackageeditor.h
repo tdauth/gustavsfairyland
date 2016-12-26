@@ -35,7 +35,8 @@ class ClipPackageEditor : public QDialog, protected Ui::ClipPackageEditor
 		void closePackage();
 
 	private slots:
-		void changedCurrentItem(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+		void changedCurrentClipItem(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+		void changedCurrentBonusClipItem(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 	public:
 		ClipPackageEditor(fairytale *app, QWidget *parent);

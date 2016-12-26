@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
+    <width>401</width>
     <height>573</height>
    </rect>
   </property>
@@ -111,7 +111,7 @@
          </font>
         </property>
         <property name="title">
-         <string>Advanced</string>
+         <string>Show More</string>
         </property>
         <property name="checkable">
          <bool>true</bool>

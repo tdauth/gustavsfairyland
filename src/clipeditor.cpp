@@ -494,7 +494,7 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 {
 	setupUi(this);
 
-	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false); // enable when all fields are valid
+	this->okPushButton->setEnabled(false); // enable when all fields are valid
 
 	connect(this->clipIdLineEdit, &QLineEdit::textChanged, this, &ClipEditor::clipIdChanged);
 	connect(this->isAPersonCheckBox, &QCheckBox::toggled, this, &ClipEditor::setIsPerson);
@@ -516,8 +516,8 @@ ClipEditor::ClipEditor(fairytale *app, QWidget *parent) : QDialog(parent), m_app
 
 	connect(this->descriptionLineEdit, &QLineEdit::textChanged, this, &ClipEditor::updateAllDescriptions);
 
-	connect(this->buttonBox, &QDialogButtonBox::accepted, this, &ClipEditor::accept);
-	connect(this->buttonBox, &QDialogButtonBox::rejected, this, &ClipEditor::reject);
+	connect(this->okPushButton, &QPushButton::clicked, this, &ClipEditor::accept);
+	connect(this->cancelPushButton, &QPushButton::clicked, this, &ClipEditor::reject);
 	connect(this, &QDialog::finished, this, &ClipEditor::onFinish);
 
 	connect(this->m_recorder->imageCapture(), &QCameraImageCapture::imageSaved, this, &ClipEditor::imageSaved);
@@ -576,7 +576,7 @@ bool ClipEditor::checkForValidFields()
 	const bool result = !this->m_clip->id().isEmpty() && !this->m_clip->descriptions().isEmpty() && !this->m_clip->imageUrl().isEmpty() && !this->m_clip->videoUrl().isEmpty() && !this->m_clip->narratorUrls().isEmpty();
 
 	// TODO make sure the ID is unique
-	this->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(result);
+	okPushButton->setEnabled(result);
 
 	showImageButton->setEnabled(!this->m_clip->imageUrl().isEmpty());
 	playVideoPushButton->setEnabled(!this->m_clip->videoUrl().isEmpty());

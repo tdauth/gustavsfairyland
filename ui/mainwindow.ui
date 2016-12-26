@@ -40,9 +40,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>487</width>
-         <height>733</height>
+         <y>-364</y>
+         <width>491</width>
+         <height>722</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -204,7 +204,7 @@
               </font>
              </property>
              <property name="title">
-              <string>Settings</string>
+              <string>Show &amp;More</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
