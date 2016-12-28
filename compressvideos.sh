@@ -48,6 +48,10 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	# Use qscale, otherwise the quality is shit!
 	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -qscale:v 6 -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
 
+	# Android should have really small videos for a better performance.
+	RESOLUTION="480x270"
+	BITRATE_LIMIT="500k"
+
 	# Deinterlaced for Android
 	# http://video.stackexchange.com/questions/17396/how-to-deinterlacing-with-ffmpeg
 	# Crash with QtAV and aac audio codec: https://github.com/wang-bin/QtAV/issues/138
