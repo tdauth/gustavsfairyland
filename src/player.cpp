@@ -274,8 +274,7 @@ void Player::checkForFinish()
 		qDebug() << "Emitting signal";
 
 #ifdef Q_OS_ANDROID
-		m_app->centralWidget()->layout()->removeWidget(this);
-		m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
+		this->hideCentral();
 #endif
 
 		if (!this->m_musicWasMutedBefore)
@@ -284,7 +283,6 @@ void Player::checkForFinish()
 		}
 
 		emit stateChangedVideoAndSounds(QMediaPlayer::StoppedState);
-		emit finishVideoAndSounds();
 	}
 }
 
@@ -293,7 +291,6 @@ void Player::checkForStart()
 	if (this->m_parallelSoundsMediaPlayer->state() == QMediaPlayer::PlayingState || this->state() == QMediaPlayer::PlayingState)
 	{
 		emit stateChangedVideoAndSounds(QMediaPlayer::PlayingState);
-		emit startVideoOrSounds();
 	}
 }
 
@@ -310,11 +307,34 @@ void Player::checkForPause()
 		)
 	{
 		emit stateChangedVideoAndSounds(QMediaPlayer::PausedState);
-		emit pauseVideoAndSounds();
 	}
 }
 
-void Player::playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame, bool multipleVideos)
+#ifdef Q_OS_ANDROID
+void Player::showCentral()
+{
+	// Make sure all hidden widgets have been shown before.
+	if (!this->m_hiddenWidgets.isEmpty())
+	{
+		this->hideCentral();
+	}
+
+	// one top level window on Android for OpenGL
+	this->m_hiddenWidgets = m_app->hideWidgetsInMainWindow();
+	this->m_hiddenWidgets.removeAll(this); // never reshow the player
+	m_app->centralWidget()->layout()->addWidget(this);
+	this->show();
+}
+
+void Player::hideCentral()
+{
+	m_app->centralWidget()->layout()->removeWidget(this);
+	m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
+	this->m_hiddenWidgets.clear();
+}
+#endif
+
+void Player::playVideo(const QUrl &url, const QString &description, bool duringGame, bool multipleVideos)
 {
 	this->m_isPrefix = false;
 	this->m_skipped = false;
@@ -324,7 +344,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 #ifndef USE_QTAV
 	this->m_videoWidget->show();
 
-	if (app->isFullScreen())
+	if (m_app->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -333,10 +353,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 		this->show();
 	}
 #else
-	// one top level window on Android for OpenGL
-	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
-	app->centralWidget()->layout()->addWidget(this);
-	this->show();
+	this->showCentral();
 #endif
 
 	this->skipPushButton->setEnabled(true);
@@ -354,7 +371,7 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 	}
 
 	this->descriptionLabel->setText(description);
-	const QUrl resolvedUrl = app->resolveClipUrl(url);
+	const QUrl resolvedUrl = m_app->resolveClipUrl(url);
 
 #ifdef USE_QTAV
 	qDebug() << "Playing video:" << resolvedUrl.toString();
@@ -395,22 +412,22 @@ void Player::playVideo(fairytale *app, const QUrl &url, const QString &descripti
 #endif
 }
 
-void Player::playBonusVideo(fairytale *app, const QUrl &url, const QString &description)
+void Player::playBonusVideo(const QUrl &url, const QString &description)
 {
 	// Bonus videos are not played during a game.
-	this->playVideo(app, url, description, false, false);
+	this->playVideo(url, description, false, false);
 }
 
-void Player::playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
+void Player::playSound(const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
 {
-	const QUrl resolvedImageUrl = app->resolveClipUrl(imageUrl);
+	const QUrl resolvedImageUrl = m_app->resolveClipUrl(imageUrl);
 #ifndef Q_OS_ANDROID
 	const QString imageFile = resolvedImageUrl.toLocalFile();
 #else
 	const QString imageFile = resolvedImageUrl.url();
 #endif
 	qDebug() << "Image file:" << imageFile;
-	const QUrl soundUrl = app->resolveClipUrl(url);
+	const QUrl soundUrl = m_app->resolveClipUrl(url);
 
 	this->m_isPrefix = prefix;
 	this->m_skipped = false;
@@ -424,7 +441,7 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->m_iconLabel->setFile(imageFile);
 
 #ifndef Q_OS_ANDROID
-	if (app->isFullScreen())
+	if (m_app->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -433,10 +450,7 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 		this->show();
 	}
 #else
-	// one top level window on Android for OpenGL
-	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
-	app->centralWidget()->layout()->addWidget(this);
-	this->show();
+	this->showCentral();
 #endif
 
 	this->skipPushButton->setEnabled(true);
@@ -472,9 +486,9 @@ void Player::playSound(fairytale *app, const QUrl &url, const QString &descripti
 	this->play();
 }
 
-void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &description)
+void Player::showImage(const QUrl &imageUrl, const QString &description)
 {
-	const QUrl resolvedImageUrl = app->resolveClipUrl(imageUrl);
+	const QUrl resolvedImageUrl = m_app->resolveClipUrl(imageUrl);
 #ifndef Q_OS_ANDROID
 	const QString imageFile = resolvedImageUrl.toLocalFile();
 #else
@@ -494,7 +508,7 @@ void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &desc
 	this->m_iconLabel->setFile(imageFile);
 
 #ifndef Q_OS_ANDROID
-	if (app->isFullScreen())
+	if (m_app->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -504,8 +518,8 @@ void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &desc
 	}
 #else
 	// one top level window on Android for OpenGL
-	this->m_hiddenWidgets = app->hideWidgetsInMainWindow();
-	app->centralWidget()->layout()->addWidget(this);
+	this->m_hiddenWidgets = m_app->hideWidgetsInMainWindow();
+	m_app->centralWidget()->layout()->addWidget(this);
 	this->show();
 #endif
 
@@ -518,9 +532,9 @@ void Player::showImage(fairytale *app, const QUrl &imageUrl, const QString &desc
 	this->descriptionLabel->setText(description);
 }
 
-void Player::playParallelSound(fairytale *app, const QUrl &url)
+void Player::playParallelSound(const QUrl &url)
 {
-	const QUrl soundUrl = app->resolveClipUrl(url);
+	const QUrl soundUrl = m_app->resolveClipUrl(url);
 
 	if (this->m_parallelSoundsMediaPlayer->state() != QMediaPlayer::StoppedState)
 	{

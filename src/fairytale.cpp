@@ -422,7 +422,7 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	if (!this->defaultClipPackage()->intro().isEmpty() && this->gameMode()->playIntro())
 	{
 		this->m_playIntro = true;
-		this->m_player->playVideo(this, this->defaultClipPackage()->intro(), tr("Intro"));
+		this->m_player->playVideo(this->defaultClipPackage()->intro(), tr("Intro"));
 	}
 	else
 	{
@@ -809,17 +809,17 @@ void fairytale::playFinalClip(int index)
 	// play the sound for the inital character again
 	if (solutionClip->isPerson() && index > 1)
 	{
-		this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
+		this->m_player->playParallelSound(this->resolveClipUrl(startPersonClip->narratorUrl()));
 	}
 
 	// play the sound "and"
 	if (solutionClip->isPerson() && index > 0)
 	{
-		this->m_player->playParallelSound(this, this->narratorSoundUrl());
+		this->m_player->playParallelSound(this->narratorSoundUrl());
 	}
 
-	this->m_player->playParallelSound(this, this->resolveClipUrl(solutionClip->narratorUrl()));
-	this->m_player->playVideo(this, solutionClip->videoUrl(), this->description(startPersonClip, index, solutionClip));
+	this->m_player->playParallelSound(this->resolveClipUrl(solutionClip->narratorUrl()));
+	this->m_player->playVideo(solutionClip->videoUrl(), this->description(startPersonClip, index, solutionClip));
 }
 
 void fairytale::playFinalVideo()
@@ -876,17 +876,17 @@ void fairytale::playCustomFairytaleClip(int index)
 				// play the sound for the inital character again
 				if (solution->isPerson() && index > 1)
 				{
-					this->m_player->playParallelSound(this, this->resolveClipUrl(startPersonClip->narratorUrl()));
+					this->m_player->playParallelSound(this->resolveClipUrl(startPersonClip->narratorUrl()));
 				}
 
 				// play the sound "and"
 				if (solution->isPerson() && index > 0)
 				{
-					this->m_player->playParallelSound(this, this->narratorSoundUrl());
+					this->m_player->playParallelSound(this->narratorSoundUrl());
 				}
 
-				this->m_player->playParallelSound(this, this->resolveClipUrl(solution->narratorUrl()));
-				this->m_player->playVideo(this, solution->videoUrl(), this->description(startPersonClip, index, solution), false);
+				this->m_player->playParallelSound(this->resolveClipUrl(solution->narratorUrl()));
+				this->m_player->playVideo(solution->videoUrl(), this->description(startPersonClip, index, solution), false);
 			}
 		}
 	}
@@ -915,6 +915,8 @@ void fairytale::playCustomFairytale(CustomFairytale *customFairytale)
 
 fairytale::Widgets fairytale::hideWidgetsInMainWindow()
 {
+	qDebug() << "Hide widgets in main window";
+
 	// TODO make a more generic way to store all shown widgets and hide them and show them afterwards
 	QStack<QWidget*> widgets;
 	widgets.push(this->centralWidget());
@@ -923,14 +925,13 @@ fairytale::Widgets fairytale::hideWidgetsInMainWindow()
 	while (!widgets.isEmpty())
 	{
 		QWidget *widget = widgets.pop();
-		qDebug() << "Checking widget" << widget;
 
 		if (widget->isVisible())
 		{
 			// Do never hide the central widget itself.
 			if (widget != this->centralWidget())
 			{
-				qDebug() << "Hiding widget " << widget->objectName();
+				qDebug() << "Hide widget " << widget->objectName();
 				hiddenWidgets.push_back(widget);
 				widget->hide();
 			}
@@ -955,8 +956,11 @@ fairytale::Widgets fairytale::hideWidgetsInMainWindow()
 
 void fairytale::showWidgetsInMainWindow(Widgets widgets)
 {
+	qDebug() << "Show widgets in main window";
+
 	foreach (QWidget *widget, widgets)
 	{
+		qDebug() << "Show widget" << widget->objectName();
 		widget->show();
 	}
 }
@@ -1399,7 +1403,7 @@ void fairytale::gameOver()
 	if (!outroUrl.isEmpty() && this->gameMode()->playOutro())
 	{
 		this->m_playOutroLose = true;
-		this->m_player->playVideo(this, outroUrl, tr("Outro"));
+		this->m_player->playVideo(outroUrl, tr("Outro"));
 	}
 	else
 	{
@@ -1441,7 +1445,7 @@ void fairytale::win()
 	if (!outroUrl.isEmpty() && this->gameMode()->playOutro())
 	{
 		this->m_playOutroWin = true;
-		this->m_player->playVideo(this, outroUrl, tr("Outro"));
+		this->m_player->playVideo(outroUrl, tr("Outro"));
 	}
 	else
 	{
@@ -1954,7 +1958,7 @@ void fairytale::onFinishVideoAndSounds()
 				// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
 				if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
 				{
-					qDebug() << "After narrator stuff";
+					qDebug() << "After narrator stuff, stop and hide player";
 
 					this->m_player->stop();
 					this->m_player->hide(); // hide the player, otherwise one cannot play the game
@@ -1971,7 +1975,7 @@ void fairytale::onFinishVideoAndSounds()
 					qDebug() << "Deque next sound, skipped: " << this->m_player->skipped();
 
 					const PlayerSoundData data = m_playerSounds.dequeue();
-					this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+					this->m_player->playSound(data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
 				}
 			}
 		}
@@ -2220,7 +2224,7 @@ void fairytale::queuePlayerSound(const PlayerSoundData &data)
 	}
 	else
 	{
-		this->m_player->playSound(this, data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+		this->m_player->playSound(data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
 	}
 }
 
@@ -2445,7 +2449,7 @@ void fairytale::playBonusClip(const fairytale::ClipKey &clipKey, bool duringGame
 	{
 		this->m_playingBonusClip = true;
 		this->m_playingBonusClipDuringGame = duringGame;
-		this->m_player->playBonusVideo(this, bonusClip->videoUrl(), bonusClip->description());
+		this->m_player->playBonusVideo(bonusClip->videoUrl(), bonusClip->description());
 	}
 	else
 	{

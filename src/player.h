@@ -40,19 +40,6 @@ class Player
 
 	signals:
 		/**
-		 * This signal is emitted when the video/sound and the parallel sounds have finished both.
-		 */
-		void finishVideoAndSounds();
-		/**
-		 * This signal is emitted when the video/sound OR the parallel sound is started.
-		 */
-		void startVideoOrSounds();
-		/**
-		 * This signal is emitted when the video/sound and the parallel sounds are being paused or one of them is paused and the other is not used.
-		 */
-		void pauseVideoAndSounds();
-
-		/**
 		 * This signal is emitted when the state of the video/sound player changes (not of the parallel sounds player).
 		 */
 		void stateChanged(QMediaPlayer::State state);
@@ -63,16 +50,16 @@ class Player
 		void stateChangedVideoAndSounds(QMediaPlayer::State state);
 
 	public slots:
-		void playVideo(fairytale *app, const QUrl &url, const QString &description, bool duringGame = true, bool multipleVideos = true);
-		void playBonusVideo(fairytale *app, const QUrl &url, const QString &description);
-		void playSound(fairytale *app, const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame = true);
-		void showImage(fairytale *app, const QUrl &imageUrl, const QString &description);
+		void playVideo(const QUrl &url, const QString &description, bool duringGame = true, bool multipleVideos = true);
+		void playBonusVideo(const QUrl &url, const QString &description);
+		void playSound(const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame = true);
+		void showImage(const QUrl &imageUrl, const QString &description);
 
 		/**
 		  * Plays a parallel sound which is mixed with the current output and which is waited for as well.
 		  * If there is already played a parallel sound this one is queued.
 		  */
-		void playParallelSound(fairytale *app, const QUrl &url);
+		void playParallelSound(const QUrl &url);
 
 		/**
 		 * Starts playing the current video or sound.
@@ -158,6 +145,10 @@ class Player
 		void checkForFinish();
 		void checkForStart();
 		void checkForPause();
+#ifdef Q_OS_ANDROID
+		void showCentral();
+		void hideCentral();
+#endif
 
 		fairytale *m_app;
 

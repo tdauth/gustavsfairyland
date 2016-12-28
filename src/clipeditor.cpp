@@ -63,7 +63,7 @@ int ClipEditor::captureImage()
 
 void ClipEditor::showImage()
 {
-	m_player->showImage(m_app, m_clip->imageUrl(), m_clip->description());
+	m_player->showImage(m_clip->imageUrl(), m_clip->description());
 }
 
 void ClipEditor::imageSaved(int id, const QString &fileName)
@@ -135,7 +135,7 @@ int ClipEditor::recordVideo()
 
 void ClipEditor::playVideo()
 {
-	m_player->playVideo(m_app, m_clip->videoUrl(), m_clip->description(), false, false);
+	m_player->playVideo(m_clip->videoUrl(), m_clip->description(), false, false);
 }
 
 void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
@@ -405,13 +405,13 @@ void ClipEditor::playNarratingSound()
 		QListWidgetItem *item = narratingSoundsListWidget->selectedItems().front();
 		const QString language = item->data(Qt::UserRole).toString();
 
-		m_player->playSound(m_app, m_clip->narratorUrls()[language], m_clip->description(), QUrl(), false, false);
+		m_player->playSound(m_clip->narratorUrls()[language], m_clip->description(), QUrl(), false, false);
 	}
 }
 
 void ClipEditor::playNarratingSoundSimple()
 {
-	m_player->playSound(m_app, m_clip->narratorUrl(), m_clip->description(), QUrl(), false, false);
+	m_player->playSound(m_clip->narratorUrl(), m_clip->description(), QUrl(), false, false);
 }
 
 void ClipEditor::removeNarratingSound()
