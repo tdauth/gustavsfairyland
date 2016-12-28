@@ -145,7 +145,7 @@ class Player
 		void checkForFinish();
 		void checkForStart();
 		void checkForPause();
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 		void showCentral();
 		void hideCentral();
 #endif

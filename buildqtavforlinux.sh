@@ -71,10 +71,6 @@ git submodule update --init
 
 export QT_AV_BUILD_DIR="$PROJECT_BIN_DIR/buildqtav"
 
-# The user.conf file can have user defined values.
-cp -f "$PROJECT_DIR/userlinux.conf" "$QT_AV_BUILD_DIR/user.conf"
-cp -f "$PROJECT_DIR/userlinux.conf" "$QT_AV_BUILD_DIR/src/user.conf"
-
 # Always clean the build directory to avoid old stuff.
 if [ ! -d "$QT_AV_BUILD_DIR" ]; then
 	#rm -rf ./buildqtav
@@ -100,7 +96,16 @@ echo "Running qmake: \"$(which qmake)\""
 # https://github.com/wang-bin/QtAV/issues/744
 # Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
 # "CONFIG+=debug" is required for the debugging output.
-qmake -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "CONFIG+=debug" "CONFIG += static_ffmpeg static_openal" "$QT_AV_DIR/QtAV.pro"
+CONFIG_DEBUG=""
+
+if [ "$BUILD_TYPE" = "Debug" ] ; then
+	CONFIG_DEBUG="CONFIG+=debug"
+else
+	CONFIG_DEBUG="CONFIG+=release"
+fi
+
+qmake -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "$CONFIG_DEBUG" "CONFIG += config_avutil config_avformat config_avcodec config_swscale config_swresample no_config_tests" "CONFIG += config_openal config_pulse config_avdevice static_ffmpeg static_openal" "$QT_AV_DIR/QtAV.pro"
+
 make -j4 #  "${BUILD_TYPE,,}" TODO debug target does not exist although in the Makefile!
 
 #mkdir ./examples

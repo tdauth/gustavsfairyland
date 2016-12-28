@@ -310,7 +310,7 @@ void Player::checkForPause()
 	}
 }
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QTAV
 void Player::showCentral()
 {
 	// Make sure all hidden widgets have been shown before.
