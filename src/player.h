@@ -102,6 +102,8 @@ class Player
 		Player(QWidget *parent, fairytale *app);
 		virtual ~Player();
 
+		fairytale* app() const;
+
 		QMediaPlayer::State state() const;
 		int volume() const;
 		bool isMuted() const;
@@ -178,6 +180,11 @@ class Player
 
 		bool m_musicWasMutedBefore = false;
 };
+
+inline fairytale* Player::app() const
+{
+	return this->m_app;
+}
 
 #ifndef USE_QTAV
 inline QMediaPlayer* Player::mediaPlayer() const

@@ -5,17 +5,18 @@
 
 #include "ui_wondialog.h"
 #include "fairytale.h"
+#include "translatedwidget.h"
 
-class WonDialog : public QDialog, protected Ui::WonDialog
+class WonDialog : public TranslatedWidget, protected Ui::WonDialog
 {
 	public:
 		WonDialog(fairytale *app, QWidget *parent);
 
-	protected:
-		virtual void changeEvent(QEvent *event) override;
+		virtual void retranslateUi(QWidget *widget) override
+		{
+			Ui::WonDialog::retranslateUi(widget);
+		}
 
-	private:
-		fairytale *m_app;
 };
 
 #endif // WONDIALOG_H

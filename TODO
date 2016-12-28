@@ -27,7 +27,7 @@ TODOs 1.3:
 	}
 Search for the bug by commenting line by line out.
 Apparently config_swresample was missing, add options via prompt with qmake (CONFIG += "config_swresample") instead of using user.conf.
-- Use maximum space on Android for the main window (but not more than that).
+- FIXED: Use maximum space on Android for the main window (but not more than that).
 - DONE: Add new Bonus Clips.
 - DONE: Make all OK and Cancel buttons use icons.
 - DONE: Rename "Advanced" to "Show more".

@@ -1,11 +1,11 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QDialog>
 #include <QUrl>
 #include <QSettings>
 
 #include "fairytale.h"
+#include "translatedwidget.h"
 #include "ui_settings.h"
 
 class ClipPackage;
@@ -15,7 +15,7 @@ class BonusClip;
 /**
  * \brief Allows to change the settings of the game and apply them or cancel.
  */
-class SettingsDialog : public QDialog, protected Ui::SettingsDialog
+class SettingsDialog : public TranslatedWidget, protected Ui::SettingsDialog
 {
 	Q_OBJECT
 
@@ -60,11 +60,12 @@ class SettingsDialog : public QDialog, protected Ui::SettingsDialog
 		void load(QSettings &settings);
 		void save(QSettings &settings);
 
-	protected:
-		virtual void changeEvent(QEvent *event) override;
+		virtual void retranslateUi(QWidget *widget) override
+		{
+			Ui::SettingsDialog::retranslateUi(widget);
+		}
 
 	private:
-		fairytale *m_app;
 		QUrl m_clipsDir;
 		typedef QMap<QTreeWidgetItem*, ClipPackage*> ClipPackages;
 		ClipPackages m_clipPackages;

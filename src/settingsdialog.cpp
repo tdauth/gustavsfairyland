@@ -16,11 +16,11 @@ void SettingsDialog::restoreDefaults()
 #ifndef Q_OS_ANDROID
 	fullScreenCheckBox->setChecked(true);
 	// We need file:/ on other systems.
-	m_clipsDir = QUrl::fromLocalFile(m_app->defaultClipsDirectory());
+	m_clipsDir = QUrl::fromLocalFile(this->app()->defaultClipsDirectory());
 #else
 	fullScreenCheckBox->setChecked(false);
 	// Dont prepend file:/ on Android!
-	m_clipsDir = QUrl(m_app->defaultClipsDirectory());
+	m_clipsDir = QUrl(this->app()->defaultClipsDirectory());
 #endif
 
 	// Sound
@@ -42,7 +42,7 @@ void SettingsDialog::restoreDefaults()
 		ClipPackage *package = iterator.value();
 
 		qDebug() << "Before removing package";
-		this->m_app->removeClipPackage(package);
+		this->app()->removeClipPackage(package);
 
 		qDebug() << "Before erasing item";
 		// erase package entry
@@ -60,10 +60,10 @@ void SettingsDialog::restoreDefaults()
 		delete package;
 	}
 
-	if (this->m_app->loadDefaultClipPackage())
+	if (this->app()->loadDefaultClipPackage())
 	{
-		Q_ASSERT(!m_app->clipPackages().isEmpty());
-		this->fill(m_app->clipPackages());
+		Q_ASSERT(!this->app()->clipPackages().isEmpty());
+		this->fill(this->app()->clipPackages());
 	}
 }
 
@@ -83,24 +83,24 @@ void SettingsDialog::apply()
 	if (this->fullScreenCheckBox->isChecked())
 	{
 		// TODO Workaround: in Fullscreen mode on Windows 7 repaint() does not cause immediate paintEvent() call! Works only when showing it and then calling showFullScreen().
-		this->m_app->show();
-		this->m_app->showFullScreen();
+		this->app()->show();
+		this->app()->showFullScreen();
 	}
 	else
 	{
-		this->m_app->showNormal();
+		this->app()->showNormal();
 	}
 
 	// Sound
-	this->m_app->setMusicMuted(!musicCheckBox->isChecked());
-	this->m_app->setMusicVolume(musicVolumeSpinBox->value());
-	this->m_app->setAudioPlayerMuted(!clickSoundsCheckBox->isChecked());
-	this->m_app->setAudioPlayerVolume(clickSoundsVolumeSpinBox->value());
-	this->m_app->setVideoSoundMuted(!videoSoundCheckBox->isChecked());
-	this->m_app->setVideoSoundVolume(videoSoundVolumeSpinBox->value());
+	this->app()->setMusicMuted(!musicCheckBox->isChecked());
+	this->app()->setMusicVolume(musicVolumeSpinBox->value());
+	this->app()->setAudioPlayerMuted(!clickSoundsCheckBox->isChecked());
+	this->app()->setAudioPlayerVolume(clickSoundsVolumeSpinBox->value());
+	this->app()->setVideoSoundMuted(!videoSoundCheckBox->isChecked());
+	this->app()->setVideoSoundVolume(videoSoundVolumeSpinBox->value());
 
 	// Clips
-	this->m_app->setClipsDir(m_clipsDir);
+	this->app()->setClipsDir(m_clipsDir);
 
 	// Set all specified clip packages for the application.
 	fairytale::ClipPackages clipPackages;
@@ -110,20 +110,20 @@ void SettingsDialog::apply()
 		clipPackages.insert(clipPackage->id(), clipPackage);
 	}
 
-	this->m_app->setClipPackages(clipPackages);
+	this->app()->setClipPackages(clipPackages);
 }
 
 void SettingsDialog::update()
 {
-	this->fullScreenCheckBox->setChecked(this->m_app->isFullScreen());
+	this->fullScreenCheckBox->setChecked(this->app()->isFullScreen());
 
 	// Sound
-	this->musicCheckBox->setChecked(!this->m_app->isMusicMuted());
-	musicVolumeSpinBox->setValue(this->m_app->musicVolume());
-	clickSoundsCheckBox->setChecked(!this->m_app->isAudioPlayerMuted());
-	clickSoundsVolumeSpinBox->setValue(this->m_app->audioPlayerVolume());
-	videoSoundCheckBox->setChecked(!this->m_app->isVideoSoundMuted());
-	videoSoundVolumeSpinBox->setValue(this->m_app->videoSoundVolume());
+	this->musicCheckBox->setChecked(!this->app()->isMusicMuted());
+	musicVolumeSpinBox->setValue(this->app()->musicVolume());
+	clickSoundsCheckBox->setChecked(!this->app()->isAudioPlayerMuted());
+	clickSoundsVolumeSpinBox->setValue(this->app()->audioPlayerVolume());
+	videoSoundCheckBox->setChecked(!this->app()->isVideoSoundMuted());
+	videoSoundVolumeSpinBox->setValue(this->app()->videoSoundVolume());
 
 	int i = 0;
 
@@ -131,7 +131,7 @@ void SettingsDialog::update()
 	{
 		audioOutputDeviceComboBox->addItem(device.deviceName(), device.deviceName());
 
-		if (m_app->audioOutputSelectorControl() != nullptr && m_app->audioOutputSelectorControl()->activeOutput() == device.deviceName())
+		if (this->app()->audioOutputSelectorControl() != nullptr && this->app()->audioOutputSelectorControl()->activeOutput() == device.deviceName())
 		{
 			audioOutputDeviceComboBox->setCurrentIndex(i);
 		}
@@ -139,7 +139,7 @@ void SettingsDialog::update()
 		++i;
 	}
 
-	audioOutputDeviceComboBox->setEnabled(m_app->audioOutputSelectorControl() != nullptr);
+	audioOutputDeviceComboBox->setEnabled(this->app()->audioOutputSelectorControl() != nullptr);
 
 	i = 0;
 
@@ -147,7 +147,7 @@ void SettingsDialog::update()
 	{
 		audioInputDeviceComboBox->addItem(device.deviceName(), device.deviceName());
 
-		if (m_app->audioInputSelectorControl() != nullptr && m_app->audioInputSelectorControl()->activeInput() == device.deviceName())
+		if (this->app()->audioInputSelectorControl() != nullptr && this->app()->audioInputSelectorControl()->activeInput() == device.deviceName())
 		{
 			audioInputDeviceComboBox->setCurrentIndex(i);
 		}
@@ -155,13 +155,13 @@ void SettingsDialog::update()
 		++i;
 	}
 
-	audioInputDeviceComboBox->setEnabled(m_app->audioInputSelectorControl() != nullptr);
+	audioInputDeviceComboBox->setEnabled(this->app()->audioInputSelectorControl() != nullptr);
 
 	// Clips
-	this->m_clipsDir = this->m_app->clipsDir();
+	this->m_clipsDir = this->app()->clipsDir();
 	this->clipsDirectoryLabel->setText(m_clipsDir.toString());
 
-	this->fill(m_app->clipPackages());
+	this->fill(this->app()->clipPackages());
 }
 
 void SettingsDialog::addFile()
@@ -170,7 +170,7 @@ void SettingsDialog::addFile()
 
 	if (!filePath.isEmpty())
 	{
-		ClipPackage *clipPackage = new ClipPackage(this->m_app);
+		ClipPackage *clipPackage = new ClipPackage(this->app());
 
 		if (clipPackage->loadClipsFromFile(filePath))
 		{
@@ -186,7 +186,7 @@ void SettingsDialog::addFile()
 
 void SettingsDialog::addDirectory()
 {
-	const QString dirPath = QFileDialog::getExistingDirectory(this, tr("Clips Directory"), this->m_app->clipsDir().toLocalFile());
+	const QString dirPath = QFileDialog::getExistingDirectory(this, tr("Clips Directory"), this->app()->clipsDir().toLocalFile());
 
 	if (!dirPath.isEmpty())
 	{
@@ -201,7 +201,7 @@ void SettingsDialog::addDirectory()
 		{
 			if (fileInfo.isReadable())
 			{
-				ClipPackage *clipPackage = new ClipPackage(this->m_app);
+				ClipPackage *clipPackage = new ClipPackage(this->app());
 
 				if (clipPackage->loadClipsFromFile(fileInfo.absoluteFilePath()))
 				{
@@ -237,7 +237,7 @@ void SettingsDialog::removeSelected()
             ClipPackage *package = iterator.value();
 
             qDebug() << "Before removing package";
-            this->m_app->removeClipPackage(package);
+            this->app()->removeClipPackage(package);
 
             qDebug() << "Before erasing item";
             // erase package entry
@@ -263,7 +263,7 @@ void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int /* column */)
 
 	if (iterator != m_clips.end())
 	{
-		const QUrl url = this->m_app->resolveClipUrl(iterator.value()->imageUrl());
+		const QUrl url = this->app()->resolveClipUrl(iterator.value()->imageUrl());
 		qDebug() << "Open URL: " << url;
 		// TODO just popup a modal dialog with the image
 		QDesktopServices::openUrl(url);
@@ -274,7 +274,7 @@ void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int /* column */)
 
 		if (bonusClipsIterator != m_bonusClips.end())
 		{
-			const QUrl url = this->m_app->resolveClipUrl(bonusClipsIterator.value()->imageUrl());
+			const QUrl url = this->app()->resolveClipUrl(bonusClipsIterator.value()->imageUrl());
 			qDebug() << "Open URL: " << url;
 			// TODO just popup a modal dialog with the image
 			QDesktopServices::openUrl(url);
@@ -282,7 +282,7 @@ void SettingsDialog::itemDoubleClicked(QTreeWidgetItem *item, int /* column */)
 	}
 }
 
-SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
+SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : TranslatedWidget(app, parent)
 {
 	setupUi(this);
 
@@ -334,7 +334,7 @@ void SettingsDialog::fill(ClipPackage *package)
 
 	QTreeWidgetItem *introItem = new QTreeWidgetItem(topLevelItem);
 	introItem->setText(0, tr("Intro"));
-	const QUrl introUrl = m_app->resolveClipUrl(package->intro());
+	const QUrl introUrl = this->app()->resolveClipUrl(package->intro());
 
 	if (introUrl.isLocalFile())
 	{
@@ -353,7 +353,7 @@ void SettingsDialog::fill(ClipPackage *package)
 
 	for (int i = 0; i < package->outros().size(); ++i)
 	{
-		const QUrl outroUrl = m_app->resolveClipUrl(package->outros().at(i));
+		const QUrl outroUrl = this->app()->resolveClipUrl(package->outros().at(i));
 		QTreeWidgetItem *outroItem = new QTreeWidgetItem(outrosItem);
 
 		const QString name = i < 4 ? HighScores::difficultyToString(fairytale::Difficulty(i)) : tr("Lost");
@@ -373,7 +373,7 @@ void SettingsDialog::fill(ClipPackage *package)
 		QTreeWidgetItem *clipItem = new QTreeWidgetItem(clip->isPerson() ? personsItem : actsItem);
 		this->m_clips.insert(clipItem, clip);
 		clipItem->setText(0, clip->description());
-		clipItem->setIcon(0, QIcon(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+		clipItem->setIcon(0, QIcon(this->app()->resolveClipUrl(clip->imageUrl()).toLocalFile()));
 
 		if (clip->isPerson())
 		{
@@ -390,7 +390,7 @@ void SettingsDialog::fill(ClipPackage *package)
 		QTreeWidgetItem *clipItem = new QTreeWidgetItem(bonusesItem);
 		this->m_bonusClips.insert(clipItem, clip);
 		clipItem->setText(0, clip->description());
-		clipItem->setIcon(0, QIcon(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+		clipItem->setIcon(0, QIcon(this->app()->resolveClipUrl(clip->imageUrl()).toLocalFile()));
 
 		++bonuses;
 	}
@@ -428,8 +428,8 @@ void SettingsDialog::load(QSettings &settings)
 	this->videoSoundVolumeSpinBox->setValue(settings.value("videoSoundVolume", fairytale::defaultVideoSoundVolume).toInt());
 
 	// Clips
-	const QDir defaultClipsDir(m_app->defaultClipsDirectory());
-	qDebug() << "Default clips dir:" << m_app->defaultClipsDirectory();
+	const QDir defaultClipsDir(this->app()->defaultClipsDirectory());
+	qDebug() << "Default clips dir:" << this->app()->defaultClipsDirectory();
 	// the default path is the "clips" sub directory
 #ifndef Q_OS_ANDROID
 	m_clipsDir = QUrl::fromLocalFile(settings.value("clipsDir", defaultClipsDir.absolutePath()).toString());
@@ -447,7 +447,7 @@ void SettingsDialog::load(QSettings &settings)
 			settings.setArrayIndex(i);
 			const QString filePath = settings.value("filePath").toString();
 
-			ClipPackage *package = new ClipPackage(m_app);
+			ClipPackage *package = new ClipPackage(this->app());
 
 			if (package->loadClipsFromFile(filePath))
 			{
@@ -471,9 +471,9 @@ void SettingsDialog::load(QSettings &settings)
 	for (int i = 0; i < customFairytalesSize; ++i)
 	{
 		settings.setArrayIndex(i);
-		CustomFairytale *customFairytale = new CustomFairytale(m_app);
+		CustomFairytale *customFairytale = new CustomFairytale(this->app());
 		customFairytale->load(settings);
-		m_app->addCustomFairytale(customFairytale);
+		this->app()->addCustomFairytale(customFairytale);
 	}
 
 	settings.endArray();
@@ -481,9 +481,9 @@ void SettingsDialog::load(QSettings &settings)
 	settings.endGroup();
 
 	// default package
-	if (m_app->clipPackages().isEmpty())
+	if (this->app()->clipPackages().isEmpty())
 	{
-		m_app->loadDefaultClipPackage();
+		this->app()->loadDefaultClipPackage();
 	}
 }
 
@@ -524,7 +524,7 @@ void SettingsDialog::save(QSettings &settings)
 	settings.beginWriteArray("customfairytales");
 	i= 0;
 
-	for (fairytale::CustomFairytales::const_iterator iterator = m_app->customFairytales().constBegin(); iterator != m_app->customFairytales().constEnd(); ++iterator)
+	for (fairytale::CustomFairytales::const_iterator iterator = this->app()->customFairytales().constBegin(); iterator != this->app()->customFairytales().constEnd(); ++iterator)
 	{
 		settings.setArrayIndex(i);
 		iterator.value()->save(settings);
@@ -535,26 +535,4 @@ void SettingsDialog::save(QSettings &settings)
 	settings.endArray();
 
 	settings.endGroup();
-}
-
-void SettingsDialog::changeEvent(QEvent *event)
-{
-	switch(event->type())
-	{
-		// this event is send if a translator is loaded
-		case QEvent::LanguageChange:
-		{
-			qDebug() << "Retranslate UI of about dialog";
-			this->retranslateUi(this);
-
-			break;
-		}
-
-		default:
-		{
-			break;
-		}
-	}
-
-	QDialog::changeEvent(event);
 }

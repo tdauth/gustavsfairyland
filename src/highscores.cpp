@@ -24,13 +24,13 @@ void HighScores::clearAll()
 	}
 }
 
-HighScores::HighScores(fairytale *app, QWidget *parent) : QDialog(parent), m_app(app)
+HighScores::HighScores(fairytale *app, QWidget *parent) : TranslatedWidget(app, parent)
 {
 	setupUi(this);
 
 	this->setModal(true);
 
-	connect(okPushButton, &QPushButton::clicked, this, &QDialog::accept);
+	connect(this->okPushButton, &QPushButton::clicked, this, &QDialog::accept);
 	connect(this->clearPushButton, &QPushButton::clicked, this, &HighScores::clearAll);
 }
 
@@ -78,31 +78,9 @@ bool HighScores::addHighScore(const HighScore &highScore)
 	return true;
 }
 
-void HighScores::changeEvent(QEvent *event)
-{
-	switch(event->type())
-	{
-		// this event is send if a translator is loaded
-		case QEvent::LanguageChange:
-		{
-			qDebug() << "Retranslate UI of highscore dialog";
-			this->retranslateUi(this);
-
-			break;
-		}
-
-		default:
-		{
-			break;
-		}
-	}
-
-	QDialog::changeEvent(event);
-}
-
 void HighScores::showEvent(QShowEvent *event)
 {
-	QWidget::showEvent(event);
+	TranslatedWidget::showEvent(event);
 
 	this->tableWidget->setRowCount(0);
 	int row = 0;

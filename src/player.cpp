@@ -146,7 +146,7 @@ void Player::showEvent(QShowEvent *event)
 {
 	Base::showEvent(event);
 
-	fairytale::updateSize(buttonsWidget);
+	this->app()->updateSize(buttonsWidget);
 }
 
 void Player::hideEvent(QHideEvent *event)
@@ -279,7 +279,7 @@ void Player::checkForFinish()
 
 		if (!this->m_musicWasMutedBefore)
 		{
-			this->m_app->setMusicMuted(false);
+			this->app()->setMusicMuted(false);
 		}
 
 		emit stateChangedVideoAndSounds(QMediaPlayer::StoppedState);
@@ -320,16 +320,16 @@ void Player::showCentral()
 	}
 
 	// one top level window on Android for OpenGL
-	this->m_hiddenWidgets = m_app->hideWidgetsInMainWindow();
+	this->m_hiddenWidgets = this->app()->hideWidgetsInMainWindow();
 	this->m_hiddenWidgets.removeAll(this); // never reshow the player
-	m_app->centralWidget()->layout()->addWidget(this);
+	this->app()->centralWidget()->layout()->addWidget(this);
 	this->show();
 }
 
 void Player::hideCentral()
 {
-	m_app->centralWidget()->layout()->removeWidget(this);
-	m_app->showWidgetsInMainWindow(this->m_hiddenWidgets);
+	this->app()->centralWidget()->layout()->removeWidget(this);
+	this->app()->showWidgetsInMainWindow(this->m_hiddenWidgets);
 	this->m_hiddenWidgets.clear();
 }
 #endif
@@ -344,7 +344,7 @@ void Player::playVideo(const QUrl &url, const QString &description, bool duringG
 #ifndef USE_QTAV
 	this->m_videoWidget->show();
 
-	if (m_app->isFullScreen())
+	if (this->app()->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -371,7 +371,7 @@ void Player::playVideo(const QUrl &url, const QString &description, bool duringG
 	}
 
 	this->descriptionLabel->setText(description);
-	const QUrl resolvedUrl = m_app->resolveClipUrl(url);
+	const QUrl resolvedUrl = this->app()->resolveClipUrl(url);
 
 #ifdef USE_QTAV
 	qDebug() << "Playing video:" << resolvedUrl.toString();
@@ -420,14 +420,14 @@ void Player::playBonusVideo(const QUrl &url, const QString &description)
 
 void Player::playSound(const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
 {
-	const QUrl resolvedImageUrl = m_app->resolveClipUrl(imageUrl);
+	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
 #ifndef Q_OS_ANDROID
 	const QString imageFile = resolvedImageUrl.toLocalFile();
 #else
 	const QString imageFile = resolvedImageUrl.url();
 #endif
 	qDebug() << "Image file:" << imageFile;
-	const QUrl soundUrl = m_app->resolveClipUrl(url);
+	const QUrl soundUrl = this->app()->resolveClipUrl(url);
 
 	this->m_isPrefix = prefix;
 	this->m_skipped = false;
@@ -441,7 +441,7 @@ void Player::playSound(const QUrl &url, const QString &description, const QUrl &
 	this->m_iconLabel->setFile(imageFile);
 
 #ifndef Q_OS_ANDROID
-	if (m_app->isFullScreen())
+	if (this->app()->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -488,7 +488,7 @@ void Player::playSound(const QUrl &url, const QString &description, const QUrl &
 
 void Player::showImage(const QUrl &imageUrl, const QString &description)
 {
-	const QUrl resolvedImageUrl = m_app->resolveClipUrl(imageUrl);
+	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
 #ifndef Q_OS_ANDROID
 	const QString imageFile = resolvedImageUrl.toLocalFile();
 #else
@@ -508,7 +508,7 @@ void Player::showImage(const QUrl &imageUrl, const QString &description)
 	this->m_iconLabel->setFile(imageFile);
 
 #ifndef Q_OS_ANDROID
-	if (m_app->isFullScreen())
+	if (this->app()->isFullScreen())
 	{
 		this->showFullScreen();
 	}
@@ -518,8 +518,8 @@ void Player::showImage(const QUrl &imageUrl, const QString &description)
 	}
 #else
 	// one top level window on Android for OpenGL
-	this->m_hiddenWidgets = m_app->hideWidgetsInMainWindow();
-	m_app->centralWidget()->layout()->addWidget(this);
+	this->m_hiddenWidgets = this->app()->hideWidgetsInMainWindow();
+	this->app()->centralWidget()->layout()->addWidget(this);
 	this->show();
 #endif
 
@@ -534,7 +534,7 @@ void Player::showImage(const QUrl &imageUrl, const QString &description)
 
 void Player::playParallelSound(const QUrl &url)
 {
-	const QUrl soundUrl = m_app->resolveClipUrl(url);
+	const QUrl soundUrl = this->app()->resolveClipUrl(url);
 
 	if (this->m_parallelSoundsMediaPlayer->state() != QMediaPlayer::StoppedState)
 	{
@@ -549,8 +549,8 @@ void Player::playParallelSound(const QUrl &url)
 
 void Player::play()
 {
-	this->m_musicWasMutedBefore = this->m_app->isMusicMuted();
-	this->m_app->setMusicMuted(true);
+	this->m_musicWasMutedBefore = this->app()->isMusicMuted();
+	this->app()->setMusicMuted(true);
 	// TODO wait for muted
 
 #ifdef USE_QTAV

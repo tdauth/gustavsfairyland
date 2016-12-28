@@ -1,12 +1,12 @@
 #ifndef HIGHSCORES_H
 #define HIGHSCORES_H
 
-#include <QDialog>
 #include <QLinkedList>
 #include <QHash>
 
 #include "ui_highscores.h"
 #include "fairytale.h"
+#include "translatedwidget.h"
 
 /**
  * \brief A single highscore entry is defined by the gamemode, package, the number of rounds, the taken time and the player's name.
@@ -66,13 +66,10 @@ inline int HighScore::time() const
 	return this->m_time;
 }
 
-class fairytale;
-
-
 /**
  * \brief Modal dialog to list all highscores. The highscores for each package with a game mode are limited to \ref maxHighScores.
  */
-class HighScores : public QDialog, protected Ui::HighScores
+class HighScores : public TranslatedWidget, protected Ui::HighScores
 {
 	Q_OBJECT
 
@@ -89,27 +86,23 @@ class HighScores : public QDialog, protected Ui::HighScores
 
 		HighScores(fairytale *app, QWidget *parent);
 
-		fairytale* app() const;
-
 		bool addHighScore(const HighScore &highScore);
 		const HighScoreMap& highScores() const;
 
 		static QString difficultyToString(fairytale::Difficulty difficulty);
 
+		virtual void retranslateUi(QWidget *widget) override
+		{
+			Ui::HighScores::retranslateUi(widget);
+		}
+
 	protected:
-		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
 
 	private:
-		fairytale *m_app;
 		HighScoreMap m_highScores;
 
 };
-
-inline fairytale* HighScores::app() const
-{
-	return this->m_app;
-}
 
 inline const HighScores::HighScoreMap& HighScores::highScores() const
 {
