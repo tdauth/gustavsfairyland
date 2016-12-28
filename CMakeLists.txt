@@ -239,7 +239,7 @@ QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/o
 
 if (USE_QTAV)
 	if (ANDROID)
-		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/${ANDROID_PREFIX}/lib")
+		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/${ANDROID_PREFIX_FFMPEG}/lib")
 	else ()
 		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/ffmpeginstall/lib")
 		set(QTAV_LIB_DIR "lib_linux_x86_64")
