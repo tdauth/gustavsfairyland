@@ -482,6 +482,8 @@ if (ANDROID)
 	add_qt_android_apk(my_app_apk gustavsfairyland NAME "@string/ApplicationName"
 		DEPENDS
 		${QTAV_LIBRARIES}
+		KEYSTORE "${ANDROID_KEY_PATH}" gustavsfairyland
+		KEYSTORE_PASSWORD "${ANDROID_KEY_PASSWORD}"
 	)
 	add_dependencies(my_app_apk CopyAssets QtAV gustavsfairyland)
 
