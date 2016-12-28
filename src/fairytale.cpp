@@ -506,8 +506,12 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	this->advancedGroupBoxWidget->hide();
 
 	this->m_currentScreen = qApp->primaryScreen();
+#ifdef Q_OS_ANDROID
 	changePrimaryScreen(this->m_currentScreen);
 	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
+	// Initial call with the initial available geometry.
+	changeAvailableGeometry(this->m_currentScreen->availableGeometry());
+#endif
 
 	connect(&this->m_timer, &QTimer::timeout, this, &fairytale::timerTick);
 
@@ -637,7 +641,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	}
 
 #ifdef Q_OS_ANDROID
-	connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(resizeScreenEvent(int)));
+	connect(QApplication::desktop(), &QDesktopWidget::resized, this, &fairytale::resizeScreenEvent);
 #endif
 }
 
@@ -2648,12 +2652,12 @@ void fairytale::changePrimaryScreen(QScreen *screen)
 
 void fairytale::changeAvailableGeometry(const QRect &geometry)
 {
-	qDebug() << "available geometry" << geometry;
-	/*
+	//m_currentScreen->orientation();
+	qDebug() << "available geometry" << geometry << "landscape:" << m_currentScreen->isLandscape(m_currentScreen->orientation()) << "portrait:" << m_currentScreen->isPortrait(m_currentScreen->orientation());
 	const QSize size = QSize(geometry.width(), geometry.height());
+	this->setMinimumSize(size);
 	this->setMaximumSize(size); // prevent widgets from expanding too wide!
 	this->resize(QSize(geometry.width(), geometry.height()));
-	*/
 }
 
 void fairytale::finishCentralDialog(int result)
