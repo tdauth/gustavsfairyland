@@ -39,6 +39,9 @@ It is in /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign but expected in
 Just do:
 ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign
 
+Fix x86 32 Bit Android arch for the release build (apparently Android CMake uses the wrong toolchain name):
+ln -s /home/tamino/android-ndk-r12b/toolchains/x86-4.9/ /home/tamino/android-ndk-r12b/toolchains/i686-linux-android-4.9
+
 The Android build uses QtAV for playing videos on Android devices since QtMultimediaWidgets are not supported on Android.
 Therefore ffmpeg and QtAV have to be build for Android too which happens in the build script "buildqtavforandroid.sh".
 
