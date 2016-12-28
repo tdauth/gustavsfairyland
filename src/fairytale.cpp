@@ -236,7 +236,7 @@ QRect fairytale::referenceRect()
 	/*
 	 * The original UI files have been designed on a system with this default size.
 	 */
-	return QRect(0, 0, 1024, 768);
+	return QRect(0, 0, 1280, 960);
 }
 
 qreal fairytale::screenWidthRatio()
