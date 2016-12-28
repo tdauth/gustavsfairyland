@@ -228,25 +228,7 @@ QRect fairytale::screenRect()
 	/*
 	 * Get the screen size of the current screen where the application is shown.
 	 */
-	return qApp->primaryScreen()->geometry();
-
-	// TODO react to 	primaryScreenChanged(QScreen *screen)
-}
-
-Qt::ScreenOrientation fairytale::screenOrientation()
-{
-	const Qt::ScreenOrientation orientation = qApp->primaryScreen()->orientation();
-
-	if (orientation == Qt::PrimaryOrientation)
-	{
-		const Qt::ScreenOrientation primaryOrientation = qApp->primaryScreen()->primaryOrientation();
-
-		return primaryOrientation;
-	}
-
-	// TODO react to orientationChanged(Qt::ScreenOrientation orientation)
-
-	return orientation;
+	return m_currentScreen->availableGeometry();
 }
 
 QRect fairytale::referenceRect()
@@ -254,18 +236,7 @@ QRect fairytale::referenceRect()
 	/*
 	 * The original UI files have been designed on a system with this default size.
 	 */
-	return QRect(0, 0, 1920, 1080);
-}
-
-Qt::ScreenOrientation fairytale::referenceOrientation()
-{
-	// the width must be bigger than or equal to the height
-	if (referenceRect().width() >= referenceRect().height())
-	{
-		return Qt::LandscapeOrientation;
-	}
-
-	return Qt::PortraitOrientation;
+	return QRect(0, 0, 1024, 768);
 }
 
 qreal fairytale::screenWidthRatio()
@@ -286,11 +257,25 @@ qreal fairytale::screenHeightRatio()
 	return heightRatio;
 }
 
+qreal fairytale::pixelRatio()
+{
+	const long double currentArea = (long double)screenRect().height() * (long double)screenRect().width();
+	const long double referenceArea = (long double)referenceRect().height() * (long double)referenceRect().width();
+
+	//qDebug() << "reference area" << referenceArea << "current area" << currentArea;
+
+	const qreal result = (qreal)(currentArea / referenceArea);
+
+	qDebug() << "Pixel ratio" << result;
+
+	return result;
+}
+
 void fairytale::updateSize(QWidget *widget)
 {
-#if 1 == 0 //def Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	// TEST At the moment there is no proper way to dynamically scale widgets due to the DPI size since it might become too big or too small.
-	if (dynamic_cast<QPushButton*>(widget) != nullptr)
+	if (dynamic_cast<QPushButton*>(widget) != nullptr || dynamic_cast<QLabel*>(widget) != nullptr || dynamic_cast<QGroupBox*>(widget) != nullptr)
 	{
 		/*
 		 * Cache the initial widget size and font on the startup once.
@@ -353,6 +338,15 @@ void fairytale::updateSize(QWidget *widget)
 			}
 		}
 	}
+	else
+	{
+		QScrollArea *scrollArea = dynamic_cast<QScrollArea*>(widget);
+
+		if (scrollArea != nullptr)
+		{
+			this->updateSize(scrollArea->widget());
+		}
+	}
 #endif
 }
 
@@ -363,7 +357,8 @@ QSize fairytale::widgetSize(const QSize &currentSize)
 
 qreal fairytale::fontSize(int currentFontSize)
 {
-	return (qreal)(currentFontSize) * screenWidthRatio();
+	// The font size is not only applied to the width but also to the height of a letter.
+	return (qreal)(currentFontSize) * pixelRatio();
 }
 
 QString fairytale::localeToName(const QString &locale)
@@ -639,10 +634,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 		qDebug() << "Compared clips dirs:" << this->defaultClipsDirectory() << "and" << currentClipsDir;
 	}
-
-#ifdef Q_OS_ANDROID
-	connect(QApplication::desktop(), &QDesktopWidget::resized, this, &fairytale::resizeScreenEvent);
-#endif
 }
 
 fairytale::~fairytale()
@@ -1038,7 +1029,7 @@ int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<v
 	return result;
 }
 
-int fairytale::execInCentralWidgetIfNecessary(QDialog* dialog)
+int fairytale::execInCentralWidgetIfNecessary(QDialog *dialog)
 {
 	return execInCentralWidgetIfNecessaryEx(dialog, [](QDialog *dialog) { });
 }
@@ -2275,16 +2266,6 @@ void fairytale::showEvent(QShowEvent *event)
 	this->updatePixmap();
 }
 
-void fairytale::resizeScreenEvent(int screen)
-{
-	qDebug() << "Screen size changed for screen:" << screen;
-	/*
-	 * Whenever the screen orientation changes, update the size.
-	 */
-	this->updateSize(scrollArea);
-	this->updateSize(gameButtonsWidget);
-}
-
 void fairytale::cleanupGame()
 {
 	this->m_playerSounds.clear();
@@ -2658,6 +2639,12 @@ void fairytale::changeAvailableGeometry(const QRect &geometry)
 	this->setMinimumSize(size);
 	this->setMaximumSize(size); // prevent widgets from expanding too wide!
 	this->resize(QSize(geometry.width(), geometry.height()));
+
+	/*
+	 * Whenever the screen orientation changes, update the size.
+	 */
+	this->updateSize(scrollArea);
+	this->updateSize(gameButtonsWidget);
 }
 
 void fairytale::finishCentralDialog(int result)

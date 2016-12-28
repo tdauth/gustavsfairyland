@@ -185,26 +185,34 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \{
 		 */
 		/**
-		 * \return Returns the current screen's rect.
+		 * \return Returns the current screen's rect of available geometry.
 		 */
-		static QRect screenRect();
+		QRect screenRect();
 		/**
-		 * \return Returns the current screen's orientation.
+		 * \return Returns the available geometry rect which was used to design the user interface.
 		 */
-		static Qt::ScreenOrientation screenOrientation();
-		static QRect referenceRect();
-		static Qt::ScreenOrientation referenceOrientation();
+		QRect referenceRect();
 		/**
 		 * Calculates a scaling factor depending on the current DPI settings and display size.
 		 */
-		static qreal screenWidthRatio();
-		static qreal screenHeightRatio();
+		qreal screenWidthRatio();
+		qreal screenHeightRatio();
+		qreal pixelRatio();
 		/**
 		 * Updates the size of \p widget and all sub widgets in its layout to the current screen size.
+		 * It uses \ref referenceRect() to determine the ratio between the current available geometry on the current screen and the used available geometry
+		 * to design the user interface.
+		 *
+		 * It stores the original designed size of all widgets for a later reference when the available geometry changes.
+		 *
+		 * \param widget The widget of which the size is updated. The size is also updated of all child widgets.
 		 */
-		static void updateSize(QWidget *widget);
-		static QSize widgetSize(const QSize &currentSize);
-		static qreal fontSize(int currentFontSize);
+		void updateSize(QWidget *widget);
+		/**
+		 * \return Returns the new wiget size which is calculated by the ratio of the \ref referenceRect() and available geometry on the screen.
+		 */
+		QSize widgetSize(const QSize &currentSize);
+		qreal fontSize(int currentFontSize);
 		/**
 		 * \}
 		 */
@@ -537,7 +545,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 	protected:
 		virtual void changeEvent(QEvent *event) override;
 		virtual void showEvent(QShowEvent *event) override;
-		void resizeScreenEvent(int screen);
 
 	private slots:
 		void onVideoAndSoundStateChanged(QMediaPlayer::State state);
