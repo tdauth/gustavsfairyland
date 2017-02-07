@@ -144,9 +144,11 @@ class RoomWidget : public RoomWidgetParent
 		 * Otherwise too many sounds will overlay each other.
 		 * \param soundEffects A list of possible file paths for the sound which is played. The path of the actual played sound is choosen randomly.
 		 */
-		void playSoundFromList(const QStringList &soundEffects);
+		void playSoundFromList(const QStringList &soundEffects, bool immediately);
 
 		void updateSounds();
+
+		void waitForSuccessSound();
 
 		GameMode *m_gameMode;
 		Mode m_mode;

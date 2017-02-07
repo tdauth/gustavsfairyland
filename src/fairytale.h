@@ -193,10 +193,14 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		QRect referenceRect();
 		/**
-		 * Calculates a scaling factor depending on the current DPI settings and display size.
+		 * Calculates a scaling factor depending on the current display size.
 		 */
 		qreal screenWidthRatio();
 		qreal screenHeightRatio();
+		/**
+		 * The pixel ratio uses (height + width) / 2.
+		 * It is used for the font size since the font uses width AND height.
+		 */
 		qreal pixelRatio();
 		/**
 		 * Updates the size of \p widget and all sub widgets in its layout to the current screen size.
@@ -400,9 +404,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * Plays a sound if no sound is already played. Otherwise it doesn't play the sound at all.
 		 * \param url The URL of the sound file.
+		 * \param immediately If this value is true, the currently played sound will be ignored and the sound from \p url will be played immediately. Otherwise the sound from \p url won't be played if there is already a sound being played at the moment.
 		 * \return Returns true if the sound is played. Otherwise it returns false.
 		 */
-		bool playSound(const QUrl &url);
+		bool playSound(const QUrl &url, bool immediately = false);
+		bool isSoundPlaying() const;
 
 		/**
 		 * Sound data to queue for the \ref Player to play a sound.
@@ -669,7 +675,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 
 		/// Custom audio player which allows only to play one sound at once and discards all other sounds which are played during that time.
 		QMediaPlayer *m_audioPlayer;
-		/// Flag which indicates if a new sound can be played at the moment.
+		/// Flag which indicates if a new sound can be played at the moment. This flag becomes false when the audio player state changes to playing and becomes true when the state becomes stopped.
 		bool m_playNewSound;
 		/// A queue with sounds waiting for the player to become available.
 		QQueue<PlayerSoundData> m_playerSounds;

@@ -13,6 +13,7 @@
 class RoomWidget;
 class Clip;
 
+// Dont use QOpenGLWidget since if it is not transparent it will always be shown over the painted image.
 #ifdef USE_QTAV
 typedef QWidget FloatingClipParent;
 #else

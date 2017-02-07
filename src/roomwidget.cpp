@@ -161,54 +161,95 @@ void RoomWidget::windSoundStateChanged(QMediaPlayer::State state)
 
 int RoomWidget::floatingClipWidth() const
 {
-	const int availableWidth = qMax(rect().height(), rect().width());
+	const long long availableWidth = ((long long)(rect().height()) + (long long)(rect().width())) / 2;
 
-	return availableWidth / 15;
+	return qMax<long long>(1, (long long)((long double)availableWidth * (long double)0.1));
 }
 
 int RoomWidget::floatingClipSpeed() const
 {
-	double factor = 0.3;
+	long double factor = 0.3;
 
-	switch (this->gameMode()->app()->difficulty())
+	if (!fairytale::hasTouchDevice())
 	{
-		case fairytale::Difficulty::Easy:
-		{
-			factor = 0.2;
+		qDebug() << "Has no touch device!";
 
-			break;
+		switch (this->gameMode()->app()->difficulty())
+		{
+			case fairytale::Difficulty::Easy:
+			{
+				factor = 0.2;
+
+				break;
+			}
+
+			case fairytale::Difficulty::Normal:
+			{
+				factor = 0.3;
+
+				break;
+			}
+
+			case fairytale::Difficulty::Hard:
+			{
+				factor = 0.4;
+
+				break;
+			}
+
+			// It should not be possible to win with this difficulty at all.
+			case fairytale::Difficulty::Mahlerisch:
+			{
+				factor = 0.5;
+
+				break;
+			}
 		}
+	}
+	else
+	{
+		qDebug() << "Has touch device!";
 
-		case fairytale::Difficulty::Normal:
+		switch (this->gameMode()->app()->difficulty())
 		{
-			factor = 0.3;
+			case fairytale::Difficulty::Easy:
+			{
+				factor = 0.6;
 
-			break;
-		}
+				break;
+			}
 
-		case fairytale::Difficulty::Hard:
-		{
-			factor = 0.4;
+			case fairytale::Difficulty::Normal:
+			{
+				factor = 0.7;
 
-			break;
-		}
+				break;
+			}
 
-		// It should not be possible to win with this difficulty at all.
-		case fairytale::Difficulty::Mahlerisch:
-		{
-			factor = 0.5;
+			case fairytale::Difficulty::Hard:
+			{
+				factor = 0.8;
 
-			break;
+				break;
+			}
+
+			// It should not be possible to win with this difficulty at all.
+			case fairytale::Difficulty::Mahlerisch:
+			{
+				factor = 0.9;
+
+				break;
+			}
 		}
 	}
 
-	const int availableWidth = qMax(rect().height(), rect().width());
-	const int result = int(double(availableWidth) * factor * floatingClipSpeedFactor());
+	const long long availableWidth = ((long long)(rect().height()) + (long long)(rect().width())) / 2;
+	const int result = (long double)(availableWidth) * factor * floatingClipSpeedFactor();
 
 	qDebug() << "Result:" << result;
 
 	// make sure it does not stop
-	return result;
+	return qMax(1, result);
 }
 
 void RoomWidget::dragEnterEvent(QDragEnterEvent *event)
@@ -427,12 +468,12 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 
 void RoomWidget::playSuccessSound()
 {
-	playSoundFromList(m_successSoundPaths);
+	playSoundFromList(m_successSoundPaths, true);
 }
 
 void RoomWidget::playFailSound()
 {
-	playSoundFromList(m_failSoundPaths);
+	playSoundFromList(m_failSoundPaths, false);
 }
 
 void RoomWidget::cancelDrags()
@@ -476,6 +517,11 @@ void RoomWidget::mouseRelease()
 	if (m_won)
 	{
 		m_won = false;
+
+		/*
+		 * Make sure that the success sound is not cut.
+		 */
+		this->waitForSuccessSound();
 
 		emit gotIt();
 	}
@@ -564,7 +610,7 @@ void RoomWidget::changeEvent(QEvent* event)
 	RoomWidgetParent::changeEvent(event);
 }
 
-void RoomWidget::playSoundFromList(const QStringList &soundEffects)
+void RoomWidget::playSoundFromList(const QStringList &soundEffects, bool immediately)
 {
 	if (!soundEffects.isEmpty())
 	{
@@ -572,7 +618,7 @@ void RoomWidget::playSoundFromList(const QStringList &soundEffects)
 		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
 		const int value = distr(eng);
 		qDebug() << "Play sound:" << soundEffects[value];
-		gameMode()->app()->playSound(QUrl(soundEffects[value]));
+		gameMode()->app()->playSound(QUrl(soundEffects[value]), immediately);
 	}
 }
 
@@ -625,6 +671,16 @@ void RoomWidget::updateSounds()
 		{
 			qDebug() << "Invalid success sound path" << sound;
 		}
+	}
+}
+
+void RoomWidget::waitForSuccessSound()
+{
+	QEventLoop eventLoop(this);
+
+	while (gameMode()->app()->isSoundPlaying())
+	{
+		eventLoop.processEvents(QEventLoop::ExcludeUserInputEvents, 500);
 	}
 }
 

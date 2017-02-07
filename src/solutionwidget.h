@@ -35,14 +35,12 @@ class SolutionWidget : public QWidget
 	protected:
 		virtual void dragEnterEvent(QDragEnterEvent *event) override;
 		virtual void dropEvent(QDropEvent *event) override;
-		virtual void showEvent(QShowEvent *event) override;
 
 	private:
 		fairytale *m_app;
 		typedef QMap<fairytale::ClipKey, IconLabel*> IconLabels;
 		IconLabels m_iconLabels;
 		int m_solveCounter;
-		QWidget *m_centralWidget;
 };
 
 inline fairytale* SolutionWidget::app() const

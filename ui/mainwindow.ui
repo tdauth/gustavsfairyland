@@ -40,7 +40,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-364</y>
+         <y>0</y>
          <width>491</width>
          <height>722</height>
         </rect>
@@ -523,7 +523,7 @@
       </layout>
      </widget>
     </item>
-    <item row="5" column="0">
+    <item row="5" column="0" alignment="Qt::AlignHCenter">
      <widget class="QLabel" name="versionLabel">
       <property name="text">
        <string>Version:</string>

@@ -121,14 +121,14 @@
         </sizepolicy>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QPushButton" name="clearPushButton">
+        <item>
+         <widget class="QPushButton" name="okPushButton">
           <property name="text">
-           <string>Clear All</string>
+           <string>OK</string>
           </property>
           <property name="icon">
            <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-            <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
+            <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -139,13 +139,13 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="okPushButton">
+         <widget class="QPushButton" name="clearPushButton">
           <property name="text">
-           <string>OK</string>
+           <string>Clear All</string>
           </property>
           <property name="icon">
            <iconset resource="../oxygen-icons-png-master/oxygen_windows.qrc">
-            <normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</normaloff>:/themes/oxygen/32x32/actions/dialog-ok-apply.png</iconset>
+            <normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</normaloff>:/themes/oxygen/32x32/actions/dialog-close.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -164,6 +164,7 @@
  </widget>
  <tabstops>
   <tabstop>tableWidget</tabstop>
+  <tabstop>okPushButton</tabstop>
   <tabstop>clearPushButton</tabstop>
  </tabstops>
  <resources>

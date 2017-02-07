@@ -70,4 +70,7 @@ Run the Bash script "compressvideos.sh" and make sure it creates videos which ca
 
 Set the option USE_COMPRESSED_FILES in CMake and it will install the compressed files instead.
 
+There is several Bash scripts for building the game using Jenkins. You can adapt the variables in those scripts for your own environment.
+For example "buildandroid_x86.sh" builds the game for Android with the x86 architecture and a specified API level.
+
 Contact: tamino@cdauth.eu

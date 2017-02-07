@@ -148,6 +148,11 @@ void GameModeSequence::resume()
 	{
 		this->m_roomWidget->resume();
 	}
+
+	if (this->m_solutionWidget != nullptr)
+	{
+		this->m_solutionWidget->setEnabled(true);
+	}
 }
 
 void GameModeSequence::pause()
@@ -155,6 +160,11 @@ void GameModeSequence::pause()
 	if (this->m_roomWidget != nullptr)
 	{
 		this->m_roomWidget->pause();
+	}
+
+	if (this->m_solutionWidget != nullptr)
+	{
+		this->m_solutionWidget->setEnabled(false);
 	}
 }
 
@@ -168,7 +178,7 @@ void GameModeSequence::end()
 	this->m_remainingClips.clear();
 
 	// NOTE Never clear clips. This will lead to a segmentation fault if the drop event is not handled yet.
-	m_solutionWidget->hide();
+	this->m_solutionWidget->hide();
 
 	// Dont clear the state for the custom fairy tale dialog
 	//setState(State::None);
@@ -229,9 +239,12 @@ void GameModeSequence::start()
 		connect(this->m_solutionWidget, &SolutionWidget::solved, this, &GameModeSequence::solved);
 		connect(this->m_solutionWidget, &SolutionWidget::failed, this, &GameModeSequence::failed);
 		this->app()->gameAreaLayout()->addWidget(this->m_solutionWidget);
+		this->app()->gameAreaLayout()->setAlignment(this->m_solutionWidget, Qt::AlignHCenter | Qt::AlignBottom);
 	}
 
 	m_solutionWidget->show();
+	m_solutionWidget->raise();
+	this->m_solutionWidget->setEnabled(true);
 
 	this->m_roomWidget->setEnabled(false);
 	this->m_roomWidget->setSolutionWidget(this->m_solutionWidget);

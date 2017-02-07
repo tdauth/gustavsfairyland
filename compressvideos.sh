@@ -34,6 +34,18 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	RESOLUTION="1440x810"
 	BITRATE_LIMIT="2m"
 
+	# Use a free video codec on Linux, otherwise it won't work on Ubuntu etc.
+	# Bitrate limit is not supported, use qscale instead.
+	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -q:v 6 -q:a 5 -vcodec theora -acodec vorbis -strict -2 -ac 2 -f ogg "$compressedNameUnix"
+
+	# .wmv for Windows. QtMultimedia uses a different backend on Windows 10 which does not support h264.
+	# Use qscale, otherwise the quality is shit!
+	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -qscale:v 6 -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
+
+	# Android should have really small videos for a better performance.
+	RESOLUTION="480x270"
+	BITRATE_LIMIT="512k"
+
 	# Make sure the codec is supported on Android:
 	# https://developer.android.com/guide/appendix/media-formats.html
 	# Use for sound: aac
@@ -42,18 +54,8 @@ find ./clips -type f \( \( -iname "*.avi" -o -iname "*.mkv" \) -and -not -iname 
 	# mp3 cant be used with h264 and mp4. It leads to the following error: MPEG4Extractor: MP3 track in MP4/3GPP file is not supported
 	# -strict -2 is required to enforce encoding support for aac.
 	# Although it ends with .mkv or .avi to use the same filenames as specified in the XML file, it actually uses always mp4 since this is supported by Android.
-	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec aac -strict -2 -f mp4 "$compressedNameUnix"
-
-	# .wmv for Windows. QtMultimedia uses a different backend on Windows 10 which does not support h264.
-	# Use qscale, otherwise the quality is shit!
-	ffmpeg -nostdin -i "$line" -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -qscale:v 6 -vcodec msmpeg4v2 -acodec wmav2 -ac 2 -strict -2 -f avi "$compressedNameWindows"
-
-	# Android should have really small videos for a better performance.
-	RESOLUTION="480x270"
-	BITRATE_LIMIT="500k"
-
 	# Deinterlaced for Android
 	# http://video.stackexchange.com/questions/17396/how-to-deinterlacing-with-ffmpeg
 	# Crash with QtAV and aac audio codec: https://github.com/wang-bin/QtAV/issues/138
-	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -acodec vorbis -ac 2 -strict -2 -f mp4 "$compressedNameAndroid"
+	ffmpeg -nostdin -i "$line" -vf yadif -s "$RESOLUTION" -b:v "$BITRATE_LIMIT" -vcodec h264 -preset veryslow -crf 20 -acodec vorbis -ac 2 -strict -2 -f mp4 "$compressedNameAndroid"
 done

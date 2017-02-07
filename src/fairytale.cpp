@@ -212,15 +212,7 @@ void fairytale::openEditor()
 
 bool fairytale::hasTouchDevice()
 {
-	foreach (const QTouchDevice *device, QTouchDevice::devices())
-	{
-		if (device->capabilities() & QTouchDevice::MouseEmulation)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return !QTouchDevice::devices().isEmpty();
 }
 
 QRect fairytale::screenRect()
@@ -259,8 +251,8 @@ qreal fairytale::screenHeightRatio()
 
 qreal fairytale::pixelRatio()
 {
-	const long double currentArea = (long double)screenRect().height() * (long double)screenRect().width();
-	const long double referenceArea = (long double)referenceRect().height() * (long double)referenceRect().width();
+	const long double currentArea = ((long double)screenRect().height() + (long double)screenRect().width()) / 2.0;
+	const long double referenceArea = ((long double)referenceRect().height() + (long double)referenceRect().width()) / 2.0;
 
 	//qDebug() << "reference area" << referenceArea << "current area" << currentArea;
 
@@ -2050,6 +2042,10 @@ void fairytale::finishAudio(QMediaPlayer::State state)
 			queuePlayerSound(m_playerSounds.dequeue());
 		}
 	}
+	else if (state == QMediaPlayer::PlayingState)
+	{
+		m_playNewSound = false;
+	}
 }
 
 void fairytale::afterNarrator()
@@ -2192,13 +2188,12 @@ QString fairytale::description(Clip *startPersonClip, int turn, Clip *clip, bool
 	return description;
 }
 
-bool fairytale::playSound(const QUrl &url)
+bool fairytale::playSound(const QUrl &url, bool immediately)
 {
-	if (m_playNewSound)
+	if (m_playNewSound || immediately)
 	{
 		qDebug() << "Play sound" << url << "because none is playing";
 
-		m_playNewSound = false;
 		m_audioPlayer->setMedia(url);
 		m_audioPlayer->play();
 
@@ -2208,6 +2203,11 @@ bool fairytale::playSound(const QUrl &url)
 	qDebug() << "Dont play sound" << url << "because one is playing";
 
 	return false;
+}
+
+bool fairytale::isSoundPlaying() const
+{
+	return !m_playNewSound;
 }
 
 void fairytale::queuePlayerSound(const PlayerSoundData &data)

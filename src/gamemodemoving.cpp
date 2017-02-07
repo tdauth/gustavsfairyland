@@ -84,6 +84,8 @@ void GameModeMoving::afterNarrator()
 
 	qDebug() << "Starting room widget is shown" << this->m_roomWidget->isVisible();
 	this->m_roomWidget->show();
+	qDebug() << "Starting room widget is shown 2" << this->m_roomWidget->isVisible();
+	qDebug() << "Gamea Area visible" << this->app()->gameAreaWidget()->isVisible();
 	this->m_roomWidget->start();
 }
 
@@ -211,16 +213,6 @@ void GameModeMoving::lost()
 	this->setState(State::Lost);
 
 	this->app()->onFinishTurn();
-}
-
-int GameModeMoving::startSpeed() const
-{
-	if (this->app()->hasTouchDevice())
-	{
-		return FLOATING_CLIP_PIXELS_PER_S + 400;
-	}
-
-	return FLOATING_CLIP_PIXELS_PER_S;
 }
 
 #include "gamemodemoving.moc"

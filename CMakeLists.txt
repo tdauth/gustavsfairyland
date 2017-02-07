@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.4.3)
 
 # TODO use Hunter for easier dependency resolving
-include("cmake/HunterGate.cmake")
+#include("cmake/HunterGate.cmake")
 
-HunterGate(
-	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
-	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
-)
+#HunterGate(
+#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
+#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
+#)
 
 project(gustavsfairyland)
 
@@ -17,6 +17,10 @@ if (ANDROID)
 	set(ANDROID_ICON "@drawable/logo")
 	include("cmake/AddQtAndroidApk.cmake" REQUIRED)
 	include_directories("${ANDROID_NDK}/sources/android/native_app_glue/")
+
+	if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+		add_compile_options(-O3) # Make it faster on Android
+	endif ()
 endif ()
 
 enable_testing()

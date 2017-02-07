@@ -5,25 +5,13 @@
 #include "iconlabel.h"
 #include "clip.h"
 
-SolutionWidget::SolutionWidget(fairytale *app, QWidget *parent) : QWidget(parent), m_app(app), m_solveCounter(0), m_centralWidget(nullptr)
+SolutionWidget::SolutionWidget(fairytale *app, QWidget *parent) : QWidget(parent), m_app(app), m_solveCounter(0)
 {
+	this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
 	this->setAcceptDrops(true);
+	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_centralWidget = new QWidget(this);
-	m_centralWidget->setLayout(new QHBoxLayout());
-	m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	/*
-	QScrollArea *scrollArea = new QScrollArea();
-	scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	scrollArea->setWidget(m_centralWidget);
-	*/
-
-	QHBoxLayout *layout = new QHBoxLayout();
-	this->setLayout(layout);
-	layout->addWidget(m_centralWidget, 0, Qt::AlignCenter);
-	//layout->addWidget(scrollArea, 0, Qt::AlignCenter);
-	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+	this->setLayout(new QHBoxLayout());
 }
 
 void SolutionWidget::fail(const fairytale::ClipKey &clipKey)
@@ -98,22 +86,17 @@ void SolutionWidget::dropEvent(QDropEvent *event)
 	QWidget::dropEvent(event);
 }
 
-void SolutionWidget::showEvent(QShowEvent *event)
-{
-	QWidget::showEvent(event);
-}
-
 void SolutionWidget::addClip(const fairytale::ClipKey &clipKey)
 {
-	IconLabel *iconLabel = new IconLabel(m_centralWidget);
+	IconLabel *iconLabel = new IconLabel(this);
 	iconLabel->setMinimumSize(128, 128);
-	iconLabel->setEnabled(false); // show with grey
+	iconLabel->setEnabled(false); // show with grey as long as the clip is not dragged and dropped
 	iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_iconLabels.insert(clipKey, iconLabel);
 	const Clip *clip = m_app->getClipByKey(clipKey);
 	iconLabel->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
-	m_centralWidget->layout()->addWidget(iconLabel);
-	m_centralWidget->layout()->setAlignment(iconLabel, Qt::AlignCenter);
+	this->layout()->addWidget(iconLabel);
+	this->layout()->setAlignment(iconLabel, Qt::AlignCenter);
 }
 
 void SolutionWidget::clearClips()
