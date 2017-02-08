@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.4.3)
 
 # TODO use Hunter for easier dependency resolving
-#include("cmake/HunterGate.cmake")
+include("cmake/HunterGate.cmake")
 
-#HunterGate(
-#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
-#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
-#)
+HunterGate(
+	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
+	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
+)
 
 project(gustavsfairyland)
 
-#hunter_add_package(Qt)
+hunter_add_package(Qt COMPONENTS qtmultimedia qtsvg qtxmlpatterns)
 
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
