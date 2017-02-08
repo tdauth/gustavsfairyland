@@ -1,0 +1,24 @@
+language: cpp
+compiler:
+- clang
+- gcc
+os:
+- linux
+- windows
+before_install:
+  - sudo add-apt-repository ppa:beineri/opt-qt541 -y
+  - sudo apt-get update
+  - brew update
+install:
+  - sudo apt-get install qt54base
+script:
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=Debug .. && make && cpack .
+addons:
+  apt:
+    sources:
+     # - debian-sid
+    packages:
+      - cmake
+     # - qt5-default
