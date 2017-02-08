@@ -551,6 +551,7 @@ void Player::play()
 {
 	this->m_musicWasMutedBefore = this->app()->isMusicMuted();
 	this->app()->setMusicMuted(true);
+
 	// TODO wait for muted
 
 #ifdef USE_QTAV

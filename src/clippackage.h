@@ -42,6 +42,10 @@ class ClipPackage : public QObject
 		 * \brief A map of bonus clips which every package stores. They key is the unique ID of a bonus clip.
 		 */
 		typedef QMap<QString, BonusClip*> BonusClips;
+		/**
+		 * \brief A vector of URLs for the outro videos.
+		 * One entry per difficulty \ref fairytale::Difficulty. The difficulty can be used as index but make sure that the index is in bounds.
+		 */
 		typedef QVector<QUrl> Outros;
 
 		ClipPackage(fairytale *app, QObject *parent = nullptr);
@@ -60,6 +64,11 @@ class ClipPackage : public QObject
 		bool loadClipsFromArchive(const QString &file, const QString &clipsDir);
 		bool saveClipsToArchive(const QString &file);
 
+		/**
+		 * Loads the clips specified in the XML file \p file.
+		 * \param file An XML file which specifies all clips of the package.
+		 * \return Returns true if the clips have been loaded successfully. Otherwise it returns false.
+		 */
 		bool loadClipsFromFile(const QString &file);
 		bool saveClipsToFile(const QString &file);
 

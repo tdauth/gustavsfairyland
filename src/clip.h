@@ -10,7 +10,6 @@ class Clip : public AbstractClip
 {
 	public:
 		typedef QMap<QString, QUrl> Urls;
-		typedef QMap<QString, QString> Descriptions;
 
 		Clip(fairytale *app, QObject *parent = nullptr);
 		Clip(const Clip &clip, QObject *parent = nullptr);

@@ -168,7 +168,7 @@ void fairytale::showCustomFairytale()
 	}
 }
 
-void fairytale::settings()
+void fairytale::showSettings()
 {
 	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
 
@@ -179,6 +179,25 @@ void fairytale::settings()
 
 	settingsDialog()->update();
 	execInCentralWidgetIfNecessary(settingsDialog());
+
+	// continue game
+	if (pausedGame)
+	{
+		resumeGame();
+	}
+}
+
+void fairytale::showSettingsEx(std::function<void(QDialog*)> lambda)
+{
+	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
+
+	if (pausedGame)
+	{
+		pauseGame();
+	}
+
+	settingsDialog()->update();
+	execInCentralWidgetIfNecessaryEx(settingsDialog(), lambda);
 
 	// continue game
 	if (pausedGame)
@@ -516,7 +535,7 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	connect(creditsPushButton, &QPushButton::clicked, this, &fairytale::about);
 
 	connect(languagePushButton, &QPushButton::clicked, this, &fairytale::showLocaleDialog);
-	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::settings);
+	connect(settingsPushButton, &QPushButton::clicked, this, &fairytale::showSettings);
 	connect(quitPushButton, &QPushButton::clicked, this, &fairytale::close);
 
 	connect(this->m_player, &Player::stateChangedVideoAndSounds, this, &fairytale::onVideoAndSoundStateChanged);
@@ -600,11 +619,31 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	 * Therefore reset to the default clips directory and try to load the default clip packages.
 	 *
 	 * If the clips directory is different from the default dir ask for resetting it to make it easier for normal players
-	 * to use the latest clip files.
+	 * to use the latest clip files. Otherwise they continue to use some path from an older installation.
 	 */
 	if (this->m_clipPackages.isEmpty())
 	{
-		resetToDefaultClipPackages();
+		/*
+		 * There might be some errors when the clips directories do not exist. In this case the clip packages cannot be loaded which might prevent the player from
+		 * playing the game.
+		 */
+		if (!resetToDefaultClipPackages())
+		{
+			if (QMessageBox::question(this, tr("Error on loading all clip packages"), tr("Make sure that the clip packages are installed in the path which is configured in the setttings. Do you want to go to change the clips directory path now?"), QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+			{
+				this->showSettingsEx([](QDialog *dialog) {
+					SettingsDialog *settingsDialog = dynamic_cast<SettingsDialog*>(dialog);
+
+					if (settingsDialog != nullptr)
+					{
+						settingsDialog->showClipsGroupBox();
+						settingsDialog->changeClipsDirectory();
+					}
+
+				}
+				);
+			}
+		}
 	}
 	else
 	{
@@ -708,7 +747,22 @@ QString fairytale::defaultClipsDirectory() const
 	 */
 	return QString("assets:/clips");
 #else
-	return QString("/usr/share/gustavsfairyland/clips");
+	/*
+	 * By default this is the installation path for RPMs and DEB packages.
+	 */
+	QDir dir("/usr/share/gustavsfairyland/clips");
+
+	if (dir.exists() && dir.isReadable())
+	{
+		return dir.absolutePath();
+	}
+
+	/*
+	 * If it is the binary version it might be the relative path from the "bin" directory.
+	 */
+	dir = QDir(QCoreApplication::applicationDirPath() + "../share/gustavsfairyland/clips");
+
+	return dir.absolutePath(); // The absolute path is required for comparison at start since Settings uses the absolute path as well.
 #endif
 }
 
@@ -2569,6 +2623,10 @@ bool fairytale::loadDefaultClipPackage()
 	defaultClipPackages.push_back("custom.xml");
 
 	int i = 0;
+	/*
+	 * Return false if at least one failed since the one might lead to errors and the player has to be informed about the wrong clip package.
+	 */
+	bool oneFailed = false;
 
 	foreach (const QString &defaultClipPackage, defaultClipPackages)
 	{
@@ -2580,28 +2638,50 @@ bool fairytale::loadDefaultClipPackage()
 		if (fileInfo.exists() && fileInfo.isReadable())
 		{
 			ClipPackage *package = new ClipPackage(this);
+			bool checkedPackage = package->loadClipsFromFile(filePath);
 
-			if (package->loadClipsFromFile(filePath))
+			if (checkedPackage)
 			{
-				this->addClipPackage(package);
+				/**
+				 * Check if the first clip video file exists and is readable to check if the clip package can be loaded successfully when starting the game.
+				 */
+				if (!package->clips().isEmpty())
+				{
+					const Clip *clip = package->clips().begin().value();
+					const QString clipFilePath = this->resolveClipUrl(clip->videoUrl()).toLocalFile();
+					const QFileInfo clipFileInfo(clipFilePath);
+					checkedPackage = clipFileInfo.exists() && clipFileInfo.isReadable();
+
+					qDebug() << "Checked first video clip of package" << package->id() << "with result" << checkedPackage << "and video file path" << clipFilePath;
+				}
+
+				if (checkedPackage)
+				{
+					this->addClipPackage(package);
+				}
 			}
-			else
+
+			if (!checkedPackage)
 			{
 				delete package;
 				package = nullptr;
 
 				qDebug() << "Error on loading clip package:" << fileInfo.absoluteFilePath();
+
+				oneFailed = true;
 			}
 		}
 		else
 		{
 			qDebug() << "Default clip package does not exist:" << fileInfo.absoluteFilePath();
+
+			oneFailed = true;
 		}
 
 		++i;
 	}
 
-	return !this->clipPackages().isEmpty();
+	return !oneFailed;
 }
 
 bool fairytale::resetToDefaultClipPackages()

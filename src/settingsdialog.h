@@ -48,6 +48,11 @@ class SettingsDialog : public TranslatedWidget, protected Ui::SettingsDialog
 		 */
 		void removeSelected();
 
+		/**
+		 * Checks the clips group box and shows the inner widget.
+		 */
+		void showClipsGroupBox();
+
 	private slots:
 		void itemDoubleClicked(QTreeWidgetItem *item, int column);
 

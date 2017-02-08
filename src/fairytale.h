@@ -94,7 +94,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void cancelGame();
 		void showCustomFairytale();
-		void settings();
+		void showSettings();
 		void openEditor();
 		void showHighScores();
 		/**
@@ -505,6 +505,8 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda);
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
+
+		void showSettingsEx(std::function<void(QDialog*)> lambda);
 
 		/**
 		 * Gets a clip package by its unique ID.

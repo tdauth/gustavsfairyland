@@ -69,7 +69,7 @@ void SettingsDialog::restoreDefaults()
 
 void SettingsDialog::changeClipsDirectory()
 {
-	const QUrl clipsDirUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Clips Directory"));
+	const QUrl clipsDirUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Clips Directory"), m_clipsDir);
 
 	if (!clipsDirUrl.isEmpty() && clipsDirUrl.isValid())
 	{
@@ -305,6 +305,12 @@ SettingsDialog::SettingsDialog(fairytale *app, QWidget *parent) : TranslatedWidg
 
 	this->clipsGroupBox->setChecked(false);
 	this->clipsWidget->hide();
+}
+
+void SettingsDialog::showClipsGroupBox()
+{
+	this->clipsGroupBox->setChecked(true);
+	this->clipsWidget->show();
 }
 
 void SettingsDialog::fill(const fairytale::ClipPackages &packages)
