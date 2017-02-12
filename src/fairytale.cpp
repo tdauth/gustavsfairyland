@@ -19,6 +19,7 @@
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
 #include "gamemodesequence.h"
+#include "gamemodemultiplayer.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -567,6 +568,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
 	GameModeSequence *gameModeSequence = new GameModeSequence(this);
 	m_gameModes.insert(gameModeSequence->id(), gameModeSequence);
+	GameModeMultiplayer *gameModeMultiplayer = new GameModeMultiplayer(this);
+	m_gameModes.insert(gameModeMultiplayer->id(), gameModeMultiplayer);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -1844,6 +1847,9 @@ void fairytale::nextTurn()
 		case GameMode::State::None:
 		{
 			QMessageBox::warning(this, tr("Invalid gamemode"), tr("The gamemode has invalid behaviour."));
+
+			// end game for safety
+			this->gameOver();
 
 			break;
 		}

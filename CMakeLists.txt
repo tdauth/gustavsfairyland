@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.4.3)
 
 # TODO use Hunter for easier dependency resolving
-include("cmake/HunterGate.cmake")
+#include("cmake/HunterGate.cmake")
 
-HunterGate(
-	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
-	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
-)
+#HunterGate(
+#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
+#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
+#)
 
 project(gustavsfairyland)
 
-hunter_add_package(Qt COMPONENTS qtmultimedia qtsvg qtxmlpatterns)
+#hunter_add_package(Qt COMPONENTS qtmultimedia qtsvg qtxmlpatterns)
 
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
@@ -82,6 +82,7 @@ find_package(Qt5MultimediaWidgets REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
+find_package(Qt5Network REQUIRED)
 
 # Requires QtAV for playing videos
 if (USE_QTAV)
@@ -147,6 +148,7 @@ set(fairyland_HEADERS
 	src/customfairytaledialog.h
 	src/gamemode.h
 	src/gamemodemoving.h
+	src/gamemodemultiplayer.h
 	src/gamemodeoneoutoffour.h
 	src/gamemodecreative.h
 	src/gamemodesequence.h
@@ -185,6 +187,7 @@ set(fairyland_SRCS
 	src/customfairytaledialog.cpp
 	src/gamemode.cpp
 	src/gamemodemoving.cpp
+	src/gamemodemultiplayer.cpp
 	src/gamemodeoneoutoffour.cpp
 	src/gamemodecreative.cpp
 	src/gamemodesequence.cpp
@@ -292,7 +295,7 @@ endif ()
 add_subdirectory(src)
 
 add_library(gustavsfairylandlib ${fairyland_SRCS} ${fairyland_UI_HEADERS})
-target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+target_link_libraries(gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg Qt5::Network)
 
 if (USE_QTMEL)
 	target_link_libraries(gustavsfairylandlib "${QT_MEL_LIBRARIES}" ${AV_LIBRARIES} ${OpenCV_LIBRARIES} ${ZLIB_LIBRARIES})
@@ -325,7 +328,7 @@ else ()
 	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
 endif()
 
-target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg)
+target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg Qt5::Network)
 
 if (USE_QTAV)
 	target_link_libraries(gustavsfairyland Qt5::OpenGL ${QTAV_LIBRARIES})

@@ -738,6 +738,24 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>GameModeMultiplayer</name>
+    <message>
+        <location filename="../src/gamemodemultiplayer.h" line="46"/>
+        <source>Multiplayer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gamemodemultiplayer.cpp" line="76"/>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <location filename="../src/gamemodemultiplayer.cpp" line="76"/>
+        <source>HTTP error %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameModeOneOutOfFour</name>
     <message>
         <location filename="../src/gamemodeoneoutoffour.h" line="77"/>
@@ -1295,137 +1313,137 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>fairytale</name>
     <message>
-        <location filename="../src/fairytale.cpp" line="142"/>
+        <location filename="../src/fairytale.cpp" line="143"/>
         <source>Cancel Game?</source>
         <translation>Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="142"/>
+        <location filename="../src/fairytale.cpp" line="143"/>
         <source>Do you want to cancel the game?</source>
         <translation>Wollen Sie das Spiel abbrechen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="404"/>
         <location filename="../src/fairytale.cpp" line="405"/>
-        <location filename="../src/fairytale.cpp" line="1673"/>
-        <location filename="../src/fairytale.cpp" line="1674"/>
+        <location filename="../src/fairytale.cpp" line="406"/>
+        <location filename="../src/fairytale.cpp" line="1676"/>
+        <location filename="../src/fairytale.cpp" line="1677"/>
         <source>Pause Game (P)</source>
         <translation>Spiel anhalten (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="431"/>
+        <location filename="../src/fairytale.cpp" line="432"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="500"/>
+        <location filename="../src/fairytale.cpp" line="501"/>
         <source>Unlock all bonus clips</source>
         <translation>Alle Bonus-Clips freischalten</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="504"/>
+        <location filename="../src/fairytale.cpp" line="505"/>
         <source>Lock all bonus clips</source>
         <translation>Alle Bonus-Clips verbergen</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="509"/>
-        <location filename="../src/fairytale.cpp" line="2290"/>
+        <location filename="../src/fairytale.cpp" line="510"/>
+        <location filename="../src/fairytale.cpp" line="2296"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="546"/>
+        <location filename="../src/fairytale.cpp" line="547"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="550"/>
+        <location filename="../src/fairytale.cpp" line="551"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="632"/>
+        <location filename="../src/fairytale.cpp" line="635"/>
         <source>Error on loading all clip packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="632"/>
+        <location filename="../src/fairytale.cpp" line="635"/>
         <source>Make sure that the clip packages are installed in the path which is configured in the setttings. Do you want to go to change the clips directory path now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="660"/>
+        <location filename="../src/fairytale.cpp" line="663"/>
         <source>Use default clip packages?</source>
         <translation>Standard-Clip-Pakete verwenden?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="660"/>
+        <location filename="../src/fairytale.cpp" line="663"/>
         <source>Your clip package directory has been changed. This might be due to an old installation of this game. Some of the latest clips might not be available. Do you want to use the default clip packages of the current installation?</source>
         <translation>Ihr Clip-Paket-Verzeichnis wurde geändert. Das kann an einer alten Installation dieses Spiels liegen. Einige der neusten Clips sind daher möglicherweise nicht verfügbar. Wollen Sie die Standard-Clip-Pakete der aktuellen Installation verwenden?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1255"/>
+        <location filename="../src/fairytale.cpp" line="1258"/>
         <source>Added new clip</source>
         <translation>Neuen Clip hinzugefügt</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1255"/>
+        <location filename="../src/fairytale.cpp" line="1258"/>
         <source>A new clip has been added and is available in the game now.</source>
         <translation>Ein neuer Clip wurde hinzugefügt und ist nun im Spiel verfügbar.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1262"/>
+        <location filename="../src/fairytale.cpp" line="1265"/>
         <source>Error on Saving Custom Clips Package</source>
         <translation>Fehler beim Speichern des eigenen Clip-Pakets</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1262"/>
+        <location filename="../src/fairytale.cpp" line="1265"/>
         <source>Error on Saving Custom Clips Package.</source>
         <translation>Fehler beim Speichern des eigenen Clip-Paket.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1268"/>
+        <location filename="../src/fairytale.cpp" line="1271"/>
         <source>Missing Custom Clip Dir</source>
         <translation>Eigenes Clip-Verzeichnis fehlt</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1268"/>
+        <location filename="../src/fairytale.cpp" line="1271"/>
         <source>Custom Clip Dir is missing.</source>
         <translation>Eigenes Clip-Verzeichnis fehlt.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1273"/>
+        <location filename="../src/fairytale.cpp" line="1276"/>
         <source>Missing Custom Clip Package</source>
         <translation>Eigenes Clip-Paket fehlt</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1273"/>
+        <location filename="../src/fairytale.cpp" line="1276"/>
         <source>Custom Clip Package is missing.</source>
         <translation>Clip-Paket mit eigenen Clips fehlt.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1316"/>
+        <location filename="../src/fairytale.cpp" line="1319"/>
         <source>Unable to start the game</source>
         <translation>Spiel konnte nicht gestartet werden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1316"/>
+        <location filename="../src/fairytale.cpp" line="1319"/>
         <source>Unable to start the game since clips are missing. Try to restore the default settings.</source>
         <translation>Das Spiel konnte nicht gestartet werden, da Clips fehlen. Versuchen Sie die Standardeinstellungen wieder herzustellen.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1447"/>
-        <location filename="../src/fairytale.cpp" line="1489"/>
+        <location filename="../src/fairytale.cpp" line="1450"/>
+        <location filename="../src/fairytale.cpp" line="1492"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1558"/>
+        <location filename="../src/fairytale.cpp" line="1561"/>
         <source>Unlocked Bonus Clip!</source>
         <translation>Bonus-Clip freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1558"/>
+        <location filename="../src/fairytale.cpp" line="1561"/>
         <source>Unlocked Bonus clip &quot;%1&quot;! Do you want to see it now?</source>
         <translation>Bonus-Clip &quot;%1&quot; freigeschaltet! Wollen Sie ihn jetzt anschauen?</translation>
     </message>
@@ -1434,82 +1452,82 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Bonus-Clip %1 freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1568"/>
+        <location filename="../src/fairytale.cpp" line="1571"/>
         <source>Unlocked all Bonus Clips already!</source>
         <translation>Es wurden bereits alle Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1568"/>
+        <location filename="../src/fairytale.cpp" line="1571"/>
         <source>You have already unlocked all available bonus clips!</source>
         <translation>Sie haben bereits alle verfügbaren Bonus-Clips freigeschaltet!</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1600"/>
+        <location filename="../src/fairytale.cpp" line="1603"/>
         <source>Play video?</source>
         <translation>Video abspielen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1600"/>
+        <location filename="../src/fairytale.cpp" line="1603"/>
         <source>Do you want to see the video of your fairytale now?</source>
         <translation>Wollen Sie das Video Ihres Märchens nun sehen?</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1648"/>
-        <location filename="../src/fairytale.cpp" line="1649"/>
+        <location filename="../src/fairytale.cpp" line="1651"/>
+        <location filename="../src/fairytale.cpp" line="1652"/>
         <source>Continue Game (P)</source>
         <translation>Spiel fortsetzen (P)</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1807"/>
+        <location filename="../src/fairytale.cpp" line="1810"/>
         <source>and</source>
         <translation>und</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1846"/>
-        <location filename="../src/fairytale.cpp" line="1898"/>
+        <location filename="../src/fairytale.cpp" line="1849"/>
+        <location filename="../src/fairytale.cpp" line="1904"/>
         <source>Invalid gamemode</source>
         <translation>Ungültiger Spielmodus</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="1846"/>
-        <location filename="../src/fairytale.cpp" line="1898"/>
+        <location filename="../src/fairytale.cpp" line="1849"/>
+        <location filename="../src/fairytale.cpp" line="1904"/>
         <source>The gamemode has invalid behaviour.</source>
-        <translation>Der Spielmodus hat weist ein ungültiges Verhalten auf.</translation>
+        <translation>Der Spielmodus weist ein ungültiges Verhalten auf.</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2176"/>
+        <location filename="../src/fairytale.cpp" line="2182"/>
         <source>%1 Seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2200"/>
-        <location filename="../src/fairytale.cpp" line="2234"/>
+        <location filename="../src/fairytale.cpp" line="2206"/>
+        <location filename="../src/fairytale.cpp" line="2240"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2204"/>
-        <location filename="../src/fairytale.cpp" line="2238"/>
+        <location filename="../src/fairytale.cpp" line="2210"/>
+        <location filename="../src/fairytale.cpp" line="2244"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2211"/>
+        <location filename="../src/fairytale.cpp" line="2217"/>
         <source>and &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>und &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2215"/>
+        <location filename="../src/fairytale.cpp" line="2221"/>
         <source>and %1</source>
         <translation>und %1</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2222"/>
+        <location filename="../src/fairytale.cpp" line="2228"/>
         <source>%1 and &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>%1 und &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fairytale.cpp" line="2226"/>
+        <location filename="../src/fairytale.cpp" line="2232"/>
         <source>%1 and %2</source>
         <translation>%1 und %2</translation>
     </message>
