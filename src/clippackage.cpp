@@ -274,7 +274,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (imageBlockExists)
 		{
-			const QString filePath = clip->imageUrl().toLocalFile();
+			const QString filePath = fairytale::filePath(clip->imageUrl());
 
 			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
@@ -291,7 +291,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		while (iterator != clip->narratorUrls().constEnd())
 		{
-			const QString filePath = iterator.value().toLocalFile();
+			const QString filePath = fairytale::filePath(iterator.value());
 			Block narratorBlock;
 
 			if (!writeBlock(filePath, f, narratorBlock, offset, filePath, blocks))
@@ -312,7 +312,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (videoBlockExists)
 		{
-			const QString filePath = clip->videoUrl().toLocalFile();
+			const QString filePath = fairytale::filePath(clip->videoUrl());
 
 			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{
@@ -374,7 +374,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (imageBlockExists)
 		{
-			const QString filePath = clip->imageUrl().toLocalFile();
+			const QString filePath = fairytale::filePath(clip->imageUrl());
 
 			if (!writeBlock(filePath, f, imageBlock, offset, filePath, blocks))
 			{
@@ -390,7 +390,7 @@ bool ClipPackage::saveClipsToArchive(const QString &file)
 
 		if (videoBlockExists)
 		{
-			const QString filePath = clip->videoUrl().toLocalFile();
+			const QString filePath = fairytale::filePath(clip->videoUrl());
 
 			if (!writeBlock(filePath, f, videoBlock, offset, filePath, blocks))
 			{

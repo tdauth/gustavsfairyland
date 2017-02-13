@@ -173,12 +173,8 @@ void CustomFairytaleDialog::addClip(const fairytale::ClipKey &clipKey)
 	label->setMaximumSize(iconSize);
 
 	const Clip *clip = m_app->getClipByKey(clipKey);
+	const QString imageFile = fairytale::filePath(m_app->resolveClipUrl(clip->imageUrl()));
 
-#ifndef Q_OS_ANDROID
-	const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).toLocalFile();
-#else
-	const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).url();
-#endif
 	label->setFile(imageFile);
 	label->setEnabled(true); // dont grey out the clip icon
 	this->playFinalVideoPushButton->show();

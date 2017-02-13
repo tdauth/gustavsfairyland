@@ -6,7 +6,7 @@
 #include "roomwidget.h"
 #include "gamemodemoving.h"
 #include "fairytale.h"
-#include "door.h"
+#include "window.h"
 #include "speed.h"
 
 FloatingClip::FloatingClip(RoomWidget *parent, int width, int speed) : FloatingClipParent(parent), m_roomWidget(parent), m_speed(speed), m_width(width), m_x(0), m_y(0), m_dirX(1), m_dirY(1), m_collisionDistance(0), m_pause(false)
@@ -169,22 +169,22 @@ void FloatingClip::updatePosition(qint64 elapsedTime)
 		// check the wind first and calculate direction
 		if (!collided && m_collisionDistance == 0)
 		{
-			if (this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen())
+			if (this->m_roomWidget->windows().at((int)Window::Location::North)->isOpen() && !this->m_roomWidget->windows().at((int)Window::Location::South)->isOpen())
 			{
 				setDirY(1);
 			}
 
-			if (this->m_roomWidget->doors().at((int)Door::Location::South)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::North)->isOpen())
+			if (this->m_roomWidget->windows().at((int)Window::Location::South)->isOpen() && !this->m_roomWidget->windows().at((int)Window::Location::North)->isOpen())
 			{
 				setDirY(-1);
 			}
 
-			if (this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen())
+			if (this->m_roomWidget->windows().at((int)Window::Location::West)->isOpen() && !this->m_roomWidget->windows().at((int)Window::Location::East)->isOpen())
 			{
 				setDirX(1);
 			}
 
-			if (this->m_roomWidget->doors().at((int)Door::Location::East)->isOpen() && !this->m_roomWidget->doors().at((int)Door::Location::West)->isOpen())
+			if (this->m_roomWidget->windows().at((int)Window::Location::East)->isOpen() && !this->m_roomWidget->windows().at((int)Window::Location::West)->isOpen())
 			{
 				setDirX(-1);
 			}
@@ -288,11 +288,7 @@ void FloatingClip::updateScaledClipImage()
 	if (clip != nullptr)
 	{
 		const QUrl clipUrl = m_roomWidget->gameMode()->app()->resolveClipUrl(clip->imageUrl());
-#ifndef Q_OS_ANDROID
-		const QString filePath = clipUrl.toLocalFile();
-#else
-		const QString filePath = clipUrl.url();
-#endif
+		const QString filePath = fairytale::filePath(clipUrl);
 		this->m_scaledImage = QImage(filePath).scaled(width, width, Qt::KeepAspectRatio);
 		Q_ASSERT(!this->m_scaledImage.isNull());
 		this->m_scaledImageDisabled = QImage(filePath).convertToFormat(QImage::Format_Grayscale8).scaled(width, width, Qt::KeepAspectRatio);

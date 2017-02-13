@@ -3,7 +3,7 @@
 #include <QDesktopWidget>
 
 #include "roomwidget.h"
-#include "door.h"
+#include "window.h"
 #include "floatingclip.h"
 #include "speed.h"
 #include "gamemodemoving.h"
@@ -23,10 +23,10 @@ void RoomWidget::changeWind()
 		case 0:
 		{
 			//qDebug() << "North wind";
-			m_doors[(int)Door::Location::North]->open();
-			m_doors[(int)Door::Location::South]->close();
-			m_doors[(int)Door::Location::West]->close();
-			m_doors[(int)Door::Location::East]->close();
+			m_windows[(int)Window::Location::North]->open();
+			m_windows[(int)Window::Location::South]->close();
+			m_windows[(int)Window::Location::West]->close();
+			m_windows[(int)Window::Location::East]->close();
 
 			break;
 		}
@@ -35,10 +35,10 @@ void RoomWidget::changeWind()
 		case 1:
 		{
 			//qDebug() << "North west wind";
-			m_doors[(int)Door::Location::North]->open();
-			m_doors[(int)Door::Location::South]->close();
-			m_doors[(int)Door::Location::West]->open();
-			m_doors[(int)Door::Location::East]->close();
+			m_windows[(int)Window::Location::North]->open();
+			m_windows[(int)Window::Location::South]->close();
+			m_windows[(int)Window::Location::West]->open();
+			m_windows[(int)Window::Location::East]->close();
 
 			break;
 		}
@@ -47,10 +47,10 @@ void RoomWidget::changeWind()
 		case 2:
 		{
 			//qDebug() << "North east wind";
-			m_doors[(int)Door::Location::North]->open();
-			m_doors[(int)Door::Location::South]->close();
-			m_doors[(int)Door::Location::West]->close();
-			m_doors[(int)Door::Location::East]->open();
+			m_windows[(int)Window::Location::North]->open();
+			m_windows[(int)Window::Location::South]->close();
+			m_windows[(int)Window::Location::West]->close();
+			m_windows[(int)Window::Location::East]->open();
 
 			break;
 		}
@@ -59,10 +59,10 @@ void RoomWidget::changeWind()
 		case 3:
 		{
 			//qDebug() << "South wind";
-			m_doors[(int)Door::Location::North]->close();
-			m_doors[(int)Door::Location::South]->open();
-			m_doors[(int)Door::Location::West]->close();
-			m_doors[(int)Door::Location::East]->close();
+			m_windows[(int)Window::Location::North]->close();
+			m_windows[(int)Window::Location::South]->open();
+			m_windows[(int)Window::Location::West]->close();
+			m_windows[(int)Window::Location::East]->close();
 
 			break;
 		}
@@ -71,10 +71,10 @@ void RoomWidget::changeWind()
 		case 4:
 		{
 			//qDebug() << "South west wind";
-			m_doors[(int)Door::Location::North]->close();
-			m_doors[(int)Door::Location::South]->open();
-			m_doors[(int)Door::Location::West]->open();
-			m_doors[(int)Door::Location::East]->close();
+			m_windows[(int)Window::Location::North]->close();
+			m_windows[(int)Window::Location::South]->open();
+			m_windows[(int)Window::Location::West]->open();
+			m_windows[(int)Window::Location::East]->close();
 
 			break;
 		}
@@ -83,10 +83,10 @@ void RoomWidget::changeWind()
 		case 5:
 		{
 			//qDebug() << "South east wind";
-			m_doors[(int)Door::Location::North]->close();
-			m_doors[(int)Door::Location::South]->open();
-			m_doors[(int)Door::Location::West]->close();
-			m_doors[(int)Door::Location::East]->open();
+			m_windows[(int)Window::Location::North]->close();
+			m_windows[(int)Window::Location::South]->open();
+			m_windows[(int)Window::Location::West]->close();
+			m_windows[(int)Window::Location::East]->open();
 
 			break;
 		}
@@ -301,9 +301,9 @@ RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWid
 	//this->setAttribute(Qt::WA_PaintUnclipped);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	for (int i = 0; i < Door::MaxLocations; ++i)
+	for (int i = 0; i < Window::MaxLocations; ++i)
 	{
-		m_doors.push_back(new Door(this, static_cast<Door::Location>(i)));
+		m_windows.push_back(new Window(this, static_cast<Window::Location>(i)));
 	}
 
 	updateSounds();
@@ -349,14 +349,14 @@ void RoomWidget::pause()
 
 	this->setEnabled(false);
 
-	foreach (FloatingClip *clip, m_floatingClips)
+	for (FloatingClip *clip : m_floatingClips)
 	{
 		clip->pause();
 	}
 
-	foreach (Door *door, m_doors)
+	for (Window *window : m_windows)
 	{
-		door->close();
+		window->close();
 	}
 
 	this->gameMode()->app()->repaint(); // repaint the whole main window
@@ -445,18 +445,19 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 		painter.drawImage(0, 0, m_woodImageDisabled);
 	}
 
-	foreach (Door *door, m_doors)
-	{
-		door->paint(&painter, this);
-	}
-
 	// TODO reverse foreach, make sure the solution is always printed on top
 	for (FloatingClips::iterator iterator = m_floatingClips.begin(); iterator != m_floatingClips.end(); ++iterator)
 	{
 		(*iterator)->paint(&painter);
 	}
 
-	foreach (ClickAnimation *clickAnimation, this->m_clickAnimations)
+	// paint windows over the floating clips
+	for (Window *window : m_windows)
+	{
+		window->paint(&painter, this);
+	}
+
+	for (ClickAnimation *clickAnimation : this->m_clickAnimations)
 	{
 		clickAnimation->paint(&painter, this);
 	}

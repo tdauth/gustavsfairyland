@@ -137,7 +137,6 @@ set(fairyland_HEADERS
 	src/fairytale.h
 	src/floatingclip.h
 	src/clip.h
-	src/door.h
 	src/player.h
 	src/iconbutton.h
 	src/clippackage.h
@@ -169,6 +168,7 @@ set(fairyland_HEADERS
 	src/translatedwidget.h
 	src/solutionwidget.h
 	src/abstractclip.h
+	src/window.h
 )
 
 set(fairyland_SRCS
@@ -176,7 +176,6 @@ set(fairyland_SRCS
 	src/fairytale.cpp
 	src/floatingclip.cpp
 	src/clip.cpp
-	src/door.cpp
 	src/player.cpp
 	src/iconbutton.cpp
 	src/clippackage.cpp
@@ -208,6 +207,7 @@ set(fairyland_SRCS
 	src/translatedwidget.cpp
 	src/solutionwidget.cpp
 	src/abstractclip.cpp
+	src/window.cpp
 )
 
 set(fairyland_UI
@@ -325,7 +325,9 @@ if (ANDROID)
 	install(TARGETS gustavsfairyland LIBRARY DESTINATION lib)
 else ()
 	add_executable(gustavsfairyland src/main.cpp ${fairyland_RESOURCES_RCC} ${fairytale_QM_FILES} ${RES_FILES})
-	install(TARGETS gustavsfairyland RUNTIME DESTINATION bin)
+	add_executable(gustavsfairylandserver src/server.cpp)
+	target_link_libraries(gustavsfairylandserver Qt5::Core Qt5::Network)
+	install(TARGETS gustavsfairyland gustavsfairylandserver RUNTIME DESTINATION bin)
 endif()
 
 target_link_libraries(gustavsfairyland gustavsfairylandlib Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Xml Qt5::Svg Qt5::Network)

@@ -26,6 +26,8 @@ Player::Player(QWidget *parent, fairytale *app)
 {
 	setupUi(this);
 
+	this->setupButtons();
+
 #ifdef USE_QTAV
 	this->m_player = new QtAV::AVPlayer(this);
 	this->m_renderer = new QtAV::OpenGLWidgetRenderer(this); // GLWidgetRenderer2
@@ -129,6 +131,7 @@ void Player::changeEvent(QEvent *event)
 		{
 			//std::cerr << "Retranslate UI of player" << std::endl;
 			this->retranslateUi(this);
+			this->setupButtons();
 
 			break;
 		}
@@ -421,11 +424,7 @@ void Player::playBonusVideo(const QUrl &url, const QString &description)
 void Player::playSound(const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
 {
 	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
-#ifndef Q_OS_ANDROID
-	const QString imageFile = resolvedImageUrl.toLocalFile();
-#else
-	const QString imageFile = resolvedImageUrl.url();
-#endif
+	const QString imageFile = fairytale::filePath(resolvedImageUrl);
 	qDebug() << "Image file:" << imageFile;
 	const QUrl soundUrl = this->app()->resolveClipUrl(url);
 
@@ -489,11 +488,7 @@ void Player::playSound(const QUrl &url, const QString &description, const QUrl &
 void Player::showImage(const QUrl &imageUrl, const QString &description)
 {
 	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
-#ifndef Q_OS_ANDROID
-	const QString imageFile = resolvedImageUrl.toLocalFile();
-#else
-	const QString imageFile = resolvedImageUrl.url();
-#endif
+	const QString imageFile = fairytale::filePath(resolvedImageUrl);
 	qDebug() << "Image file:" << imageFile;
 
 	this->m_isPrefix = false;
@@ -658,4 +653,17 @@ void Player::skipAll()
 	this->stop();
 	this->m_parallelSounds.clear();
 	this->m_parallelSoundsMediaPlayer->stop();
+}
+
+void Player::setupButtons()
+{
+	/*
+	 * Only use icons for buttons on Android to safe space.
+	 */
+#ifdef Q_OS_ANDROID
+	this->cancelPushButton->setText("");
+	this->skipAllPushButton->setText("");
+	this->skipPushButton->setText("");
+	this->pausePushButton->setText("");
+#endif
 }

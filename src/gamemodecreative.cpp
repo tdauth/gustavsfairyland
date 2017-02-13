@@ -144,12 +144,7 @@ void GameModeCreative::afterNarrator()
 		ClipButton *button = m_buttons[i];
 		Clip *clip = app()->getClipByKey(button->clip());
 		const QUrl url = this->app()->resolveClipUrl(clip->imageUrl());
-#ifndef Q_OS_ANDROID
-		const QString filePath = url.toLocalFile();
-#else
-		const QString filePath = url.url();
-#endif
-
+		const QString filePath = fairytale::filePath(url);
 		button->iconButton()->setFile(filePath);
 		connect(button->iconButton(), &IconButton::clicked, this, &GameModeCreative::clickCard);
 		button->label()->setText(this->app()->description(this->app()->getClipByKey(this->app()->startPerson()), this->app()->turns(), clip, false));

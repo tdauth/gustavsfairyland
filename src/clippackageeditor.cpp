@@ -291,7 +291,7 @@ void ClipPackageEditor::loadClipPackage()
 
 		QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
 		const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
-		item->setIcon(0, QIcon(imageUrl.toLocalFile()));
+		item->setIcon(0, QIcon(fairytale::filePath(imageUrl)));
 		item->setText(0, clip->description());
 		item->setData(0, Qt::UserRole, clip->id());
 		treeWidget->addTopLevelItem(item);
@@ -303,7 +303,7 @@ void ClipPackageEditor::loadClipPackage()
 
 		QTreeWidgetItem *item = new QTreeWidgetItem(bonusClipTreeWidget);
 		const QUrl imageUrl = this->m_app->resolveClipUrl(clip->imageUrl());
-		item->setIcon(0, QIcon(imageUrl.toLocalFile()));
+		item->setIcon(0, QIcon(fairytale::filePath(imageUrl)));
 		item->setText(0, clip->description());
 		item->setData(0, Qt::UserRole, clip->id());
 		bonusClipTreeWidget->addTopLevelItem(item);

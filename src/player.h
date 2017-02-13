@@ -152,6 +152,8 @@ class Player
 		void hideCentral();
 #endif
 
+		void setupButtons();
+
 		fairytale *m_app;
 
 		/**

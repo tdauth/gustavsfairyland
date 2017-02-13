@@ -1,13 +1,13 @@
 #include <QtGui>
 
-#include "door.h"
+#include "window.h"
 #include "roomwidget.h"
 
-Door::Door(RoomWidget *parent, Location location): QObject(parent), m_roomWidget(parent), m_location(location), m_isOpen(false)
+Window::Window(RoomWidget *parent, Location location): QObject(parent), m_roomWidget(parent), m_location(location), m_isOpen(false)
 {
 }
 
-void Door::paint(QPainter *painter, QWidget *area)
+void Window::paint(QPainter *painter, QWidget *area)
 {
 	const QColor color(Qt::black);
 	QPen pen(color);

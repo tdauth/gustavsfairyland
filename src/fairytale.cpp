@@ -402,8 +402,11 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	clearSolution();
 
 	this->m_paused = false;
+// Use only icon on Android.
+#ifndef Q_OS_ANDROID
 	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
+#endif
 
 	// requires person in the first step always
 	this->m_requiresPerson = true;
@@ -435,20 +438,6 @@ void fairytale::startNewGame(const ClipPackages &clipPackages, GameMode *gameMod
 	{
 		nextTurn();
 	}
-}
-
-QStringList fairytale::languages() const
-{
-	const QDir dir(translationsDir());
-
-	QStringList result;
-
-	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
-	{
-		result << languageFile.baseName();
-	}
-
-	return result;
 }
 
 fairytale::fairytale(Qt::WindowFlags flags)
@@ -497,6 +486,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	setupUi(this);
 
+	this->setupGameButtons();
+
 #ifdef DEBUG
 	QPushButton *unlockAllPushButton = new QPushButton(tr("Unlock all bonus clips"), this);
 	connect(unlockAllPushButton, &QPushButton::clicked, this, &fairytale::unlockAllBonusClips);
@@ -516,8 +507,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 #ifdef Q_OS_ANDROID
 	changePrimaryScreen(this->m_currentScreen);
 	connect(qApp, &QGuiApplication::primaryScreenChanged, this, &fairytale::changePrimaryScreen);
-	// Initial call with the initial available geometry.
-	changeAvailableGeometry(this->m_currentScreen->availableGeometry());
 #endif
 
 	connect(&this->m_timer, &QTimer::timeout, this, &fairytale::timerTick);
@@ -650,11 +639,8 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	}
 	else
 	{
-#ifndef Q_OS_ANDROID
-		const QString currentClipsDir = this->clipsDir().toLocalFile();
-#else
-		const QString currentClipsDir = this->clipsDir().toString();
-#endif
+		const QString currentClipsDir = filePath(this->clipsDir());
+
 		// Make sure both return absolute paths.
 		if (this->defaultClipsDirectory() != currentClipsDir)
 		{
@@ -719,6 +705,20 @@ fairytale::~fairytale()
 
 	// Prevent restarting on ending the app.
 	disconnect(this->m_musicPlayer, &QMediaPlayer::stateChanged, this, &fairytale::finishMusic);
+}
+
+QStringList fairytale::languages() const
+{
+	const QDir dir(translationsDir());
+
+	QStringList result;
+
+	foreach (const QFileInfo &languageFile, dir.entryInfoList(QStringList("*.qm")))
+	{
+		result << languageFile.baseName();
+	}
+
+	return result;
 }
 
 QString fairytale::defaultClipsDirectory() const
@@ -1648,8 +1648,11 @@ void fairytale::pauseGame()
 		return;
 	}
 
+// Use only icon on Android.
+#ifndef Q_OS_ANDROID
 	this->pauseGamePushButton->setText(tr("Continue Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Continue Game (P)"));
+#endif
 	this->m_paused = true;
 
 	if (this->isMediaPlayerPlaying())
@@ -1673,8 +1676,11 @@ void fairytale::resumeGame()
 		return;
 	}
 
+// Use only icon on Android.
+#ifndef Q_OS_ANDROID
 	this->pauseGamePushButton->setText(tr("Pause Game (P)"));
 	this->m_player->pauseButton()->setText(tr("Pause Game (P)"));
+#endif
 	this->m_paused = false;
 
 	if (this->isMediaPlayerPaused())
@@ -2294,6 +2300,7 @@ void fairytale::changeEvent(QEvent *event)
 			this->retranslateUi(this);
 			this->updatePixmap();
 			this->versionLabel->setText(tr("Version: %1").arg(gustavsfairyland_VERSION));
+			this->setupGameButtons();
 
 			break;
 		}
@@ -2424,6 +2431,15 @@ QUrl fairytale::resolveClipUrl(const QUrl &url) const
 	qDebug() << "Resolved: " << result;
 
 	return result;
+}
+
+QString fairytale::filePath(const QUrl &url)
+{
+#ifndef Q_OS_ANDROID
+	return url.toLocalFile();
+#else
+	return url.url();
+#endif
 }
 
 SettingsDialog* fairytale::settingsDialog()
@@ -2654,7 +2670,7 @@ bool fairytale::loadDefaultClipPackage()
 				if (!package->clips().isEmpty())
 				{
 					const Clip *clip = package->clips().begin().value();
-					const QString clipFilePath = this->resolveClipUrl(clip->videoUrl()).toLocalFile();
+					const QString clipFilePath = fairytale::filePath(this->resolveClipUrl(clip->videoUrl()));
 					const QFileInfo clipFileInfo(clipFilePath);
 					checkedPackage = clipFileInfo.exists() && clipFileInfo.isReadable();
 
@@ -2714,6 +2730,10 @@ void fairytale::changePrimaryScreen(QScreen *screen)
 	}
 
 	m_currentScreen = screen;
+
+	// Initial call with the initial available geometry.
+	changeAvailableGeometry(this->m_currentScreen->availableGeometry());
+
 	connect(m_currentScreen, &QScreen::availableGeometryChanged, this, &fairytale::changeAvailableGeometry);
 }
 
@@ -2847,6 +2867,14 @@ LocaleDialog* fairytale::localeDialog()
 void fairytale::showLocaleDialog()
 {
 	this->execInCentralWidgetIfNecessary(localeDialog());
+}
+
+void fairytale::setupGameButtons()
+{
+#ifdef Q_OS_ANDROID
+	this->cancelGamePushButton->setText("");
+	this->pauseGamePushButton->setText("");
+#endif
 }
 
 void fairytale::updatePixmap()

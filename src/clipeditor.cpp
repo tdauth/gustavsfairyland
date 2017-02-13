@@ -146,7 +146,7 @@ void ClipEditor::videoRecorderStateChanged(QMediaRecorder::State state)
 	{
 		qDebug() << "Saved file";
 
-		const QString filePath = m_recorder->recorder()->outputLocation().toLocalFile();
+		const QString filePath = fairytale::filePath(m_recorder->recorder()->outputLocation());
 
 		// Dont delete the current file.
 		if (filePath != m_recordedFile)
@@ -166,7 +166,7 @@ void ClipEditor::audioRecorderStateChanged(QMediaRecorder::State state)
 
 	if (state == QMediaRecorder::StoppedState)
 	{
-		const QString filePath = m_recorder->audioRecorder()->outputLocation().toLocalFile();
+		const QString filePath = fairytale::filePath(m_recorder->audioRecorder()->outputLocation());
 		qDebug() << "Saved audio file" << filePath;
 
 		// Dont delete the current file.
@@ -625,7 +625,7 @@ bool ClipEditor::clipIdIsAlreadyUsed() const
 
 bool ClipEditor::moveFileToCurrentClipDir(const QDir parentDir, const QUrl &oldUrl, QUrl &newUrl)
 {
-	const QString oldImageFilePath = this->m_app->resolveClipUrl(oldUrl).toLocalFile();
+	const QString oldImageFilePath = fairytale::filePath(this->m_app->resolveClipUrl(oldUrl));
 	const QFileInfo oldImageFile(oldImageFilePath);
 	bool result = oldImageFile.exists();
 

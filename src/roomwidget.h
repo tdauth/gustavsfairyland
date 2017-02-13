@@ -13,7 +13,7 @@
 #include "config.h"
 
 class GameMode;
-class Door;
+class Window;
 class FloatingClip;
 class Clip;
 class ClickAnimation;
@@ -59,7 +59,7 @@ class RoomWidget : public RoomWidgetParent
 			DragAndDrop
 		};
 
-		typedef QVector<Door*> Doors;
+		typedef QVector<Window*> Windows;
 		typedef QMap<fairytale::ClipKey, FloatingClip*> FloatingClips;
 		typedef QVector<ClickAnimation*> ClickAnimations;
 
@@ -105,7 +105,7 @@ class RoomWidget : public RoomWidgetParent
 		void removeFloatingClip(const fairytale::ClipKey &clipKey);
 		void hideFloatingClip(const fairytale::ClipKey &clipKey);
 		void clearClickAnimations();
-		const Doors& doors() const;
+		const Windows& windows() const;
 		const FloatingClips& floatingClips() const;
 
 		void playSuccessSound();
@@ -158,7 +158,7 @@ class RoomWidget : public RoomWidgetParent
 		QTimer *m_paintTimer; // repaints the whole room widget with all doors and the floating clip
 		/// Measures the time the painting takes to prevent wrong distances when it takes longer than the repaint timer interval.
 		qint64 m_paintTime;
-		Doors m_doors;
+		Windows m_windows;
 		FloatingClips m_floatingClips;
 		FloatingClips m_hiddenFloatingClips;
 		QStringList m_failSoundPaths;
@@ -188,9 +188,9 @@ inline GameMode* RoomWidget::gameMode() const
 	return this->m_gameMode;
 }
 
-inline const RoomWidget::Doors& RoomWidget::doors() const
+inline const RoomWidget::Windows& RoomWidget::windows() const
 {
-	return this->m_doors;
+	return this->m_windows;
 }
 
 inline const RoomWidget::FloatingClips& RoomWidget::floatingClips() const

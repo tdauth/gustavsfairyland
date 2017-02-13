@@ -101,7 +101,7 @@ void BonusClipsDialog::update()
 		{
 			QPushButton *pushButton = new QPushButton(bonusClip->description());
 			pushButton->setIconSize(QSize(32, 32));
-			pushButton->setIcon(QIcon(m_app->resolveClipUrl(bonusClip->imageUrl()).toLocalFile()));
+			pushButton->setIcon(QIcon(fairytale::filePath(m_app->resolveClipUrl(bonusClip->imageUrl()))));
 			pushButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 			QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());

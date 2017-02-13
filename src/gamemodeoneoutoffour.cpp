@@ -171,11 +171,7 @@ void GameModeOneOutOfFour::afterNarrator()
 		Clip *clip = this->app()->getClipByKey(this->m_currentClips[i]);
 
 		const QUrl url = this->app()->resolveClipUrl(clip->imageUrl());
-#ifndef Q_OS_ANDROID
-		const QString filePath = url.toLocalFile();
-#else
-		const QString filePath = url.url();
-#endif
+		const QString filePath = fairytale::filePath(url);
 		this->m_buttons[i]->setFile(filePath);
 		this->m_buttons[i]->setEnabled(true);
 	}

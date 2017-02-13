@@ -344,7 +344,7 @@ void SettingsDialog::fill(ClipPackage *package)
 
 	if (introUrl.isLocalFile())
 	{
-		introItem->setIcon(0, QIcon(introUrl.toLocalFile()));
+		introItem->setIcon(0, QIcon(fairytale::filePath(introUrl)));
 		introItem->setText(1, QString::number(1));
 	}
 	else
@@ -374,12 +374,12 @@ void SettingsDialog::fill(ClipPackage *package)
 	int acts = 0;
 	int bonuses = 0;
 
-	foreach (Clip *clip, package->clips())
+	for (Clip *clip : package->clips())
 	{
 		QTreeWidgetItem *clipItem = new QTreeWidgetItem(clip->isPerson() ? personsItem : actsItem);
 		this->m_clips.insert(clipItem, clip);
 		clipItem->setText(0, clip->description());
-		clipItem->setIcon(0, QIcon(this->app()->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+		clipItem->setIcon(0, QIcon(fairytale::filePath(this->app()->resolveClipUrl(clip->imageUrl()))));
 
 		if (clip->isPerson())
 		{
@@ -391,12 +391,12 @@ void SettingsDialog::fill(ClipPackage *package)
 		}
 	}
 
-	foreach (BonusClip *clip, package->bonusClips())
+	for (BonusClip *clip : package->bonusClips())
 	{
 		QTreeWidgetItem *clipItem = new QTreeWidgetItem(bonusesItem);
 		this->m_bonusClips.insert(clipItem, clip);
 		clipItem->setText(0, clip->description());
-		clipItem->setIcon(0, QIcon(this->app()->resolveClipUrl(clip->imageUrl()).toLocalFile()));
+		clipItem->setIcon(0, QIcon(fairytale::filePath(this->app()->resolveClipUrl(clip->imageUrl()))));
 
 		++bonuses;
 	}

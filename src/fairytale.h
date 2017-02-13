@@ -94,13 +94,22 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 */
 		void cancelGame();
 		void showCustomFairytale();
+		/**
+		 * Shows the settings dialog.
+		 */
 		void showSettings();
 		void openEditor();
+		/**
+		 * Shows the high scores dialog.
+		 */
 		void showHighScores();
 		/**
 		 * Allows creating one custom clip which can be used in the game.
 		 */
 		void record();
+		/**
+		 * Shows the about dialog which contains the credits.
+		 */
 		void about();
 
 		/**
@@ -112,8 +121,6 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * Restarts the game with the same package and the specified settings.
 		 */
 		void retry(GameMode *gameMode, Difficulty difficulty);
-
-		QStringList languages() const;
 
 		void showLocaleDialog();
 		/**
@@ -241,6 +248,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		virtual ~fairytale();
 
 		/**
+		 * \return Returns all supported languages by checking for translation files in \ref translationsDir(). The languages are returned as locale names like "en" or "de".
+		 */
+		QStringList languages() const;
+
+		/**
 		 * \return Returns the directory where the clips are stored by default.
 		 */
 		QString defaultClipsDirectory() const;
@@ -307,12 +319,21 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		bool defaultUseMaxRounds() const;
 		int defaultMaxRounds() const;
 
+		/**
+		 * \return Returns all clip packages of the game which are loaded at the moment.
+		 */
 		const ClipPackages& clipPackages() const;
+		/**
+		 * \return Returns the clip package which is used by default. This is usually "gustav". If it does not exist, it uses the first one. Returns nullptr if no clip packages have been loaded.
+		 */
 		ClipPackage* defaultClipPackage() const;
 		/**
 		 * \return Returns the clip packages which are used by default (for example when starting a quick game). These include "gustav" and "custom".
 		 */
 		ClipPackages defaultClipPackages() const;
+		/**
+		 * \return Returns the custom clip package "custom" which is used for all customly added/recorded clips. Returns nullptr if the clip package has not been loaded.
+		 */
 		ClipPackage* customClipPackage() const;
 
 		/**
@@ -321,6 +342,16 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \return Returns the resolved clip URL. If \p url is relative it prepends the directory \ref clipsDir(). Otherwise it returns the absolute URL.
 		 */
 		QUrl resolveClipUrl(const QUrl &url) const;
+
+		/**
+		 * Converts \p url to a local file path.
+		 * This is different on Android since "assets:/" is used. Therefore on Android it uses url() of the URL to get the file path as a string.
+		 * On the other platforms it uses toLocalFile() to get the file path.
+		 * Therefore the method works cross-platform.
+		 * \param url The URL which is converted to a string.
+		 * \return Returns the string representation of the URL.
+		 */
+		static QString filePath(const QUrl &url);
 
 		/**
 		 * The directory where all clips are stored.
@@ -571,6 +602,15 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void lockAllBonusClips();
 
 	private:
+		/**
+		 * Game buttons use icons only on Android. This method clears the button texts on Android.
+		 */
+		void setupGameButtons();
+
+		/**
+		 * Updates the logo depending on the current language of the application.
+		 * The logo contains the name of the application in the current language.
+		 */
 		void updatePixmap();
 		/**
 		 * Updates the text of the time label with the remaining time.

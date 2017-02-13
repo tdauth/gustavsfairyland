@@ -1,5 +1,5 @@
-#ifndef DOOR_H
-#define DOOR_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <QObject>
 #include <QPainter>
@@ -8,14 +8,12 @@
 class RoomWidget;
 
 /**
- * \brief A door widget can be open or closed by wind from a specific direction.
+ * \brief A window widget can be open or closed by wind from a specific direction.
  *
- * Every door has a specific location which is specified by the type \ref Door::Location.
+ * Every window has a specific location which is specified by the type \ref Window::Location.
  * Besides it has a state which can be checked via \ref isOpen().
- *
- * \note By now it is actually displayed as a window rather than a door but has the same effect.
  */
-class Door : public QObject
+class Window : public QObject
 {
 	public:
 		enum class Location : int
@@ -28,7 +26,7 @@ class Door : public QObject
 
 		static const int MaxLocations = 4;
 
-		Door(RoomWidget *parent, Location location);
+		Window(RoomWidget *parent, Location location);
 
 		void paint(QPainter *painter, QWidget *area);
 
@@ -42,19 +40,19 @@ class Door : public QObject
 		bool m_isOpen;
 };
 
-inline void Door::open()
+inline void Window::open()
 {
 	this->m_isOpen = true;
 }
 
-inline void Door::close()
+inline void Window::close()
 {
 	this->m_isOpen = false;
 }
 
-inline bool Door::isOpen() const
+inline bool Window::isOpen() const
 {
 	return this->m_isOpen;
 }
 
-#endif // DOOR_H
+#endif // WINDOW_H

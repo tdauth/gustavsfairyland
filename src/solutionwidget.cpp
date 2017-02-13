@@ -94,7 +94,7 @@ void SolutionWidget::addClip(const fairytale::ClipKey &clipKey)
 	iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_iconLabels.insert(clipKey, iconLabel);
 	const Clip *clip = m_app->getClipByKey(clipKey);
-	iconLabel->setFile(m_app->resolveClipUrl(clip->imageUrl()).toLocalFile());
+	iconLabel->setFile(fairytale::filePath(m_app->resolveClipUrl(clip->imageUrl())));
 	this->layout()->addWidget(iconLabel);
 	this->layout()->setAlignment(iconLabel, Qt::AlignCenter);
 }

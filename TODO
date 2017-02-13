@@ -1,11 +1,11 @@
 TODOs 1.3:
-- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore).
+- Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore). Has the method cleanupGame() some bugs and does not end the game mode properly or does ending the player continue the game mode?
 - DONE: Fix "Skip All" at intro.
 - English Qt translations are not loaded on Linux with installed RPM.
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal. Außerdem ist das Widget einfach noch bei einem neuen Spiel da. Siehe Let's Play: https://www.youtube.com/watch?v=PM-nSBuHYp8
 - Make the castle clip shorter.
 - valgrind memory leaks.
-- Pages on the ground should be painted after the open windows.
+- FIXED: Pages on the ground should be painted after the open windows.
 - Make the open windows smaller.
 - Make input dialogs central and not modal: file inputs, string inputs.
 - Record wiget: Add Description and check box etc to group box.
@@ -45,6 +45,7 @@ Apparently config_swresample was missing, add options via prompt with qmake (CON
 - Increase floating clip speed on Android.
 - Android scroll area doesn't work with touch.
 - Android room widget is cut (old version with OpenGL widget???).
+- Android: Rotating the app on Android fucks up the widget sizes completely (too small). Slot changePrimaryScreen() -> changeAvailableGeometry().
 - Test installations and game for Ubuntu and Debian packages.
 - Install a Mac OS VM and compile it for Mac OS.
 - Use SVG images as clip images for better scaling.

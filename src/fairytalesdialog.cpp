@@ -162,11 +162,7 @@ void FairytalesDialog::update()
 
 			if (clip != nullptr)
 			{
-#ifndef Q_OS_ANDROID
-				const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).toLocalFile();
-#else
-				const QString imageFile = m_app->resolveClipUrl(clip->imageUrl()).url();
-#endif
+				const QString imageFile = fairytale::filePath(m_app->resolveClipUrl(clip->imageUrl()));
 				iconLabel->setFile(imageFile);
 			}
 			else
