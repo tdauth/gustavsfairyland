@@ -2164,7 +2164,7 @@ void fairytale::startMusic()
 {
 	// TODO add to package XML file, each package can have its own background music
 	QList<QUrl> urls;
-	urls.push_back(QUrl("./music/01.PSO020103-Mahler-5-I.mp3"));
+	urls.push_back(QUrl("./music/MahlerSymphonyNo4Part3.mp3"));
 	const QUrl url = urls.front(); //urls.at(qrand() % urls.size());
 	const QUrl musicUrl = this->resolveClipUrl(url);
 	qDebug() << "Play music:" << musicUrl;
