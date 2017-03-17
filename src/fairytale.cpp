@@ -53,9 +53,9 @@ QPalette fairytale::gameColorPalette()
 QString fairytale::gameStyleSheet()
 {
 	return QString(
-	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QTreeView, QHeaderView, QMessageBox { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
+	"QComboBox, QPushButton, QMenuBar, QSpinBox, QCheckBox, QTableView, QTreeView, QHeaderView, QMessageBox, QMenu { background-color: #C05800; } QMenuBar::item:selected { background: #C05800; } "
 	"QFrame, QLabel, QToolTip { border: black; }"
-	"QGroupBox { background-color: #C05800; margin-top: 35px; border: 2px solid black; } QGroupBox QPushButton, QGroupBox QSpinBox, QGroupBox QComboBox { background-color: #CEA66B; }"
+	"QGroupBox { background-color: #C05800; margin-top: 35px; border: 2px solid black; } QGroupBox QPushButton, QGroupBox QSpinBox, QGroupBox QComboBox, QGroupBox QLineEdit { background-color: #CEA66B; }"
 	"QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; /* position at the left center */ padding: 0 3px; background-color: #C05800; border: 2px solid black; }"
 	"QHeaderView::section { background-color: #CEA66B; }"
 	"QComboBox QAbstractItemView { selection-background-color: #CEA66B; background-color: #CEA66B; border: 2px solid black; }"

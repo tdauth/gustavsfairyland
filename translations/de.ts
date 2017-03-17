@@ -175,17 +175,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../build/ui_clipeditor.h" line="599"/>
         <source>Video:</source>
-        <translation type="unfinished"></translation>
+        <translation>Video:</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="602"/>
         <source>Narrator Sound:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzähler-Sound:</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="605"/>
         <source>Picture:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild:</translation>
     </message>
     <message>
         <location filename="../build/ui_clipeditor.h" line="609"/>
@@ -757,17 +757,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/gamemodemultiplayer.h" line="46"/>
         <source>Multiplayer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehrspieler</translation>
     </message>
     <message>
         <location filename="../src/gamemodemultiplayer.cpp" line="76"/>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/gamemodemultiplayer.cpp" line="76"/>
         <source>HTTP error %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP-Fehler %1.</translation>
     </message>
 </context>
 <context>
@@ -1379,12 +1379,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/fairytale.cpp" line="625"/>
         <source>Error on loading all clip packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden aller Clip-Pakete</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="625"/>
         <source>Make sure that the clip packages are installed in the path which is configured in the setttings. Do you want to go to change the clips directory path now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Stellen Sie sicher, dass die Clip-Pakete in den Pfad installiert wurden, welcher in den Einstellungen konfiguriert ist. Wollen Sie den Clip-Verzeichnispfad jetzt ändern?</translation>
     </message>
     <message>
         <location filename="../src/fairytale.cpp" line="650"/>

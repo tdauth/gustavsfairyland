@@ -62,7 +62,7 @@
           </sizepolicy>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item alignment="Qt::AlignTop">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QWidget" name="contentWidget" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

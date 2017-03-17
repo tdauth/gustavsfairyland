@@ -13,14 +13,18 @@ TODOs 1.3:
 - FIXED: Record widget: Add labels to group box buttons.
 - FIXED: Record widget: After setting up all items, raise input dialog automatically.
 - Custom clips: Allow cleaning up all custom clips with one button.
+- FIXED: Depending on the background color, change the background color of QLineEdit.
+- Make all layouts centralized like the languages dialog.
 - FIXED: Record widget: file entries in table widget have white background: QListWidget QListWidgetItem
 - High Scores: Add group box per game mode!
 - Optional: Add sound for timer per tick.
+- FIXED (QMenu): Context menu has grey background! Only available when full screen is disabled. QMenu?
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen. Siehe https://github.com/ruslo/hunter/issues/622#issuecomment-268078415
 - Color of the scrollbars and spin boxes does not match the game color.
 - FIXED: Bei sehr vielen gespeicherten Märchen werden diese in der Übersicht zusammengequetscht, da der vertikale Scroll Bar nicht erscheint.
 - Separater Scroll Bar (Vertikal) in Kreativmodus ist unnötig.
-- Only stop fail sound if a success click sound is queued and play the success sound instead. Otherwise you will here the fail sound on winning!
+- FIXED: Only stop fail sound if a success click sound is queued and play the success sound instead. Otherwise you will here the fail sound on winning!
+- Sometimes even the old click sound is not stopped, it sounds like it is cancelled and the next sound is played immediately. Something todo with the state of the player?
 - Use QtMEL for Windows (if necessary with Hunter). It should allow recording videos on Windows.
 - DONE: Use QTAV_FFMPEG_LOG=debug as environment variable to log FFMPEG debugging.
 - Add option USE_QTAV to use QtAV on Linux as well. Linking errors at the moment.
@@ -28,7 +32,7 @@ TODOs 1.3:
 - Disable music during videos completely. Check if the call setMuted() is asynchronous. If it is asynchronous it is not guaranteed that it is muted. If so it has to be blocked until the state of the music player has changed before playing a video.
 - FIXED: Ask for playing fairytale video immediately. Otherwise many players do miss the button "Play Video".
 - FIXED: Cut all pauses for all sounds. Otherwise they seem to have a delay at the start which should be cut.
-- Cut all pauses for all clip narrator sounds.
+- Cut all pauses for all clip narrator sounds using Audacity. This makes the playing faster.
 - Android Crash: https://github.com/wang-bin/QtAV/issues/138 Test another audio codec (Vorbis). Its not about the audio codec (tested). Try to build libQtAV with debug flags and ffmpeg to get the symbols and lines. Building in debug mode works, but androiddeployqt does always strip libraries: https://bugreports.qt.io/browse/QTBUG-57771 The following method causes the crash:
 	void AudioResampler::setOutAudioFormat(const AudioFormat& format)
 	{
@@ -43,16 +47,17 @@ Apparently config_swresample was missing, add options via prompt with qmake (CON
 - Improve painting performance on Android.
 - Fix painting the solutions widget on Android.
 - Fix the x86 release for Android.
-- Increase floating clip speed on Android.
-- Android scroll area doesn't work with touch.
+- Increase floating clip speed on Android/Touch device.
+- Android scroll area doesn't work with touch (Qt5 bug/no default setting).
 - Android room widget is cut (old version with OpenGL widget???).
 - Android: Rotating the app on Android fucks up the widget sizes completely (too small). Slot changePrimaryScreen() -> changeAvailableGeometry().
 - Test installations and game for Ubuntu and Debian packages.
+- Test the linux binary only (relative clips path).
 - Install a Mac OS VM and compile it for Mac OS.
 - Use SVG images as clip images for better scaling.
 - Use custom sound settings for wind sounds.
-- Add clip settings button to delete and clear all customly recorded clips.
-- The Linux binary wont work since it doesn't use the relative path and expects /usr/share/gustavsfairyland. Just try both paths on runtime!
+- Add clip settings button to delete and clear all customly recorded clips to the settings group box for clips.
+- The Linux binary won't work since it doesn't use the relative path and expects /usr/share/gustavsfairyland. Just try both paths on runtime!
 - Make sure the user is warned also when /usr/share/gustavsfairyland is empty (does already happen?).
 - FIXED: Use a free video and audio codecs on Linux systems which is supported on Ubuntu, Fedora and Debian. vcodec theora, acodec vorbis, container ogg.
 - FIXED: Use maximum space on Android for the main window (but not more than that).

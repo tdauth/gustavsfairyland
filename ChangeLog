@@ -1,3 +1,11 @@
+Release 1.3.0:
+* Many new bonus clips (25 now).
+* Cut the narrator sound pauses to make the gameflow faster.
+* Mute the music during videos.
+* Improved layout of the clip recorder.
+* Check for the relative path ../clips which shoul fix the Linux binary release.
+* Interrupt the fail sound by a success sound when clicking the correct clip which led to confusion.
+
 Release 1.2.0:
 * Added more sound controls in the settings.
 * Increased default sound volume.
