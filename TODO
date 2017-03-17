@@ -1,7 +1,7 @@
 TODOs 1.3:
 - Use the following piece as music only (free version! Since the game does not take that long, not that much music is required!): https://youtu.be/YnfhInZLmUQ?t=1573
 	- https://musopen.org/music/1305/gustav-mahler/symphony-no-4-in-g/
-	
+
 - Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore). Has the method cleanupGame() some bugs and does not end the game mode properly or does ending the player continue the game mode?
 - DONE: Fix "Skip All" at intro.
 - FIXED (buttons are English with the RPM): English Qt translations are not loaded on Linux with installed RPM (Qt translations are the translations for the message box etc. "No", "Yes").
@@ -67,7 +67,7 @@ Apparently config_swresample was missing, add options via prompt with qmake (CON
 - Use SVG images as clip images for better scaling.
 - Use custom sound settings for wind sounds.
 - Add clip settings button to delete and clear all customly recorded clips to the settings group box for clips.
-- The Linux binary won't work since it doesn't use the relative path and expects /usr/share/gustavsfairyland. Just try both paths on runtime!
+- FIXED: The Linux binary won't work since it doesn't use the relative path and expects /usr/share/gustavsfairyland. Just try both paths on runtime! Also fix /usr/share/gustavsfairyland/translations.
 - Make sure the user is warned also when /usr/share/gustavsfairyland is empty (does already happen?).
 - FIXED: Use a free video and audio codecs on Linux systems which is supported on Ubuntu, Fedora and Debian. vcodec theora, acodec vorbis, container ogg.
 - FIXED: Use maximum space on Android for the main window (but not more than that).

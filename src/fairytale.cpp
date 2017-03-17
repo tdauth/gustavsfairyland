@@ -1375,7 +1375,21 @@ QDir fairytale::translationsDir() const
 #elif defined(Q_OS_ANDROID)
 	const QDir translationsDir = QDir("assets:/translations");
 #else
-	const QDir translationsDir = QDir("/usr/share/gustavsfairyland/translations");
+	/*
+	 * By default this is the installation path for RPMs and DEB packages.
+	 */
+	QDir translationsDir("/usr/share/gustavsfairyland/translations");
+
+	if (translationsDir.exists() && translationsDir.isReadable())
+	{
+		return translationsDir.absolutePath();
+	}
+
+	/*
+	 * If it is the binary version it might be the relative path from the "bin" directory.
+	 * The absolute path is required for comparison at start since Settings uses the absolute path as well.
+	 */
+	translationsDir = QDir(QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/translations").absolutePath();
 #endif
 
 	return translationsDir;
