@@ -764,7 +764,7 @@ QString fairytale::defaultClipsDirectory() const
 	/*
 	 * If it is the binary version it might be the relative path from the "bin" directory.
 	 */
-	dir = QDir(QCoreApplication::applicationDirPath() + "../share/gustavsfairyland/clips");
+	dir = QDir(QCoreApplication::applicationDirPath() + "/../share/gustavsfairyland/clips");
 
 	return dir.absolutePath(); // The absolute path is required for comparison at start since Settings uses the absolute path as well.
 #endif
