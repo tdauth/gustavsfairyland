@@ -89,7 +89,13 @@ void SolutionWidget::dropEvent(QDropEvent *event)
 void SolutionWidget::addClip(const fairytale::ClipKey &clipKey)
 {
 	IconLabel *iconLabel = new IconLabel(this);
-	iconLabel->setMinimumSize(128, 128);
+// TODO set relative to the screen/widget size
+#ifndef Q_OS_ANDROID
+	const QSize minimumSize(128, 128);
+#else
+	const QSize minimumSize(64, 64);
+#endif
+	iconLabel->setMinimumSize(minimumSize);
 	iconLabel->setEnabled(false); // show with grey as long as the clip is not dragged and dropped
 	iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_iconLabels.insert(clipKey, iconLabel);

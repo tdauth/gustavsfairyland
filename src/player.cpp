@@ -339,6 +339,9 @@ void Player::hideCentral()
 
 void Player::playVideo(const QUrl &url, const QString &description, bool duringGame, bool multipleVideos)
 {
+	// Reset to pause icon for pausing the game.
+	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
+	
 	this->m_isPrefix = false;
 	this->m_skipped = false;
 	this->m_skippedAll = false;
@@ -423,6 +426,9 @@ void Player::playBonusVideo(const QUrl &url, const QString &description)
 
 void Player::playSound(const QUrl &url, const QString &description, const QUrl &imageUrl, bool prefix, bool duringGame)
 {
+	// Reset to pause icon for pausing the game.
+	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
+
 	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
 	const QString imageFile = fairytale::filePath(resolvedImageUrl);
 	qDebug() << "Image file:" << imageFile;
@@ -487,6 +493,9 @@ void Player::playSound(const QUrl &url, const QString &description, const QUrl &
 
 void Player::showImage(const QUrl &imageUrl, const QString &description)
 {
+	// Reset to pause icon for pausing the game.
+	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
+
 	const QUrl resolvedImageUrl = this->app()->resolveClipUrl(imageUrl);
 	const QString imageFile = fairytale::filePath(resolvedImageUrl);
 	qDebug() << "Image file:" << imageFile;
@@ -572,6 +581,9 @@ void Player::play()
 	qDebug() << "Play with volume" << this->volume() << "and is muted" << this->isMuted() << "and video player audio role" << this->mediaPlayer()->audioRole();
 	this->mediaPlayer()->play();
 #endif
+
+	// Change to pause icon for pausing the game.
+	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
 }
 
 void Player::pause()
@@ -582,6 +594,9 @@ void Player::pause()
 	this->mediaPlayer()->pause();
 #endif
 	this->m_parallelSoundsMediaPlayer->pause();
+
+	// Change to play icon for continuing the game.
+	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-start.png"));
 }
 
 void Player::stop()

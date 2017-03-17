@@ -1654,6 +1654,9 @@ void fairytale::pauseGame()
 		return;
 	}
 
+	// Change to play icon for continuing the game.
+	this->pauseGamePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-start.png"));
+
 // Use only icon on Android.
 #ifndef Q_OS_ANDROID
 	this->pauseGamePushButton->setText(tr("Continue Game (P)"));
@@ -1681,6 +1684,9 @@ void fairytale::resumeGame()
 
 		return;
 	}
+
+	// Change to pause icon for pausing the game.
+	this->pauseGamePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
 
 // Use only icon on Android.
 #ifndef Q_OS_ANDROID
@@ -2356,6 +2362,9 @@ void fairytale::cleanupGame()
 	this->m_playIntro = false;
 	this->m_playOutroWin = false;
 	this->m_playOutroLose = false;
+
+	// Reset to pause button.
+	this->pauseGamePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
 
 	/*
 	 * Could also happen during playing the custom fairytale!

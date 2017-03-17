@@ -1,4 +1,7 @@
 TODOs 1.3:
+- Use the following piece as music only (free version! Since the game does not take that long, not that much music is required!): https://youtu.be/YnfhInZLmUQ?t=1573
+	- https://musopen.org/music/1305/gustav-mahler/symphony-no-4-in-g/
+	
 - Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore). Has the method cleanupGame() some bugs and does not end the game mode properly or does ending the player continue the game mode?
 - DONE: Fix "Skip All" at intro.
 - FIXED (buttons are English with the RPM): English Qt translations are not loaded on Linux with installed RPM (Qt translations are the translations for the message box etc. "No", "Yes").
@@ -18,6 +21,7 @@ TODOs 1.3:
 - FIXED: Record widget: file entries in table widget have white background: QListWidget QListWidgetItem
 - High Scores: Add group box per game mode!
 - Optional: Add sound for timer per tick.
+- FIXED: Change icons of play and pause button (in the player as well).
 - FIXED (QMenu): Context menu has grey background! Only available when full screen is disabled. QMenu?
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen. Siehe https://github.com/ruslo/hunter/issues/622#issuecomment-268078415
 - Color of the scrollbars and spin boxes does not match the game color.
@@ -47,7 +51,13 @@ Apparently config_swresample was missing, add options via prompt with qmake (CON
 - Improve painting performance on Android.
 - Fix painting the solutions widget on Android.
 - Fix the x86 release for Android.
+- Get a working F-Droid release: https://gitlab.com/fdroid/rfp/issues/74
 - Increase floating clip speed on Android/Touch device.
+- Android: Rotation event fucks up the button sizes in the main menu and on the second rotation the top image size as well! ONLY happens in the main menu!
+- FIXED (use fixed smaller size): Android: Make the labels for drag & drop smaller.
+- Android: More time for drag & drop in normal mode.
+- Android: Pausing and continuing a video in the player does not work. Endless lag?? Check if m_pausedMediaPlayer is set correctly and if play() is the correct method to continue playing a video with QtAV.
+- FIXED (wordwrap = true for descriptionLabel): Android: Add linebreak to top label if necessary.
 - Android scroll area doesn't work with touch (Qt5 bug/no default setting).
 - Android room widget is cut (old version with OpenGL widget???).
 - Android: Rotating the app on Android fucks up the widget sizes completely (too small). Slot changePrimaryScreen() -> changeAvailableGeometry().
