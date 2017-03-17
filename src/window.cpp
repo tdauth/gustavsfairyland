@@ -20,15 +20,18 @@ void Window::paint(QPainter *painter, QWidget *area)
 	// TODO use QLine and rotate them when opening the windows
 	if (!this->isOpen())
 	{
+		const double left = 0.3;
+		const double right = 0.7;
+
 		int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 
 		switch (m_location)
 		{
 			case Location::North:
 			{
-				x1 = 0.3 * area->size().width();
+				x1 = left * area->size().width();
 				y1 = penWidthHalf;
-				x2 = 0.7 * area->size().width();
+				x2 = right * area->size().width();
 				y2 = penWidthHalf;
 
 				break;
@@ -36,9 +39,9 @@ void Window::paint(QPainter *painter, QWidget *area)
 
 			case Location::South:
 			{
-				x1 = 0.3 * area->size().width();
+				x1 = left * area->size().width();
 				y1 = area->size().height() - penWidthHalf;
-				x2 = 0.7 * area->size().width();
+				x2 = right * area->size().width();
 				y2 = area->size().height() - penWidthHalf;
 
 				break;
@@ -47,9 +50,9 @@ void Window::paint(QPainter *painter, QWidget *area)
 			case Location::West:
 			{
 				x1 = penWidthHalf;
-				y1 = 0.3 * area->size().height();
+				y1 = left * area->size().height();
 				x2 = penWidthHalf;
-				y2 = 0.7 * area->size().height();
+				y2 = right * area->size().height();
 
 				break;
 			}
@@ -57,9 +60,9 @@ void Window::paint(QPainter *painter, QWidget *area)
 			case Location::East:
 			{
 				x1 = area->size().width() - penWidthHalf;
-				y1 = 0.3 * area->size().height();
+				y1 = left * area->size().height();
 				x2 = area->size().width() - penWidthHalf;
-				y2 = 0.7 * area->size().height();
+				y2 = right * area->size().height();
 
 				break;
 			}
@@ -71,7 +74,7 @@ void Window::paint(QPainter *painter, QWidget *area)
 	{
 		int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 		int x3 = 0, y3 = 0, x4 = 0, y4 = 0;
-		const int distance = 10;
+		const double distance = 0.1;
 
 		switch (m_location)
 		{
@@ -80,12 +83,12 @@ void Window::paint(QPainter *painter, QWidget *area)
 				x1 = 0.7 * area->width();
 				y1 = penWidthHalf;
 				x2 = 0.8 * area->width();
-				y2 = area->width() / distance;
+				y2 = distance * area->width();
 
 				x3 = 0.3 * area->width();
 				y3 = penWidthHalf;
 				x4 = 0.2 * area->width();
-				y4 = area->width() / distance;
+				y4 = distance * area->width();
 
 				break;
 			}
@@ -95,12 +98,12 @@ void Window::paint(QPainter *painter, QWidget *area)
 				x1 = 0.7 * area->width();
 				y1 = area->height() - penWidthHalf;
 				x2 = 0.8 * area->width();
-				y2 = area->height() - (area->height() / distance);
+				y2 = area->height() - (distance * area->height());
 
 				x3 = 0.3 * area->width();
 				y3 = area->height() - penWidthHalf;
 				x4 = 0.2 * area->width();
-				y4 = area->height() - (area->height() / distance);
+				y4 = area->height() - (distance * area->height());
 
 				break;
 			}
@@ -109,12 +112,12 @@ void Window::paint(QPainter *painter, QWidget *area)
 			{
 				x1 = penWidthHalf;
 				y1 = 0.7 * area->height();
-				x2 = area->height() / distance;
+				x2 = distance * area->height();
 				y2 = 0.8 * area->height();
 
 				x3 = penWidthHalf;
 				y3 = 0.3 * area->height();
-				x4 = area->height() / distance;
+				x4 = distance * area->height();
 				y4 = 0.2 * area->height();
 
 				break;
@@ -124,12 +127,12 @@ void Window::paint(QPainter *painter, QWidget *area)
 			{
 				x1 = area->width() - penWidthHalf;
 				y1 = 0.7 * area->height();
-				x2 = area->width() - (area->width() / distance);
+				x2 = area->width() - (distance * area->width());
 				y2 = 0.8 * area->height();
 
 				x3 = area->width() - penWidthHalf;
 				y3 = 0.3 * area->height();
-				x4 = area->width() - (area->width() / distance);
+				x4 = area->width() - (distance * area->width());
 				y4 = 0.2 * area->height();
 
 				break;

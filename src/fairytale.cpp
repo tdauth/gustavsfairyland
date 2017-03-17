@@ -59,6 +59,7 @@ QString fairytale::gameStyleSheet()
 	"QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; /* position at the left center */ padding: 0 3px; background-color: #C05800; border: 2px solid black; }"
 	"QHeaderView::section { background-color: #CEA66B; }"
 	"QComboBox QAbstractItemView { selection-background-color: #CEA66B; background-color: #CEA66B; border: 2px solid black; }"
+	"QListWidget::item  { background-color: #CEA66B; } QListWidget::item:selected { background-color: #C05800; }"
 	);
 }
 
@@ -1250,6 +1251,11 @@ void fairytale::record()
 				{
 					return;
 				}
+
+				/*
+				 * Allow the user to type the description immediately.
+				 */
+				clipEditor->raiseDescriptionInput();
 			}) == QDialog::Accepted)
 			{
 				Clip *clipOfCustomPackage = clipEditor.clip(this->customClipPackage());

@@ -773,3 +773,10 @@ void ClipEditor::setIsNewClip(bool isNewClip)
 		titleLabel->setText(tr("Edit clip"));
 	}
 }
+
+void ClipEditor::raiseDescriptionInput()
+{
+	this->descriptionLineEdit->raise();
+	this->descriptionLineEdit->setFocus();
+}
+

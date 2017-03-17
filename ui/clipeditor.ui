@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>387</width>
-        <height>1131</height>
+        <height>1194</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -48,60 +48,6 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_4">
-              <property name="font">
-               <font>
-                <pointsize>25</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Description:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="descriptionLineEdit">
-              <property name="font">
-               <font>
-                <pointsize>25</pointsize>
-               </font>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QCheckBox" name="isAPersonCheckBox">
-              <property name="font">
-               <font>
-                <pointsize>25</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Is a Person</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>74</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
            <widget class="QGroupBox" name="videoGroupBox">
             <property name="title">
              <string/>
@@ -110,6 +56,67 @@
              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QWidget" name="widget_2" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_8">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QLabel" name="label_4">
+                    <property name="font">
+                     <font>
+                      <pointsize>25</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Description:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="descriptionLineEdit">
+                    <property name="font">
+                     <font>
+                      <pointsize>25</pointsize>
+                     </font>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <item>
+                   <widget class="QCheckBox" name="isAPersonCheckBox">
+                    <property name="font">
+                     <font>
+                      <pointsize>25</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Is a Person</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>74</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>Video:</string>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_10">
                   <item>
@@ -182,6 +189,13 @@
                  </layout>
                 </item>
                 <item>
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>Narrator Sound:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_11">
                   <item>
                    <spacer name="horizontalSpacer_8">
@@ -251,6 +265,13 @@
                    </spacer>
                   </item>
                  </layout>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>Picture:</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_12">

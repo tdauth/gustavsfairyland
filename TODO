@@ -1,18 +1,19 @@
 TODOs 1.3:
 - Wind sound does not stop when you cancel the game during the initial intro or when the player is shown. Reproduce: Intro, Skip All, Cancel game, Yes (actually here the sound should not be played anymore). Has the method cleanupGame() some bugs and does not end the game mode properly or does ending the player continue the game mode?
 - DONE: Fix "Skip All" at intro.
-- English Qt translations are not loaded on Linux with installed RPM.
+- FIXED (buttons are English with the RPM): English Qt translations are not loaded on Linux with installed RPM (Qt translations are the translations for the message box etc. "No", "Yes").
 - Kreativmodus beim Neustart ist der Button rechts und nicht mehr unten. Passiert nur manchmal. Außerdem ist das Widget einfach noch bei einem neuen Spiel da. Siehe Let's Play: https://www.youtube.com/watch?v=PM-nSBuHYp8
 - Make the castle clip shorter.
 - valgrind memory leaks.
 - FIXED: Pages on the ground should be painted after the open windows.
 - Make the open windows smaller.
+* Outro (lost) shows cancel button but does not allow canceling!
 - Make input dialogs central and not modal: file inputs, string inputs.
-- Record wiget: Add Description and check box etc to group box.
-- Record widget: Add labels to group box buttons.
-- Record widget: After setting up all items, raise input dialog automatically.
+- FIXED: Record wiget: Add Description and check box etc to group box.
+- FIXED: Record widget: Add labels to group box buttons.
+- FIXED: Record widget: After setting up all items, raise input dialog automatically.
 - Custom clips: Allow cleaning up all custom clips with one button.
-- Record widget: file entries in table widget have white background.
+- FIXED: Record widget: file entries in table widget have white background: QListWidget QListWidgetItem
 - High Scores: Add group box per game mode!
 - Optional: Add sound for timer per tick.
 - Wenn Hunter unter Linux zumindest geht, cross compiling damit testen. Siehe https://github.com/ruslo/hunter/issues/622#issuecomment-268078415
