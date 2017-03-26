@@ -489,6 +489,9 @@ fairytale::fairytale(Qt::WindowFlags flags)
 
 	this->setupGameButtons();
 
+	// set current tab key to this button, so pressing enter starts a game.
+	this->quickGamePushButton->setFocus(Qt::TabFocusReason);
+
 #ifdef DEBUG
 	QPushButton *unlockAllPushButton = new QPushButton(tr("Unlock all bonus clips"), this);
 	connect(unlockAllPushButton, &QPushButton::clicked, this, &fairytale::unlockAllBonusClips);
