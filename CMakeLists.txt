@@ -19,6 +19,7 @@ if (ANDROID)
 	include_directories("${ANDROID_NDK}/sources/android/native_app_glue/")
 
 	if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+		message(STATUS "Using -O3 on Android in release mode to improve the performance.")
 		add_compile_options(-O3) # Make it faster on Android
 	endif ()
 endif ()
