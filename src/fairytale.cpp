@@ -2009,7 +2009,14 @@ void fairytale::onFinishVideoAndSounds()
 			this->m_playIntro = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
-			nextTurn();
+
+			/*
+			 * The game could have been cancelled which does also stop the video.
+			 */
+			if (this->isGameRunning())
+			{
+				nextTurn();
+			}
 		}
 		// played outro win
 		else if (this->m_playOutroWin)
@@ -2019,6 +2026,8 @@ void fairytale::onFinishVideoAndSounds()
 			this->m_playOutroWin = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+
+			// TODO check if the game is still running
 			afterOutroWin();
 		}
 		// played outro lose
@@ -2029,35 +2038,43 @@ void fairytale::onFinishVideoAndSounds()
 			this->m_playOutroLose = false;
 			this->m_player->stop();
 			this->m_player->hide(); // hide the player, otherwise one cannot play the game
+
+			// TODO check if the game is still running
 			afterOutroGameOver();
 		}
 		// played narrator stuff
 		else if (!this->m_playCompleteSolution && m_playingCustomFairytale == nullptr)
 		{
-			// Only react if the game mode has not been canceled
-			if (this->gameMode()->state() == GameMode::State::Running)
+			/*
+			 * The game could have been cancelled which does also stop the video.
+			 */
+			if (this->isGameRunning())
 			{
-				// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
-				if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+				// Only react if the game mode has not been canceled
+				if (this->gameMode()->state() == GameMode::State::Running)
 				{
-					qDebug() << "After narrator stuff, stop and hide player";
+					// played a normal narrator clip, if the player has skipped one sound (a prefix sound for example) all sounds are skipped
+					if (!this->m_player->isPrefix() || this->m_player->skipped() || m_playerSounds.empty())
+					{
+						qDebug() << "After narrator stuff, stop and hide player";
 
-					this->m_player->stop();
-					this->m_player->hide(); // hide the player, otherwise one cannot play the game
+						this->m_player->stop();
+						this->m_player->hide(); // hide the player, otherwise one cannot play the game
 
-					this->m_playerSounds.clear();
+						this->m_playerSounds.clear();
 
-					qDebug() << "Calling after narrator";
+						qDebug() << "Calling after narrator";
 
-					this->afterNarrator();
-				}
-				// played only the word "and" or the first person sound then we always expect another sound
-				else
-				{
-					qDebug() << "Deque next sound, skipped: " << this->m_player->skipped();
+						this->afterNarrator();
+					}
+					// played only the word "and" or the first person sound then we always expect another sound
+					else
+					{
+						qDebug() << "Deque next sound, skipped: " << this->m_player->skipped();
 
-					const PlayerSoundData data = m_playerSounds.dequeue();
-					this->m_player->playSound(data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+						const PlayerSoundData data = m_playerSounds.dequeue();
+						this->m_player->playSound(data.narratorSoundUrl, data.description, data.imageUrl, data.prefix);
+					}
 				}
 			}
 		}
@@ -2069,6 +2086,8 @@ void fairytale::onFinishVideoAndSounds()
 				qDebug() << "Play next final clip";
 				// next time play the following clip
 				this->m_completeSolutionIndex++;
+
+				// TODO check if the game is still running
 				this->playFinalClip(this->m_completeSolutionIndex);
 			}
 			/*
@@ -2084,6 +2103,7 @@ void fairytale::onFinishVideoAndSounds()
 				this->m_player->hide();
 				// Dont hide the custom fairytale. The player should have the change to save or rewatch it.
 
+				// TODO check if the game is still running
 				this->afterAskingForPlayingFairytale();
 			}
 		}
@@ -2095,6 +2115,8 @@ void fairytale::onFinishVideoAndSounds()
 				qDebug() << "Play next custom fairytale clip";
 				// next time play the following clip
 				this->m_customFairytaleIndex++;
+
+				// TODO check if the game is still running
 				this->playCustomFairytaleClip(this->m_customFairytaleIndex);
 			}
 			/*
@@ -2105,6 +2127,7 @@ void fairytale::onFinishVideoAndSounds()
 				// The dialog has to disappear, after the player watched all final clips.
 				this->m_player->hide();
 
+				// TODO check if the game is still running
 				this->finishPlayingCustomFairytale();
 			}
 		}
@@ -2117,6 +2140,7 @@ void fairytale::onFinishVideoAndSounds()
 
 		qDebug() << "Finished bonus clip";
 
+		// TODO check if the game is still running
 		if (this->m_playingBonusClipDuringGame)
 		{
 			qDebug() << "Game is still running, therefore show the custom fairytale dialog now";
