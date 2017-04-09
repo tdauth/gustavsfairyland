@@ -475,12 +475,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>53</x>
-     <y>301</y>
+     <x>62</x>
+     <y>331</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>325</y>
+     <x>145</x>
+     <y>380</y>
     </hint>
    </hints>
   </connection>
@@ -495,8 +495,56 @@
      <y>46</y>
     </hint>
     <hint type="destinationlabel">
-     <x>147</x>
-     <y>66</y>
+     <x>173</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>musicCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>musicVolumeSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>96</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clickSoundsCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>clickSoundsVolumeSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>videoSoundCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>videoSoundVolumeSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>164</y>
     </hint>
    </hints>
   </connection>
