@@ -1,17 +1,18 @@
+# Gustav's Fairyland
 Gustav's Fairyland is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale which is narrated by the famous composer Gustav Mahler.
 
 It has been created by Tamino Dauth and Carsten Thomas.
 
-=Dependencies=
+## Dependencies
 The game depends on several libraries on Fedora:
 * qt5-qtbase-gui >= 5.5.1
 * qt5-qtmultimedia >= 5.5.1
 * qt5-qtsvg >= 5.5.1
 * qt5-qttranslations >= 5.5.1
 
-=Installation=
+## Installation
 
-==Compilation instructions==
+### Compilation instructions
 
 Create a binary directory and run:
 `cmake <path to the fairytale folder>`
