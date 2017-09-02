@@ -1,3 +1,4 @@
+#!/bin/bash
 cd "$WORKSPACE/fairytale"
 bash -x buildlinux_release.sh
 cd build
