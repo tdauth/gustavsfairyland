@@ -10,8 +10,6 @@ Run one of the following commands:
 `bash buildlinux_debug.sh`
 `bash buildlinux_release.sh`
 
-It creates an RPM and a DEB package.
-
 The game depends on several libraries on Fedora:
 * qt5-qtbase-gui >= 5.5.1
 * qt5-qtmultimedia >= 5.5.1
@@ -66,6 +64,16 @@ Install app on the current device (this is done automatically by the CMake modul
 Make sure the codec is supported on Android:
 https://developer.android.com/guide/appendix/media-formats.html
 
+The following command builds the game for Android with the x86 architecture and a specified API level:
+`bash ./buildandroid_x86.sh`
+
+The following command builds the game for Android with the ARM architecture and a specified API level:
+`bash ./buildandroid_arm.sh`
+
+For the Android releases execute one of the following commands:
+`bash ./build_arm_release.sh`
+`bash ./build_x86_release.sh`
+
 ### Clips
 The clips consist of video and audio files.
 These files have to be converted into different file formats for the different platforms.
@@ -82,4 +90,7 @@ Video compression:
 ### Jenkins
 There is several Bash scripts for building the game using Jenkins.
 You can adapt the variables in those scripts for your own environment.
-For example "buildandroid_x86.sh" builds the game for Android with the x86 architecture and a specified API level.
+For the Linux release execute this command:
+`bash ./jenkins_linux_release.sh`
+
+It creates a TBZ2, an RPM and a DEB package.
