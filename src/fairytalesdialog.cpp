@@ -126,6 +126,8 @@ void FairytalesDialog::update()
 	 */
 	customFairytaleKeys.sort();
 
+	int i = 0;
+
 	for (const QString customFairytaleKey : customFairytaleKeys)
 	{
 		CustomFairytale *customFairytale = m_app->customFairytales()[customFairytaleKey];
@@ -154,7 +156,7 @@ void FairytalesDialog::update()
 			widgetLayout->addWidget(iconLabel);
 			iconLabel->setAlignment(Qt::AlignCenter);
 			iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-			const QSize iconSize = QSize(128, 128);
+			const QSize iconSize = QSize(64, 64);
 			iconLabel->setMinimumSize(iconSize);
 			iconLabel->setMaximumSize(iconSize);
 
@@ -173,8 +175,11 @@ void FairytalesDialog::update()
 
 		widgetLayout->addStretch();
 
-		contentWidget->layout()->addWidget(widget);
+		QVBoxLayout *layout = dynamic_cast<QVBoxLayout*>(contentWidget->layout());
+		layout->insertWidget(i, widget, 0, Qt::AlignVCenter);
 		m_fairytales.insert(widget, new Fairytale(customFairytale->name(), widget, this));
+
+		++i;
 	}
 }
 
