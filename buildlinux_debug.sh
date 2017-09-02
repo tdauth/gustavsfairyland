@@ -6,3 +6,4 @@ cd "$WORKSPACE/build"
 cmake "$WORKSPACE/fairytale/" -DUSE_COMPRESSED_FILES=${USE_COMPRESSED_FILES} -DCMAKE_BUILD_TYPE="Debug"
 make -j4
 ctest -T "Test" || true
+cpack .
