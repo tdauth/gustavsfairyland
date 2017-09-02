@@ -583,12 +583,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="139"/>
+        <location filename="../src/fairytalesdialog.cpp" line="141"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fairytalesdialog.cpp" line="145"/>
+        <location filename="../src/fairytalesdialog.cpp" line="147"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
