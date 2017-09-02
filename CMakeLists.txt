@@ -1,16 +1,6 @@
 cmake_minimum_required(VERSION 3.4.3)
 
-# TODO use Hunter for easier dependency resolving
-#include("cmake/HunterGate.cmake")
-
-#HunterGate(
-#	URL "https://github.com/ruslo/hunter/archive/v0.16.15.tar.gz"
-#	SHA1 "6974c2150fc0d3b09de3ad1efcbf15d360647ffa"
-#)
-
 project(gustavsfairyland)
-
-#hunter_add_package(Qt COMPONENTS qtmultimedia qtsvg qtxmlpatterns)
 
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
@@ -169,6 +159,7 @@ set(fairyland_HEADERS
 	src/translatedwidget.h
 	src/solutionwidget.h
 	src/abstractclip.h
+	src/utilities.h
 	src/window.h
 )
 
@@ -504,7 +495,7 @@ endif ()
 
 set(CPACK_PACKAGE_NAME "gustavsfairyland")
 set(CPACK_PACKAGE_VENDOR "https://gustavsfairyland.wordpress.com")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A game to create custom fairytales narrated by Gustav Mahler himself.")
 set(CPACK_PACKAGE_VERSION "${gustavsfairyland_VERSION}")
 set(CPACK_PACKAGE_VERSION_MAJOR "${gustavsfairyland_VERSION_MAJOR}")
