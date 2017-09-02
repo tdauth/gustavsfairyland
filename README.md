@@ -1,17 +1,31 @@
-Compilation instructions:
+Gustav's Fairyland is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale which is narrated by the famous composer Gustav Mahler.
+
+It has been created by Tamino Dauth and Carsten Thomas.
+
+=Dependencies=
+The game depends on several libraries on Fedora:
+* qt5-qtbase-gui >= 5.5.1
+* qt5-qtmultimedia >= 5.5.1
+* qt5-qtsvg >= 5.5.1
+* qt5-qttranslations >= 5.5.1
+
+=Installation=
+
+==Compilation instructions==
+
 Create a binary directory and run:
-cmake <path to the fairytale folder>
+`cmake <path to the fairytale folder>`
 
 Now compile everything in the binary directory:
-make -j4
+`make -j4`
 
 Alternatively you can use one of the scripts:
-buildlinux_debug.sh
-buildlinux_release.sh
+`bash buildlinux_debug.sh`
+`bash buildlinux_release.sh`
 
 For Linux and Windows:
 Just use cpack in the build directory:
-cpack .
+`cpack .`
 
 It creates an RPM and a DEB package and for Windows a NSIS package.
 
@@ -37,10 +51,10 @@ The program zipalign might not be found for signing the app.
 It is in /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign but expected in
 /home/tamino/Android/Sdk/build-tools/zipalign
 Just do:
-ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign
+`ln -s /home/tamino/Android/Sdk/build-tools/24.0.1/zipalign /home/tamino/Android/Sdk/build-tools/zipalign`
 
 Fix x86 32 Bit Android arch for the release build (apparently Android CMake uses the wrong toolchain name):
-ln -s /home/tamino/android-ndk-r12b/toolchains/x86-4.9/ /home/tamino/android-ndk-r12b/toolchains/i686-linux-android-4.9
+`ln -s /home/tamino/android-ndk-r12b/toolchains/x86-4.9/ /home/tamino/android-ndk-r12b/toolchains/i686-linux-android-4.9`
 
 The Android build uses QtAV for playing videos on Android devices since QtMultimediaWidgets are not supported on Android.
 Therefore ffmpeg and QtAV have to be build for Android too which happens in the build script "buildqtavforandroid.sh".
@@ -57,7 +71,7 @@ Add udev rules for the device:
 https://developer.android.com/studio/run/device.html
 
 Install app on the current device (this is done automatically by the CMake module on building):
-./adb -d install -r /home/tamino/Downloads/gustavsfairyland.apk
+`./adb -d install -r /home/tamino/Downloads/gustavsfairyland.apk`
 
 Make sure the codec is supported on Android:
 https://developer.android.com/guide/appendix/media-formats.html
