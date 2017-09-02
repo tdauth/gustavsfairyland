@@ -10,12 +10,11 @@
 #include "fairytale.h"
 #include "clickanimation.h"
 #include "solutionwidget.h"
+#include "utilities.h"
 
 void RoomWidget::changeWind()
 {
-	std::mt19937 eng(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(0, 6); // define the range
-	const int value = distr(eng);
+	const int value = randomNumber(0, 6);
 
 	switch (value)
 	{
@@ -111,8 +110,6 @@ void RoomWidget::updatePaint()
 	QElapsedTimer overrunTimer;
 	overrunTimer.start();
 
-	//qDebug() << "Interval:" << interval;
-
 	// move floating clips
 	foreach (FloatingClip *clip, m_floatingClips)
 	{
@@ -125,15 +122,8 @@ void RoomWidget::updatePaint()
 		clickAnimation->updateInterval(interval);
 	}
 
-	//qDebug() << "Repaint";
-
 	// This should trigger an immediate paintEvent() call for RoomWidget. There have been some problems with this on Windows 7, Qt 5.7.0 mingw32 build.
 	this->repaint();
-
-	// Only indicate that it should be repainted. This does not have to trigger paintEvent() but if some paint events are skipped it doesn't matter.
-	//this->update();
-
-	//qDebug() << "Repaint end:" << overrunTimer.elapsed();
 
 	// Now get the duration it took to repaint the whole widget which might be longer than the timer interval.
 	m_paintTime = overrunTimer.elapsed();
@@ -297,8 +287,6 @@ int RoomWidget::maxCollisionDistance() const
 RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWidgetParent(parent), m_gameMode(gameMode), m_mode(mode), m_won(false), m_windTimer(new QTimer(this)), m_paintTimer(new QTimer(this)), m_paintTime(0), m_woodSvg(QString(":/resources/wood.svg")), m_windSoundPlayer(new QMediaPlayer(this)), m_playWindSound(true), m_floatingClipSpeedFactor(1.0), m_solutionWidget(nullptr)
 {
 	// The room widget is painted all the time directly.
-	//this->setAttribute(Qt::WA_OpaquePaintEvent);
-	//this->setAttribute(Qt::WA_PaintUnclipped);
 	this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	for (int i = 0; i < Window::MaxLocations; ++i)
@@ -321,8 +309,6 @@ RoomWidget::RoomWidget(GameMode *gameMode, Mode mode, QWidget *parent) : RoomWid
 	{
 		this->setAcceptDrops(true);
 	}
-
-//	qDebug() << "Current Context:" << this->format();
 }
 
 RoomWidget::~RoomWidget()
@@ -615,9 +601,7 @@ void RoomWidget::playSoundFromList(const QStringList &soundEffects, bool immedia
 {
 	if (!soundEffects.isEmpty())
 	{
-		std::mt19937 eng(rd()); // seed the generator
-		std::uniform_int_distribution<> distr(0, soundEffects.size() - 1); // define the range
-		const int value = distr(eng);
+		const int value = randomNumber(0, soundEffects.size() - 1);
 		qDebug() << "Play sound:" << soundEffects[value];
 		gameMode()->app()->playSound(QUrl(soundEffects[value]), immediately);
 	}
