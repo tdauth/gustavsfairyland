@@ -7,11 +7,10 @@ BUILD_TYPE="$1"
 PROJECT_DIR="$2"
 PROJECT_BIN_DIR="$3"
 QT_DIR="$4"
-ANDROID_PREFIX="$5"
-ANDROID_PREFIX_FFMPEG="$6"
-ANDROID_TARGET="$7"
-
-export HOME_TAMINO="/home/tamino"
+ANDROID_ABI="$5"
+ANDROID_TARGET="$6"
+ANDROID_API_LEVEL="$7"
+ANDROID_NDK="$8"
 
 if [ -z "$BUILD_TYPE" ] ; then
 	echo "Define BUILD_TYPE as argument 1 (Debug or Release)"
@@ -29,26 +28,31 @@ if [ -z "$PROJECT_BIN_DIR" ] ; then
 fi
 
 if [ -z "$QT_DIR" ] ; then
-	echo "Setting QT_DIR automatically"
-	QT_DIR="$HOME_TAMINO/Qt/5.7/android_armv7" # "$HOME_TAMINO/Qt5.7.0"
+	echo "Define QT_DIR as argument 4"
+	exit 1
 fi
 
-if [ -z "$ANDROID_PREFIX" ] ; then
-	echo "Setting ANDROID_PREFIX automatically"
-	ANDROID_PREFIX="sdk-android-armv7-gcc" # sdk-android-x86
-fi
-
-if [ -z "$ANDROID_PREFIX_FFMPEG" ] ; then
-	echo "Setting ANDROID_PREFIX_FFMPEG automatically"
-	ANDROID_PREFIX_FFMPEG="sdk-android-armv7-gcc" # sdk-android-x86-gcc
+if [ -z "$ANDROID_ABI" ] ; then
+	echo "Define ANDROID_ABI as argument 5"
+	exit 1
 fi
 
 if [ -z "$ANDROID_TARGET" ] ; then
-	echo "Setting ANDROID_TARGET automatically"
-	ANDROID_TARGET="armv7" # x86
+	echo "Define ANDROID_TARGET as argument 6"
+	exit 1
 fi
 
-export NDK_ROOT="$HOME_TAMINO/android-ndk-r12b"
+if [ -z "$ANDROID_API_LEVEL" ] ; then
+	echo "Define ANDROID_API_LEVEL as argument 7"
+	exit 1
+fi
+
+if [ -z "$ANDROID_NDK" ] ; then
+	echo "Define ANDROID_NDK as argument 8"
+	exit 1
+fi
+
+export NDK_ROOT="$ANDROID_NDK"
 export INSTALL_DIR="../installffmpeg"
 export QT_PATH="$QT_DIR"
 
@@ -62,9 +66,9 @@ if [ ! -d "$FFMPEG_DIR" ] ; then
 	git clone https://github.com/wang-bin/build_ffmpeg.git "$FFMPEG_DIR"
 fi
 
-export FFMPEG_VERSION="3.1.5"
+export FFMPEG_VERSION="3.3"
 export FFSRC="$PROJECT_BIN_DIR/ffmpeg-$FFMPEG_VERSION" #/path/to/ffmpeg # if no ffmpeg source fold under this dir
-export FFMPEG_PREFIX="$FFMPEG_DIR/$ANDROID_PREFIX_FFMPEG"
+export FFMPEG_PREFIX="$FFMPEG_DIR/sdk-android-gcc"
 
 # Download and extract ffmpeg if it does not exist.
 # TODO checksums? or rather use a local copy
@@ -79,7 +83,12 @@ fi
 cp -f "$PROJECT_DIR/config-android.sh" "$FFMPEG_DIR"
 # TODO specify NDK_ROOT in file "config-android.sh" as well as static build
 cd "$FFMPEG_DIR"
-./build_ffmpeg.sh android "$ANDROID_TARGET"
+./avbuild.sh android "$ANDROID_TARGET"
+
+if [ ! "$?" -eq "0" ] ; then
+	echo "Failed to build ffmpeg for Android."
+	exit 1
+fi
 
 export QT_AV_DIR="$PROJECT_BIN_DIR/qtav"
 
@@ -90,7 +99,6 @@ fi
 
 cd "$QT_AV_DIR"
 git submodule update --init
-#git checkout tags/v1.11.0
 
 export QT_AV_BUILD_DIR="$PROJECT_BIN_DIR/buildqtav"
 
@@ -102,30 +110,28 @@ fi
 cd "$QT_AV_BUILD_DIR"
 
 export FFMPEG_INCLUDE_DIR="$FFMPEG_PREFIX/include"
-export FFMPEG_LIB_DIR="$FFMPEG_PREFIX/lib"
-export CPATH="$FFMPEG_INCLUDE_DIR/:$CPATH"
-export LIBRARY_PATH="$FFMPEG_LIB_DIR:$LIBRARY_PATH"
-export LD_LIBRARY_PATH="$FFMPEG_LIB_DIR:$LD_LIBRARY_PATH"
-export ANDROID_NDK_ROOT="$NDK_ROOT"
+export FFMPEG_LIB_DIR="$FFMPEG_PREFIX/lib/$ANDROID_ABI"
 
-echo "LIBRARY_PATH: $LIBRARY_PATH"
-echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo "ffmpeg include dir:"
+echo "ls -lha $FFMPEG_INCLUDE_DIR/:"
+ls -lha "$FFMPEG_INCLUDE_DIR/"
+
+echo "ffmpeg link dir:"
 echo "ls -lha $FFMPEG_LIB_DIR/:"
 ls -lha "$FFMPEG_LIB_DIR/"
-echo "Building QtAV from: $(pwd)"
-echo "Running qmake: \"$QT_PATH/bin/qmake\""
-# "$QT_PATH/5.7/android_x86/bin/qmake"
-# If the error "Error: libavresample or libswresample is required" appears, use this:
-# https://github.com/wang-bin/QtAV/issues/744
-# Add the options "CONFIG+=config_avutil config_avformat config_avcodec config_swscale config_swresample" to the user.conf file if "CONFIG += no_config_tests" is used.
-# "CONFIG+=debug" is required for the debugging output.
-CONFIG_DEBUG=""
 
-if [ "$BUILD_TYPE" = "Debug" ] ; then
-	CONFIG_DEBUG="CONFIG+=debug"
-else
-	CONFIG_DEBUG="CONFIG+=release"
-fi
-
-"$QT_PATH/bin/qmake" -Wall "LIBS += -L$FFMPEG_LIB_DIR -lavresample -lswresample" "INCLUDE += -I$FFMPEG_INCLUDE_DIR" "$CONFIG_DEBUG" "CONFIG += config_avutil config_avformat config_avcodec config_swscale config_swresample no_config_tests" "$QT_AV_DIR/QtAV.pro"
-make -j4
+# CMake build:
+cmake "$QT_AV_DIR" \
+-DCMAKE_SYSTEM_NAME=Android \
+-DCMAKE_SYSTEM_VERSION="$ANDROID_API_LEVEL" \
+-DCMAKE_ANDROID_ARCH_ABI="$ANDROID_ABI" \
+-DCMAKE_ANDROID_NDK="$ANDROID_NDK" \
+-DCMAKE_ANDROID_STL_TYPE=gnustl_static \
+-DCMAKE_VERBOSE_MAKEFILE=on \
+-DCMAKE_PREFIX_PATH="$QT_DIR/lib/cmake;$FFMPEG_LIB_DIR;$FFMPEG_INCLUDE_DIR" \
+-DCMAKE_LIBRARY_PATH="$FFMPEG_LIB_DIR" \
+-DCMAKE_INCLUDE_PATH="$FFMPEG_INCLUDE_DIR" \
+-DCMAKE_CXX_FLAGS="-I$FFMPEG_INCLUDE_DIR -I$QT_DIR/include/QtAndroidExtras/ -L$FFMPEG_LIB_DIR -L$QT_DIR/lib -lQt5AndroidExtras" \
+-DBUILD_EXAMPLES=0 \
+-DBUILD_TESTS=0
+make #-j4
