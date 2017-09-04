@@ -238,7 +238,7 @@ QT5_ADD_RESOURCES(fairyland_RESOURCES_RCC resource.qrc oxygen-icons-png-master/o
 
 if (USE_QTAV)
 	if (ANDROID)
-		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/${ANDROID_PREFIX_FFMPEG}/lib")
+		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/build_ffmpeg/sdk-android-gcc/lib/${CMAKE_ANDROID_ARCH_ABI}")
 	else ()
 		set(QTAV_FFMPEG_LIB_DIR "${CMAKE_BINARY_DIR}/ffmpeginstall/lib")
 		set(QTAV_LIB_DIR "lib_linux_x86_64")
@@ -252,8 +252,8 @@ if (USE_QTAV)
 		"${QTAV_FFMPEG_LIB_DIR}/libavutil.so"
 		"${QTAV_FFMPEG_LIB_DIR}/libswresample.so"
 		"${QTAV_FFMPEG_LIB_DIR}/libswscale.so"
-		"${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAV.so"
-		"${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}/libQtAVWidgets.so"
+		"${CMAKE_BINARY_DIR}/buildqtav/lib/libQtAV.so"
+		"${CMAKE_BINARY_DIR}/buildqtav/lib/libQtAVWidgets.so"
 	)
 
 	if (ANDROID)
@@ -273,7 +273,7 @@ if (USE_QTAV)
 			message(FATAL_ERROR "Missing openal library.")
 		endif ()
 
-		set(CMAKE_INSTALL_RPATH "${QTAV_FFMPEG_LIB_DIR}" "${CMAKE_BINARY_DIR}/buildqtav/${QTAV_LIB_DIR}")
+		set(CMAKE_INSTALL_RPATH "${QTAV_FFMPEG_LIB_DIR}" "${CMAKE_BINARY_DIR}/buildqtav/lib")
 		set(CMAKE_SKIP_BUILD_RPATH FALSE)
 		set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 		set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
