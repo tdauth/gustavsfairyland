@@ -341,7 +341,7 @@ void Player::playVideo(const QUrl &url, const QString &description, bool duringG
 {
 	// Reset to pause icon for pausing the game.
 	this->pausePushButton->setIcon(QIcon(":/themes/oxygen/32x32/actions/media-playback-pause.png"));
-	
+
 	this->m_isPrefix = false;
 	this->m_skipped = false;
 	this->m_skippedAll = false;
@@ -682,3 +682,5 @@ void Player::setupButtons()
 	this->pausePushButton->setText("");
 #endif
 }
+
+#include "moc_player.cpp"

@@ -779,4 +779,3 @@ void ClipEditor::raiseDescriptionInput()
 	this->descriptionLineEdit->raise();
 	this->descriptionLineEdit->setFocus();
 }
-

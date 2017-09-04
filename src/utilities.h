@@ -3,6 +3,9 @@
 
 #include <random>
 
+/**
+ * Returns a random number between \p min and \p max (inclusive bounds).
+ */
 int randomNumber(int min, int max)
 {
 	static std::random_device rd;

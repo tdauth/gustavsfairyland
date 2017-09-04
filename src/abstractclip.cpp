@@ -13,7 +13,13 @@ AbstractClip::AbstractClip(const AbstractClip &clip, QObject* parent) : QObject(
 	this->assign(clip);
 }
 
-AbstractClip::AbstractClip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, fairytale *app, QObject* parent): QObject(parent), m_app(app), m_id(id), m_imageUrl(imageUrl), m_videoUrl(videoUrl), m_descriptions(descriptions)
+AbstractClip::AbstractClip(const QString &id, const QUrl &imageUrl, const QUrl &videoUrl, const Descriptions &descriptions, fairytale *app, QObject* parent)
+: QObject(parent)
+, m_app(app)
+, m_id(id)
+, m_imageUrl(imageUrl)
+, m_videoUrl(videoUrl)
+, m_descriptions(descriptions)
 {
 }
 

@@ -321,4 +321,3 @@ void CustomFairytaleDialog::showEvent(QShowEvent *event)
 
 	QWidget::showEvent(event);
 }
-

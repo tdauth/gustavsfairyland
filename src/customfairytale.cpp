@@ -77,4 +77,3 @@ QString CustomFairytale::toString()
 
 	return clipIdPairs.join(";");
 }
-

@@ -340,4 +340,3 @@ GameModeCreative::ClipButton::ClipButton(QWidget *parent, fairytale::ClipKey cli
 	m_label->setWordWrap(true);
 	m_label->setAlignment(Qt::AlignCenter);
 }
-
