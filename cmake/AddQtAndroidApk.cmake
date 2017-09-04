@@ -46,18 +46,6 @@ endif()
 string(REPLACE "\\" "/" QT_ANDROID_NDK_ROOT ${QT_ANDROID_NDK_ROOT}) # androiddeployqt doesn't like backslashes in paths
 message(STATUS "Found Android NDK: ${QT_ANDROID_NDK_ROOT}")
 
-# find ANT
-if(NOT QT_ANDROID_ANT)
-    set(QT_ANDROID_ANT $ENV{ANT})
-    if(NOT QT_ANDROID_ANT)
-        find_program(QT_ANDROID_ANT NAME ant)
-        if(NOT QT_ANDROID_ANT)
-            message(FATAL_ERROR "Could not find ANT. Please add its directory to the PATH environment variable, or set the ANT environment variable or QT_ANDROID_ANT CMake variable to its path.")
-        endif()
-    endif()
-endif()
-message(STATUS "Found ANT: ${QT_ANDROID_ANT}")
-
 include(CMakeParseArguments)
 
 # define a macro to create an Android APK target
@@ -65,25 +53,20 @@ include(CMakeParseArguments)
 # example:
 # add_qt_android_apk(my_app_apk my_app
 #     NAME "My App"
+#     VERSION_CODE 12
 #     PACKAGE_NAME "org.mycompany.myapp"
 #     PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/my-android-sources
+#     BUILDTOOLS_REVISION "23.0.3"
 #     KEYSTORE ${CMAKE_CURRENT_LIST_DIR}/mykey.keystore myalias
 #     KEYSTORE_PASSWORD xxxx
 #     DEPENDS a_linked_target "path/to/a_linked_library.so" ...
 #     INSTALL
 #)
-# 
+#
 macro(add_qt_android_apk TARGET SOURCE_TARGET)
 
     # parse the macro arguments
-    cmake_parse_arguments(ARG "INSTALL" "NAME;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD" "DEPENDS;KEYSTORE" ${ARGN})
-
-    # check the configuration
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(ANT_CONFIG debug)
-    else()
-        set(ANT_CONFIG release)
-    endif()
+    cmake_parse_arguments(ARG "INSTALL" "NAME;VERSION_CODE;PACKAGE_NAME;PACKAGE_SOURCES;KEYSTORE_PASSWORD;BUILDTOOLS_REVISION" "DEPENDS;KEYSTORE" ${ARGN})
 
     # extract the full path of the source target binary
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -106,15 +89,28 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         set(QT_ANDROID_APP_PACKAGE_NAME org.qtproject.${SOURCE_TARGET})
     endif()
 
+    # set the Android SDK build-tools revision
+    if(ARG_BUILDTOOLS_REVISION)
+        set(QT_ANDROID_SDK_BUILDTOOLS_REVISION ${ARG_BUILDTOOLS_REVISION})
+    else()
+        set(QT_ANDROID_SDK_BUILDTOOLS_REVISION "")
+    endif()
+
     # define the application source package directory
     if(ARG_PACKAGE_SOURCES)
         set(QT_ANDROID_APP_PACKAGE_SOURCE_ROOT ${ARG_PACKAGE_SOURCES})
     else()
-        # get app version
-        get_property(QT_ANDROID_APP_VERSION TARGET ${SOURCE_TARGET} PROPERTY VERSION)
+        # get version code from arguments, or generate a fixed one if not provided
+        set(QT_ANDROID_APP_VERSION_CODE ${ARG_VERSION_CODE})
+        if(NOT QT_ANDROID_APP_VERSION_CODE)
+            set(QT_ANDROID_APP_VERSION_CODE 1)
+        endif()
 
-        # use the major version number for code version (must be a single number)
-        string(REGEX MATCH "[0-9]+" QT_ANDROID_APP_VERSION_CODE "${QT_ANDROID_APP_VERSION}")
+        # try to extract the app version from the target properties, or use the version code if not provided
+        get_property(QT_ANDROID_APP_VERSION TARGET ${SOURCE_TARGET} PROPERTY VERSION)
+        if(NOT QT_ANDROID_APP_VERSION)
+            set(QT_ANDROID_APP_VERSION ${QT_ANDROID_APP_VERSION_CODE})
+        endif()
 
         # create a subdirectory for the extra package sources
         set(QT_ANDROID_APP_PACKAGE_SOURCE_ROOT "${CMAKE_CURRENT_BINARY_DIR}/package")
@@ -163,22 +159,20 @@ macro(add_qt_android_apk TARGET SOURCE_TARGET)
         set(INSTALL_OPTIONS --reinstall)
     endif()
 
-    # create a custom command that will run the androiddeployqt utility to prepare the Android package
-    add_custom_command(
-      OUTPUT run_android_deploy_qt
-      DEPENDS ${SOURCE_TARGET}
-      COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI} # it seems that recompiled libraries are not copied if we don't remove them first
-      COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI}
-      COMMAND ${CMAKE_COMMAND} -E copy ${QT_ANDROID_APP_PATH} ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI}
-      COMMAND ${QT_ANDROID_QT_ROOT}/bin/androiddeployqt --verbose --output ${CMAKE_CURRENT_BINARY_DIR} --input ${CMAKE_CURRENT_BINARY_DIR}/qtdeploy.json --ant ${QT_ANDROID_ANT} ${INSTALL_OPTIONS} ${SIGN_OPTIONS}
-    )
+    # specify the Android API level
+    if(ANDROID_NATIVE_API_LEVEL)
+        set(TARGET_LEVEL_OPTIONS --android-platform android-${ANDROID_NATIVE_API_LEVEL})
+    endif()
 
-    # create the custom target that invokes ANT to create the apk
+    # create a custom command that will run the androiddeployqt utility to prepare the Android package
     add_custom_target(
         ${TARGET}
         ALL
-        COMMAND ${QT_ANDROID_ANT} ${ANT_CONFIG}
-        DEPENDS run_android_deploy_qt
+        DEPENDS ${SOURCE_TARGET}
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI} # it seems that recompiled libraries are not copied if we don't remove them first
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI}
+        COMMAND ${CMAKE_COMMAND} -E copy ${QT_ANDROID_APP_PATH} ${CMAKE_CURRENT_BINARY_DIR}/libs/${ANDROID_ABI}
+        COMMAND ${QT_ANDROID_QT_ROOT}/bin/androiddeployqt --verbose --output ${CMAKE_CURRENT_BINARY_DIR} --input ${CMAKE_CURRENT_BINARY_DIR}/qtdeploy.json --gradle ${TARGET_LEVEL_OPTIONS} ${INSTALL_OPTIONS} ${SIGN_OPTIONS}
     )
 
 endmacro()
