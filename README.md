@@ -10,6 +10,7 @@ Run one of the following commands:
 `bash buildlinux_debug.sh`
 `bash buildlinux_release.sh`
 
+#### Fedora
 The game depends on several libraries on Fedora:
 * qt5-qtbase-gui >= 5.5.1
 * qt5-qtmultimedia >= 5.5.1
@@ -24,12 +25,13 @@ Generator: Code Blocks - MinGW Makefiles
 CPack creates an NSIS based Windows installer.
 
 ### Android
-Download SDK and NDK.
-Use the corresponding CMake module.
-Add the path to "android" to your PATH ./Android/Sdk/tools/
+* Download SDK and NDK.
+* Download the Qt Open Source release for the corresponding Android version.
+* Add the path to "android" to your PATH ./Android/Sdk/tools/
+* Make sure that the paths in the Bash scripts are set properly (buildandroid.sh, buildqtavforandroid.sh and config-android.sh).
+* Execute one of the following commands: `bash ./build_arm_release.sh` or `bash ./build_x86_release.sh`
 
-Use the following CMake modules for Android deployment:
-https://github.com/taka-no-me/android-cmake
+Use the following CMake module for Android deployment with Qt:
 https://github.com/LaurentGomila/qt-android-cmake/
 
 There is a Bash script "buildandroid.sh" which does everything as long a virtual Android device is installed properly
@@ -63,16 +65,6 @@ Install app on the current device (this is done automatically by the CMake modul
 
 Make sure the codec is supported on Android:
 https://developer.android.com/guide/appendix/media-formats.html
-
-The following command builds the game for Android with the x86 architecture and a specified API level:
-`bash ./buildandroid_x86.sh`
-
-The following command builds the game for Android with the ARM architecture and a specified API level:
-`bash ./buildandroid_arm.sh`
-
-For the Android releases execute one of the following commands:
-`bash ./build_arm_release.sh`
-`bash ./build_x86_release.sh`
 
 ### Clips
 The clips consist of video and audio files.
