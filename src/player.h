@@ -20,6 +20,14 @@
 class fairytale;
 class IconLabel;
 
+using PlayerParentType =
+#ifndef Q_OS_ANDROID
+QDialog
+#else
+QWidget
+#endif
+;
+
 /**
  * \brief The video player which allows to play video sequences which can be skipped or paused as well.
  *
@@ -28,13 +36,7 @@ class IconLabel;
  *
  * The backend depends on the options set during the compile time of the game.
  */
-class Player
-#ifndef Q_OS_ANDROID
-: public QWidget // TODO QDialog
-#else
-: public QWidget
-#endif
-, protected Ui::Player
+class Player : public PlayerParentType, protected Ui::Player
 {
 	Q_OBJECT
 
