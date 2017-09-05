@@ -80,7 +80,7 @@ if [ ! -d "$FFSRC" ] ; then
 fi
 
 # Overwrite custom Android configuration with the correct NDK path
-cp -f "$PROJECT_DIR/config-android.sh" "$FFMPEG_DIR"
+cp -f "$PROJECT_BIN_DIR/config-android.sh" "$FFMPEG_DIR"
 # TODO specify NDK_ROOT in file "config-android.sh" as well as static build
 cd "$FFMPEG_DIR"
 ./avbuild.sh android "$ANDROID_TARGET"

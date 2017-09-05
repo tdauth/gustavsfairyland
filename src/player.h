@@ -30,7 +30,7 @@ class IconLabel;
  */
 class Player
 #ifndef Q_OS_ANDROID
-: public QWidget //QDialog
+: public QWidget // TODO QDialog
 #else
 : public QWidget
 #endif

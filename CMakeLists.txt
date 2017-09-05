@@ -257,6 +257,7 @@ if (USE_QTAV)
 	)
 
 	if (ANDROID)
+		configure_file(config-android.sh.in config-android.sh)
 		# Builds QtAV for Android which is required since Qt5MultimediaWidgets is not supported on Android.
 		add_custom_target(QtAV bash -x ./buildqtavforandroid.sh "${CMAKE_BUILD_TYPE}" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${QT_DIR}" "${CMAKE_ANDROID_ARCH_ABI}" "${ANDROID_TARGET}" "${CMAKE_SYSTEM_VERSION}" "${CMAKE_ANDROID_NDK}" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}" COMMENT "Building QtAV.")
 	elseif (UNIX)
