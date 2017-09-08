@@ -11,11 +11,7 @@
 #include "iconlabel.h"
 
 Player::Player(QWidget *parent, fairytale *app)
-#ifndef Q_OS_ANDROID
-: QDialog(parent)
-#else
-: QWidget(parent)
-#endif
+: Base(parent)
 , m_app(app), m_iconLabel(new IconLabel(this)), m_skipped(false), m_skippedAll(false), m_isPrefix(false), m_parallelSoundsMediaPlayer(new QMediaPlayer(this))
 #ifdef USE_QTAV
 , m_player(nullptr)

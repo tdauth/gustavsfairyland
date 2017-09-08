@@ -93,13 +93,7 @@ class Player : public PlayerParentType, protected Ui::Player
 		void skipAll();
 
 	public:
-		typedef
-#ifndef Q_OS_ANDROID
-		QDialog
-#else
-		QWidget
-#endif
-		Base;
+		typedef PlayerParentType Base;
 
 		Player(QWidget *parent, fairytale *app);
 		virtual ~Player();
