@@ -1,10 +1,14 @@
 #ifndef GAMEMODEMULTIPLAYER_H
 #define GAMEMODEMULTIPLAYER_H
 
+#include <QNetworkAccessManager>
+
 #include "gamemode.h"
 
 class GameModeMultiplayer : public GameMode
 {
+	Q_OBJECT
+
 	public:
 		GameModeMultiplayer(fairytale *app);
 
@@ -51,4 +55,4 @@ inline void GameModeMultiplayer::setState(GameMode::State state)
 	this->m_state = state;
 }
 
-#endif
+#endif // GAMEMODEMULTIPLAYER_H

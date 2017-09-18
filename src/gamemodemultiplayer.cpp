@@ -101,3 +101,5 @@ int GameModeMultiplayer::waitForReply(QNetworkReply *reply)
 
 	return result;
 }
+
+#include "gamemodemultiplayer.moc"

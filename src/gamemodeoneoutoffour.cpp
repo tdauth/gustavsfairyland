@@ -232,4 +232,3 @@ void GameModeOneOutOfFour::selectRandomSolution()
 	this->m_currentSolution = solution;
 	this->m_remainingClips.removeAll(solution); // solution is done forever
 }
-
