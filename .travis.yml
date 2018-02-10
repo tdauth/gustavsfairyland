@@ -1,16 +1,25 @@
+sudo: false
+services:
+  - docker
 language: cpp
-script:
-  - mkdir build
-  - cd build
-  - cmake -DCMAKE_BUILD_TYPE=Debug .. && make && cpack .
-addons:
-  apt:
-    sources:
-      - george-edison55-precise-backports
-    packages:
-      - qtbase5-dev
-      - qtmultimedia5-dev
-      - libqt5svg5-dev
-      - qttools5-dev
-      - cmake-data
-      - cmake
+
+before_install:
+  - docker pull fedora:27
+  - docker ps -a
+  - docker run fedora:27 /bin/sh -c "cd /root; dnf -y install git cmake gcc-c++ libatomic bash which rpm-build gflags-devel glog-devel valgrind autoconf automake libtool zlib-devel lzma-devel snappy-devel double-conversion-devel openssl-devel libevent-devel qt5-devel; git clone https://github.com/tdauth/gustavsfairyland.git; cd ./gustavsfairyland/scripts; bash ./buildlinux_debug.sh"
+
+#script:
+  #- mkdir build
+  #- cd build
+  #- cmake -DCMAKE_BUILD_TYPE=Debug .. && make && cpack .
+#addons:
+  #apt:
+    #sources:
+      #- george-edison55-precise-backports
+    #packages:
+      #- qtbase5-dev
+      #- qtmultimedia5-dev
+      #- libqt5svg5-dev
+      #- qttools5-dev
+      #- cmake-data
+      #- cmake
