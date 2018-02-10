@@ -1,5 +1,5 @@
 # Gustav's Fairyland
-Gustav's Fairyland is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale which is narrated by the famous composer Gustav Mahler.
+[Gustav's Fairyland](https://gustavsfairyland.wordpress.com/) is a simple puzzle game on time where the player has to choose the right clip to construct a custom fairytale which is narrated by the famous composer [Gustav Mahler](https://en.wikipedia.org/wiki/Gustav_Mahler).
 
 It has been created by Tamino Dauth and Carsten Thomas.
 
