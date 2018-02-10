@@ -1,8 +1,8 @@
-sudo: false
+sudo: required
+os: linux
+language: cpp
 services:
   - docker
-language: cpp
-
 before_install:
   - docker pull fedora:27
   - docker ps -a
