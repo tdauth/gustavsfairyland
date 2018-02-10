@@ -11,6 +11,6 @@ addons:
       - qtbase5-dev
       - qtmultimedia5-dev
       - libqt5svg5-dev
-      - qttools5-dev-tools
+      - qttools5-dev
       - cmake-data
       - cmake
