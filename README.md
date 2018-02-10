@@ -4,7 +4,7 @@ Gustav's Fairyland is a simple puzzle game on time where the player has to choos
 It has been created by Tamino Dauth and Carsten Thomas.
 
 ## Automatic Build with TravisCI
-
+[![Build Status](https://travis-ci.org/tdauth/gustavsfairyland.svg?branch=master)](https://travis-ci.org/tdauth/gustavsfairyland)
 
 ## Manual Build
 
