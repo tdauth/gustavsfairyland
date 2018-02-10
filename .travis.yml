@@ -1,16 +1,4 @@
 language: cpp
-compiler:
-- clang
-- gcc
-os:
-- linux
-- windows
-before_install:
-  - sudo add-apt-repository ppa:beineri/opt-qt541 -y
-  - sudo apt-get update
-  - brew update
-install:
-  - sudo apt-get install qt54base
 script:
   - mkdir build
   - cd build
@@ -18,7 +6,10 @@ script:
 addons:
   apt:
     sources:
-     # - debian-sid
+      - george-edison55-precise-backports
     packages:
+      - qtbase5-dev
+      - qtmultimedia5-dev
+      - libqt5svg5-dev
+      - cmake-data
       - cmake
-     # - qt5-default

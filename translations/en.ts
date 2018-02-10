@@ -918,17 +918,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="82"/>
+        <location filename="../src/player.cpp" line="78"/>
         <source>SPACE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="86"/>
+        <location filename="../src/player.cpp" line="82"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="89"/>
+        <location filename="../src/player.cpp" line="85"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>

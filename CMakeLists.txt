@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.4.3)
 
 project(gustavsfairyland)
 
+include(ExternalProject)
+
 if (ANDROID)
 	add_definitions(-DANDROID_ICON="@drawable/logo")
 	set(ANDROID_ICON "@drawable/logo")
@@ -86,8 +88,6 @@ endif ()
 
 # On Windows recording with the webcam is not supported yet by QtMultimedia. Therefore we need an alternative library.
 if (USE_QTMEL)
-	include(ExternalProject)
-
 	hunter_add_package(OpenCV)
 	hunter_add_package(ZLIB)
 
@@ -114,8 +114,6 @@ if (USE_QTMEL)
 endif ()
 
 if (USE_VLCQT)
-	include(ExternalProject)
-
 	# Requires libVLC (vlc-devel on Fedora) and Qt 5
 	ExternalProject_Add(VLCQt
 		GIT_REPOSITORY https://github.com/vlc-qt/vlc-qt.git
@@ -354,7 +352,7 @@ if (ANDROID)
 
 	foreach (f ${fairytale_QM_FILES})
 		get_filename_component(fileName "${f}" NAME)
-		add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/translations/${fileName} )
+		add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${f}" ${CMAKE_BINARY_DIR}/assets/translations/${fileName} )
 	endforeach ()
 else ()
 	install(FILES ${fairytale_QM_FILES} DESTINATION share/gustavsfairyland/translations)
@@ -365,11 +363,11 @@ if (UNIX)
 
 	if (DESKTOP_FILE_VALIDATE_PATH)
 		message(STATUS "Validating .desktop files with program ${DESKTOP_FILE_VALIDATE_PATH}.")
-		add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} ${CMAKE_SOURCE_DIR}/gustavsfairyland.desktop SOURCES gustavsfairyland.desktop)
+		add_custom_target(ValidateDesktopFile ALL COMMAND ${DESKTOP_FILE_VALIDATE_PATH} "${CMAKE_SOURCE_DIR}/share/gustavsfairyland.desktop" SOURCES share/gustavsfairyland.desktop)
 	endif ()
 
-	install(FILES gustavsfairyland.desktop DESTINATION share/applications)
-	install(FILES gustavsfairyland.png DESTINATION share/icons/hicolor/48x48/apps)
+	install(FILES share/gustavsfairyland.desktop DESTINATION share/applications)
+	install(FILES share/gustavsfairyland.png DESTINATION share/icons/hicolor/48x48/apps)
 endif ()
 
 if (USE_COMPRESSED_FILES)
@@ -400,14 +398,21 @@ endif ()
 # the default fairyland package gustav
 # Install all file paths manually and only use the specified files. This allows you to use compressed video files for example.
 if (ANDROID)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/custom.xml ${CMAKE_BINARY_DIR}/assets/clips/custom.xml)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/res/drawable/logo.jpg)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/bin/res/drawable/logo.jpg)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values/fairylandstrings.xml)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values/fairylandstrings.xml)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/res/values-de/fairylandstrings-de.xml)
-	add_custom_command(TARGET CopyAssets COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values-de/fairylandstrings-de.xml)
+	set(RES_DIR "${CMAKE_BINARY_DIR}/gustavsfairylandres")
+	configure_file(cmake/build.gradle build.gradle COPYONLY)
+
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory ${RES_DIR})
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory ${RES_DIR}/values)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory ${RES_DIR}/values-de)
+
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/gustav.xml ${CMAKE_BINARY_DIR}/assets/clips/gustav.xml)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/clips/custom.xml ${CMAKE_BINARY_DIR}/assets/clips/custom.xml)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${RES_DIR}/drawable/logo.jpg)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/logo.jpg ${CMAKE_BINARY_DIR}/bin/res/drawable/logo.jpg)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${RES_DIR}/values/fairylandstrings.xml)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values/fairylandstrings.xml)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${RES_DIR}/values-de/fairylandstrings-de.xml)
+	add_custom_command(TARGET CopyAssets PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/translations/fairylandstrings.xml ${CMAKE_BINARY_DIR}/bin/res/values-de/fairylandstrings-de.xml)
 else ()
 	install(FILES clips/gustav.xml clips/custom.xml DESTINATION share/gustavsfairyland/clips)
 endif ()
@@ -482,6 +487,7 @@ if (ANDROID)
 	# NOTE add PACKAGE_SOURCES "${CMAKE_SOURCE_DIR}/clips" to install all clips
 	# PACKAGE_NAME "org.tacaproductions.gustavsfairyland"
 	add_qt_android_apk(my_app_apk gustavsfairyland NAME "@string/ApplicationName"
+		BUILDTOOLS_REVISION "23.0.3"
 		DEPENDS
 		${QTAV_LIBRARIES}
 		KEYSTORE "${ANDROID_KEY_PATH}" gustavsfairyland

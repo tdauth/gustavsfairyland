@@ -1,0 +1,12 @@
+[Desktop Entry]
+Comment=A fairytale puzzle game
+Comment[de]=Ein Märchenpuzzlespiel
+Comment[en_GB]=A fairytale puzzle game
+Name=Gustav's Fairyland
+Name[de]=Gustavs Märchenwelt
+Name[en_GB]=Gustav's Fairyland
+Exec=gustavsfairyland %U
+Icon=gustavsfairyland
+Type=Application
+Terminal=false
+Categories=Game;

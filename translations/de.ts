@@ -1119,17 +1119,17 @@ p, li { white-space: pre-wrap; }
         <translation>Alles überspringen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="82"/>
+        <location filename="../src/player.cpp" line="78"/>
         <source>SPACE</source>
         <translation>SPACE</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="86"/>
+        <location filename="../src/player.cpp" line="82"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="89"/>
+        <location filename="../src/player.cpp" line="85"/>
         <source>C</source>
         <translation>C</translation>
     </message>
