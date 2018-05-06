@@ -314,6 +314,11 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		void setClipPackages(const ClipPackages &packages);
 		void removeClipPackage(ClipPackage *package);
 		const GameModes& gameModes() const;
+		/**
+		 * The default game mode is "sequence".
+		 *
+		 * \return Returns the default game mode which is used when a game is started via the "Let's Go" button.
+		 */
 		GameMode* defaultGameMode() const;
 		Difficulty defaultDifficulty() const;
 		bool defaultUseMaxRounds() const;

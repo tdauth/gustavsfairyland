@@ -28,8 +28,6 @@ class Window : public QObject
 
 		Window(RoomWidget *parent, Location location);
 
-		void paint(QPainter *painter, QWidget *area);
-
 		void open();
 		void close();
 		bool isOpen() const;

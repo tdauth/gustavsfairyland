@@ -38,7 +38,7 @@ CPack creates an NSIS based Windows installer.
 Use the following CMake module for Android deployment with Qt:
 [Qt Android CMake](https://github.com/LaurentGomila/qt-android-cmake/)
 
-There is a Bash script `src/buildandroid.sh` which does everything as long a virtual Android device is installed properly
+There is a Bash script `scripts/buildandroid.sh` which does everything as long a virtual Android device is installed properly
 and the paths are correct.
 
 The program zipalign might not be found for signing the app.

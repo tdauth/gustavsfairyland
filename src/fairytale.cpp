@@ -2613,7 +2613,7 @@ void fairytale::removeClipPackage(ClipPackage *package)
 GameMode* fairytale::defaultGameMode() const
 {
 	// prefer floating clips in a room
-	GameModes::const_iterator iterator = this->gameModes().find("pagesontheground");
+	GameModes::const_iterator iterator = this->gameModes().find("sequence");
 
 	if (iterator != this->gameModes().end())
 	{

@@ -21,7 +21,6 @@ void RoomWidget::changeWind()
 		// north
 		case 0:
 		{
-			//qDebug() << "North wind";
 			m_windows[(int)Window::Location::North]->open();
 			m_windows[(int)Window::Location::South]->close();
 			m_windows[(int)Window::Location::West]->close();
@@ -33,7 +32,6 @@ void RoomWidget::changeWind()
 		// north west
 		case 1:
 		{
-			//qDebug() << "North west wind";
 			m_windows[(int)Window::Location::North]->open();
 			m_windows[(int)Window::Location::South]->close();
 			m_windows[(int)Window::Location::West]->open();
@@ -45,7 +43,6 @@ void RoomWidget::changeWind()
 		// north east
 		case 2:
 		{
-			//qDebug() << "North east wind";
 			m_windows[(int)Window::Location::North]->open();
 			m_windows[(int)Window::Location::South]->close();
 			m_windows[(int)Window::Location::West]->close();
@@ -57,7 +54,6 @@ void RoomWidget::changeWind()
 		// south
 		case 3:
 		{
-			//qDebug() << "South wind";
 			m_windows[(int)Window::Location::North]->close();
 			m_windows[(int)Window::Location::South]->open();
 			m_windows[(int)Window::Location::West]->close();
@@ -69,7 +65,6 @@ void RoomWidget::changeWind()
 		// south west
 		case 4:
 		{
-			//qDebug() << "South west wind";
 			m_windows[(int)Window::Location::North]->close();
 			m_windows[(int)Window::Location::South]->open();
 			m_windows[(int)Window::Location::West]->open();
@@ -81,7 +76,6 @@ void RoomWidget::changeWind()
 		// south east
 		case 5:
 		{
-			//qDebug() << "South east wind";
 			m_windows[(int)Window::Location::North]->close();
 			m_windows[(int)Window::Location::South]->open();
 			m_windows[(int)Window::Location::West]->close();
@@ -432,18 +426,12 @@ void RoomWidget::paintEvent(QPaintEvent *event)
 	}
 
 	// TODO reverse foreach, make sure the solution is always printed on top
-	for (FloatingClips::iterator iterator = m_floatingClips.begin(); iterator != m_floatingClips.end(); ++iterator)
+	for (FloatingClip *floatingClip : floatingClips())
 	{
-		(*iterator)->paint(&painter);
+		floatingClip->paint(&painter);
 	}
 
-	// paint windows over the floating clips
-	for (Window *window : m_windows)
-	{
-		window->paint(&painter, this);
-	}
-
-	for (ClickAnimation *clickAnimation : this->m_clickAnimations)
+	for (ClickAnimation *clickAnimation : m_clickAnimations)
 	{
 		clickAnimation->paint(&painter, this);
 	}
