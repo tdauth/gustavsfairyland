@@ -1,28 +1,44 @@
 sudo: required
 os: linux
 language: cpp
-services:
-  - docker
-# Fedora supports the required libraries:
-before_install:
-  - docker pull fedora:27
-  - docker ps -a
-  - docker run fedora:27 /bin/sh -c "cd /root; dnf -y install git cmake gcc-c++ libatomic bash which rpm-build gflags-devel glog-devel valgrind libtool zlib-devel lzma-devel snappy-devel double-conversion-devel openssl-devel libevent-devel qt5-devel; git clone https://github.com/tdauth/gustavsfairyland.git; cd ./gustavsfairyland; mkdir ./build; cd ./build; cmake .. -DCMAKE_BUILD_TYPE=Debug; make -j4; ctest .; cpack ."
-# Use a script to disable the default automake build:
 script:
-  - ls
-#script:
-  #- mkdir build
-  #- cd build
-  #- cmake -DCMAKE_BUILD_TYPE=Debug .. && make && cpack .
-#addons:
-  #apt:
-    #sources:
-      #- george-edison55-precise-backports
-    #packages:
-      #- qtbase5-dev
-      #- qtmultimedia5-dev
-      #- libqt5svg5-dev
-      #- qttools5-dev
-      #- cmake-data
-      #- cmake
+before_install:
+  # required libs for android build tools
+  - sudo apt-get update
+  - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
+  # for gradle output style
+  - export TERM=dumb
+  # newer version of gradle
+  - wget http://services.gradle.org/distributions/gradle-1.10-bin.zip
+  - unzip -qq gradle-1.10-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-1.10
+  - export PATH=$GRADLE_HOME/bin:$PATH
+  - chmod +x gradlew
+  # newest Android SDK 22.3
+  - wget http://dl.google.com/android/android-sdk_r22.3-linux.tgz
+  - tar -zxf android-sdk_r22.3-linux.tgz
+  - export ANDROID_HOME=`pwd`/android-sdk-linux
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  # newest Android NDK
+  - if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -O ndk.tgz; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -O ndk.tgz; fi
+  - tar -xf ndk.tgz
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-r9c
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
+  # manually set sdk.dir variable, according to local paths
+  - echo "sdk.dir=$ANDROID_HOME" > local.properties
+  - echo yes | android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-19,build-tools-19.0.1,extra-google-google_play_services,extra-google-m2repository --force --no-ui
+
+  - ./scripts/buildlinux_release.sh
+  - ./scripts/buildandroid_arm_release.sh
+  - ./scripts/buildandroid_x86_release.sh
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - qtbase5-dev
+      - qtmultimedia5-dev
+      - libqt5svg5-dev
+      - qttools5-dev
+      - cmake-data
+      - cmake
