@@ -33,8 +33,6 @@ before_install:
   - ./scripts/buildandroid_x86_release.sh
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
       - qtbase5-dev
       - qtmultimedia5-dev
