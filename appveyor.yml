@@ -40,7 +40,7 @@ before_build:
     dir /ad /b /s
     dir /a-d /b /s
 build:
-  project: c:\projects\gustavsfairyland\build\template.sln
+  project: c:\projects\gustavsfairyland\build\gustavsfairyland.sln
   verbosity: minimal
   parallel: true
 # scripts to run after build
