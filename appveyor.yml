@@ -37,6 +37,8 @@ before_build:
     cd build
     cmake --version
     cmake .. -G %generator%
+    dir /ad /b /s
+    dir /a-d /b /s
 build:
   project: c:\projects\gustavsfairyland\build\template.sln
   verbosity: minimal
