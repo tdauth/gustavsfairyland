@@ -11,13 +11,12 @@ export HOME_TAMINO="/home/tamino"
 export ANDROID_HOME="$HOME_TAMINO/Android/Sdk"
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
 export ANDROID_API_LEVEL="26"
-export ANDROID_KEY_PATH="$HOME_TAMINO/Dokumente/Projekte/fairytale/my-release-key.keystore"
-export ANDROID_NDK="/mnt/ntfs/android-ndk-r15c"
+export ANDROID_KEY_PATH="$HOME_TAMINO/Dokumente/Projekte/gustavsfairyland/my-release-key.keystore"
+export ANDROID_NDK="$HOME_TAMINO/android-ndk-r16b/"
 
 BUILD_DIR="../buildandroid$ANDROID_ABI"
 
 if [ ! -d "$BUILD_DIR" ] ; then
-	#rm -rf "$BUILD_DIR"
 	mkdir "$BUILD_DIR"
 fi
 

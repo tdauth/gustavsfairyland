@@ -22,7 +22,7 @@ void ClickAnimation::paint(QPainter *painter, QWidget *area)
 		return;
 	}
 
-	const QColor color(this->m_roomWidget->isEnabled() ? Qt::black : Qt::black);
+	const QColor color(Qt::black);
 	QPen pen(color);
 	const int penWidth = 4;
 	pen.setWidth(penWidth);

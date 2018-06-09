@@ -29,7 +29,7 @@ endif ()
 
 message(STATUS "Compiling for ${CMAKE_SYSTEM_NAME}")
 
-option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." FALSE)
+option(USE_COMPRESSED_FILES "Enable this option to install much smaller videos and sound files. The files need to be generated before using this option by the scripts compressvideos.sh and compressaudio.sh." TRUE)
 option(USE_QTAV "Enable this option to use QtAV for playing video files." FALSE)
 option(USE_QTMEL "Enable this option to use QtMEL for recording video files." FALSE)
 option(USE_VLCQT "Enable this option to use VLC-Qt. Another library to play videos." FALSE)
@@ -136,7 +136,6 @@ set(fairyland_HEADERS
 	src/customfairytaledialog.h
 	src/gamemode.h
 	src/gamemodemoving.h
-	src/gamemodemultiplayer.h
 	src/gamemodeoneoutoffour.h
 	src/gamemodecreative.h
 	src/gamemodesequence.h
@@ -176,7 +175,6 @@ set(fairyland_SRCS
 	src/customfairytaledialog.cpp
 	src/gamemode.cpp
 	src/gamemodemoving.cpp
-	src/gamemodemultiplayer.cpp
 	src/gamemodeoneoutoffour.cpp
 	src/gamemodecreative.cpp
 	src/gamemodesequence.cpp

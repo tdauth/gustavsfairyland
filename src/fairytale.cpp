@@ -19,7 +19,6 @@
 #include "gamemodemoving.h"
 #include "gamemodecreative.h"
 #include "gamemodesequence.h"
-#include "gamemodemultiplayer.h"
 #include "aboutdialog.h"
 #include "settingsdialog.h"
 #include "wondialog.h"
@@ -189,7 +188,7 @@ void fairytale::showSettings()
 	}
 }
 
-void fairytale::showSettingsEx(std::function<void(QDialog*)> lambda)
+void fairytale::showSettingsEx(std::function<void(QDialog*)> &&lambda)
 {
 	const bool pausedGame = this->isGameRunning() && !this->isGamePaused();
 
@@ -199,7 +198,7 @@ void fairytale::showSettingsEx(std::function<void(QDialog*)> lambda)
 	}
 
 	settingsDialog()->update();
-	execInCentralWidgetIfNecessaryEx(settingsDialog(), lambda);
+	execInCentralWidgetIfNecessaryEx(settingsDialog(), std::move(lambda));
 
 	// continue game
 	if (pausedGame)
@@ -561,8 +560,6 @@ fairytale::fairytale(Qt::WindowFlags flags)
 	m_gameModes.insert(gameModeCreative->id(), gameModeCreative);
 	GameModeSequence *gameModeSequence = new GameModeSequence(this);
 	m_gameModes.insert(gameModeSequence->id(), gameModeSequence);
-	GameModeMultiplayer *gameModeMultiplayer = new GameModeMultiplayer(this);
-	m_gameModes.insert(gameModeMultiplayer->id(), gameModeMultiplayer);
 
 	QSettings settings("TaCaProduction", "gustavsfairyland");
 
@@ -1013,7 +1010,7 @@ void fairytale::showWidgetsInMainWindow(Widgets widgets)
 	}
 }
 
-int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda)
+int fairytale::execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> &&lambda)
 {
 	if (this->m_centralWidgets.contains(dialog))
 	{

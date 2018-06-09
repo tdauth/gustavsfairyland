@@ -244,7 +244,7 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		/**
 		 * Creates a new game of "Gustav's Fairyland". The game is represented by a main window.
 		 */
-		fairytale(Qt::WindowFlags flags = 0);
+		explicit fairytale(Qt::WindowFlags flags = 0);
 		virtual ~fairytale();
 
 		/**
@@ -539,10 +539,10 @@ class fairytale : public QMainWindow, protected Ui::MainWindow
 		 * \param lambda This function is called after the dialog is shown but before the event loop and waiting for execution starts.
 		 * \return Returns the result of the dialog's exec() call.
 		 */
-		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> lambda);
+		int execInCentralWidgetIfNecessaryEx(QDialog *dialog, std::function<void(QDialog*)> &&lambda);
 		int execInCentralWidgetIfNecessary(QDialog *dialog);
 
-		void showSettingsEx(std::function<void(QDialog*)> lambda);
+		void showSettingsEx(std::function<void(QDialog*)> &&lambda);
 
 		/**
 		 * Gets a clip package by its unique ID.

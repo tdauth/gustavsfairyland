@@ -13,7 +13,7 @@ class GameModeMoving : public GameMode
 	Q_OBJECT
 
 	public:
-		GameModeMoving(fairytale *app);
+		explicit GameModeMoving(fairytale *app);
 
 		virtual QString id() const override;
 		virtual QString name() const override;

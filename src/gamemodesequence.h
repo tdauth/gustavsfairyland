@@ -16,7 +16,7 @@ class GameModeSequence : public GameMode
 	public:
 		static const int maxFloatingClips = 7;
 
-		GameModeSequence(fairytale *app);
+		explicit GameModeSequence(fairytale *app);
 
 		virtual QString id() const override;
 		virtual QString name() const override;

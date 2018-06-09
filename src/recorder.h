@@ -64,6 +64,9 @@ class Recorder : public QDialog, protected Ui::Recorder
 #endif
 
 	public slots:
+		/**
+		 * Starts recording a video with the webcam into the specified output file path.
+		 */
 		void recordVideo();
 		void captureImage();
 		void recordAudio();
@@ -82,6 +85,8 @@ class Recorder : public QDialog, protected Ui::Recorder
 		 */
 		int showCameraFinder(QCamera::CaptureMode captureMode = QCamera::CaptureStillImage, bool startRecording = false);
 		/**
+		 * Shows the audio recorder widget which allows recording audio and pausing the recording.
+		 * 
 		 * \return Returns the result of exec().
 		 */
 		int showAudioRecorder(bool startRecording = false);
@@ -94,7 +99,7 @@ class Recorder : public QDialog, protected Ui::Recorder
 			CaptureImage
 		};
 
-		Recorder(QWidget *parent = nullptr);
+		explicit Recorder(QWidget *parent = nullptr);
 		virtual ~Recorder();
 
 		QMediaRecorder::State state() const;

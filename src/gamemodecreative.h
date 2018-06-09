@@ -19,7 +19,7 @@ class GameModeCreative : public GameMode
 		void finish();
 
 	public:
-		GameModeCreative(fairytale *app);
+		explicit GameModeCreative(fairytale *app);
 
 		virtual GameMode::State state() override;
 		virtual ClipKeys solutions() override;

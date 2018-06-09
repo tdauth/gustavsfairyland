@@ -13,7 +13,7 @@
 class LanguageDialog : public QDialog, protected Ui::LanguageDialog
 {
 	public:
-		LanguageDialog(QWidget *parent);
+		explicit LanguageDialog(QWidget *parent);
 
 		/**
 		 * \return Returns the selected language tag such as "de" or "en".

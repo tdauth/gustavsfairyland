@@ -16,7 +16,7 @@ class CustomFairytale : public QObject
 	public:
 		typedef QList<fairytale::ClipKey> ClipIds;
 
-		CustomFairytale(QObject *parent);
+		explicit CustomFairytale(QObject *parent);
 
 		void load(const QSettings &settings);
 		void save(QSettings &settings);
